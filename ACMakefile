@@ -1,0 +1,23 @@
+ALLJOYN_DIST := ../..
+#ALLJOYN_DIST := core/alljoyn/build/linux/x86_64/debug/dist/cpp/
+
+ALLJOYN_LIB := $(ALLJOYN_DIST)/lib/liballjoyn.a
+ALLJOYN_LIB += $(ALLJOYN_DIST)/lib/libajrouter.a
+
+CXXFLAGS = -Wall -pipe -std=c++98 -fno-rtti -fno-exceptions -Wno-long-long -Wno-deprecated -g -DQCC_OS_LINUX -DQCC_OS_GROUP_POSIX
+
+LIBS = -lalljoyn -lstdc++ -lcrypto -lpthread -lrt -lajrouter
+
+.PHONY: default clean
+
+default: AlljoynClient
+
+clean:
+	rm -f AlljoynClient.o AlljoynClient
+
+AlljoynClient: AlljoynClient.o $(ALLJOYN_LIB)
+	$(CXX) -o $@ AlljoynClient.o -L$(ALLJOYN_DIST)/lib $(LIBS)
+
+AlljoynClient.o: AlljoynClient.cc $(ALLJOYN_LIB)
+	@echo $(ALLJOYN_LIB)
+	$(CXX) -c $(CXXFLAGS) -I$(ALLJOYN_DIST)/inc -I. -o $@ AlljoynClient.cc
