@@ -109,5 +109,5 @@ $(OBJDIR)/%.o: $(PARSINGMODULE_SRC)/%.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@ 
 
 # Clean: remove object directory and binary directory
-cleanall:
+clean:
 	rm -rf $(OBJDIR) $(BINDIR) $(BUILDDIR)
