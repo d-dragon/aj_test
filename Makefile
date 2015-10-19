@@ -3,7 +3,8 @@
 # 
 # 	Prerequisite: 
 # 		1. jansson dev library was installed in the build PC (eg:  jansson-devel in CentOS)
-# 		2.
+# 		2. scons
+# 		3. 
 # 		 
 # 	Compiler
 # 
@@ -22,6 +23,7 @@ LIBS 				= $(DEFAULT_LIBS) $(JANSSON_LIBS)
 #
 # Directories information
 #	
+BUILDDIR			= build
 OBJDIR 				= obj
 BINDIR				= bin
 # 
@@ -33,23 +35,50 @@ PARSINGMODULE_SRC	= src/parsing
 ONBOARDING_OBJECTS	= $(patsubst $(ONBOARDING_SRCDIR)/%.cc,$(OBJDIR)/%.o,$(wildcard $(ONBOARDING_SRCDIR)/*.cc) $(wildcard src/OnboardingClientMain.cc))
 PARSINGMODULE_OBJS	= $(patsubst $(PARSINGMODULE_SRC)/%.cc,$(OBJDIR)/%.o,$(wildcard $(PARSINGMODULE_SRC)/*.cc))
 
+AJ_CORE_SRC		= alljoyn-15.04.00b-src
+AJ_SERVICES_SRC		= alljoyn-services-15.04.00-src
+ROOT_DIR		= $(shell pwd)
 #
 # Target: alljoynclient and onboarding
 #	
-all: onboarding alljoynclient
+all: directories common_libs onboarding alljoynclient
 
-onboarding: directories OnboardingTestApp
+onboarding: common_libs OnboardingTestApp
 
 alljoynclient:
 
+common_libs: build_alljoyn_src build_alljoyn_services
+
+build_alljoyn_src:
+	@tar xzf common_libs/$(AJ_CORE_SRC).tar.gz -C $(BUILDDIR)
+	@tar xzf common_libs/$(AJ_SERVICES_SRC).tar.gz -C $(BUILDDIR)
+	@cd $(BUILDDIR)/$(AJ_CORE_SRC); scons BINDINGS=cpp WS=off BR=on ICE=off OS=linux CPU=x86_64 VARIANT=release; \
+	cp -a build/linux/x86_64/release/dist/cpp/lib/ ../../; \
+	cp -a build/linux/x86_64/release/dist/cpp/inc/ ../../; \
+	cd -
+	@export ALLJOYN_DISTDIR=`pwd`/$(BUILDDIR)/$(AJ_CORE_SRC)/build/linux/x86_64/release/dist/;cd $(BUILDDIR)/$(AJ_SERVICES_SRC)/services/base/onboarding; \
+	scons V=1 BINDINGS=cpp WS=off BR=on ICE=off OS=linux CPU=x86_64 VARIANT=release; \
+	cp -a build/linux/x86_64/release/dist/config/inc $(ROOT_DIR); \
+	cp -a build/linux/x86_64/release/dist/config/lib $(ROOT_DIR); \
+	cp -a build/linux/x86_64/release/dist/onboarding/inc $(ROOT_DIR); \
+        cp -a build/linux/x86_64/release/dist/onboarding/lib $(ROOT_DIR); \
+	cp -a build/linux/x86_64/release/dist/services_common/inc $(ROOT_DIR); \
+        cp -a build/linux/x86_64/release/dist/services_common/lib $(ROOT_DIR); \
+	cd $(ROOT_DIR)
+	echo "done Onboarding services"
+	
+build_alljoyn_services:
+	@echo "" 
 # 
 # Creat bin/ and obj dir to store temporary object and binary
 # 
 directories:
+	
 	@clear
 	@echo "Create obj dir"
 	@echo $(ONBOARDING_OBJECTS)
 	@echo $(SOURCES)
+	@mkdir -p $(BUILDDIR)
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(BINDIR)
 
@@ -78,5 +107,5 @@ $(OBJDIR)/%.o: $(PARSINGMODULE_SRC)/%.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Clean: remove object directory and binary directory
-clean:
-	rm -rf $(OBJDIR) $(BINDIR)
+cleanall:
+	rm -rf $(OBJDIR) $(BINDIR) $(BUILDDIR)
