@@ -134,7 +134,7 @@ QStatus AlljoynClient::RemoteBusObject::SendSignal(const char* methodName, size_
 	
 	for(size_t i = 0; i < numMember; i++) {
 
-		printf("remoteSignalMember: %s message\n", remoteSignalMember[i]->name.c_str());
+		// printf("remoteSignalMember: %s message\n", remoteSignalMember[i]->name.c_str());
 		if(strcmp(remoteSignalMember[i]->name.c_str(), methodName) == 0) {
 
 			assert(&remoteSignalMember[i]);
@@ -296,45 +296,6 @@ QStatus AlljoynClient::SendRequestSignal(const char* signalName, size_t numArg, 
 		args[i].Set("s", va_arg(signalArgs, char*));
 	}
 	va_end(signalArgs);
-	// printf("%s\n", MsgArg::ToString(args,numArg,0).c_str());
 	status = remoteObject->SendSignal(signalName, numArg, args);
 	return status;
-}
-
-int main()
-{
-	QStatus status;
-	printf("start app\n");
-
-	AlljoynClient* ajClient = new AlljoynClient();
-	status = ajClient->InitAlljoynClient("com.verik.bus.VENUS_BOARD");
-
-	if(ER_OK != status) {
-		printf("init alljoyn client failed\n");
-		return -1;
-	}
-	sleep(1);
-	status = ajClient->ConnectServiceProvider("com.verik.bus.VENUS_BOARD");
-	if (ER_OK == status) {
-
-		ajClient->SendRequestSignal("add_devices", 1, "arg1");
-		sleep(1);
-		ajClient->SendRequestSignal("list_devices", 1, "all");
-		sleep(1);
-		ajClient->SendRequestSignal("get_binary", 4, "arg1", "arg2", "arg3" , "arg4");
-		sleep(1);
-		ajClient->SendRequestSignal("set_binary", 5, "arg1", "arg2", "arg3", "arg4", "arg5");
-		sleep(1);
-		ajClient->SendRequestSignal("update_firmware", 1, "arg1");
-		sleep(1);
-		ajClient->SendRequestSignal("set_rule", 4, "arg1", "arg2", "arg3" , "arg4");
-		sleep(1);
-		ajClient->SendRequestSignal("get_rule", 1, "arg1");
-		sleep(1);
-		ajClient->SendRequestSignal("rule_actions", 6, "arg1", "arg2", "arg3", "arg4", "arg5", "arg6");
-		sleep(1);
-	}
-	while(1);
-	// delete ajClient;
-	return 0;
 }
