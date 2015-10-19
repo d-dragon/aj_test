@@ -51,14 +51,13 @@ class AlljoynClient
 			public:
 				RemoteBusObject(BusAttachment& bus, const char* path,const char* interface, ProxyBusObject proxyObject, SessionId sessionId);
 				~RemoteBusObject();
-				void GetBinarySignalHandler(const InterfaceDescription::Member* member, const char* srcPath, Message& msg);
-				void SetBinarySignalHandler(const InterfaceDescription::Member* member, const char* srcPath, Message& msg);
-				QStatus SendSignal(const char* methodName, size_t numArg);
+				void SignalHandler(const InterfaceDescription::Member* member, const char* srcPath, Message& msg);
+				QStatus SendSignal(const char* methodName, size_t numArg, MsgArg args[]);
 				
 			private:
 				const InterfaceDescription::Member** remoteSignalMember;
 				SessionId remoteSessionId;
-    			size_t num_member;
+    			size_t numMember;
 		};
 
 		RemoteBusObject* remoteObject;

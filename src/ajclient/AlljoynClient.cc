@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <signal.h>
+#include <cstdarg>
+#include <string.h>
 
 #include "AlljoynClient.h"
 
@@ -78,7 +80,7 @@ void AlljoynClient::AlljoynClientSessionListener::SessionLost(SessionId sessionI
 	printf("SessionLost sessionId = %u, Reason = %d\n", sessionId, reason);
 }
 
-AlljoynClient::RemoteBusObject::RemoteBusObject(BusAttachment& bus, const char* path,const char* interface, ProxyBusObject proxyObject, SessionId sessionId) : BusObject(path), remoteSessionId(sessionId), num_member(0){
+AlljoynClient::RemoteBusObject::RemoteBusObject(BusAttachment& bus, const char* path,const char* interface, ProxyBusObject proxyObject, SessionId sessionId) : BusObject(path), remoteSessionId(sessionId), numMember(0){
 
 	QStatus status;
 
@@ -90,57 +92,63 @@ AlljoynClient::RemoteBusObject::RemoteBusObject(BusAttachment& bus, const char* 
 		printf("BusObject AddInterface failed, reason: %s\n", QCC_StatusText(status));
 	}
 
-	num_member = remoteInterface->GetMembers(NULL, 0);
+	numMember = remoteInterface->GetMembers(NULL, 0);
 
-	if (num_member > 0) {
+	if (numMember > 0) {
 		// remoteSignalMember = new InterfaceDescription::Member();
-		printf("number member of %s: %d\n", interface, (int)num_member);
-		remoteInterface->GetMembers(remoteSignalMember, num_member);
+		printf("number member of %s: %d\n", interface, (int)numMember);
+		remoteInterface->GetMembers(remoteSignalMember, numMember);
 		assert(remoteSignalMember);
-// #ifdef DEBUG_ENABLE
-		for (int i = 0; i < (int)num_member; i++) {
-			printf("member %d: %s\n", i, remoteSignalMember[i]->name.c_str());
+#ifdef DEBUG_ENABLE
+		for (size_t i = 0; i < numMember; i++) {
+			printf("member %u: %s\n", i, remoteSignalMember[i]->name.c_str());
 		}
-// #endif
+#endif
 	}
 
 	/**********Register Signal Handler**********/
-	status = bus.RegisterSignalHandler(this, static_cast<MessageReceiver::SignalHandler>(&AlljoynClient::RemoteBusObject::GetBinarySignalHandler), remoteSignalMember[1], NULL);
-	if (ER_OK == status)
-	{
-		printf("register SignalHandler for %s\n", remoteSignalMember[1]->name.c_str());
+	for (size_t i = 0; i < numMember; i++) {
+	
+		status = bus.RegisterSignalHandler(this, static_cast<MessageReceiver::SignalHandler>(&AlljoynClient::RemoteBusObject::SignalHandler), remoteSignalMember[i], NULL);
+		if (ER_OK == status)
+		{
+			printf("register SignalHandler for %s\n", remoteSignalMember[i]->name.c_str());
+		}
 	}
 }
 
 
-void AlljoynClient::RemoteBusObject::GetBinarySignalHandler(const InterfaceDescription::Member* member, const char* srcPath, Message& msg){
+void AlljoynClient::RemoteBusObject::SignalHandler(const InterfaceDescription::Member* member, const char* srcPath, Message& msg){
 
-	printf("receive signal from %s\n", srcPath);
+	printf("receive signal %s from %s\n", member->name.c_str(), srcPath);
     QCC_UNUSED(member);
     QCC_UNUSED(srcPath);
     printf("%s: %s\n", msg->GetSender(), msg->GetArg(0)->v_string.str);
 }
 
-QStatus AlljoynClient::RemoteBusObject::SendSignal(const char* methodName, size_t numArg){
+QStatus AlljoynClient::RemoteBusObject::SendSignal(const char* methodName, size_t numArg, MsgArg args[]){
 
 	QStatus status;
 	printf("send signal %s, sessionId: %u\n", methodName, remoteSessionId);
 	uint8_t flags = 0;
-	assert(&remoteSignalMember[1]);
-	MsgArg tmp_arg[4];
-	tmp_arg[0].Set("s", "all");
-	tmp_arg[1].Set("s", "all");
-	tmp_arg[2].Set("s", "all");
-	tmp_arg[3].Set("s", "all");
+	
+	for(size_t i = 0; i < numMember; i++) {
 
-	printf("remoteSignalMember: %s message\n", remoteSignalMember[1]->name.c_str());
-	status = Signal(NULL, remoteSessionId, *remoteSignalMember[1], tmp_arg, numArg ,0, flags, NULL);
-	if (ER_OK != status) {
+		printf("remoteSignalMember: %s message\n", remoteSignalMember[i]->name.c_str());
+		if(strcmp(remoteSignalMember[i]->name.c_str(), methodName) == 0) {
 
-		printf("Send Signal failed\n");
+			assert(&remoteSignalMember[i]);
+			status = Signal(NULL, remoteSessionId, *remoteSignalMember[i], args, numArg ,0, flags, NULL);
+			if (ER_OK != status) {
+
+				printf("Send Signal failed\n");
+			}
+			return status;
+		}
 	}
-
-	return status;
+	
+	printf("request signal <%s> not found\n", methodName);
+	return ER_FAIL;
 }
 AlljoynClient::RemoteBusObject::~RemoteBusObject(){
 
@@ -277,9 +285,19 @@ QStatus AlljoynClient::ConnectServiceProvider(const char* interface){
 QStatus AlljoynClient::SendRequestSignal(const char* signalName, size_t numArg, ... ){
 
 	QStatus status;
-	// size_t numArg = 4;
-	status = remoteObject->SendSignal(signalName, numArg);
 
+	va_list signalArgs;
+
+	va_start(signalArgs, numArg);
+	MsgArg args[numArg];
+
+	for (size_t i = 0; i < numArg; i++) {
+
+		args[i].Set("s", va_arg(signalArgs, char*));
+	}
+	va_end(signalArgs);
+	// printf("%s\n", MsgArg::ToString(args,numArg,0).c_str());
+	status = remoteObject->SendSignal(signalName, numArg, args);
 	return status;
 }
 
@@ -291,14 +309,32 @@ int main()
 	AlljoynClient* ajClient = new AlljoynClient();
 	status = ajClient->InitAlljoynClient("com.verik.bus.VENUS_BOARD");
 
-	if(status == ER_OK) {
-		printf("init alljoyn client success\n");
+	if(ER_OK != status) {
+		printf("init alljoyn client failed\n");
+		return -1;
 	}
 	sleep(1);
 	status = ajClient->ConnectServiceProvider("com.verik.bus.VENUS_BOARD");
-	
-	ajClient->SendRequestSignal("get_binary", (size_t)4);
+	if (ER_OK == status) {
 
+		ajClient->SendRequestSignal("add_devices", 1, "arg1");
+		sleep(1);
+		ajClient->SendRequestSignal("list_devices", 1, "all");
+		sleep(1);
+		ajClient->SendRequestSignal("get_binary", 4, "arg1", "arg2", "arg3" , "arg4");
+		sleep(1);
+		ajClient->SendRequestSignal("set_binary", 5, "arg1", "arg2", "arg3", "arg4", "arg5");
+		sleep(1);
+		ajClient->SendRequestSignal("update_firmware", 1, "arg1");
+		sleep(1);
+		ajClient->SendRequestSignal("set_rule", 4, "arg1", "arg2", "arg3" , "arg4");
+		sleep(1);
+		ajClient->SendRequestSignal("get_rule", 1, "arg1");
+		sleep(1);
+		ajClient->SendRequestSignal("rule_actions", 6, "arg1", "arg2", "arg3", "arg4", "arg5", "arg6");
+		sleep(1);
+	}
+	while(1);
 	// delete ajClient;
 	return 0;
 }
