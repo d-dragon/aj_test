@@ -86,7 +86,8 @@ directories:
 # 
 # Onboarding Apps
 # 
-OnboardingTestApp: $(ONBOARDING_OBJECTS) $(PARSINGMODULE_OBJS)
+# OnboardingTestApp: $(ONBOARDING_OBJECTS) $(PARSINGMODULE_OBJS)
+OnboardingTestApp: $(ONBOARDING_OBJECTS)
 	@echo "Build Onboarding app"
 	$(CXX) -o $(BINDIR)/$@ $^ $(CXXFLAGS) $(LIBS)
 
