@@ -21,9 +21,10 @@
 
 using namespace ajn;
 
-AboutListenerHandlerImpl::AboutListenerHandlerImpl( BusAttachment *inputBusAttment)
+AboutListenerHandlerImpl::AboutListenerHandlerImpl( BusAttachment *inputBusAttment, bool isReset)
 {
-     busAttment = inputBusAttment;
+    busAttment      = inputBusAttment;
+    mresetConnection = isReset;
 }
 
 AboutListenerHandlerImpl::~AboutListenerHandlerImpl()
@@ -66,7 +67,7 @@ void AboutListenerHandlerImpl::announceBasicHandlerCallback(qcc::String const& b
 
         SessionOpts opts(SessionOpts::TRAFFIC_MESSAGES, false, SessionOpts::PROXIMITY_ANY, TRANSPORT_ANY);
         SessionListenerImpl* sessionListener = new SessionListenerImpl(busName);
-        AsyncSessionJoinerCB* joincb = new AsyncSessionJoinerCB(busName.c_str(), busAttment);
+        AsyncSessionJoinerCB* joincb = new AsyncSessionJoinerCB(busName.c_str(), busAttment, mresetConnection);
 
         QStatus status = busAttment->JoinSessionAsync(busName.c_str(), port, sessionListener, opts, joincb,
                                                          sessionListener);

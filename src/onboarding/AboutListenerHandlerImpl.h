@@ -50,7 +50,7 @@ class AboutListenerHandlerImpl : public ajn::AboutListener {
      * @param basicCallback
      * @param fullCallback
      */
-    AboutListenerHandlerImpl(ajn::BusAttachment *);
+    AboutListenerHandlerImpl(ajn::BusAttachment *, bool resetConnection = false);
 
     /**
      * ~AnnounceHandlerImpl
@@ -64,6 +64,8 @@ class AboutListenerHandlerImpl : public ajn::AboutListener {
     std::set<qcc::String> handledAnnouncements;
 
     ajn::BusAttachment *busAttment;
+
+    bool mresetConnection;
 };
 
 #endif /* ABOUTLISTENERHANDLERSAMPLE_H_ */

@@ -28,13 +28,14 @@
 using namespace ajn;
 using namespace services;
 
-AsyncSessionJoinerCB::AsyncSessionJoinerCB(const char* name, BusAttachment* inputBusAttment) :
+AsyncSessionJoinerCB::AsyncSessionJoinerCB(const char* name, BusAttachment* inputBusAttment, bool isReset) :
     m_Busname("")
 {
     if (name) {
         m_Busname.assign(name);
     }
     busAttment = inputBusAttment;
+    mresetConnection = isReset;
 }
 
 AsyncSessionJoinerCB::~AsyncSessionJoinerCB()
@@ -247,41 +248,45 @@ void AsyncSessionJoinerCB::sessionJoinedCallback(qcc::String const& busName, Ses
         } else {
             std::cout << "Call to GetLastError failed " << QCC_StatusText(status) << std::endl;
         }
-
-        std::cout << std::endl << busName.c_str() << " OnboardingClient GetScanInfo" << std::endl;
-        std::cout << "-----------------------------------" << std::endl;
-        unsigned short age = 0;
-        OnboardingClient::ScanInfos scanInfos;
-        if ((status = onboardingClient->GetScanInfo(busName.c_str(), age, scanInfos, id)) == ER_OK) {
-            for (OnboardingClient::ScanInfos::iterator it = scanInfos.begin(); it != scanInfos.end(); ++it) {
-                std::cout << "Network  SSID=" << it->SSID.c_str() << " authType=" << it->authType << std::endl;
+        if ( true != mresetConnection )
+        {
+            std::cout << std::endl << busName.c_str() << " OnboardingClient GetScanInfo" << std::endl;
+            std::cout << "-----------------------------------" << std::endl;
+            unsigned short age = 0;
+            OnboardingClient::ScanInfos scanInfos;
+            if ((status = onboardingClient->GetScanInfo(busName.c_str(), age, scanInfos, id)) == ER_OK) {
+                for (OnboardingClient::ScanInfos::iterator it = scanInfos.begin(); it != scanInfos.end(); ++it) {
+                    std::cout << "Network  SSID=" << it->SSID.c_str() << " authType=" << it->authType << std::endl;
+                }
+            } else {
+                std::cout << "Call to GetScanInfo failed " << QCC_StatusText(status) << std::endl;
             }
-        } else {
-            std::cout << "Call to GetScanInfo failed " << QCC_StatusText(status) << std::endl;
-        }
 
-        std::cout << std::endl << busName.c_str() << " OnboardingClient ConfigureWiFi" << std::endl;
-        std::cout << "-----------------------------------" << std::endl;
+            std::cout << std::endl << busName.c_str() << " OnboardingClient ConfigureWiFi" << std::endl;
+            std::cout << "-----------------------------------" << std::endl;
 
-        short resultStatus;
+            short resultStatus;
 
-        if ((status = onboardingClient->ConfigureWiFi(busName.c_str(), oBInfo, resultStatus, id)) == ER_OK) {
-            std::cout << "Call to ConfigureWiFi succeeded " << std::endl;
-        } else {
-            std::cout << "Call to ConfigureWiFi failed " << QCC_StatusText(status) << std::endl;
-        }
+            if ((status = onboardingClient->ConfigureWiFi(busName.c_str(), oBInfo, resultStatus, id)) == ER_OK) {
+                std::cout << "Call to ConfigureWiFi succeeded " << std::endl;
+            } else {
+                std::cout << "Call to ConfigureWiFi failed " << QCC_StatusText(status) << std::endl;
+            }
 
-        if ((status = onboardingClient->ConnectTo(busName.c_str(), id)) == ER_OK) {
-            std::cout << "Call to ConnectTo succeeded " << std::endl;
-        } else {
-            std::cout << "Call to ConnectTo failed " << QCC_StatusText(status) << std::endl;
-        }
+            if ((status = onboardingClient->ConnectTo(busName.c_str(), id)) == ER_OK) {
+                std::cout << "Call to ConnectTo succeeded " << std::endl;
+            } else {
+                std::cout << "Call to ConnectTo failed " << QCC_StatusText(status) << std::endl;
+            }
+        }else{ 
+            // Call OffBoard to reset connection.
 
-//        if ((status = onboardingClient->OffboardFrom(busName.c_str(), id)) == ER_OK) {
-//            std::cout << "Call to OffboardFrom succeeded " << std::endl;
-//        } else {
-//            std::cout << "Call to OffboardFrom failed " << QCC_StatusText(status) << std::endl;
-//        }
+           if ((status = onboardingClient->OffboardFrom(busName.c_str(), id)) == ER_OK) {
+               std::cout << "Call to OffboardFrom succeeded " << std::endl;
+           } else {
+               std::cout << "Call to OffboardFrom failed " << QCC_StatusText(status) << std::endl;
+           }
+       }
 
     }
 

@@ -37,7 +37,7 @@ class AsyncSessionJoinerCB : public ajn::BusAttachment::JoinSessionAsyncCB {
      * @param name
      * @param callback
      */
-    AsyncSessionJoinerCB(const char* name, ajn::BusAttachment* inputBusAttment);
+    AsyncSessionJoinerCB(const char* name, ajn::BusAttachment* inputBusAttment, bool resetConnection = false);
 
     /**
      * destructor
@@ -63,6 +63,8 @@ class AsyncSessionJoinerCB : public ajn::BusAttachment::JoinSessionAsyncCB {
     qcc::String m_Busname;
 
     ajn::BusAttachment* busAttment;
+
+    bool mresetConnection;
 };
 
 #endif /* ASYNCSESSIONJOINERCB_H_ */

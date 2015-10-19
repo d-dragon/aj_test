@@ -25,14 +25,15 @@ using namespace ajn;
     Constructor and Destructors
 */
 
-OnboardingTest::OnboardingTest(){
+OnboardingTest::OnboardingTest(bool isReset){
 // Initialize AllJoyn
     ajInitial = new AJInitializer();
     if (ajInitial->Initialize() != ER_OK) {
         std::cout << "Unable to Initialize AllJoyn " << std::endl;
     }
     *interfaces={"org.alljoyn.Onboarding"};
-    mbusAttachment =  NULL;
+    mbusAttachment      = NULL;
+    mresetConnection    = isReset;
 }
 
 OnboardingTest::~OnboardingTest(){
@@ -46,7 +47,7 @@ QStatus OnboardingTest::CreateBusAttachment(){
     mbusAttachment = new BusAttachment("OnboardingClient", true);
 
     status = mbusAttachment->Start();
-    if (status == ER_OK) {
+    if (ER_OK == status) {
         std::cout << "BusAttachment started." << std::endl;
     } else {
         std::cout << "Unable to start BusAttachment. Status: " << QCC_StatusText(status) << std::endl;
@@ -71,7 +72,7 @@ QStatus OnboardingTest::CreateBusAttachment(){
         return ER_FAIL;
     }
 
-    announceHandler = new AboutListenerHandlerImpl(mbusAttachment);
+    announceHandler = new AboutListenerHandlerImpl(mbusAttachment, mresetConnection);
     mbusAttachment->RegisterAboutListener(*announceHandler);
 
     status = mbusAttachment->WhoImplements(interfaces, sizeof(interfaces) / sizeof(interfaces[0]));

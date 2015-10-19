@@ -19,6 +19,7 @@
 #include <signal.h>
 #include <set>
 #include "OnboardingTest.h"
+#include "ParsingModule.h"
 
 using namespace ajn;
 //using namespace services;
@@ -456,10 +457,12 @@ int main(int argc, char**argv, char**envArg) {
 
     int main(){
         QStatus ret;
+        ParsingModule *inputParsing = new ParsingModule();
         OnboardingTest *onboardingTestApp;
         /* Install SIGINT handler so Ctrl + C deallocates memory properly */
         signal(SIGINT, SigIntHandler);
-        onboardingTestApp = new OnboardingTest();
+        bool isReset = false;
+        onboardingTestApp = new OnboardingTest(isReset);
         ret = onboardingTestApp->CreateBusAttachment();
         if ( ER_OK != ret )
         {
@@ -476,6 +479,7 @@ int main(int argc, char**argv, char**envArg) {
             }
         onboardingTestApp->FinishBusAttachment();
         delete onboardingTestApp;
+        delete inputParsing;
         return 0;
     }
 #endif
