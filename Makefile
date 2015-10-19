@@ -48,7 +48,7 @@ all: directories common_libs onboarding alljoynclient
 onboarding: OnboardingTestApp
 
 alljoynclient: $(AJCLIENT_OBJECTS)
-	@echo "**********Build AlljoynClient**********"
+	@echo "**********Build AlljoynClientApp**********"
 	$(CXX) -o $(BINDIR)/$@ $^ $(CXXFLAGS) $(LIBS)
 
 common_libs: build_alljoyn_src build_alljoyn_services
@@ -86,7 +86,7 @@ directories:
 # 
 # Onboarding Apps
 # 
-OnboardingTestApp: $(ONBOARDING_OBJECTS) $(PARSINGMODULE_OBJS)
+OnboardingTestApp: $(ONBOARDING_OBJECTS)
 	@echo "Build Onboarding app"
 	$(CXX) -o $(BINDIR)/$@ $^ $(CXXFLAGS) $(LIBS)
 
@@ -98,7 +98,7 @@ $(OBJDIR)/%.o: $(ONBOARDING_SRCDIR)/%.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(OBJDIR)/%.o: $(AJCLIENT_SRCDIR)/%.cc
-	@echo "build ajclient object"
+	@echo "**********Build ajclient object***********"
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # 
