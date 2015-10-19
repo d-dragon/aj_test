@@ -37,9 +37,9 @@ ONBOARDING_OBJECTS	= $(patsubst $(ONBOARDING_SRCDIR)/%.cc,$(OBJDIR)/%.o,$(wildca
 AJCLIENT_OBJECTS	= $(patsubst $(AJCLIENT_SRCDIR)/%.cc,$(OBJDIR)/%.o,$(wildcard $(AJCLIENT_SRCDIR)/*.cc))
 PARSINGMODULE_OBJS	= $(patsubst $(PARSINGMODULE_SRC)/%.cc,$(OBJDIR)/%.o,$(wildcard $(PARSINGMODULE_SRC)/*.cc))
 
-AJ_CORE_SRC		= alljoyn-15.04.00b-src
+AJ_CORE_SRC			= alljoyn-15.04.00b-src
 AJ_SERVICES_SRC		= alljoyn-services-15.04.00-src
-ROOT_DIR		= $(shell pwd)
+ROOT_DIR			= $(shell pwd)
 #
 # Target: alljoynclient and onboarding
 #	
@@ -76,7 +76,6 @@ build_alljoyn_services:
 # Creat bin/ and obj dir to store temporary object and binary
 # 
 directories:
-	
 	@clear
 	@echo "Create obj bin build dirs"
 	@mkdir -p $(BUILDDIR)

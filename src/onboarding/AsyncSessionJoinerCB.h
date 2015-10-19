@@ -19,7 +19,7 @@
 
 #include <alljoyn/BusAttachment.h>
 #include <alljoyn/AboutProxy.h>
-
+#include <alljoyn/onboarding/Onboarding.h>
 #if defined(QCC_OS_GROUP_WINDOWS)
 /* Disabling warning C 4100. Function doesnt use all passed in parameters */
 #pragma warning(push)
@@ -37,7 +37,7 @@ class AsyncSessionJoinerCB : public ajn::BusAttachment::JoinSessionAsyncCB {
      * @param name
      * @param callback
      */
-    AsyncSessionJoinerCB(const char* name, ajn::BusAttachment* inputBusAttment, bool resetConnection = false);
+    AsyncSessionJoinerCB(const char* name, ajn::BusAttachment* inputBusAttment, bool resetConnection, ajn::services::OBInfo oBInfo);
 
     /**
      * destructor
@@ -65,6 +65,8 @@ class AsyncSessionJoinerCB : public ajn::BusAttachment::JoinSessionAsyncCB {
     ajn::BusAttachment* busAttment;
 
     bool mresetConnection;
+
+    ajn::services::OBInfo oBInfo;
 };
 
 #endif /* ASYNCSESSIONJOINERCB_H_ */

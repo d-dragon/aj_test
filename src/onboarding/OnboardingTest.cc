@@ -42,7 +42,7 @@ OnboardingTest::~OnboardingTest(){
 
 // Create bus attachment
 
-QStatus OnboardingTest::CreateBusAttachment(){
+QStatus OnboardingTest::CreateBusAttachment(ajn::services::OBInfo connectionInput){
     QStatus status;
     mbusAttachment = new BusAttachment("OnboardingClient", true);
 
@@ -72,7 +72,7 @@ QStatus OnboardingTest::CreateBusAttachment(){
         return ER_FAIL;
     }
 
-    announceHandler = new AboutListenerHandlerImpl(mbusAttachment, mresetConnection);
+    announceHandler = new AboutListenerHandlerImpl(mbusAttachment, mresetConnection,connectionInput);
     mbusAttachment->RegisterAboutListener(*announceHandler);
 
     status = mbusAttachment->WhoImplements(interfaces, sizeof(interfaces) / sizeof(interfaces[0]));

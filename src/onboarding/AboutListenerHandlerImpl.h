@@ -17,6 +17,7 @@
 #ifndef ABOUTLISTENERHANDLERSAMPLE_H_
 #define ABOUTLISTENERHANDLERSAMPLE_H_
 #include <alljoyn/AboutListener.h>
+#include <alljoyn/onboarding/Onboarding.h>
 #include <iostream>
 #include <iomanip>
 #include <signal.h>
@@ -50,7 +51,7 @@ class AboutListenerHandlerImpl : public ajn::AboutListener {
      * @param basicCallback
      * @param fullCallback
      */
-    AboutListenerHandlerImpl(ajn::BusAttachment *, bool resetConnection = false);
+    AboutListenerHandlerImpl(ajn::BusAttachment *, bool resetConnection, ajn::services::OBInfo);
 
     /**
      * ~AnnounceHandlerImpl
@@ -66,6 +67,7 @@ class AboutListenerHandlerImpl : public ajn::AboutListener {
     ajn::BusAttachment *busAttment;
 
     bool mresetConnection;
+    ajn::services::OBInfo oBInfo;
 };
 
 #endif /* ABOUTLISTENERHANDLERSAMPLE_H_ */
