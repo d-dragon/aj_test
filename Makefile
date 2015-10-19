@@ -30,9 +30,11 @@ BINDIR				= bin
 # Module source dir
 # 
 ONBOARDING_SRCDIR 	= src/onboarding
+AJCLIENT_SRCDIR		= src/ajclient
 PARSINGMODULE_SRC	= src/parsing
 
 ONBOARDING_OBJECTS	= $(patsubst $(ONBOARDING_SRCDIR)/%.cc,$(OBJDIR)/%.o,$(wildcard $(ONBOARDING_SRCDIR)/*.cc) $(wildcard src/OnboardingClientMain.cc))
+AJCLIENT_OBJECTS	= $(patsubst $(AJCLIENT_SRCDIR)/%.cc,$(OBJDIR)/%.o,$(wildcard $(AJCLIENT_SRCDIR)/*.cc))
 PARSINGMODULE_OBJS	= $(patsubst $(PARSINGMODULE_SRC)/%.cc,$(OBJDIR)/%.o,$(wildcard $(PARSINGMODULE_SRC)/*.cc))
 
 AJ_CORE_SRC		= alljoyn-15.04.00b-src
@@ -43,9 +45,11 @@ ROOT_DIR		= $(shell pwd)
 #	
 all: directories common_libs onboarding alljoynclient
 
-onboarding: common_libs OnboardingTestApp
+onboarding: OnboardingTestApp
 
-alljoynclient:
+alljoynclient: $(AJCLIENT_OBJECTS)
+	@echo "**********Build AlljoynClient**********"
+	$(CXX) -o $(BINDIR)/$@ $^ $(CXXFLAGS) $(LIBS)
 
 common_libs: build_alljoyn_src build_alljoyn_services
 
@@ -56,28 +60,25 @@ build_alljoyn_src:
 	cp -a build/linux/x86_64/release/dist/cpp/lib/ ../../; \
 	cp -a build/linux/x86_64/release/dist/cpp/inc/ ../../; \
 	cd -
-	@export ALLJOYN_DISTDIR=`pwd`/$(BUILDDIR)/$(AJ_CORE_SRC)/build/linux/x86_64/release/dist/;cd $(BUILDDIR)/$(AJ_SERVICES_SRC)/services/base/onboarding; \
-	scons V=1 BINDINGS=cpp WS=off BR=on ICE=off OS=linux CPU=x86_64 VARIANT=release; \
-	cp -a build/linux/x86_64/release/dist/config/inc $(ROOT_DIR); \
-	cp -a build/linux/x86_64/release/dist/config/lib $(ROOT_DIR); \
-	cp -a build/linux/x86_64/release/dist/onboarding/inc $(ROOT_DIR); \
-        cp -a build/linux/x86_64/release/dist/onboarding/lib $(ROOT_DIR); \
-	cp -a build/linux/x86_64/release/dist/services_common/inc $(ROOT_DIR); \
-        cp -a build/linux/x86_64/release/dist/services_common/lib $(ROOT_DIR); \
-	cd $(ROOT_DIR)
-	echo "done Onboarding services"
 	
 build_alljoyn_services:
-	@echo "" 
+	@export ALLJOYN_DISTDIR=`pwd`/$(BUILDDIR)/$(AJ_CORE_SRC)/build/linux/x86_64/release/dist/;cd $(BUILDDIR)/$(AJ_SERVICES_SRC)/services/base/onboarding; \
+        scons V=1 BINDINGS=cpp WS=off BR=on ICE=off OS=linux CPU=x86_64 VARIANT=release; \
+        cp -a build/linux/x86_64/release/dist/config/inc $(ROOT_DIR); \
+        cp -a build/linux/x86_64/release/dist/config/lib $(ROOT_DIR); \
+        cp -a build/linux/x86_64/release/dist/onboarding/inc $(ROOT_DIR); \
+        cp -a build/linux/x86_64/release/dist/onboarding/lib $(ROOT_DIR); \
+        cp -a build/linux/x86_64/release/dist/services_common/inc $(ROOT_DIR); \
+        cp -a build/linux/x86_64/release/dist/services_common/lib $(ROOT_DIR); \
+        cd $(ROOT_DIR)
+
 # 
 # Creat bin/ and obj dir to store temporary object and binary
 # 
 directories:
 	
 	@clear
-	@echo "Create obj dir"
-	@echo $(ONBOARDING_OBJECTS)
-	@echo $(SOURCES)
+	@echo "Create obj bin build dirs"
 	@mkdir -p $(BUILDDIR)
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(BINDIR)
@@ -86,16 +87,18 @@ directories:
 # Onboarding Apps
 # 
 OnboardingTestApp: $(ONBOARDING_OBJECTS) $(PARSINGMODULE_OBJS)
-	@echo "build app"
-	@echo $(CXX) -o $(BINDIR)/$@ $^ $(CXXFLAGS) $(LIBS)
+	@echo "Build Onboarding app"
 	$(CXX) -o $(BINDIR)/$@ $^ $(CXXFLAGS) $(LIBS)
 
 # 
 # Onboarding Objects
 # 
-$(OBJDIR)/%.o: $(ONBOARDING_SRCDIR)/%.cc
-	@echo "build object"
-	@echo $(CXX) $(CXXFLAGS) -c $< -o $@ 
+$(OBJDIR)/%.o: $(ONBOARDING_SRCDIR)/%.cc 
+	@echo "build onboarding object"
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o: $(AJCLIENT_SRCDIR)/%.cc
+	@echo "build ajclient object"
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # 
@@ -103,8 +106,7 @@ $(OBJDIR)/%.o: $(ONBOARDING_SRCDIR)/%.cc
 # 
 $(OBJDIR)/%.o: $(PARSINGMODULE_SRC)/%.cc
 	@echo "build object"
-	@echo $(CXX) $(CXXFLAGS) -c $< -o $@ 
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@ 
 
 # Clean: remove object directory and binary directory
 cleanall:
