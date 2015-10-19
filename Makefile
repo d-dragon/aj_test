@@ -33,7 +33,7 @@ ONBOARDING_SRCDIR 	= src/onboarding
 AJCLIENT_SRCDIR		= src/ajclient
 PARSINGMODULE_SRC	= src/parsing
 
-ONBOARDING_OBJECTS	= $(patsubst $(ONBOARDING_SRCDIR)/%.cc,$(OBJDIR)/%.o,$(wildcard $(ONBOARDING_SRCDIR)/*.cc) $(wildcard src/OnboardingClientMain.cc))
+ONBOARDING_OBJECTS	= $(patsubst $(ONBOARDING_SRCDIR)/%.cc,$(OBJDIR)/%.o,$(wildcard $(ONBOARDING_SRCDIR)/*.cc))
 AJCLIENT_OBJECTS	= $(patsubst $(AJCLIENT_SRCDIR)/%.cc,$(OBJDIR)/%.o,$(wildcard $(AJCLIENT_SRCDIR)/*.cc))
 PARSINGMODULE_OBJS	= $(patsubst $(PARSINGMODULE_SRC)/%.cc,$(OBJDIR)/%.o,$(wildcard $(PARSINGMODULE_SRC)/*.cc))
 
@@ -109,5 +109,5 @@ $(OBJDIR)/%.o: $(PARSINGMODULE_SRC)/%.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@ 
 
 # Clean: remove object directory and binary directory
-cleanall:
+clean:
 	rm -rf $(OBJDIR) $(BINDIR) $(BUILDDIR)
