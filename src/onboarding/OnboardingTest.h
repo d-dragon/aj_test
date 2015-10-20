@@ -11,12 +11,12 @@ public:
 	/*
 	Intialize and Destroy AJ initialization
 	*/
-	OnboardingTest(bool isReset=false);
+	OnboardingTest(bool isReset);
 	~OnboardingTest();
 	/*
 		Create Bus Attachment
 	*/
-	QStatus CreateBusAttachment();
+	QStatus CreateBusAttachment(ajn::services::OBInfo oBInfo);
 	QStatus FinishBusAttachment();
 
 private:

@@ -21,10 +21,14 @@
 
 using namespace ajn;
 
-AboutListenerHandlerImpl::AboutListenerHandlerImpl( BusAttachment *inputBusAttment, bool isReset)
+AboutListenerHandlerImpl::AboutListenerHandlerImpl( BusAttachment *inputBusAttment, bool isReset,ajn::services::OBInfo conInfo)
 {
     busAttment      = inputBusAttment;
     mresetConnection = isReset;
+    
+    oBInfo.SSID.assign(conInfo.SSID.c_str());
+    oBInfo.passcode.assign(conInfo.passcode.c_str());
+    oBInfo.authType = conInfo.authType;
 }
 
 AboutListenerHandlerImpl::~AboutListenerHandlerImpl()
@@ -67,7 +71,7 @@ void AboutListenerHandlerImpl::announceBasicHandlerCallback(qcc::String const& b
 
         SessionOpts opts(SessionOpts::TRAFFIC_MESSAGES, false, SessionOpts::PROXIMITY_ANY, TRANSPORT_ANY);
         SessionListenerImpl* sessionListener = new SessionListenerImpl(busName);
-        AsyncSessionJoinerCB* joincb = new AsyncSessionJoinerCB(busName.c_str(), busAttment, mresetConnection);
+        AsyncSessionJoinerCB* joincb = new AsyncSessionJoinerCB(busName.c_str(), busAttment, mresetConnection, oBInfo);
 
         QStatus status = busAttment->JoinSessionAsync(busName.c_str(), port, sessionListener, opts, joincb,
                                                          sessionListener);

@@ -28,7 +28,7 @@
 using namespace ajn;
 using namespace services;
 
-AsyncSessionJoinerCB::AsyncSessionJoinerCB(const char* name, BusAttachment* inputBusAttment, bool isReset) :
+AsyncSessionJoinerCB::AsyncSessionJoinerCB(const char* name, BusAttachment* inputBusAttment, bool isReset, ajn::services::OBInfo conInfo) :
     m_Busname("")
 {
     if (name) {
@@ -36,6 +36,10 @@ AsyncSessionJoinerCB::AsyncSessionJoinerCB(const char* name, BusAttachment* inpu
     }
     busAttment = inputBusAttment;
     mresetConnection = isReset;
+    oBInfo.SSID.assign(conInfo.SSID.c_str());
+    oBInfo.passcode.assign(conInfo.passcode.c_str());
+    oBInfo.authType = conInfo.authType;
+    std::cout <<  oBInfo.SSID.c_str() <<  oBInfo.passcode.c_str() << oBInfo.authType << "tuanngo";
 }
 
 AsyncSessionJoinerCB::~AsyncSessionJoinerCB()
@@ -78,13 +82,6 @@ void AsyncSessionJoinerCB::sessionJoinedCallback(qcc::String const& busName, Ses
     bool isIconInterface = false;
     bool isConfigInterface = false;
     bool isOnboardingInterface = false;
-    /*
-        Connecting wifi infor
-     */
-    OBInfo oBInfo;
-    oBInfo.SSID.assign("VEriK2");
-    oBInfo.passcode.assign("564572694b73797374656d733130");
-    oBInfo.authType = WPA2_TKIP;
 
     std::cout << std::endl << busName.c_str() << " AboutClient ObjectDescriptions" << std::endl;
     std::cout << "-----------------------------------" << std::endl;
@@ -351,6 +348,7 @@ void AsyncSessionJoinerCB::GetAboutData(AboutData& aboutData, const char* langua
     delete [] fields;
     std::cout << std::endl;
 }
+
 
 void AsyncSessionJoinerCB::GetAllAboutData(AboutProxy& aboutProxy)
 {
