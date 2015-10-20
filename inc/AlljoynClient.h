@@ -16,12 +16,24 @@
 
 using namespace ajn;
 using namespace std;
+
+/**
+ *  AlljoynClient is main class provide some abilities:
+ *		- Attach to specific alljoyn bus
+ *		- Get about data from service privider by provided interface
+ *		- Join session that provider is listening
+ *		- Send/receive signal to/from service provider
+ *		- Send/receive method to/from service provider
+ */
 class AlljoynClient
 {
 	private:
 		BusAttachment* mainBus;
 		SessionId sessionId;
 
+		/**
+		*	Store provider configuration which used to communication with remote service
+		*/
 		struct AboutInfo
 		{
 			string busName;
@@ -29,6 +41,9 @@ class AlljoynClient
 			AboutObjectDescription objectDescription;
 		};
 
+		/**
+		*	Class inform session related events
+		*/
 		class AlljoynClientSessionListener : public SessionListener{
 			public:
 			AlljoynClientSessionListener();
@@ -36,6 +51,9 @@ class AlljoynClient
 			void SessionLost(SessionId sessionId, SessionLostReason reason);
 		};
 
+		/**
+		*	Class is responsible for receiving announced data
+		*/
 		class AlljoynClientAboutListener : public AboutListener
 		{
 			public:
@@ -43,9 +61,11 @@ class AlljoynClient
 				~AlljoynClientAboutListener();
 				void Announced(const char* busName, uint16_t version, SessionPort port, const MsgArg& objectDescriptionArg, const MsgArg& aboutDataArg);
 				AboutInfo aboutInfo;
-				// BusAttachment* dupMainBus;
 		};
 		
+		/**
+		*	Class is use information from about data to 
+		*/
 		class RemoteBusObject : public BusObject
 		{
 			public:

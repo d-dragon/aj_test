@@ -80,7 +80,7 @@ void AlljoynClient::AlljoynClientSessionListener::SessionLost(SessionId sessionI
 	printf("SessionLost sessionId = %u, Reason = %d\n", sessionId, reason);
 }
 
-AlljoynClient::RemoteBusObject::RemoteBusObject(BusAttachment& bus, const char* path,const char* interface, ProxyBusObject proxyObject, SessionId sessionId) : BusObject(path), remoteSessionId(sessionId), numMember(0){
+AlljoynClient::RemoteBusObject::RemoteBusObject(BusAttachment& bus, const char* path,const char* interface, ProxyBusObject proxyObject, SessionId sessionId) : BusObject(path), remoteSessionId(sessionId), numMember(0), remoteSignalMember(NULL) {
 
 	QStatus status;
 
@@ -95,7 +95,7 @@ AlljoynClient::RemoteBusObject::RemoteBusObject(BusAttachment& bus, const char* 
 	numMember = remoteInterface->GetMembers(NULL, 0);
 
 	if (numMember > 0) {
-		// remoteSignalMember = new InterfaceDescription::Member();
+		remoteSignalMember = new const InterfaceDescription::Member*[numMember];
 		printf("number member of %s: %d\n", interface, (int)numMember);
 		remoteInterface->GetMembers(remoteSignalMember, numMember);
 		assert(remoteSignalMember);
@@ -156,6 +156,7 @@ AlljoynClient::RemoteBusObject::~RemoteBusObject(){
 /*****************************************************/
 AlljoynClient::AlljoynClientAboutListener::AlljoynClientAboutListener(){
 
+	aboutInfo.port = 0;
 }
 AlljoynClient::AlljoynClientAboutListener::~AlljoynClientAboutListener(){
 
@@ -196,13 +197,11 @@ QStatus AlljoynClient::InitAlljoynClient(const char* interface){
 		printf("AlljoynInit failed\n");
 		return status;
 	}
-
 	if((status = AllJoynRouterInit()) != ER_OK) {
 		printf("init AllJoynRouter failed\n");
 		AllJoynShutdown();
 		return status;
 	}
-
 	mainBus = new BusAttachment("Alljoyn.Client", true);
 	if ((status = mainBus->Start()) == ER_OK) {
 		printf("BusAttachment started!\n");
@@ -251,6 +250,11 @@ QStatus AlljoynClient::ConnectServiceProvider(const char* interface){
 	delete interfaces;
 #endif
 
+	if (aboutListener.aboutInfo.port == 0) {
+
+		printf("Service provider not found\n");
+		return ER_FAIL;
+	}
 	printf("busName: %s, SessionPort: %u\n", aboutListener.aboutInfo.busName.c_str(), aboutListener.aboutInfo.port);
 	if (mainBus != NULL) {
 

@@ -19,7 +19,10 @@ Description detail
 2. Running app
 	2.1 Run Alljoyn onboarding
 	
-	2.2
+	2.2 Run Alljoyn client
+		Navigate to root directory of project source
+		$ export LD_LIBRARY_PATH=./lib
+		$ ./bin/alljoynclient
 =============================================
 
 =============================================
