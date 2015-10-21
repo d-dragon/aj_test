@@ -31,7 +31,7 @@ static void CDECL_CALL SigIntHandler(int sig)
 {
     quit = true;
 }
-
+#if 0
 int main( int argc, char **argv){
 	ParsingModule *parsingClient;
 	parsingClient = new ParsingModule();
@@ -41,7 +41,7 @@ int main( int argc, char **argv){
 	delete parsingClient;
 	return 0;
 }
-#if 0
+#else
 int main(int argc, char **argv){
     QStatus ret;
     OBInfo oBInfo;

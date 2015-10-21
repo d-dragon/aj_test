@@ -7,7 +7,7 @@ class ParsingModule{
 
 public:
 	/*
-		Constructor and Destructor
+	 * Constructor and Destructor
 	 */
 	ParsingModule();
 	~ParsingModule();
@@ -17,13 +17,28 @@ public:
 	 */
 	
 	int LoadJSONFromFile(const char* path);
+	/*
+	 * Dump all JSON file into console
+	 */
 	void DumpJSONFile();
+	/*
+	 * Get type of JSON input type
+	 */
+	json_type GetJSONType(json_t*);
+	/*
+	 * Searching in JSON root
+	 */
+	void TraversalJSONData();
+		
 
 private:
-	int LoadJSON();
+	/*
+	 * JSON handle pointer
+	 */
 	json_t *mJSONroot;
-	FILE *mInputFile;
-	const char* filePath;
+	void TraversalJSONObject(json_t *);
+	void TraversalJSONDataLocal(json_t *);
+	void TraversalJSONArray(json_t*);
 };
 
 #endif
