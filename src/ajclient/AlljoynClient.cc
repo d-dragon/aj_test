@@ -120,10 +120,12 @@ AlljoynClient::RemoteBusObject::RemoteBusObject(BusAttachment& bus, const char* 
 
 void AlljoynClient::RemoteBusObject::SignalHandler(const InterfaceDescription::Member* member, const char* srcPath, Message& msg){
 
-	printf("receive signal %s from %s\n", member->name.c_str(), srcPath);
+	printf("\nReceived signal [%s] from %s\n", member->name.c_str(), srcPath);
     QCC_UNUSED(member);
     QCC_UNUSED(srcPath);
-    printf("%s: %s\n", msg->GetSender(), msg->GetArg(0)->v_string.str);
+    // printf("%s: %s\n", msg->GetSender(), msg->GetArg(0)->v_string.str);
+    printf("Response message: %s\n", msg->GetArg(0)->v_string.str);
+
 }
 
 QStatus AlljoynClient::RemoteBusObject::SendSignal(const char* methodName, size_t numArg, MsgArg args[]){

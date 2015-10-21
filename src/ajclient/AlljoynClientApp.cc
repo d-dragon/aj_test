@@ -8,63 +8,38 @@ struct SignalInfo{
 
 	string signalName;
 	int numArg;
+	string argHint;
 	
 }SignalInfo;
 
 static struct SignalInfo SignalInfoList[] = {
-	{"add_devices", 1}, \
-	{"get_binary", 4}, \
-	{"list_devices", 1}, \
-	{"set_binary", 5}, \
-	{"update_firmware", 1}, \
-	{"set_rule", 4}, \
-	{"get_rule", 1}, \
-	{"rule_actions", 6}
+	{"add_devices", 1, "(type) -> e.g. (zwave)"}, \
+	{"get_binary", 4, "(servicename, id, epnum, priod) -> e.g. (zwave, 08, option, option)"}, \
+	{"list_devices", 1, "(type) -> e.g. (all/zwave)"}, \
+	{"set_binary", 5, "(servicename, id, value, epnum, proid) -> e.g. (zwave, 08, 1/0, option, option)"}, \
+	{"update_firmware", 1, "(url) -> e.g. (ftp://192.168.1.2/firmware.img)"}, \
+	{"set_rule", 4, "(ruly_type, rule_name, conditions, actions) -> e.g. (time, rule1, 12:00, zwave;08;1)"}, \
+	{"get_rule", 1, "(type) -> e.g. (all)"}, \
+	{"rule_actions", 6, "(rule_action, rule_type, rule_name, new_name, new_conditions, new_actions)"}
 };
 
-int GetSignalNumArg(string signalName){
-
-	int numSignalInfo = (sizeof SignalInfoList) / (sizeof SignalInfo);
-
-	for (int i = 0; i < numSignalInfo; ++i)
-	{
-		if( SignalInfoList[i].signalName.compare(signalName) == 0) {
-
-		}
-	}
-}
 
 int help(){
 
 	int numSignalInfo = (sizeof SignalInfoList) / (sizeof SignalInfo);
-	printf("Supported Features:\n");
+	printf("\n********Supported Features********************************************\n");
 	for (int i = 0; i < numSignalInfo; ++i)
 	{
-		cout << "\t" << i <<":"<< SignalInfoList[i].signalName << endl;
+		cout << "\t" << i <<":"<< SignalInfoList[i].signalName << SignalInfoList[i].argHint << endl;
 	}
-	printf("Press number to take corresponding action!!!\n");
+	cout << "\t" << "8:quit" << endl;
+	printf("Press the number to take corresponding action!!!\n");
+	printf("**********************************************************************\n");
 }
 int main()
 {
 	QStatus status;
-
-	/*******************************/
-
-	help();
 	int funcIndex;
-	cout << "Choose Index of Feature:";
-	cin >> funcIndex;
-	cout << "Input " << SignalInfoList[funcIndex].numArg << "arguments of " << SignalInfoList[funcIndex].signalName << endl;
-	string args[funcIndex];
-	for (int i = 0; i < SignalInfoList[funcIndex].numArg; i++) {
-		cout << "Argument" << i + 1 << ":";
-		cin >> args[i];
-		cout << args[i] << endl;
-	}
-
-	return 1;
-	/*******************************/
-
 
 	printf("*********Start Alljoyn Client app **********\n");
 	AlljoynClient* ajClient = new AlljoynClient();
@@ -77,8 +52,53 @@ int main()
 	sleep(1);
 	status = ajClient->ConnectServiceProvider("com.verik.bus.VENUS_BOARD");
 	if (ER_OK == status) {
+		while(1){
 
+			help();
+			
+			cout << "Choose feature index:";
+			cin >> funcIndex;
+			if(funcIndex == 8) {
+				cout << "Program exit>>>>>" << endl;
+				break;
+			}
+			cout << "Input " << SignalInfoList[funcIndex].numArg << " arguments of " << SignalInfoList[funcIndex].signalName << endl;
+			string args[SignalInfoList[funcIndex].numArg];
+			for (int i = 0; i < SignalInfoList[funcIndex].numArg; i++) {
+				cout << "Argument" << i + 1 << ":";
+				cin >> args[i];
+				cout << args[i] << endl;
+			}
 
+			switch(SignalInfoList[funcIndex].numArg){
+
+				case 1:
+
+					status = ajClient->SendRequestSignal(SignalInfoList[funcIndex].signalName.c_str(), 1, args[0].c_str());
+					if (ER_OK != status) {
+						cout << "send signal ["<< SignalInfoList[funcIndex].signalName <<"] failed!" << endl;
+					}
+					break;
+				case 4:
+					status = ajClient->SendRequestSignal(SignalInfoList[funcIndex].signalName.c_str(), 4, args[0].c_str(), args[1].c_str(), args[2].c_str(), args[3].c_str());
+					if (ER_OK != status) {
+						cout << "send signal ["<< SignalInfoList[funcIndex].signalName <<"] failed!" << endl;
+					}
+					break;
+				case 5:
+					status = ajClient->SendRequestSignal(SignalInfoList[funcIndex].signalName.c_str(), 5, args[0].c_str(), args[1].c_str(), args[2].c_str(), args[3].c_str(), args[4].c_str());
+					if (ER_OK != status) {
+						cout << "send signal ["<< SignalInfoList[funcIndex].signalName <<"] failed!" << endl;
+					}
+					break;
+				case 6:
+					status = ajClient->SendRequestSignal(SignalInfoList[funcIndex].signalName.c_str(), 6, args[0].c_str(), args[1].c_str(), args[2].c_str(), args[3].c_str(), args[4].c_str(), args[5].c_str());
+					if (ER_OK != status) {
+						cout << "send signal ["<< SignalInfoList[funcIndex].signalName <<"] failed!" << endl;
+					}
+					break;
+			};
+		};
 		/*ajClient->SendRequestSignal("add_devices", 1, "zwave");
 		sleep(4);*/
 /*		ajClient->SendRequestSignal("list_devices", 1, "zwave");
@@ -99,11 +119,9 @@ int main()
 		ajClient->SendRequestSignal("get_rule", 1, "all");
 		sleep(2);
 		*/
-		ajClient->SendRequestSignal("rule_actions", 6, "update", "time", "rule1", "rule2", "16:00;1,2,3,4,5", "zwave;33D5;0;01;0104");
-
+/*		ajClient->SendRequestSignal("rule_actions", 6, "update", "time", "rule1", "rule2", "16:00;1,2,3,4,5", "zwave;33D5;0;01;0104");
+*/
 	}
-	// sleep(3);
-	while(1);
 	printf("App terminated\n");
 	// delete ajClient;	
 	return 0;
