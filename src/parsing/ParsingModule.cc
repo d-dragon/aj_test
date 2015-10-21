@@ -26,10 +26,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <jansson.h>
+#include <string.h>
 #include "ParsingModule.h"
 
 ParsingModule::ParsingModule(){
     mJSONroot	= NULL;
+	isMatch		= false;
 }
 
 ParsingModule::~ParsingModule(){
@@ -61,6 +63,28 @@ json_type ParsingModule::GetJSONType(json_t *element){
 		return json_typeof(element);
 }
 
+int ParsingModule::GetValueOfKey(const char *input, void*output[]){
+	int ret = 0;
+	if (NULL == input) return -1; //invalid input
+	strncpy(mSearchResponse.inKey, input, MAX_KEY_SZ);
+	switch(mSearchResponse.type){
+		case JSON_STRING:
+			*output = mSearchResponse.outString;
+			break;
+		case JSON_INTEGER:
+			*output = &mSearchResponse.outInt;
+			break;
+		case JSON_REAL:
+			*output = &mSearchResponse.outReal;
+			break;
+		default:
+			std::cout << "GetValueOfKey unsupported" << std::endl;
+			return 1;
+	}
+
+	return ret;
+}	
+
 void ParsingModule::TraversalJSONObject(json_t *element){
 	size_t size;
 	const char *key;
@@ -69,7 +93,11 @@ void ParsingModule::TraversalJSONObject(json_t *element){
 	size = json_object_size(element);
     std::cout << "JSON object of: " << size << " pair(s)" << std::endl;
 	json_object_foreach(element, key, value){
-		std::cout << "JSON key: " << key << std::endl;
+		std::cout << "JSON key: " << key <<":" << mSearchResponse.inKey <<std::endl;
+		if ( 0== strcmp(mSearchResponse.inKey, key))
+		{
+			isMatch = true;
+		}
 		TraversalJSONDataLocal(value);
 	}
 }	
@@ -79,8 +107,8 @@ void ParsingModule::TraversalJSONArray(json_t *element){
 
 	for (i = 0; i < size; i++){
 		TraversalJSONDataLocal(json_array_get(element, i));
-
 	}
+
 }
 
 void ParsingModule::TraversalJSONData(){
@@ -99,12 +127,24 @@ void ParsingModule::TraversalJSONDataLocal(json_t *element){
 			TraversalJSONArray(element);
 			break;
 		case JSON_STRING:
+			if (isMatch){
+				mSearchResponse.type = JSON_STRING;
+				strcpy(mSearchResponse.outString, json_string_value(element));
+			}
 			std::cout<< "Value of string: " << json_string_value(element) << std::endl;
 			break;
 		case JSON_INTEGER:
+			if (isMatch){
+				mSearchResponse.type = JSON_INTEGER;
+				mSearchResponse.outInt = json_integer_value(element);
+			}
 			std::cout<< "Value of int: " << json_integer_value(element) << std::endl;
 			break;
 		case JSON_REAL:
+			if (isMatch){
+				mSearchResponse.type = JSON_REAL;
+			   	mSearchResponse.outReal = json_real_value(element);
+			}
 			std::cout << "Value of real: " << std::endl;
 			break;
 		case JSON_TRUE:
