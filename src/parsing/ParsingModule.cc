@@ -30,6 +30,7 @@
 #include "ParsingModule.h"
 
 ParsingModule::ParsingModule(){
+    mJSONcurrent = NULL;
     mJSONroot	= NULL;
 	isMatch		= false;
 }
@@ -42,12 +43,14 @@ ParsingModule::~ParsingModule(){
 int ParsingModule::LoadJSONFromFile(const char* path){
 	json_error_t jsonErr;
 	mJSONroot	= json_load_file(path, 0, &jsonErr);
+    mJSONcurrent= mJSONroot;
 	if (NULL == mJSONroot)
 	{
-		std::cout<<"Error while loading file: "<< jsonErr.text << " at line: " << jsonErr.line << std::endl;
+		LOGCXX("Error while loading file: "<< jsonErr.text << " at line: " << jsonErr.line << std::endl);
 		return -1;
 	}
-	std::cout<< "Load JSON successful"<<std::endl;
+    LOGCXX("Load JSON successful"<<std::endl);
+
 	return 0;
 }
 
@@ -58,32 +61,75 @@ void ParsingModule::DumpJSONFile(){
 		std::cout << "Invalid JSON" << std::endl;
 }
 
+
 json_type ParsingModule::GetJSONType(json_t *element){
 	if (element)
 		return json_typeof(element);
 }
 
-int ParsingModule::GetValueOfKey(const char *input, void*output[]){
-	int ret = 0;
-	if (NULL == input) return -1; //invalid input
-	strncpy(mSearchResponse.inKey, input, MAX_KEY_SZ);
-	switch(mSearchResponse.type){
-		case JSON_STRING:
-			*output = mSearchResponse.outString;
-			break;
-		case JSON_INTEGER:
-			*output = &mSearchResponse.outInt;
-			break;
-		case JSON_REAL:
-			*output = &mSearchResponse.outReal;
-			break;
-		default:
-			std::cout << "GetValueOfKey unsupported" << std::endl;
-			return 1;
-	}
+json_t * ParsingModule::GetObjectOfKey(const char *key){
+    if (NULL != key){
+        strncpy(searchKey, key, MAX_KEY_SZ);
+    }
+    TraversalJSONDataLocal(mJSONroot);
+    if (NULL != mJSONcurrent){
+        TraversalJSONDataLocal(mJSONcurrent);
+    }
+    return mJSONcurrent;
+}
 
-	return ret;
-}	
+int ParsingModule::GetNumOfWifiConfiguration(){
+    const char *key;
+    json_t *value;
+    int cnt = 0;
+    void *iter = json_object_iter(mJSONroot);
+//Save iter
+    mJSONiter = iter;
+    while(iter)
+    {
+        key = json_object_iter_key(iter);
+        LOGCXX("Key: " << key << " count: " << cnt << std::endl);
+        value = json_object_iter_value(iter);
+        cnt++;
+        /* use key and value ... */
+        iter = json_object_iter_next(mJSONroot, iter);
+    }
+    
+    return cnt;
+
+}
+
+int ParsingModule::GetNextWifiConfiguration(ajn::services::OBInfo *info){
+    int ret =0;
+    json_t *value;
+    const char *key;
+    void *iter;
+    if (mJSONiter){
+        value = json_object_iter_value(mJSONiter);
+        // Parse data of wifi
+        iter = json_object_iter(value);
+        while(iter)
+        {
+            key = json_object_iter_key(iter);
+            if (0 == strcmp(key, "ssid")) {
+                info->SSID.assign( json_string_value(json_object_iter_value(iter)));
+            }
+            if (0 == strcmp(key,"passcode")){
+                info->passcode.assign(json_string_value(json_object_iter_value(iter)));
+            }
+            if (0 == strcmp(key,"auth")) {
+                info->authType = (ajn::services::OBAuthType)json_integer_value(json_object_iter_value(iter));
+            }
+            iter = json_object_iter_next(value, iter);
+        }
+
+        /* use key and value ... */
+        mJSONiter = json_object_iter_next(mJSONroot, mJSONiter);
+    }else {
+        ret = -1;
+    }
+    return ret;
+}
 
 void ParsingModule::TraversalJSONObject(json_t *element){
 	size_t size;
@@ -93,14 +139,21 @@ void ParsingModule::TraversalJSONObject(json_t *element){
 	size = json_object_size(element);
     std::cout << "JSON object of: " << size << " pair(s)" << std::endl;
 	json_object_foreach(element, key, value){
-		std::cout << "JSON key: " << key <<":" << mSearchResponse.inKey <<std::endl;
-		if ( 0== strcmp(mSearchResponse.inKey, key))
+    LOGCXX( "key: " << key );
+    // Get current location of Json object has match key	
+	if ((mJSONroot == mJSONcurrent) && ( 0 == strcmp(searchKey,  key)))
 		{
-			isMatch = true;
+            LOGCXX("Find out the key" << std::endl);
+            mJSONcurrent = value;
+            return;
 		}
+    // Get number of Element of Object has match key
+        if ( element == mJSONcurrent) mNumberOfElement = size;
+
 		TraversalJSONDataLocal(value);
 	}
 }	
+
 void ParsingModule::TraversalJSONArray(json_t *element){
 	size_t size, i;
 	size = json_array_size(element);
@@ -111,6 +164,16 @@ void ParsingModule::TraversalJSONArray(json_t *element){
 
 }
 
+int ParsingModule::GetNumberOfKey(const char *key){
+    mNumberOfElement = 0;
+     if (NULL != key){
+        strncpy(searchKey, key, MAX_KEY_SZ);
+    }
+    TraversalJSONDataLocal(mJSONroot);
+    TraversalJSONDataLocal(mJSONcurrent);
+    return mNumberOfElement;
+}
+
 void ParsingModule::TraversalJSONData(){
 	TraversalJSONDataLocal(mJSONroot);
 }
@@ -119,32 +182,18 @@ void ParsingModule::TraversalJSONDataLocal(json_t *element){
 	switch(GetJSONType(element))
 	{
 		case JSON_OBJECT:
-			std::cout << "JSON OBJECT" <<std::endl;
 			TraversalJSONObject(element);
 			break;
 		case JSON_ARRAY:
-			std::cout << "JSON ARRAY" << std::endl;
 			TraversalJSONArray(element);
 			break;
 		case JSON_STRING:
-			if (isMatch){
-				mSearchResponse.type = JSON_STRING;
-				strcpy(mSearchResponse.outString, json_string_value(element));
-			}
-			std::cout<< "Value of string: " << json_string_value(element) << std::endl;
+			LOGCXX( "Value of string: " << json_string_value(element) << std::endl);
 			break;
 		case JSON_INTEGER:
-			if (isMatch){
-				mSearchResponse.type = JSON_INTEGER;
-				mSearchResponse.outInt = json_integer_value(element);
-			}
-			std::cout<< "Value of int: " << json_integer_value(element) << std::endl;
+			LOGCXX( "Value of int: " << json_integer_value(element) << std::endl);
 			break;
 		case JSON_REAL:
-			if (isMatch){
-				mSearchResponse.type = JSON_REAL;
-			   	mSearchResponse.outReal = json_real_value(element);
-			}
 			std::cout << "Value of real: " << std::endl;
 			break;
 		case JSON_TRUE:
