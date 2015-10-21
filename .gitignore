@@ -1,7 +1,10 @@
+*.swp
+*.out
 bin/
 obj/
 build/
 lib/
 inc/alljoyn
 inc/qcc
-
+inc/jansson.h
+inc/jansson_config.h

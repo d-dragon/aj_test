@@ -78,7 +78,12 @@ build_alljoyn_services:
 build_jansson:
 	@echo "Build Jansson lib"
 	@tar xzf common_libs/$(JANSSON_SRC).tar.gz -C $(BUILDDIR)
-	@cd $(BUILDDIR)/$(JANSSON_SRC)/ ; ./configure --prefix=$(ROOT_DIR)/ --includedir=$(ROOT_DIR)/inc; make; make install; cd $(ROOT_DIR)
+	@if [ -f $(BUILDDIR)/$(JANSSON_SRC)/Makefile ]; then \
+		cd $(BUILDDIR)/$(JANSSON_SRC); make install;  \
+	else \
+		cd $(BUILDDIR)/$(JANSSON_SRC)/ ; ./configure --prefix=$(ROOT_DIR)/ --includedir=$(ROOT_DIR)/inc; make; make install; \
+	fi	
+	@cd $(ROOT_DIR)
 
 		
 # 
