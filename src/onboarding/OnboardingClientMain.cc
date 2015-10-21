@@ -32,6 +32,16 @@ static void CDECL_CALL SigIntHandler(int sig)
     quit = true;
 }
 
+int main( int argc, char **argv){
+	ParsingModule *parsingClient;
+	parsingClient = new ParsingModule();
+	parsingClient->LoadJSONFromFile("./sample1.json");
+	parsingClient->DumpJSONFile();
+
+	delete parsingClient;
+	return 0;
+}
+#if 0
 int main(int argc, char **argv){
     QStatus ret;
     OBInfo oBInfo;
@@ -125,3 +135,4 @@ int main(int argc, char **argv){
 //        delete inputParsing;
     return 0;
 }
+#endif

@@ -29,13 +29,36 @@
 #include "ParsingModule.h"
 
 ParsingModule::ParsingModule(){
-    mJSONroot = NULL;
+    mJSONroot	= NULL;
 }
 
 ParsingModule::~ParsingModule(){
     if (mJSONroot != NULL)
         json_decref(mJSONroot);
 }
+
+int ParsingModule::LoadJSONFromFile(const char* path){
+	json_error_t jsonErr;
+	mJSONroot	= json_load_file(path, 0, &jsonErr);
+	if (NULL == mJSONroot)
+	{
+		std::cout<<"Error while load file"<< jsonErr.text<< std::endl;
+		return -1;
+	}
+	std::cout<< "Load JSON successful"<<std::endl;
+	
+	return 0;
+	
+
+}
+
+void ParsingModule::DumpJSONFile(){
+	if (mJSONroot)
+		std::cout << json_dumps(mJSONroot, JSON_COMPACT)<< std::endl;
+	else
+		std::cout << "Invalid JSON" << std::endl;
+}
+
 /* forward refs */
 void print_json(json_t *root);
 void print_json_aux(json_t *element, int indent);

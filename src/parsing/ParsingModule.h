@@ -11,10 +11,19 @@ public:
 	 */
 	ParsingModule();
 	~ParsingModule();
+	/* Load JSON from input file
+	 * Input: const char* location of file
+	 * Output: 0: success; other: failed
+	 */
+	
+	int LoadJSONFromFile(const char* path);
+	void DumpJSONFile();
 
 private:
 	int LoadJSON();
 	json_t *mJSONroot;
+	FILE *mInputFile;
+	const char* filePath;
 };
 
 #endif

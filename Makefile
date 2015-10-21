@@ -26,6 +26,7 @@ LIBS 				= $(DEFAULT_LIBS) $(JANSSON_LIBS)
 BUILDDIR			= build
 OBJDIR 				= obj
 BINDIR				= bin
+LIBDIR				= lib
 # 
 # Module source dir
 # 
@@ -78,8 +79,8 @@ build_alljoyn_services:
 build_jansson:
 	@echo "Build Jansson lib"
 	@tar xzf common_libs/$(JANSSON_SRC).tar.gz -C $(BUILDDIR)
-	@if [ -f $(BUILDDIR)/$(JANSSON_SRC)/Makefile ]; then \
-		cd $(BUILDDIR)/$(JANSSON_SRC); make install;  \
+	@if [ -f $(LIBDIR)/libjansson.so.4.7.0 ] && [ -f inc/jansson.h ] && [ -f inc/jansson_config.h ] ; then \
+		echo "do nothing"; \
 	else \
 		cd $(BUILDDIR)/$(JANSSON_SRC)/ ; ./configure --prefix=$(ROOT_DIR)/ --includedir=$(ROOT_DIR)/inc; make; make install; \
 	fi	
@@ -99,8 +100,7 @@ directories:
 # 
 # Onboarding Apps
 # 
-# OnboardingTestApp: $(ONBOARDING_OBJECTS) $(PARSINGMODULE_OBJS)
-OnboardingTestApp: $(ONBOARDING_OBJECTS)
+OnboardingTestApp: $(ONBOARDING_OBJECTS) $(PARSINGMODULE_OBJS)
 	@echo "Build Onboarding app"
 	$(CXX) -o $(BINDIR)/$@ $^ $(CXXFLAGS) $(LIBS)
 
