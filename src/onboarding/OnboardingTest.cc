@@ -6,8 +6,6 @@
 #include <iomanip>
 #include <signal.h>
 #include <set>
-//#include <alljoyn/services_common/LogModulesNames.h>
-
 #include <alljoyn/AboutData.h>
 #include <alljoyn/AboutListener.h>
 #include <alljoyn/AboutObjectDescription.h>
@@ -34,9 +32,15 @@ OnboardingTest::OnboardingTest(bool isReset){
     *interfaces={"org.alljoyn.Onboarding"};
     mbusAttachment      = NULL;
     mresetConnection    = isReset;
+#if DBGE
+    std::cout<< "OnboardingTest::OnboardingTest constructor" << std::endl;
+#endif
 }
 
 OnboardingTest::~OnboardingTest(){
+#if DBGE
+    std::cout<< "OnboardingTest::~OnboardingTest" << std::endl;
+#endif
 	delete ajInitial;
 }
 

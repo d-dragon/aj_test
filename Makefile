@@ -39,6 +39,7 @@ PARSINGMODULE_OBJS	= $(patsubst $(PARSINGMODULE_SRC)/%.cc,$(OBJDIR)/%.o,$(wildca
 
 AJ_CORE_SRC			= alljoyn-15.04.00b-src
 AJ_SERVICES_SRC		= alljoyn-services-15.04.00-src
+JANSSON_SRC			= jansson-2.7
 ROOT_DIR			= $(shell pwd)
 #
 # Target: alljoynclient and onboarding
@@ -51,27 +52,35 @@ alljoynclient: $(AJCLIENT_OBJECTS)
 	@echo "**********Build AlljoynClientApp**********"
 	$(CXX) -o $(BINDIR)/$@ $^ $(CXXFLAGS) $(LIBS)
 
-common_libs: build_alljoyn_src build_alljoyn_services
+common_libs: build_alljoyn_src build_alljoyn_services build_jansson
 
 build_alljoyn_src:
+	@echo "Build Alljoyn source"
 	@tar xzf common_libs/$(AJ_CORE_SRC).tar.gz -C $(BUILDDIR)
-	@tar xzf common_libs/$(AJ_SERVICES_SRC).tar.gz -C $(BUILDDIR)
 	@cd $(BUILDDIR)/$(AJ_CORE_SRC); scons BINDINGS=cpp WS=off BR=on ICE=off OS=linux CPU=x86_64 VARIANT=release; \
 	cp -a build/linux/x86_64/release/dist/cpp/lib/ ../../; \
 	cp -a build/linux/x86_64/release/dist/cpp/inc/ ../../; \
-	cd -
+	cd  $(ROOT_DIR)
 	
 build_alljoyn_services:
+	@echo "Build Alljoyn services"
+	@tar xzf common_libs/$(AJ_SERVICES_SRC).tar.gz -C $(BUILDDIR)
 	@export ALLJOYN_DISTDIR=`pwd`/$(BUILDDIR)/$(AJ_CORE_SRC)/build/linux/x86_64/release/dist/;cd $(BUILDDIR)/$(AJ_SERVICES_SRC)/services/base/onboarding; \
-        scons V=1 BINDINGS=cpp WS=off BR=on ICE=off OS=linux CPU=x86_64 VARIANT=release; \
-        cp -a build/linux/x86_64/release/dist/config/inc $(ROOT_DIR); \
-        cp -a build/linux/x86_64/release/dist/config/lib $(ROOT_DIR); \
-        cp -a build/linux/x86_64/release/dist/onboarding/inc $(ROOT_DIR); \
-        cp -a build/linux/x86_64/release/dist/onboarding/lib $(ROOT_DIR); \
-        cp -a build/linux/x86_64/release/dist/services_common/inc $(ROOT_DIR); \
-        cp -a build/linux/x86_64/release/dist/services_common/lib $(ROOT_DIR); \
-        cd $(ROOT_DIR)
+    scons V=1 BINDINGS=cpp WS=off BR=on ICE=off OS=linux CPU=x86_64 VARIANT=release; \
+    cp -a build/linux/x86_64/release/dist/config/inc $(ROOT_DIR); \
+    cp -a build/linux/x86_64/release/dist/config/lib $(ROOT_DIR); \
+    cp -a build/linux/x86_64/release/dist/onboarding/inc $(ROOT_DIR); \
+    cp -a build/linux/x86_64/release/dist/onboarding/lib $(ROOT_DIR); \
+    cp -a build/linux/x86_64/release/dist/services_common/inc $(ROOT_DIR); \
+    cp -a build/linux/x86_64/release/dist/services_common/lib $(ROOT_DIR); \
+    cd $(ROOT_DIR)
 
+build_jansson:
+	@echo "Build Jansson lib"
+	@tar xzf common_libs/$(JANSSON_SRC).tar.gz -C $(BUILDDIR)
+	@cd $(BUILDDIR)/$(JANSSON_SRC)/ ; ./configure --prefix=$(ROOT_DIR)/ --includedir=$(ROOT_DIR)/inc; make; make install; cd $(ROOT_DIR)
+
+		
 # 
 # Creat bin/ and obj dir to store temporary object and binary
 # 
@@ -94,7 +103,7 @@ OnboardingTestApp: $(ONBOARDING_OBJECTS)
 # Onboarding Objects
 # 
 $(OBJDIR)/%.o: $(ONBOARDING_SRCDIR)/%.cc 
-	@echo "build onboarding object"
+	@echo "Build onboarding object"
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(OBJDIR)/%.o: $(AJCLIENT_SRCDIR)/%.cc
@@ -105,7 +114,7 @@ $(OBJDIR)/%.o: $(AJCLIENT_SRCDIR)/%.cc
 # Objects for Parsing Module
 # 
 $(OBJDIR)/%.o: $(PARSINGMODULE_SRC)/%.cc
-	@echo "build object"
+	@echo "Build object"
 	$(CXX) $(CXXFLAGS) -c $< -o $@ 
 
 # Clean: remove object directory and binary directory

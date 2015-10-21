@@ -5,6 +5,7 @@
 #include <AboutListenerHandlerImpl.h>
 #include <SrpKeyXListener.h>
 #include <AJInitializer.h>
+#define DBGE 1
 class OnboardingTest{
 
 public:
