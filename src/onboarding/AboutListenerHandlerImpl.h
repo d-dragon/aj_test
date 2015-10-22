@@ -51,7 +51,7 @@ class AboutListenerHandlerImpl : public ajn::AboutListener {
      * @param basicCallback
      * @param fullCallback
      */
-    AboutListenerHandlerImpl(ajn::BusAttachment *, bool resetConnection, ajn::services::OBInfo);
+    AboutListenerHandlerImpl(ajn::BusAttachment *, long, ajn::services::OBInfo);
 
     /**
      * ~AnnounceHandlerImpl
@@ -66,7 +66,7 @@ class AboutListenerHandlerImpl : public ajn::AboutListener {
 
     ajn::BusAttachment *busAttment;
 
-    bool mresetConnection;
+	long mcbFlags;
     ajn::services::OBInfo oBInfo;
 };
 

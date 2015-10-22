@@ -57,7 +57,7 @@ public:
 
      // Onboarding parsing part
     int GetNumOfWifiConfiguration();
-    int GetNextWifiConfiguration(ajn::services::OBInfo*);
+    int GetNextWifiConfiguration(ajn::services::OBInfo*, long*);
 private:
 
 	/*

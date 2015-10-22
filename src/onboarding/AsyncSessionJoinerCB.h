@@ -37,7 +37,7 @@ class AsyncSessionJoinerCB : public ajn::BusAttachment::JoinSessionAsyncCB {
      * @param name
      * @param callback
      */
-    AsyncSessionJoinerCB(const char* name, ajn::BusAttachment* inputBusAttment, bool resetConnection, ajn::services::OBInfo oBInfo);
+    AsyncSessionJoinerCB(const char* name, ajn::BusAttachment* inputBusAttment, long, ajn::services::OBInfo oBInfo);
 
     /**
      * destructor
@@ -64,7 +64,7 @@ class AsyncSessionJoinerCB : public ajn::BusAttachment::JoinSessionAsyncCB {
 
     ajn::BusAttachment* busAttment;
 
-    bool mresetConnection;
+	long onboardingFlags;
 
     ajn::services::OBInfo oBInfo;
 };

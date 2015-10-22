@@ -1,0 +1,17 @@
+{
+"VEriK_Belkin": {
+        "ssid": "VEriK_Belkin",
+        "passcode": "766572696b73797374656d7332303135",
+        "auth": 4,
+		"getVersion": 1,
+		"getState": 0,
+		"getLastErr": 1,
+		"getScanInfo": 0,
+		"configWifi": 0,
+		"connectTo": 0,
+		"offBoard": 0 
+		
+        }
+
+}
+

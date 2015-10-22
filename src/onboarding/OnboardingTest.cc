@@ -23,7 +23,7 @@ using namespace ajn;
     Constructor and Destructors
 */
 
-OnboardingTest::OnboardingTest(bool isReset){
+OnboardingTest::OnboardingTest(long flags){
 // Initialize AllJoyn
     ajInitial = new AJInitializer();
     if (ajInitial->Initialize() != ER_OK) {
@@ -31,10 +31,7 @@ OnboardingTest::OnboardingTest(bool isReset){
     }
     *interfaces={"org.alljoyn.Onboarding"};
     mbusAttachment      = NULL;
-    mresetConnection    = isReset;
-#if DBGE
-    std::cout<< "OnboardingTest::OnboardingTest constructor" << std::endl;
-#endif
+    mcbFlags    = flags;
 }
 
 OnboardingTest::~OnboardingTest(){
@@ -64,6 +61,7 @@ QStatus OnboardingTest::CreateBusAttachment(ajn::services::OBInfo connectionInpu
     } else {
         std::cout << "Failed to connect daemon. Status: " << QCC_StatusText(status) << std::endl;
         return ER_FAIL;
+
     }
 
     srpKeyXListener = new SrpKeyXListener();
@@ -76,7 +74,7 @@ QStatus OnboardingTest::CreateBusAttachment(ajn::services::OBInfo connectionInpu
         return ER_FAIL;
     }
 
-    announceHandler = new AboutListenerHandlerImpl(mbusAttachment, mresetConnection,connectionInput);
+    announceHandler = new AboutListenerHandlerImpl(mbusAttachment, mcbFlags, connectionInput);
     mbusAttachment->RegisterAboutListener(*announceHandler);
 
     status = mbusAttachment->WhoImplements(interfaces, sizeof(interfaces) / sizeof(interfaces[0]));

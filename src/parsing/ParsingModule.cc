@@ -28,6 +28,7 @@
 #include <jansson.h>
 #include <string.h>
 #include "ParsingModule.h"
+#include "common_def.h"
 
 ParsingModule::ParsingModule(){
     mJSONcurrent = NULL;
@@ -99,8 +100,8 @@ int ParsingModule::GetNumOfWifiConfiguration(){
 
 }
 
-int ParsingModule::GetNextWifiConfiguration(ajn::services::OBInfo *info){
-    int ret =0;
+int ParsingModule::GetNextWifiConfiguration(ajn::services::OBInfo *info,long  *flgs){
+    int ret =0, i;
     json_t *value;
     const char *key;
     void *iter;
@@ -120,6 +121,12 @@ int ParsingModule::GetNextWifiConfiguration(ajn::services::OBInfo *info){
             if (0 == strcmp(key,"auth")) {
                 info->authType = (ajn::services::OBAuthType)json_integer_value(json_object_iter_value(iter));
             }
+			for (i = 0; i < sizeof(sOnboardingCb)/sizeof(OnboardingWifiCb); i++){
+				if (0 == strcmp(key,sOnboardingCb[i].JSKeyName)) {
+					if( json_integer_value(json_object_iter_value(iter)) == 1)
+						*flgs |= sOnboardingCb[i].ID;
+					}
+			}
             iter = json_object_iter_next(value, iter);
         }
 

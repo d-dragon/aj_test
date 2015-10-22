@@ -12,7 +12,7 @@ public:
 	/*
 	Intialize and Destroy AJ initialization
 	*/
-	OnboardingTest(bool isReset);
+	OnboardingTest(long);
 	~OnboardingTest();
 	/*
 		Create Bus Attachment
@@ -27,7 +27,7 @@ private:
 	const char* interfaces[];
 
 	AJInitializer *ajInitial;
-	bool mresetConnection;
+	long mcbFlags;
 
 };
 
