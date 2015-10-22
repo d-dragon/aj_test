@@ -1,0 +1,49 @@
+{ "add_devices" :
+	{ "type" : "" }
+}
+
+{ "list_devices" :
+	{ "type" : "" }
+}
+
+{ "get_binrary" :
+	{ "type" : "" },
+	{ "id" : "" },
+	{"epnum" : "" },
+	{"proid" : "" }
+}
+
+{ "set_binrary" :
+	{ "type" : "" },
+	{ "id" : "" },
+	{"value" : ""},
+	{"epnum" : "" },
+	{"proid" : "" }
+}
+
+{ "update_firmware" :
+	{ "url" : "" }
+}
+
+{ "set_rule" :
+	{ "ruletype" : "" },
+	{ "rulename" : "" },
+	{"conditions" : ""},
+	{"actions" : "" },
+}
+
+{ "get_rule" :
+	{"device_type" : ""}	
+
+}
+
+{ "rule_actions" :
+	{ "ruleaction" : "" },
+	{ "ruletype" : "" },
+	{ "rulename" : "" },
+	{ "newname" : "" },
+	{ "newcondition" : ""},
+	{ "newaction" : "" },
+}
+
+

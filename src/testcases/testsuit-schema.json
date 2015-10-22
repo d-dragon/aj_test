@@ -1,0 +1,173 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "/",
+    "type": "object",
+    "properties": {
+        "newdevice": {
+            "id": "newdevice",
+            "type": "object",
+            "properties": {
+                "testcase1": {
+                    "id": "testcase1",
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "id": "name",
+                            "type": "string",
+                            "default": "wifisetup"
+                        },
+                        "input": {
+                            "id": "input",
+                            "type": "object",
+                            "properties": {
+                                "ssid": {
+                                    "id": "ssid",
+                                    "type": "string",
+                                    "default": "VEriK2"
+                                },
+                                "auth": {
+                                    "id": "auth",
+                                    "type": "integer",
+                                    "default": -2,
+                                    "description": "Authentication type"
+                                },
+                                "password": {
+                                    "id": "password",
+                                    "type": "string",
+                                    "default": "verik****"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "testcase2": {
+                    "id": "testcase2",
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "id": "name",
+                            "type": "string",
+                            "default": "adddevice"
+                        },
+                        "input": {
+                            "id": "input",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "id": "type",
+                                    "type": "string",
+                                    "default": "zwave",
+                                    "description": "Serivce name (zwave/zigbee/upnp)"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "testcase3": {
+                    "id": "testcase3",
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "id": "name",
+                            "type": "string",
+                            "default": "controlonoff"
+                        },
+                        "input": {
+                            "id": "input",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "id": "type",
+                                    "type": "string",
+                                    "default": "zwave",
+                                    "description": "Serivce name (zwave/zigbee/upnp)"
+                                },
+                                "id": {
+                                    "id": "id",
+                                    "type": "string",
+                                    "default": "01",
+                                    "description": "Device ID (01,02...) - Get it from list_device"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "testcase4": {
+                    "id": "testcase4",
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "id": "name",
+                            "type": "string",
+                            "default": "rules"
+                        },
+                        "input": {
+                            "id": "input",
+                            "type": "object",
+                            "properties": {
+                                "ruletype": {
+                                    "id": "ruletype",
+                                    "type": "string",
+                                    "default": "time",
+                                    "description": "time/d2d"
+                                },
+                                "rulename": {
+                                    "id": "rulename",
+                                    "type": "string",
+                                    "default": "rule1"
+                                },
+                                "ruleaction": {
+                                    "id": "ruleaction",
+                                    "type": "string",
+                                    "default": "activate",
+                                    "description": "activate/deactivate/delete/update"
+                                },
+                                "condition": {
+                                    "id": "condition",
+                                    "type": "string",
+                                    "default": "15:40;1,2,3,4,5",
+                                    "description": "Condition that rule wil be triggered"
+                                },
+                                "actions": {
+                                    "id": "actions",
+                                    "type": "string",
+                                    "default": "zwave;33D5;1;01;0104",
+                                    "description": "Action while rule is triggered"
+                                },
+                                "newname": {
+                                    "id": "newname",
+                                    "type": "string",
+                                    "default": "rule2",
+                                    "description": "Set new rule name, just apply for update rule"
+                                },
+                                "newcondition": {
+                                    "id": "newcondition",
+                                    "type": "string",
+                                    "default": "16:00;1,2,3",
+                                    "description": "Set new conditions, just apply for update rule"
+                                },
+                                "newaction": {
+                                    "id": "newaction",
+                                    "type": "string",
+                                    "default": "zwave;33D5;0;01;0104",
+                                    "description": "Set new action, just apply for update rule"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false,
+            "description": "Test suit for new device"
+        }
+    },
+    "additionalProperties": false
+}

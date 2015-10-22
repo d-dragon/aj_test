@@ -1,0 +1,85 @@
+{ "newdevice" : {
+		"testcase1" : 
+			{
+				"name" : "wifisetup",
+				"input" : {
+					"ssid" : "VEriK2",
+					"auth" : -2,
+					"password" : "verik****"
+				}
+
+			},
+		"testcase2" :
+			{ 
+				"name" : "adddevice", 
+				"input" : { 
+					"type" : "zwave" 
+				}
+			},
+		"testcase3" :
+			{
+				"name" : "controlonoff",
+				"input" : {
+					"type" : "zwave",
+					"id" : "from_adddevice_output"
+				}
+			},
+		"testcase4" :
+			{
+				"name" : "rules",
+				"input" : {
+					"ruletype" : "time",
+					"rulename" : "rule1",
+					"ruleaction" : "activate",
+					"condition" : "15:40;1,2,3,4,5",
+					"actions" : "zwave;33D5;1;01;0104",
+					"newname" : "rule2",
+					"newcondition" : "16:00;1,2,3",
+					"newaction" : "zwave;33D5;0;01;0104"
+				}
+			}
+
+	}
+}{ "newdevice" : {
+		"testcase1" : 
+			{
+				"name" : "wifisetup",
+				"input" : {
+					"ssid" : "VEriK2",
+					"auth" : -2,
+					"password" : "verik****"
+				}
+
+			},
+		"testcase2" :
+			{ 
+				"name" : "adddevice", 
+				"input" : { 
+					"type" : "zwave" 
+				}
+			},
+		"testcase3" :
+			{
+				"name" : "controlonoff",
+				"input" : {
+					"type" : "zwave",
+					"id" : "from_adddevice_output"
+				}
+			},
+		"testcase4" :
+			{
+				"name" : "rules",
+				"input" : {
+					"ruletype" : "time",
+					"rulename" : "rule1",
+					"ruleaction" : "activate",
+					"condition" : "15:40;1,2,3,4,5",
+					"actions" : "zwave;33D5;1;01;0104",
+					"newname" : "rule2",
+					"newcondition" : "16:00;1,2,3",
+					"newaction" : "zwave;33D5;0;01;0104"
+				}
+			}
+
+	}
+}
