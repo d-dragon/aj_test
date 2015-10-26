@@ -1,5 +1,8 @@
-{ "newdevice" : {
-		"testcase1" : 
+
+[ 
+	{
+	"testsuit" : "newdevice",
+	"testcases" :	[
 			{
 				"name" : "wifisetup",
 				"input" : {
@@ -9,14 +12,12 @@
 				}
 
 			},
-		"testcase2" :
 			{ 
 				"name" : "adddevice", 
 				"input" : { 
 					"type" : "zwave" 
 				}
 			},
-		"testcase3" :
 			{
 				"name" : "controlonoff",
 				"input" : {
@@ -24,7 +25,6 @@
 					"id" : "from_adddevice_output"
 				}
 			},
-		"testcase4" :
 			{
 				"name" : "rules",
 				"input" : {
@@ -39,9 +39,11 @@
 				}
 			}
 
-	}
-}{ "newdevice" : {
-		"testcase1" : 
+	]
+	},
+	{
+	"testsuit" : "addeddevice",
+		"testcases" :	[ 
 			{
 				"name" : "wifisetup",
 				"input" : {
@@ -51,14 +53,6 @@
 				}
 
 			},
-		"testcase2" :
-			{ 
-				"name" : "adddevice", 
-				"input" : { 
-					"type" : "zwave" 
-				}
-			},
-		"testcase3" :
 			{
 				"name" : "controlonoff",
 				"input" : {
@@ -66,7 +60,6 @@
 					"id" : "from_adddevice_output"
 				}
 			},
-		"testcase4" :
 			{
 				"name" : "rules",
 				"input" : {
@@ -81,5 +74,6 @@
 				}
 			}
 
-	}
+		]
 }
+]

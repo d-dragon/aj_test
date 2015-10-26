@@ -45,7 +45,7 @@ ROOT_DIR			= $(shell pwd)
 #
 # Target: alljoynclient and onboarding
 #	
-all: directories common_libs onboarding alljoynclient
+all: directories common_libs alljoynclient ParsingApp
 
 onboarding: OnboardingTestApp
 
@@ -97,6 +97,8 @@ directories:
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(BINDIR)
 
+ParsingApp: src/jsonparser.cc 
+	$(CXX) -o $(BINDIR)/jsonparser src/jsonparser.cc $(CXXFLAGS) $(LIBS)
 # 
 # Onboarding Apps
 # 
