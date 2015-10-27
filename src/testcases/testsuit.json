@@ -1,8 +1,7 @@
-
 [ 
 	{
-	"testsuit" : "newdevice",
-	"testcases" :	[
+		"testsuit" : "newdevice",
+		"testcases" :	[
 			{
 				"name" : "wifisetup",
 				"input" : {
@@ -21,52 +20,19 @@
 			{
 				"name" : "controlonoff",
 				"input" : {
-					"type" : "zwave",
-					"id" : "from_adddevice_output"
+				"type" : "zwave",
+					"id" : "from_adddevice_output",
+					"value" : "0|1"
 				}
 			},
 			{
 				"name" : "rules",
 				"input" : {
+					"devicetype" : "all",
 					"ruletype" : "time",
 					"rulename" : "rule1",
 					"ruleaction" : "activate",
-					"condition" : "15:40;1,2,3,4,5",
-					"actions" : "zwave;33D5;1;01;0104",
-					"newname" : "rule2",
-					"newcondition" : "16:00;1,2,3",
-					"newaction" : "zwave;33D5;0;01;0104"
-				}
-			}
-
-	]
-	},
-	{
-	"testsuit" : "addeddevice",
-		"testcases" :	[ 
-			{
-				"name" : "wifisetup",
-				"input" : {
-					"ssid" : "VEriK2",
-					"auth" : -2,
-					"password" : "verik****"
-				}
-
-			},
-			{
-				"name" : "controlonoff",
-				"input" : {
-					"type" : "zwave",
-					"id" : "from_adddevice_output"
-				}
-			},
-			{
-				"name" : "rules",
-				"input" : {
-					"ruletype" : "time",
-					"rulename" : "rule1",
-					"ruleaction" : "activate",
-					"condition" : "15:40;1,2,3,4,5",
+					"conditions" : "15:40;1,2,3,4,5",
 					"actions" : "zwave;33D5;1;01;0104",
 					"newname" : "rule2",
 					"newcondition" : "16:00;1,2,3",
@@ -75,5 +41,43 @@
 			}
 
 		]
-}
+	},
+	{
+		"testsuit" : "addeddevice",
+		"testcases" :	[ 
+			{
+				"name" : "wifisetup",
+				"input" : {
+					"ssid" : "VEriK2",
+					"auth" : -2 ,
+					"password" : "verik****"
+				}
+
+			},
+			{
+				"name" : "controlonoff",
+				"input" : {
+					"type" : "zwave",
+					"deviceid" : "01"
+				}
+
+			},
+			{
+				"name" : "rules",
+				"input" : {
+					"devicetype" : "all",
+					"ruletype" : "time",
+					"rulename" : "rule1",
+					"ruleaction" : "activate",
+					"condition" : "15:40;1,2,3,4,5",
+					"actions" : "zwave;33D5;1;01;0104",
+					"newname" : "rule2",
+					"newcondition" : "16:00;1,2,3",
+					"newaction" : "zwave;33D5;0;01;0104"
+				}
+
+			}
+
+		]
+	}
 ]

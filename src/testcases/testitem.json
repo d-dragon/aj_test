@@ -1,49 +1,57 @@
-{ "add_devices" :
-	{ "type" : "" }
-}
+[
+	"add_devices" :[
+		{ "arg": "type", "value" : "na" }
+	],
 
-{ "list_devices" :
-	{ "type" : "" }
-}
+	"list_devices" :[
+		{ "arg": "type", "value" : "na" }
+	],
 
-{ "get_binrary" :
-	{ "type" : "" },
-	{ "id" : "" },
-	{"epnum" : "" },
-	{"proid" : "" }
-}
+	"get_binrary" :[
+		{ "arg": "type", "value" : "na" },
+		{ "arg": "id", "value" : "na" },
+		{ "arg": "epnum", "value" : "na" },
+		{ "arg": "proid", "value" : "na" }
+	],
 
-{ "set_binrary" :
-	{ "type" : "" },
-	{ "id" : "" },
-	{"value" : ""},
-	{"epnum" : "" },
-	{"proid" : "" }
-}
+	"set_binrary" :[
+		{ "arg": "type", "value" : "na" },
+		{ "arg": "id", "value" : "na" },
+		{ "arg": "value", "value" : "na" },
+		{ "arg": "epnum", "value" : "na" },
+		{ "arg": "proid", "value" : "na" }
+	],
 
-{ "update_firmware" :
-	{ "url" : "" }
-}
+	"update_firmware" :[
+		{ "arg": "url", "value" : "na" }
+	],
 
-{ "set_rule" :
-	{ "ruletype" : "" },
-	{ "rulename" : "" },
-	{"conditions" : ""},
-	{"actions" : "" },
-}
+	"set_rule" :[
+		{ "arg": "ruletype", "value" : "na" },
+		{ "arg": "rulename", "value" : "na" },
+		{ "arg": "conditions", "value" : "na" },
+		{ "arg": "actions", "value" : "na" }
+	],
 
-{ "get_rule" :
-	{"device_type" : ""}	
+	"get_rule" :[
+		{ "arg": "devicetype", "value" : "na" }
 
-}
+	],
 
-{ "rule_actions" :
-	{ "ruleaction" : "" },
-	{ "ruletype" : "" },
-	{ "rulename" : "" },
-	{ "newname" : "" },
-	{ "newcondition" : ""},
-	{ "newaction" : "" },
-}
+	"rule_actions" :[
+		{ "arg": "ruleaction", "value" : "na" },
+		{ "arg": "ruletype", "value" : "na" },
+		{ "arg": "rulename", "value" : "na" },
+		{ "arg": "newname", "value" : "na" },
+		{ "arg": "newcondition", "value" : "na" },
+		{ "arg": "newaction", "value" : "na" }
+	],
 
+	"onboarding" : [
+		{ "arg" : "ssid", "value" : "na"},
+		{ "arg" : "auth", "value" : 0},
+		{ "arg" : "password", "value" : "na"}
 
+	]
+
+]

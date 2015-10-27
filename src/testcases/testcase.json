@@ -1,50 +1,38 @@
-*********WiFiSetup************************
 {
-  "wifisetup":{
-    "testitem" : [
-        {"name" : "onboarding"}
-      ]
-  }
-}
+	"wifisetup":{
+		"testitems" : [
+			{"name" : "onboarding"}
+		]
+	},
 
-*********AddDevice************************
-{
-  "adddevice": {
-    "testitem": [
-      { "name": "add_devices" },
-      { "name": "list_devices" }
-    ]
-  }
-}
+	"adddevice": {
+		"testitems": [
+			{ "name": "add_devices" },
+			{ "name": "list_devices" }
+		]
+	},
 
-*********ControlOnOff************************
-{
-  "controlonoff":{
-    "testitem": [
-          {"name" : "set_binary", "value" : "1"},
-          {"name" : "get_binary"},
-          {"name" : "set_binary", "value" : "0"},
-          {"name" : "get_binary"}
-      ]
-  }
-}
+	"controlonoff":{
+		"testitems": [
+			{"name" : "set_binary"},
+			{"name" : "get_binary"},
+			{"name" : "set_binary"},
+			{"name" : "get_binary"}
+		]
+	},
 
-*********FirmwareUpdate************************
-{
-  "firmwareupdate":{
-    "testitem": [
-        {"name" : "update_firmware"}
-      ]
-  }
-}
+	"firmwareupdate":{
+		"testitems": [
+			{"name" : "update_firmware"}
+		]
+	},
 
-***********Rules**********************
-{
-  "rules":{
-    "testitem" : [
-          {"name" : "set_rule"},
-          {"name" : "get_rule"},
-          {"name" : "rule_action"}
-      ]
-  }
+	"rules":{
+		"testitems" : [
+			{"name" : "set_rule"},
+			{"name" : "get_rule"},
+			{"name" : "rule_action"}
+		]
+	}
+
 }
