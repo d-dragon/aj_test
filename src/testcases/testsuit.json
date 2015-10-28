@@ -20,7 +20,7 @@
 			{
 				"name" : "controlonoff",
 				"input" : {
-				"type" : "zwave",
+					"type" : "zwave",
 					"id" : "from_adddevice_output",
 					"value" : "0|1"
 				}

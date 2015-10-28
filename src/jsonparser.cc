@@ -5,17 +5,23 @@
 #include <jansson.h>
 #include <string.h>
 
+#define LOGCXX(msg)  (std::cout<< "DBG: " << __FILE__ << "::" << __LINE__ << " | " << msg << std::endl )
 json_t* testSuitRoot;
 json_error_t err;
+char *g_tiTemplatePath;
 using namespace std;
-#define LOGCXX(msg)  (std::cout<< "DBG: " << __FILE__ << "::" << __LINE__ << " | " << msg << std::endl )
+
 
 
 int TestCaseParser(json_t *tcObj, const char *tcTemplatePath);
+int TestItemProcessor(json_t *inputArg, json_t *tiObj);
+
+json_t* getTestItemTemplateObj(const char *tiName, const char *tiTemplatePath);
 
 int main(int argc, char* argv[]){
 
 	size_t numTestSuit;
+	g_tiTemplatePath = argv[3];
 
 	cout << "num args:" << argc << endl; 
 	testSuitRoot = json_load_file(argv[1], 0, &err);
@@ -136,8 +142,88 @@ int TestCaseParser(json_t *tcObj, const char *tcTemplatePath){
 	size_t index;
 	json_t *tiObj;
 	json_array_foreach(tiArray, index, tiObj) {
-		LOGCXX("running test item " << index);
 		//pass test item and it args in to test item processor
+		TestItemProcessor(tcInputArg, tiObj);		
 	}
 	return 1;
 }
+
+
+int TestItemProcessor(json_t *inputArg, json_t *inputTIObj){
+
+	const char *tiName;
+	json_t *tiNameObj, *tiObj;
+
+	tiNameObj = json_object_get(inputTIObj,"name");
+	if(!json_is_string(tiNameObj)){
+		
+		LOGCXX("test item json format invalid");
+		return -1;
+	}
+	tiName = json_string_value(tiNameObj);
+	LOGCXX("running test item "<< tiName);
+
+	tiObj = getTestItemTemplateObj(tiName, g_tiTemplatePath);
+
+	if(tiObj == NULL){
+		return -1;
+	}
+	
+	LOGCXX("debug ---------------------------------- ");
+	size_t index;
+	json_t *value;
+	json_t *inputArgEle;
+	json_array_foreach(tiObj,  index, value){
+
+		const char *inputArgName;
+		inputArgName = json_string_value(json_object_get(value, "arg"));
+		LOGCXX("updating argument value of " << inputArgName);
+		inputArgEle = json_object_get(inputArg, inputArgName);
+		if(json_is_string(inputArgEle)){
+			if(json_object_set(value, "value", inputArgEle) != 0){
+				LOGCXX("update object fail");
+			}
+		}
+	}
+
+
+	json_array_foreach(tiObj, index, value){
+		json_t *tmpEle;
+		tmpEle = json_object_get(value, "value");
+		if(json_is_string(tmpEle)){
+			LOGCXX("---------------value: " << json_string_value(tmpEle));
+		}
+	}
+
+}
+
+//int TestItemUpdater(json_t **tiObj, json_t *inputEle);
+
+json_t* getTestItemTemplateObj(const char *tiName,const char *tiTemplatePath){
+	
+
+	static json_t *tiRoot = NULL;
+
+	json_t *tiObj;
+	if(tiRoot == NULL){
+
+		tiRoot = json_load_file(tiTemplatePath, 0, &err);
+		if(!tiRoot){
+			LOGCXX("load test item json failed :: err: " << err.text << err.line);
+			return NULL;
+		}
+	}
+
+	tiObj = json_object_get(tiRoot, tiName);
+	if(!json_is_array(tiObj)){
+		
+		LOGCXX("test item json format invalid");
+		return NULL;
+	}
+	return tiObj;
+}
+
+
+
+
+

@@ -31,7 +31,7 @@
 		"testitems" : [
 			{"name" : "set_rule"},
 			{"name" : "get_rule"},
-			{"name" : "rule_action"}
+			{"name" : "rule_actions"}
 		]
 	}
 

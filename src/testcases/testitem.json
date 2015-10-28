@@ -1,4 +1,4 @@
-[
+{
 	"add_devices" :[
 		{ "arg": "type", "value" : "na" }
 	],
@@ -7,14 +7,14 @@
 		{ "arg": "type", "value" : "na" }
 	],
 
-	"get_binrary" :[
+	"get_binary" :[
 		{ "arg": "type", "value" : "na" },
 		{ "arg": "id", "value" : "na" },
 		{ "arg": "epnum", "value" : "na" },
 		{ "arg": "proid", "value" : "na" }
 	],
 
-	"set_binrary" :[
+	"set_binary" :[
 		{ "arg": "type", "value" : "na" },
 		{ "arg": "id", "value" : "na" },
 		{ "arg": "value", "value" : "na" },
@@ -54,4 +54,4 @@
 
 	]
 
-]
+}
