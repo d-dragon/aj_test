@@ -21,14 +21,4 @@ struct OnboardingWifiCb {
 	char JSKeyName[128];
 };
 
-struct OnboardingWifiCb sOnboardingCb[] ={
-	{GET_VERSION, "getVersion"},
-	{GET_STATE, "getState"},
-	{GET_LAST_ERR, "getLastErr"},
-	{GET_SCAN_INFO, "getScanInfo"},
-	{CONFIG_WIFI, "configWifi"},
-	{CONNECT_TO, "connectTo"},
-	{OFF_BOARD_FROM, "offBoard"}
-};
-
 #endif
