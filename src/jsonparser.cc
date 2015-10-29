@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <jansson.h>
 #include <string.h>
+#include "TestWorker.h"
 
 #define LOGCXX(msg)  (std::cout<< "DBG: " << __FILE__ << "::" << __LINE__ << " | " << msg << std::endl )
 json_t* testSuitRoot;
@@ -39,8 +40,15 @@ int main(int argc, char* argv[]){
 	numTestSuit = json_array_size(testSuitRoot);
 	json_t *testSuitArray[numTestSuit];
 	LOGCXX("number of testsuit: " << numTestSuit);
+	//start alljoyn service
+
+	TestWorker *worker = new TestWorker("com.verik.bus.VENUS_BOARD");
+	worker->startAlljoynClient();
+	string arg[5];
+	worker->executeTestItem("onboarding", 5, arg);
 
 	//get test suit then store in array test suit
+
 
 	for (size_t i = 0 ; i < numTestSuit; i++){
 
@@ -70,6 +78,7 @@ int main(int argc, char* argv[]){
 		size_t numTestCase = 0;
 		numTestCase = json_array_size(tcObj);
 		LOGCXX("number test case of " << tsName << ":" << numTestCase);
+
 
 		//get test cases then store in array
 		json_t *tcArrayObj[numTestCase];
@@ -106,13 +115,13 @@ int TestCaseParser(json_t *tcObj, const char *tcTemplatePath){
 
 	tcInputArg = json_object_get(tcObj, "input");
 	if(!json_is_object(tcInputArg)){
-		
+
 		LOGCXX("testcase format invalid");
 		return -1;
 	}else{
 		LOGCXX("number args input: " << json_object_size(tcInputArg));
 	}
-	
+
 	static json_t *tcTemplateObj = NULL;
 	//load json template in to static variable
 	if ( tcTemplateObj == NULL){
@@ -156,7 +165,7 @@ int TestItemProcessor(json_t *inputArg, json_t *inputTIObj){
 
 	tiNameObj = json_object_get(inputTIObj,"name");
 	if(!json_is_string(tiNameObj)){
-		
+
 		LOGCXX("test item json format invalid");
 		return -1;
 	}
@@ -168,7 +177,7 @@ int TestItemProcessor(json_t *inputArg, json_t *inputTIObj){
 	if(tiObj == NULL){
 		return -1;
 	}
-	
+
 	LOGCXX("debug ---------------------------------- ");
 	size_t index;
 	json_t *value;
@@ -191,7 +200,10 @@ int TestItemProcessor(json_t *inputArg, json_t *inputTIObj){
 		json_t *tmpEle;
 		tmpEle = json_object_get(value, "value");
 		if(json_is_string(tmpEle)){
-			LOGCXX("---------------value: " << json_string_value(tmpEle));
+			LOGCXX("index " << index << " value: " << json_string_value(tmpEle));
+		}else if(json_is_number(tmpEle)){
+			LOGCXX("index " << index << "	 value: " << json_integer_value(tmpEle));
+
 		}
 	}
 
@@ -200,7 +212,7 @@ int TestItemProcessor(json_t *inputArg, json_t *inputTIObj){
 //int TestItemUpdater(json_t **tiObj, json_t *inputEle);
 
 json_t* getTestItemTemplateObj(const char *tiName,const char *tiTemplatePath){
-	
+
 
 	static json_t *tiRoot = NULL;
 
@@ -216,7 +228,7 @@ json_t* getTestItemTemplateObj(const char *tiName,const char *tiTemplatePath){
 
 	tiObj = json_object_get(tiRoot, tiName);
 	if(!json_is_array(tiObj)){
-		
+
 		LOGCXX("test item json format invalid");
 		return NULL;
 	}
