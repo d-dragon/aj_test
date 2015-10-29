@@ -37,6 +37,7 @@ struct OnboardingWifiCb sOnboardingCb[] ={
        {GET_SCAN_INFO, "getScanInfo"},
        {CONFIG_WIFI, "configWifi"},
        {CONNECT_TO, "connectTo"},
+       {CONF_AND_CONNECT_WIFI,"configAndConnectWifi"},
        {OFF_BOARD_FROM, "offBoard"}
 };
 

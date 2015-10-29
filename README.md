@@ -50,8 +50,7 @@ B. Description detail:
 					"getState": 0,
 					"getLastErr": 1,
 					"getScanInfo": 0,
-					"configWifi": 0,
-					"connectTo": 0,
+					"configAndConnectWifi": 0,
 					"offBoard": 0
 			}
 		}
@@ -71,13 +70,13 @@ B. Description detail:
 		WPA2_CCMP = 5,                        //!<WPA2_CCMP authentication
 		WPS = 6,                          //!<WPS authentication
 	"getVersion", ... "offBoard":	those keys stand for functions could be call from Onboardee (this Onboarding test app).
-									Set 1 if you want to call it.
-									0: means do not call it. 	
+									Set 	1: if you want to call it.
+											0: means do not call it. 	
 
 	Please fill suitable value before run the test App
 	2.1.1 Connect to wifi
 		Then we can run it now, make on boarding, we have to make PC connect wifi info AP of device:
-		Requirement: correct value of ssid, passcode, auth, do not enable offBoard.
+		Requirement: correct value of ssid, passcode, auth, configAndConnectWifi=1 , and do not enable offBoard.
 
 		$ LD_LIBRARY_PATH=./lib ./bin/OnboardingTestApp
 

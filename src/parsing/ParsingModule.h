@@ -6,7 +6,6 @@
 #define MAX_KEY_SZ 128
 #define MAX_STR_SZ 1024*4
 
-#define LOGCXX(msg)  (std::cout<< "DBG: " << __FILE__ << "(" << __LINE__ << ") "  << msg << std::endl )
 struct JSONSearchInfo{
 	json_type type;
 	char inKey[MAX_KEY_SZ];

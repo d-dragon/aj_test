@@ -260,7 +260,7 @@ void AsyncSessionJoinerCB::sessionJoinedCallback(qcc::String const& busName, Ses
                 std::cout << "Call to GetScanInfo failed " << QCC_StatusText(status) << std::endl;
             }
 		}
-		if ((onboardingFlags & CONFIG_WIFI) == CONFIG_WIFI){	
+		if (((onboardingFlags & CONF_AND_CONNECT_WIFI) == CONF_AND_CONNECT_WIFI) || ((onboardingFlags & CONFIG_WIFI) == CONFIG_WIFI)){	
             std::cout << std::endl << busName.c_str() << " OnboardingClient ConfigureWiFi" << std::endl;
             std::cout << "-----------------------------------" << std::endl;
 
@@ -272,7 +272,7 @@ void AsyncSessionJoinerCB::sessionJoinedCallback(qcc::String const& busName, Ses
                 std::cout << "Call to ConfigureWiFi failed " << QCC_StatusText(status) << std::endl;
             }
 		}
-		if ((onboardingFlags & CONNECT_TO) == CONNECT_TO){
+		if (((onboardingFlags & CONF_AND_CONNECT_WIFI) == CONF_AND_CONNECT_WIFI) || ((onboardingFlags & CONNECT_TO) == CONNECT_TO)){
             if ((status = onboardingClient->ConnectTo(busName.c_str(), id)) == ER_OK) {
                 std::cout << "Call to ConnectTo succeeded " << std::endl;
             } else {

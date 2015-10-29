@@ -21,6 +21,7 @@
 #include <alljoyn/onboarding/Onboarding.h>
 #include "OnboardingTest.h"
 #include "ParsingModule.h"
+#include "common_def.h"
 #include <getopt.h>
 
 using namespace ajn;
