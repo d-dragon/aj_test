@@ -11,6 +11,7 @@ using namespace std;
 // Print out the fields found in the AboutData. Only fields with known signatures
 // are printed out.  All others will be treated as an unknown field.
 //this is temperary function for testing
+#ifdef DEBUG_ENABLED
 void printAboutData(AboutData& aboutData, const char* language, int tabNum)
 {
     size_t count = aboutData.GetFields();
@@ -54,6 +55,7 @@ void printAboutData(AboutData& aboutData, const char* language, int tabNum)
     }
     delete [] fields;
 }
+#endif
 
 AlljoynClient::AlljoynClient() : mainBus(NULL), remoteObject(NULL), proxyObject(NULL){
 
@@ -169,7 +171,7 @@ void AlljoynClient::AlljoynClientAboutListener::Announced(const char* busName, u
 	aboutInfo.objectDescription.CreateFromMsgArg(objectDescriptionArg);
 	aboutInfo.busName = string(busName);
 	aboutInfo.port = port;
-#ifdef DEBUG_ENABLE
+#ifdef DEBUG_ENABLED
 	printf("================================================\n");
 	printf("Announce signal discovered\n");
 	printf("\tFrom bus %s\n", busName);

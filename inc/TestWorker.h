@@ -14,7 +14,7 @@ class TestWorker {
 		QStatus startAlljoynClient();
 		QStatus stopAlljoynClient();
 		QStatus restartAlljoynClient();
-		QStatus executeTestItem(string testItem, size_t numArg, string ajSignalMsgArg[]);
+		QStatus executeTestItem(string testItem, size_t numArg, string tiArg[]);
 
 	private:
 		string serviceInterface;

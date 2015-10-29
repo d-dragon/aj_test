@@ -49,9 +49,16 @@
 
 	"onboarding" : [
 		{ "arg" : "ssid", "value" : "na"},
-		{ "arg" : "auth", "value" : 0},
-		{ "arg" : "password", "value" : "na"}
+		{ "arg" : "passcode", "value" : "na"},
+		{ "arg" : "auth", "value" : "na"},
+		{ "arg" : "getVersion", "value" : "na"},
+		{ "arg" : "getState", "value" : "na"},
+		{ "arg" : "getLastErr", "value" : "na"},
+		{ "arg" : "getScanInfo", "value" : "na"},
+		{ "arg" : "configAndConnectWifi", "value" : "na"},
+		 { "arg" : "offBoard", "value" : "na"}
 
 	]
 
 }
+ 

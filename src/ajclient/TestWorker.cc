@@ -33,7 +33,7 @@ QStatus TestWorker::startAlljoynClient(){
 	return status;
 }
 
-QStatus TestWorker::executeTestItem(string testItem, size_t numArg, string ajSignalMsgArg[]){
+QStatus TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 
 	
 	QStatus status;

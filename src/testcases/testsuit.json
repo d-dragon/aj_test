@@ -5,9 +5,16 @@
 			{
 				"name" : "wifisetup",
 				"input" : {
-					"ssid" : "VEriK2",
-					"auth" : -2,
-					"password" : "verik****"
+					"ssid": "VEriK_Belkin",
+					"passcode": "766572696b73797374656d7332303135",
+					"auth": "WPA_AUTO",
+					"getVersion": "on",
+					"getState": "off",
+					"getLastErr": "on",
+					"getScanInfo": "on",
+					"configAndConnectWifi": "on",
+					"offBoard": "off" 
+
 				}
 
 			},
