@@ -30,6 +30,9 @@
 #include "ParsingModule.h"
 #include "common_def.h"
 
+using namespace ajn;
+using namespace services;
+
 struct OnboardingWifiCb sOnboardingCb[] ={
        {GET_VERSION, "getVersion"},
        {GET_STATE, "getState"},
@@ -41,10 +44,23 @@ struct OnboardingWifiCb sOnboardingCb[] ={
        {OFF_BOARD_FROM, "offBoard"}
 };
 
+struct WifiAuthenticationType sWifiAuthType[]={
+    {"WPA2_AUTO",   WPA2_AUTO},                     //!< WPA2_AUTO authentication
+    {"WPA_AUTO",    WPA_AUTO},                      //!< WPA_AUTO authentication
+    {"ANY",         ANY},                           //!< ANY authentication
+    {"OPEN",        OPEN},                          //!< OPEN authentication
+    {"WEP",         WEP},                           //!< WEP authentication
+    {"WPA_TKIP",    WPA_TKIP},                      //!< WPA_TKIP authentication
+    {"WPA_CCMP",    WPA_CCMP},                      //!< WPA_CCMP authentication
+    {"WPA2_TKIP",   WPA2_TKIP},                     //!<WPA2_TKIP authentication
+    {"WPA2_CCMP",   WPA2_CCMP},                     //!<WPA2_CCMP authentication
+    {"WPS",         WPS}                            //!<WPS authentication
+
+};
+
 ParsingModule::ParsingModule(){
-    mJSONcurrent = NULL;
     mJSONroot	= NULL;
-	isMatch		= false;
+    mJSONiter.clear();
 }
 
 ParsingModule::~ParsingModule(){
@@ -55,7 +71,6 @@ ParsingModule::~ParsingModule(){
 int ParsingModule::LoadJSONFromFile(const char* path){
 	json_error_t jsonErr;
 	mJSONroot	= json_load_file(path, 0, &jsonErr);
-    mJSONcurrent= mJSONroot;
 	if (NULL == mJSONroot)
 	{
 		LOGCXX("Error while loading file: "<< jsonErr.text << " at line: " << jsonErr.line << std::endl);
@@ -73,51 +88,40 @@ void ParsingModule::DumpJSONFile(){
 		std::cout << "Invalid JSON" << std::endl;
 }
 
-
-json_type ParsingModule::GetJSONType(json_t *element){
-	if (element)
-		return json_typeof(element);
-}
-
-json_t * ParsingModule::GetObjectOfKey(const char *key){
-    if (NULL != key){
-        strncpy(searchKey, key, MAX_KEY_SZ);
-    }
-    TraversalJSONDataLocal(mJSONroot);
-    if (NULL != mJSONcurrent){
-        TraversalJSONDataLocal(mJSONcurrent);
-    }
-    return mJSONcurrent;
-}
-
 int ParsingModule::GetNumOfWifiConfiguration(){
     const char *key;
     json_t *value;
     int cnt = 0;
     void *iter = json_object_iter(mJSONroot);
 //Save iter
-    mJSONiter = iter;
+//    mJSONiter = iter;
     while(iter)
     {
-        key = json_object_iter_key(iter);
-        LOGCXX("Key: " << key << " count: " << cnt << std::endl);
-        value = json_object_iter_value(iter);
-        cnt++;
-        /* use key and value ... */
+        mJSONiter.push_back(iter);
         iter = json_object_iter_next(mJSONroot, iter);
     }
     
-    return cnt;
+    return mJSONiter.size() - 1;
 
 }
 
-int ParsingModule::GetNextWifiConfiguration(ajn::services::OBInfo *info,long  *flgs){
+int ParsingModule::GetWifiConfiguration(ajn::services::OBInfo *info,long  *flgs,int pos){
     int ret =0, i;
-    json_t *value;
+    json_t *value= NULL;
     const char *key;
     void *iter;
-    if (mJSONiter){
-        value = json_object_iter_value(mJSONiter);
+    //Reset output of wifi
+    info->SSID.assign("");
+    info->passcode.assign("");
+    info->authType  = OPEN;
+    info->state     = NOT_CONFIGURED;
+    //Start to get information
+    if (GetKeyAtIndex(pos)){
+        value = json_object_get(mJSONroot, GetKeyAtIndex(pos));
+        if( value == NULL ){
+            LOGCXX(GetKeyAtIndex(pos) << ": is not exist in test case" );
+            return -1;
+        }
         // Parse data of wifi
         iter = json_object_iter(value);
         while(iter)
@@ -140,92 +144,24 @@ int ParsingModule::GetNextWifiConfiguration(ajn::services::OBInfo *info,long  *f
 			}
             iter = json_object_iter_next(value, iter);
         }
-
-        /* use key and value ... */
-        mJSONiter = json_object_iter_next(mJSONroot, mJSONiter);
     }else {
         ret = -1;
     }
     return ret;
 }
 
-void ParsingModule::TraversalJSONObject(json_t *element){
-	size_t size;
-	const char *key;
-	json_t *value;		
-	
-	size = json_object_size(element);
-    std::cout << "JSON object of: " << size << " pair(s)" << std::endl;
-	json_object_foreach(element, key, value){
-    LOGCXX( "key: " << key );
-    // Get current location of Json object has match key	
-	if ((mJSONroot == mJSONcurrent) && ( 0 == strcmp(searchKey,  key)))
-		{
-            LOGCXX("Find out the key" << std::endl);
-            mJSONcurrent = value;
-            return;
-		}
-    // Get number of Element of Object has match key
-        if ( element == mJSONcurrent) mNumberOfElement = size;
 
-		TraversalJSONDataLocal(value);
-	}
-}	
-
-void ParsingModule::TraversalJSONArray(json_t *element){
-	size_t size, i;
-	size = json_array_size(element);
-
-	for (i = 0; i < size; i++){
-		TraversalJSONDataLocal(json_array_get(element, i));
-	}
-
-}
-
-int ParsingModule::GetNumberOfKey(const char *key){
-    mNumberOfElement = 0;
-     if (NULL != key){
-        strncpy(searchKey, key, MAX_KEY_SZ);
+const char* ParsingModule::GetKeyAtIndex(int pos){
+    int size, ret = 0, i;
+    json_t *array;
+    array = json_object_get(mJSONroot, "testlist");
+    if (json_is_array(array)){
+        size = json_array_size(array);
+        if (pos < size && pos >= 0 )
+        {
+            return json_string_value(json_array_get(array,pos));
+        }
     }
-    TraversalJSONDataLocal(mJSONroot);
-    TraversalJSONDataLocal(mJSONcurrent);
-    return mNumberOfElement;
-}
-
-void ParsingModule::TraversalJSONData(){
-	TraversalJSONDataLocal(mJSONroot);
-}
-
-void ParsingModule::TraversalJSONDataLocal(json_t *element){
-	switch(GetJSONType(element))
-	{
-		case JSON_OBJECT:
-			TraversalJSONObject(element);
-			break;
-		case JSON_ARRAY:
-			TraversalJSONArray(element);
-			break;
-		case JSON_STRING:
-			LOGCXX( "Value of string: " << json_string_value(element) << std::endl);
-			break;
-		case JSON_INTEGER:
-			LOGCXX( "Value of int: " << json_integer_value(element) << std::endl);
-			break;
-		case JSON_REAL:
-			std::cout << "Value of real: " << std::endl;
-			break;
-		case JSON_TRUE:
-			std::cout << "Value of true: " << std::endl;
-			break;
-		case JSON_FALSE:
-			std::cout << "Value of false: " << std::endl;
-			break;
-		case JSON_NULL:
-			std::cout << "Value of null: " << std::endl;
-			break;
-		default:
-			std::cout<< "Unrecognized JSON type: " << GetJSONType(element) << std::endl;
-			return;
-	}
-
+    LOGCXX("Invalid index= " << pos);
+    return NULL;
 }

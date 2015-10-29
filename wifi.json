@@ -1,15 +1,55 @@
 {
-"VEriK_Belkin": {
+"testlist":["TC1","TC2","TC3","TC2","TC4","TC2","TC5","TC2"],
+
+"TC1": {
         "ssid": "VEriK2",
         "passcode": "564572694b73797374656d733130",
         "auth": 4,
 		"getVersion": 1,
 		"getState": 0,
 		"getLastErr": 1,
-		"getScanInfo": 0,
+		"getScanInfo": 1,
 		"configAndConnectWifi": 1,
 		"offBoard": 0
-        }
+        },
+
+"TC2":{
+        "offBoard": 1
+    },
+
+"TC3": {
+        "ssid": "VEriK_Belkin",
+        "passcode": "766572696b73797374656d7332303135",
+        "auth": 5,
+        "getVersion": 1,
+        "getState": 0,
+        "getLastErr": 1,
+        "getScanInfo": 1,
+        "configAndConnectWifi": 1,
+        "offBoard": 0
+        },
+"TC4":{
+        "ssid": "wep_test",
+        "passcode": "3132333435",
+        "auth": 1,
+        "getVersion": 1,
+        "getState": 0,
+        "getLastErr": 1,
+        "getScanInfo": 1,
+        "configAndConnectWifi": 1,
+        "offBoard": 0
+    },
+"TC5":{
+        "ssid": "wep_test",
+        "passcode": "",
+        "auth": 0,
+        "getVersion": 1,
+        "getState": 0,
+        "getLastErr": 1,
+        "getScanInfo": 1,
+        "configAndConnectWifi": 1,
+        "offBoard": 0
+    },
 
 }
 

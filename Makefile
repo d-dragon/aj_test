@@ -45,7 +45,7 @@ ROOT_DIR			= $(shell pwd)
 #
 # Target: alljoynclient and onboarding
 #	
-all: directories common_libs onboarding alljoynclient
+all: directories common_libs onboarding
 
 onboarding: OnboardingTestApp
 

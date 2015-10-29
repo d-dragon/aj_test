@@ -1,7 +1,8 @@
 #ifndef _COMMON_DEP_H_
 #define _COMMON_DEP_H_
+#include "alljoyn/onboarding/Onboarding.h"
 
-#define LOGCXX(msg)  (std::cout<< "DBG: " << __FILE__ << "(" << __LINE__ << ") "  << msg << std::endl )
+#define LOGCXX(msg)  (std::cout<< "DBG: "  << msg << std::endl )
 /*
 *	Session of OnBoarding
 */
@@ -21,5 +22,9 @@ struct OnboardingWifiCb {
 	enum WifiCbFunc ID;
 	char JSKeyName[128];
 };
+struct WifiAuthenticationType{
+    char Name[10];
+    ajn::services::OBAuthType Val;
 
+};
 #endif
