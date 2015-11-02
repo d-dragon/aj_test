@@ -6,6 +6,7 @@ Project name: Alljoyn Test Tool
 Pupose: Testing alljoyn service functions
 History: 
 	1. Oct 22: Modify 2.1 due to update Parsing Module JSON
+	2. Oct 29: Modify 2.1 having testlist
 =============================================
 A. Outline:
 =============================================
@@ -42,7 +43,8 @@ B. Description detail:
 	and it also configure which functions would be called when neccessary.
 	Example wifi.json:
 		{
-		"VEriK_Belkin": {
+		"testlist":["TC1","TC2","TC3","TC2","TC4","TC2","TC5","TC2"],
+		"TC1": {
 					"ssid": "VEriK_Belkin",
 					"passcode": "766572696b73797374656d7332303135",
 					"auth": 4,
@@ -50,8 +52,7 @@ B. Description detail:
 					"getState": 0,
 					"getLastErr": 1,
 					"getScanInfo": 0,
-					"configWifi": 0,
-					"connectTo": 0,
+					"configAndConnectWifi": 0,
 					"offBoard": 0
 			}
 		}
@@ -71,13 +72,15 @@ B. Description detail:
 		WPA2_CCMP = 5,                        //!<WPA2_CCMP authentication
 		WPS = 6,                          //!<WPS authentication
 	"getVersion", ... "offBoard":	those keys stand for functions could be call from Onboardee (this Onboarding test app).
-									Set 1 if you want to call it.
-									0: means do not call it. 	
+									Set 	1: if you want to call it.
+											0: means do not call it. 	
+	"testlist": list all test cases which would be run in order as you defined.
+				all test cases must be available to run the test.
 
 	Please fill suitable value before run the test App
 	2.1.1 Connect to wifi
 		Then we can run it now, make on boarding, we have to make PC connect wifi info AP of device:
-		Requirement: correct value of ssid, passcode, auth, do not enable offBoard.
+		Requirement: correct value of ssid, passcode, auth, configAndConnectWifi=1 , and do not enable offBoard.
 
 		$ LD_LIBRARY_PATH=./lib ./bin/OnboardingTestApp
 

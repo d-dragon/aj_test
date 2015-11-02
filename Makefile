@@ -133,4 +133,4 @@ $(OBJDIR)/%.o: $(PARSINGMODULE_SRC)/%.cc
 
 # Clean: remove object directory and binary directory
 clean:
-	rm -rf $(OBJDIR) $(BINDIR) $(BUILDDIR)
+	rm -rf $(OBJDIR) $(BINDIR) $(BUILDDIR) $(LIBDIR)

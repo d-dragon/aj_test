@@ -18,6 +18,7 @@
 
 #include <SessionListenerImpl.h>
 #include <AsyncSessionJoinerCB.h>
+#include "common_def.h"
 
 using namespace ajn;
 
@@ -37,14 +38,14 @@ AboutListenerHandlerImpl::~AboutListenerHandlerImpl()
 
 void AboutListenerHandlerImpl::Announced(const char* busName, uint16_t version, SessionPort port, const MsgArg& objectDescriptionArg, const MsgArg& aboutDataArg)
 {
-    std::cout << "*********************************************************************************" << std::endl;
-    std::cout << "Announce signal discovered" << std::endl;
-    std::cout << "\tFrom bus " << busName << std::endl;
-    std::cout << "\tAbout version " << version << std::endl;
-    std::cout << "\tSessionPort " << port << std::endl;
-    std::cout << "\tObjectDescription" << std::endl << objectDescriptionArg.ToString().c_str() << std::endl;
-    std::cout << "\tAboutData:" << std::endl << aboutDataArg.ToString().c_str() << std::endl;
-    std::cout << "*********************************************************************************" << std::endl;
+    LOGCXX("*********************************************************************************" << std::endl);
+    LOGCXX("Announce signal discovered" << std::endl);
+    LOGCXX("\tFrom bus " << busName << std::endl);
+    LOGCXX("\tAbout version " << version << std::endl);
+    LOGCXX("\tSessionPort " << port << std::endl);
+    LOGCXX("\tObjectDescription" << std::endl << objectDescriptionArg.ToString().c_str() << std::endl);
+    LOGCXX("\tAboutData:" << std::endl << aboutDataArg.ToString().c_str() << std::endl);
+    LOGCXX("*********************************************************************************" << std::endl);
 
     std::cout << "AboutListenerHandlerImpl::Announced()" << std::endl;
 //    if (m_BasicCallback) {
@@ -64,7 +65,7 @@ void AboutListenerHandlerImpl::Announced(const char* busName, uint16_t version, 
 
 void AboutListenerHandlerImpl::announceBasicHandlerCallback(qcc::String const& busName, unsigned short port)
 {
-    std::cout << "announceHandlerCallback " << busName.c_str() << " " << port << std::endl;
+    LOGCXX("announceHandlerCallback " << busName.c_str() << " " << port << std::endl);
     std::set<qcc::String>::iterator searchIterator = handledAnnouncements.find(qcc::String(busName));
     if (searchIterator == handledAnnouncements.end()) {
         handledAnnouncements.insert(busName);
@@ -77,10 +78,10 @@ void AboutListenerHandlerImpl::announceBasicHandlerCallback(qcc::String const& b
                                                          sessionListener);
 
         if (status != ER_OK) {
-            std::cout << "Unable to JoinSession with " << busName.c_str() << std::endl;
+            LOGCXX("Unable to JoinSession with " << busName.c_str() << std::endl);
         }
     } else {
-        std::cout << busName.c_str()  << " has already been handled" << std::endl;
+        LOGCXX( busName.c_str()  << " has already been handled" << std::endl);
     }
 }
 
