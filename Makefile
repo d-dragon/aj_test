@@ -27,6 +27,8 @@ BUILDDIR			= build
 OBJDIR 				= obj
 BINDIR				= bin
 LIBDIR				= lib
+SRCDIR 				= src
+
 # 
 # Module source dir
 # 
@@ -45,7 +47,12 @@ ROOT_DIR			= $(shell pwd)
 #
 # Target: alljoynclient and onboarding
 #	
-all: directories common_libs alljoynclient ParsingApp
+all: directories common_libs AlljoynTester
+
+AlljoynTester: $(AJCLIENT_OBJECTS) $(ONBOARDING_OBJECTS) $(PARSINGMODULE_OBJS)
+	@echo "**********Build Alljoyn Tester Application**********"
+	$(CXX) -c $(SRCDIR)/AlljoynTester.cc $(CXXFLAGS) $(LIBS) -o $(OBJDIR)/$@.o
+	$(CXX) -o $(BINDIR)/$@ $^ $(OBJDIR)/$@.o $(CXXFLAGS) $(LIBS)
 
 onboarding: OnboardingTestApp
 
