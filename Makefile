@@ -47,18 +47,22 @@ ROOT_DIR			= $(shell pwd)
 #
 # Target: alljoynclient and onboarding
 #	
-all: directories common_libs AlljoynTester
+all: directories common_libs OnboardingTestApp AlljoynClientApp AlljoynTester
 
 AlljoynTester: $(AJCLIENT_OBJECTS) $(ONBOARDING_OBJECTS) $(PARSINGMODULE_OBJS)
 	@echo "**********Build Alljoyn Tester Application**********"
 	$(CXX) -c $(SRCDIR)/AlljoynTester.cc $(CXXFLAGS) $(LIBS) -o $(OBJDIR)/$@.o
 	$(CXX) -o $(BINDIR)/$@ $^ $(OBJDIR)/$@.o $(CXXFLAGS) $(LIBS)
 
-onboarding: OnboardingTestApp
+OnboardingTestApp: $(ONBOARDING_OBJECTS) $(AJCLIENT_OBJECTS) $(PARSINGMODULE_OBJS)
+	@echo "Build Onboarding app"
+	$(CXX) -c $(SRCDIR)/OnboardingClientMain.cc $(CXXFLAGS) $(LIBS) -o $(OBJDIR)/$@.o
+	$(CXX) -o $(BINDIR)/$@ $^ $(OBJDIR)/$@.o $(CXXFLAGS) $(LIBS)
 
-alljoynclient: $(AJCLIENT_OBJECTS)
+AlljoynClientApp: $(AJCLIENT_OBJECTS)
 	@echo "**********Build AlljoynClientApp**********"
-	$(CXX) -o $(BINDIR)/$@ $^ $(CXXFLAGS) $(LIBS)
+	$(CXX) -c $(SRCDIR)/AlljoynClientApp.cc $(CXXFLAGS) $(LIBS) -o $(OBJDIR)/$@.o
+	$(CXX) -o $(BINDIR)/$@ $^ $(OBJDIR)/$@.o $(CXXFLAGS) $(LIBS)
 
 common_libs: build_alljoyn_src build_alljoyn_services build_jansson
 
@@ -109,9 +113,6 @@ ParsingApp: src/jsonparser.cc
 # 
 # Onboarding Apps
 # 
-OnboardingTestApp: $(ONBOARDING_OBJECTS) $(PARSINGMODULE_OBJS)
-	@echo "Build Onboarding app"
-	$(CXX) -o $(BINDIR)/$@ $^ $(CXXFLAGS) $(LIBS)
 
 # 
 # Onboarding Objects
