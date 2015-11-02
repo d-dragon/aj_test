@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <jansson.h>
+#include "TestWorker.h"
 
 using namespace std;
 
@@ -17,6 +18,8 @@ class JsonParser {
 	private:
 		json_t *testSuitRoot;
 		json_error_t err;
+		TestWorker *worker;
+
 		const char *dfTSPath;
 		const char *dfTCPath;
 		const char *dfTIPath;

@@ -31,10 +31,8 @@ int JsonParser::startParser(){
 	int status;
 	json_t *tsObj;
 	
-	TestWorker *worker = new TestWorker("com.verik.bus.VENUS_BOARD");
+	worker = new TestWorker("com.verik.bus.VENUS_BOARD");
 	worker->startAlljoynClient();
-	string arg[5];
-	worker->executeTestItem("onboarding", 5, arg);
 
 	testSuitRoot = json_load_file(dfTSPath, 0, &err);
 	if ((testSuitRoot == NULL) || !(json_is_array(testSuitRoot))){
@@ -159,15 +157,15 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 
 	int status;
-	const char *tiName;
+	string tiName;
 	json_t *tiExObj;
 
-	tiName = json_string_value(json_object_get(tiObj, "name"));
+	tiName.assign(json_string_value(json_object_get(tiObj, "name")));
 
 	cout << "proccessing test item: " << tiName << endl;
 	//TODO - manipulate test item name
 	
-	tiExObj = getTestItemTemplateObj(tiName);
+	tiExObj = getTestItemTemplateObj(tiName.c_str());
 	if(tiExObj == NULL){
 		cout << "test item " << tiName << "not found in template" << endl;
 		return ERROR;
@@ -176,6 +174,10 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 	size_t index; 
 	json_t *tiArgObj;;
 	json_t *inputArgEle;
+	size_t arraySize = 0;
+
+	arraySize = json_array_size(tiExObj);
+	string tiArg[arraySize];
 
 	json_array_foreach(tiExObj, index, tiArgObj){
 
@@ -193,10 +195,12 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 		}
 
 		//DEBUG---
-		cout << inputArgName << ": " << json_string_value(json_object_get(tiArgObj, "value")) << endl;
+	//	cout << inputArgName << ": " << json_string_value(json_object_get(tiArgObj, "value")) << endl;
 
-		
+		tiArg[index].assign(json_string_value(json_object_get(tiArgObj, "value")));
+
 	 }
+	worker->executeTestItem(tiName, arraySize, tiArg);
 
 }
 json_t* JsonParser::getTestItemTemplateObj(const char *tiName){

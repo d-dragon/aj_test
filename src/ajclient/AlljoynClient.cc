@@ -307,3 +307,17 @@ QStatus AlljoynClient::SendRequestSignal(const char* signalName, size_t numArg, 
 	status = remoteObject->SendSignal(signalName, numArg, args);
 	return status;
 }
+
+QStatus AlljoynClient::SendRequestSignal(const char* signalName, size_t numArg, string signalArgs[] ){
+
+	QStatus status;
+
+	MsgArg args[numArg];
+
+	for(size_t i = 0; i < numArg; i++){
+		args[i].Set("s", signalArgs[i].c_str());
+	}
+	cout << "alljoyn client send signal " << signalName << endl; 
+	status = remoteObject->SendSignal(signalName, numArg, args);
+	return status;
+}

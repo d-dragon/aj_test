@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "TestWorker.h"
+#include "OnboardingTest.h"
 
 using namespace std;
 TestWorker::TestWorker(char *interface){
@@ -38,6 +39,12 @@ QStatus TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg
 	
 	QStatus status;
 
+	cout << "executeTestItem: " << testItem << endl;
+	for(size_t i = 0; i < numArg; i++){
+
+		cout << "argument " << i << ": " << tiArg[i] << endl;
+	}
+
 	if(!testItem.compare("onboarding")){
 
 		printf("procesing onboarding test\n");
@@ -45,6 +52,8 @@ QStatus TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg
 	}else{
 
 		printf("processing signal test\n");
+		ajClient->SendRequestSignal(testItem.c_str(), numArg, tiArg);
 
 	}
+	sleep(3);
 }
