@@ -3,6 +3,7 @@
 #include <iostream>
 #include "TestWorker.h"
 #include "OnboardingTest.h"
+#define TIME_OUT 100
 
 using namespace std;
 int TestWorker::signalRespFlag;
@@ -41,6 +42,7 @@ QStatus TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg
 
 	
 	QStatus status;
+	OnboardingTest *onboardingTestApp;
 	int timeout = 0;
 
 	cout << "executeTestItem: " << testItem << endl;
@@ -51,8 +53,19 @@ QStatus TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg
 
 	if(!testItem.compare("onboarding")){
 
-		printf("procesing onboarding test\n");
-
+		std::cout<<"procesing onboarding test\n";
+		onboardingTestApp = new OnboardingTest(tiArg);
+		status = onboardingTestApp->CreateBusAttachment();
+		if ( ER_OK != status )
+		{
+			onboardingTestApp->FinishBusAttachment();
+			return status;
+		}
+		while (timeout++ < TIME_OUT) {
+		   usleep(100 * 1000);
+		}
+		onboardingTestApp->FinishBusAttachment();
+	 
 	}else{
 
 		printf("processing signal test\n");
