@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string>
 #include "AlljoynClient.h"
-
+#include <signal.h>
 using namespace std;
 
 struct SignalInfo{
@@ -11,6 +11,8 @@ struct SignalInfo{
 	string argHint;
 	
 }SignalInfo;
+
+static volatile int sigvalue = 1;
 
 static struct SignalInfo SignalInfoList[] = {
 	{"add_devices", 1, "(type) -> e.g. (zwave)"}, \
@@ -23,7 +25,12 @@ static struct SignalInfo SignalInfoList[] = {
 	{"rule_actions", 6, "(rule_action, rule_type, rule_name, new_name, new_conditions, new_actions)"}
 };
 
-
+void signal_handler(int signo)
+{
+    sigvalue = 1;
+    cout << "Signal Handler" << std::endl;
+    return;
+}
 int help(){
 
 	int numSignalInfo = (sizeof SignalInfoList) / (sizeof SignalInfo);
@@ -36,11 +43,14 @@ int help(){
 	printf("Press the number to take corresponding action!!!\n");
 	printf("**********************************************************************\n");
 }
+
+#define TIMEOUT 10000
 int main()
 {
 	QStatus status;
 	int funcIndex;
-
+    int sig_status;
+    int cnt = 0;
 	printf("*********Start Alljoyn Client app **********\n");
 	AlljoynClient* ajClient = new AlljoynClient();
 	status = ajClient->InitAlljoynClient("com.verik.bus.VENUS_BOARD");
@@ -51,9 +61,17 @@ int main()
 	}
 	sleep(1);
 	status = ajClient->ConnectServiceProvider("com.verik.bus.VENUS_BOARD");
+    ajClient->RegisterCB(signal_handler);
+    
 	if (ER_OK == status) {
 		while(1){
+            if (sigvalue != 1)
+            {
+                usleep(100);
 
+                continue;
+            }
+            sigvalue = 0;
 			help();
 			
 			cout << "Choose feature index:";

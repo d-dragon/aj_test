@@ -82,10 +82,17 @@ void AlljoynClient::AlljoynClientSessionListener::SessionLost(SessionId sessionI
 	printf("SessionLost sessionId = %u, Reason = %d\n", sessionId, reason);
 }
 
+
+void AlljoynClient::RemoteBusObject::RegisterCBFunc(void (*cbfunc)(int)){
+    CBFunc = cbfunc;
+}
+				
+
 AlljoynClient::RemoteBusObject::RemoteBusObject(BusAttachment& bus, const char* path,const char* interface, ProxyBusObject proxyObject, SessionId sessionId) : BusObject(path), remoteSessionId(sessionId), numMember(0), remoteSignalMember(NULL) {
 
 	QStatus status;
 
+    CBFunc = NULL;
 	const InterfaceDescription* remoteInterface = NULL;
 	remoteInterface = proxyObject.GetInterface(interface);
 	assert(remoteInterface);
@@ -127,6 +134,9 @@ void AlljoynClient::RemoteBusObject::SignalHandler(const InterfaceDescription::M
     QCC_UNUSED(srcPath);
     // printf("%s: %s\n", msg->GetSender(), msg->GetArg(0)->v_string.str);
     printf("Response message: %s\n", msg->GetArg(0)->v_string.str);
+    if (CBFunc != NULL){
+        CBFunc(1);
+    }
 
 }
 

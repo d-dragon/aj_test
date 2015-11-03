@@ -25,6 +25,8 @@ using namespace std;
  *		- Send/receive signal to/from service provider
  *		- Send/receive method to/from service provider
  */
+
+typedef void(*fptr)(int);
 class AlljoynClient
 {
 	private:
@@ -73,8 +75,10 @@ class AlljoynClient
 				~RemoteBusObject();
 				void SignalHandler(const InterfaceDescription::Member* member, const char* srcPath, Message& msg);
 				QStatus SendSignal(const char* methodName, size_t numArg, MsgArg args[]);
+                void RegisterCBFunc(void (*cbfunc)(int));
 				
 			private:
+                fptr CBFunc;
 				const InterfaceDescription::Member** remoteSignalMember;
 				SessionId remoteSessionId;
     			size_t numMember;
@@ -84,8 +88,8 @@ class AlljoynClient
 		ProxyBusObject* proxyObject;
 		AlljoynClientAboutListener aboutListener;
 		AlljoynClientSessionListener sessionListener;
-		
 	public:
+       
 		AlljoynClient();
 		~AlljoynClient();
 		QStatus InitAlljoynClient(const char* interface);
@@ -93,5 +97,7 @@ class AlljoynClient
 		QStatus SendRequestSignal(const char* signalName, size_t numArg, ... );
 		QStatus SendRequestSignal(const char* signalName, size_t numArg, string signalArgs[]);
 		QStatus CallMethod(const char* methodName, size_t numArg, ... );
+        void RegisterCB(void (*cbfunc)(int)) { remoteObject->RegisterCBFunc(cbfunc);};
+        
 };
 #endif
