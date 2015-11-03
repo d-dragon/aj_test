@@ -26,7 +26,7 @@ using namespace std;
  *		- Send/receive method to/from service provider
  */
 
-typedef void(*fptr)(int);
+typedef void(*fptr)(int , const char*, const char*, const char*);
 class AlljoynClient
 {
 	private:
@@ -75,7 +75,7 @@ class AlljoynClient
 				~RemoteBusObject();
 				void SignalHandler(const InterfaceDescription::Member* member, const char* srcPath, Message& msg);
 				QStatus SendSignal(const char* methodName, size_t numArg, MsgArg args[]);
-                void RegisterCBFunc(void (*cbfunc)(int));
+                void RegisterCBFunc(void (*cbfunc)(int respFlag, const char *respMsg, const char *srcPath, const char *member));
 				
 			private:
                 fptr CBFunc;
@@ -97,7 +97,7 @@ class AlljoynClient
 		QStatus SendRequestSignal(const char* signalName, size_t numArg, ... );
 		QStatus SendRequestSignal(const char* signalName, size_t numArg, string signalArgs[]);
 		QStatus CallMethod(const char* methodName, size_t numArg, ... );
-        void RegisterCB(void (*cbfunc)(int)) { remoteObject->RegisterCBFunc(cbfunc);};
+        void RegisterCB(void (*cbfunc)(int respFlag, const char *respMsg, const char *srcPath, const char *member)) { remoteObject->RegisterCBFunc(cbfunc);};
         
 };
 #endif

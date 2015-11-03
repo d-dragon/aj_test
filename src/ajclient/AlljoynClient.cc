@@ -83,7 +83,7 @@ void AlljoynClient::AlljoynClientSessionListener::SessionLost(SessionId sessionI
 }
 
 
-void AlljoynClient::RemoteBusObject::RegisterCBFunc(void (*cbfunc)(int)){
+void AlljoynClient::RemoteBusObject::RegisterCBFunc(void (*cbfunc)(int respFlag, const char *respMsg, const char *srcPath, const char *member)){
     CBFunc = cbfunc;
 }
 				
@@ -133,9 +133,9 @@ void AlljoynClient::RemoteBusObject::SignalHandler(const InterfaceDescription::M
     QCC_UNUSED(member);
     QCC_UNUSED(srcPath);
     // printf("%s: %s\n", msg->GetSender(), msg->GetArg(0)->v_string.str);
-    printf("Response message: %s\n", msg->GetArg(0)->v_string.str);
+    //printf("Response message: %s\n", msg->GetArg(0)->v_string.str);
     if (CBFunc != NULL){
-        CBFunc(1);
+        CBFunc(1, msg->GetArg(0)->v_string.str, srcPath, member->name.c_str());
     }
 
 }

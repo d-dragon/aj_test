@@ -25,7 +25,7 @@ static struct SignalInfo SignalInfoList[] = {
 	{"rule_actions", 6, "(rule_action, rule_type, rule_name, new_name, new_conditions, new_actions)"}
 };
 
-void signal_handler(int signo)
+void signal_handler(int signo, const char*, const char*, const char*)
 {
     sigvalue = 1;
     cout << "Signal Handler" << std::endl;

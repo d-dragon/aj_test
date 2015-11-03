@@ -102,7 +102,10 @@ B. Description detail:
     2.2 Run Alljoyn client
 		Navigate to root directory of project source
         $ export LD_LIBRARY_PATH=./lib
-        $ ./bin/alljoynclient
+        $ ./bin/AlljoynClientApp
+	2.3 Run AlljoynTester
+		$ export LD_LIBRARY_PATH=./lib
+		$ ./bin/AlljoynTester src/testcases/testsuit.json src/testcases/testcase.json src/testcases/testitem.json
 3. Limitation:
 	This guide is made for simple test function of onboarding/about, it may still contain other issue(s).
 
