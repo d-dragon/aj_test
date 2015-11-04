@@ -15,15 +15,16 @@ class TestWorker {
 		QStatus stopAlljoynClient();
 		QStatus restartAlljoynClient();
 		QStatus executeTestItem(string testItem, size_t numArg, string tiArg[]);
-	//	static void TIRespMonitor(int respFlag);
 		static void TIRespMonitor(int respFlag, const char *respMsg, const char *srcPath, const char *member);
+		static int exportStuffToFile(const char* content);
 
 	private:
-
 		static int signalRespFlag;
 		string serviceInterface;
 		AlljoynClient *ajClient;
+		static string reportFile;
 
+		void  generateReportFileName();
 };
 
 #endif

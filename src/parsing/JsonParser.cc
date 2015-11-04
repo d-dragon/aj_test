@@ -40,6 +40,8 @@ int JsonParser::startParser(){
 		cout << err.text << " at line " << err.line << endl;
 		return -1;
 	}
+
+	worker->startAlljoynClient();
 	json_array_foreach(testSuitRoot, arrayIndex, tsObj){
 
 		if(!json_is_object(tsObj)){
@@ -175,9 +177,12 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 	json_t *tiArgObj;;
 	json_t *inputArgEle;
 	size_t arraySize = 0;
+	string tmpContent;
 
 	arraySize = json_array_size(tiExObj);
 	string tiArg[arraySize];
+	tmpContent.assign("\n");
+	tmpContent.append(tiName);
 
 	json_array_foreach(tiExObj, index, tiArgObj){
 
@@ -194,12 +199,16 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 			}
 		}
 
-		//DEBUG---
-	//	cout << inputArgName << ": " << json_string_value(json_object_get(tiArgObj, "value")) << endl;
-
 		tiArg[index].assign(json_string_value(json_object_get(tiArgObj, "value")));
 
-	 }
+		tmpContent.append("\n");
+		tmpContent.append(inputArgName);
+		tmpContent.append(":");
+		tmpContent.append(tiArg[index]);
+
+	}
+	tmpContent.append("\n");
+	worker->exportStuffToFile(tmpContent.c_str());
 	worker->executeTestItem(tiName, arraySize, tiArg);
 
 }

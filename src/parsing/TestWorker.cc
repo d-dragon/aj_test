@@ -1,17 +1,23 @@
 /*testworker class*/
 #include <stdio.h>
 #include <iostream>
+#include <fstream>
+#include <ctime>
+#include <string.h>
 #include "TestWorker.h"
 #include "OnboardingTest.h"
 #define TIME_OUT 100
 
 using namespace std;
 int TestWorker::signalRespFlag;
+string TestWorker::reportFile;
+
 TestWorker::TestWorker(char *interface){
 
 	serviceInterface.assign(interface);
 	ajClient = NULL;
 	signalRespFlag = 0;
+	generateReportFileName();
 }
 TestWorker::~TestWorker(){
 
@@ -85,9 +91,44 @@ QStatus TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg
 }
 
 void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *srcPath, const char *member){
-//void TestWorker::TIRespMonitor(int respFlag){
 
+//	TestWorker *twInstance = static_cast<TestWorker *>(respFlag, respMsg, srcPath, member);
 	cout << "Received Message: " << respMsg << endl;
 	//TODO - export the result to file
+	exportStuffToFile(respMsg);
 	signalRespFlag = respFlag;
+}
+
+
+int TestWorker::exportStuffToFile(const char* content){
+
+	cout << "export content to file" << endl;
+	//TODO - auto generate file name
+	fstream outFile;
+	outFile.open(reportFile.c_str(), fstream::out | fstream::app);
+	if(!outFile.is_open()){
+		cout << "can not open file" << endl;
+		return -1;
+	}
+
+	outFile << content;
+	outFile.close();
+	return 0;
+
+}
+
+void TestWorker::generateReportFileName(){
+
+	time_t rawTime;
+	struct tm *timeInfo;
+	char timeBuff[128];
+	char reportName[256];
+
+	time(&rawTime);
+	timeInfo = localtime(&rawTime);
+
+	strftime(timeBuff, 128, "%d-%m-%Y_%I:%M:%S", timeInfo);
+	sprintf(reportName, "%s%s%s%s", "output/", "report-", timeBuff, ".txt");
+	reportFile.assign(reportName);
+
 }
