@@ -95,7 +95,10 @@ void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *sr
 //	TestWorker *twInstance = static_cast<TestWorker *>(respFlag, respMsg, srcPath, member);
 	cout << "Received Message: " << respMsg << endl;
 	//TODO - export the result to file
+	
+	exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
 	exportStuffToFile(respMsg);
+	exportStuffToFile("</td></tr></table>");
 	signalRespFlag = respFlag;
 }
 

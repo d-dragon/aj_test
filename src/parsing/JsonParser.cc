@@ -42,6 +42,7 @@ int JsonParser::startParser(){
 	}
 
 	worker->startAlljoynClient();
+	worker->exportStuffToFile("<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}</style></head><body>");
 	json_array_foreach(testSuitRoot, arrayIndex, tsObj){
 
 		if(!json_is_object(tsObj)){
@@ -57,6 +58,8 @@ int JsonParser::startParser(){
 			return status;
 		}
 	}
+
+	worker->exportStuffToFile("</body></html>");
 
 	return status;
 }
@@ -181,8 +184,13 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 
 	arraySize = json_array_size(tiExObj);
 	string tiArg[arraySize];
-	tmpContent.assign("\n");
+	tmpContent.assign("<table border=\"2\" style=\"width:100%\"> <tr><th>Test Item</th><td colspan=\"2\">");
 	tmpContent.append(tiName);
+
+	char tmp[256];
+	sprintf(tmp, "</td></tr><tr><th rowspan=\"%d\">Input</th></tr>", arraySize+1);
+	tmpContent.append(tmp);
+	memset(tmp, 0,256);
 
 	json_array_foreach(tiExObj, index, tiArgObj){
 
@@ -201,13 +209,18 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 
 		tiArg[index].assign(json_string_value(json_object_get(tiArgObj, "value")));
 
+		sprintf(tmp, "<tr><td>%s</td><td>%s</td></tr>", inputArgName, tiArg[index].c_str());
+		tmpContent.append(tmp);
+		memset(tmp, 0, 256);
+		/*
 		tmpContent.append("\n");
 		tmpContent.append(inputArgName);
 		tmpContent.append(":");
 		tmpContent.append(tiArg[index]);
+		*/
 
 	}
-	tmpContent.append("\n");
+//	tmpContent.append("\n");
 	worker->exportStuffToFile(tmpContent.c_str());
 	worker->executeTestItem(tiName, arraySize, tiArg);
 
