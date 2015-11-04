@@ -3,12 +3,19 @@
 
 #include "AlljoynClient.h"
 #include <string>
-
+#include <vector>
 using namespace std;
 
 class TestWorker {
-
+	struct TestCaseInfo
+		{
+			string Signal;
+			string Type;
+			string ID;
+			vector<string> DeviceList;
+		};
 	public:
+
 		TestWorker(char *interface);
 		~TestWorker();
 		QStatus startAlljoynClient();
@@ -19,12 +26,15 @@ class TestWorker {
 		static int exportStuffToFile(const char* content);
 
 	private:
+		struct TestCaseInfo mTestCaseInfo;
 		static int signalRespFlag;
+		static string *mRespMsg;
 		string serviceInterface;
 		AlljoynClient *ajClient;
 		static string reportFile;
 
 		void  generateReportFileName();
+		int ParseRespondedMsg();
 };
 
 #endif
