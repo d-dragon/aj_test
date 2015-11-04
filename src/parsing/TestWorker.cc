@@ -11,6 +11,7 @@
 using namespace std;
 int TestWorker::signalRespFlag;
 string TestWorker::reportFile;
+string TestWorker::mRespMsg = NULL;
 
 TestWorker::TestWorker(char *interface){
 
@@ -73,6 +74,10 @@ QStatus TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg
 		onboardingTestApp->FinishBusAttachment();
 	 
 	}else{
+		//Save infor of Test Case
+		mTestCaseInfo.Signal.assign(testItem.c_str());
+		mTestCaseInfo.Type.assign(tiArg[0]);
+		mTestCaseInfo.ID.assign(tiArg[1]);
 
 		printf("processing signal test\n");
 		ajClient->SendRequestSignal(testItem.c_str(), numArg, tiArg);
@@ -93,6 +98,8 @@ QStatus TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg
 void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *srcPath, const char *member){
 
 //	TestWorker *twInstance = static_cast<TestWorker *>(respFlag, respMsg, srcPath, member);
+//void TestWorker::TIRespMonitor(int respFlag){
+	TestWorker::mRespMsg = new string(respMsg);
 	cout << "Received Message: " << respMsg << endl;
 	//TODO - export the result to file
 	exportStuffToFile(respMsg);
@@ -131,4 +138,12 @@ void TestWorker::generateReportFileName(){
 	sprintf(reportName, "%s%s%s%s", "output/", "report-", timeBuff, ".txt");
 	reportFile.assign(reportName);
 
+}
+
+int TestWorker::ParseRespondedMsg(){
+	int ret = 0;
+	
+
+
+	return ret;
 }
