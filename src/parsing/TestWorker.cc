@@ -11,13 +11,14 @@
 using namespace std;
 int TestWorker::signalRespFlag;
 string TestWorker::reportFile;
-string TestWorker::mRespMsg = NULL;
+string *TestWorker::mRespMsg = NULL;
 
 TestWorker::TestWorker(char *interface){
 
 	serviceInterface.assign(interface);
 	ajClient = NULL;
 	signalRespFlag = 0;
+	mRespMsg = NULL;
 	generateReportFileName();
 }
 TestWorker::~TestWorker(){
@@ -99,7 +100,7 @@ void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *sr
 
 //	TestWorker *twInstance = static_cast<TestWorker *>(respFlag, respMsg, srcPath, member);
 //void TestWorker::TIRespMonitor(int respFlag){
-	TestWorker::mRespMsg = new string(respMsg);
+	mRespMsg = new string(respMsg);
 	cout << "Received Message: " << respMsg << endl;
 	//TODO - export the result to file
 	exportStuffToFile(respMsg);
