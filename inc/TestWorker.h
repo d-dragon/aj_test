@@ -4,6 +4,11 @@
 #include "AlljoynClient.h"
 #include <string>
 #include <vector>
+
+#define OK 0
+#define ERROR -1
+
+
 using namespace std;
 
 class TestWorker {
@@ -18,10 +23,10 @@ class TestWorker {
 
 		TestWorker(char *interface);
 		~TestWorker();
-		QStatus startAlljoynClient();
-		QStatus stopAlljoynClient();
-		QStatus restartAlljoynClient();
-		QStatus executeTestItem(string testItem, size_t numArg, string tiArg[]);
+		int startAlljoynClient();
+		int stopAlljoynClient();
+		int restartAlljoynClient();
+		int executeTestItem(string testItem, size_t numArg, string tiArg[]);
 		static void TIRespMonitor(int respFlag, const char *respMsg, const char *srcPath, const char *member);
 		static int exportStuffToFile(const char* content);
 

@@ -25,7 +25,7 @@ TestWorker::~TestWorker(){
 
 }
 
-QStatus TestWorker::startAlljoynClient(){
+int TestWorker::startAlljoynClient(){
 
 	QStatus status;
 	ajClient = new	AlljoynClient();
@@ -34,19 +34,20 @@ QStatus TestWorker::startAlljoynClient(){
 	if(ER_OK != status){
 
 		printf("init alljoyn client failed\n");
-		return status;
+		return ERROR;
 	}
 	sleep(2);
 	status = ajClient->ConnectServiceProvider(serviceInterface.c_str());
 	if(ER_OK != status){
 
 		printf("connect to service provider failed\n");
+		return ERROR;
 	}
 	ajClient->RegisterCB(TIRespMonitor);
-	return status;
+	return OK;
 }
 
-QStatus TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
+int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 
 	
 	QStatus status;
@@ -78,7 +79,7 @@ QStatus TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg
 		//Save infor of Test Case
 		mTestCaseInfo.Signal.assign(testItem.c_str());
 		mTestCaseInfo.Type.assign(tiArg[0]);
-		mTestCaseInfo.ID.assign(tiArg[1]);
+	//	mTestCaseInfo.ID.assign(tiArg[1]);
 
 		printf("processing signal test\n");
 		ajClient->SendRequestSignal(testItem.c_str(), numArg, tiArg);
@@ -88,6 +89,10 @@ QStatus TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg
 			if(timeout == 300){
 				cout << "Test item execution timeout!!!" << endl;
 				//TODO - need implement action for this case
+				exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
+				exportStuffToFile("Test item execution timeout!!!");
+				exportStuffToFile("</td></tr></table><br>");
+
 			}
 
 		}
@@ -98,15 +103,13 @@ QStatus TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg
 
 void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *srcPath, const char *member){
 
-//	TestWorker *twInstance = static_cast<TestWorker *>(respFlag, respMsg, srcPath, member);
-//void TestWorker::TIRespMonitor(int respFlag){
 	mRespMsg = new string(respMsg);
 	cout << "Received Message: " << respMsg << endl;
 	//TODO - export the result to file
 	
 	exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
 	exportStuffToFile(respMsg);
-	exportStuffToFile("</td></tr></table>");
+	exportStuffToFile("</td></tr></table><br>");
 	signalRespFlag = respFlag;
 }
 
@@ -139,7 +142,7 @@ void TestWorker::generateReportFileName(){
 	timeInfo = localtime(&rawTime);
 
 	strftime(timeBuff, 128, "%d-%m-%Y_%I:%M:%S", timeInfo);
-	sprintf(reportName, "%s%s%s%s", "output/", "report-", timeBuff, ".txt");
+	sprintf(reportName, "%s%s%s%s", "output/", "report-", timeBuff, ".html");
 	reportFile.assign(reportName);
 
 }

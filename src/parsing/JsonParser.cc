@@ -32,7 +32,6 @@ int JsonParser::startParser(){
 	json_t *tsObj;
 	
 	worker = new TestWorker("com.verik.bus.VENUS_BOARD");
-	worker->startAlljoynClient();
 
 	testSuitRoot = json_load_file(dfTSPath, 0, &err);
 	if ((testSuitRoot == NULL) || !(json_is_array(testSuitRoot))){
@@ -41,8 +40,12 @@ int JsonParser::startParser(){
 		return -1;
 	}
 
-	worker->startAlljoynClient();
-	worker->exportStuffToFile("<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}</style></head><body>");
+	status = worker->startAlljoynClient();
+	if(status == ERROR){
+		return status;
+	}
+
+	worker->exportStuffToFile("<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
 	json_array_foreach(testSuitRoot, arrayIndex, tsObj){
 
 		if(!json_is_object(tsObj)){
@@ -184,7 +187,7 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 
 	arraySize = json_array_size(tiExObj);
 	string tiArg[arraySize];
-	tmpContent.assign("<table border=\"2\" style=\"width:100%\"> <tr><th>Test Item</th><td colspan=\"2\">");
+	tmpContent.assign("<table border=\"2\" width=\"640\"><col width=\"100\"><col width=\"140\"><col width=\"400\"><tr><th>Test Item</th><td colspan=\"2\">");
 	tmpContent.append(tiName);
 
 	char tmp[256];

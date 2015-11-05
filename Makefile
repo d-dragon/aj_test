@@ -27,6 +27,7 @@ BUILDDIR			= build
 OBJDIR 				= obj
 BINDIR				= bin
 LIBDIR				= lib
+OUTPUTDIR			= output
 SRCDIR 				= src
 
 # 
@@ -107,6 +108,7 @@ directories:
 	@mkdir -p $(BUILDDIR)
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(BINDIR)
+	@mkdir -p $(OUTPUTDIR)
 
 ParsingApp: src/jsonparser.cc 
 	$(CXX) -o $(BINDIR)/jsonparser src/jsonparser.cc $(CXXFLAGS) $(LIBS)
