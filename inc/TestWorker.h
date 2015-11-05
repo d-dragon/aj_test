@@ -42,7 +42,7 @@ class TestWorker {
 		void  generateReportFileName();
 		int ParseRespondedMsg();
 		void GetDevIDFromList();
-		void UpdateDevIDOfTC(string*, string);
+		void UpdateDevIDOfTC(string*);
 };
 
 #endif
