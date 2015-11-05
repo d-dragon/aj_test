@@ -2,36 +2,29 @@
 	{
 		"testsuit" : "newdevice",
 		"testcases" :	[
-			{
-				"name" : "wifisetup",
-				"input" : {
-					"ssid": "VEriK_Belkin",
-					"passcode": "766572696b73797374656d7332303135",
-					"auth": "WPA_AUTO",
-					"getVersion": "on",
-					"getState": "off",
-					"getLastErr": "on",
-					"getScanInfo": "on",
-					"configAndConnectWifi": "on",
-					"offBoard": "off" 
-
-				}
-
-			},
 			{ 
 				"name" : "adddevice", 
 				"input" : { 
-					"type" : "zwave" 
+					"devicetype" : "zwave" 
 				}
 			},
 			{
 				"name" : "controlonoff",
 				"input" : {
-					"type" : "zwave",
+					"devicetype" : "zwave",
 					"id" : "from_adddevice_output",
-					"value" : "0|1"
+					"value" : "0"
 				}
 			},
+			{
+				"name" : "controlonoff",
+				"input" : {
+					"devicetype" : "zwave",
+					"id" : "from_adddevice_output",
+					"value" : "1"
+				}
+			},
+
 			{
 				"name" : "rules",
 				"input" : {
@@ -55,17 +48,26 @@
 			{
 				"name" : "wifisetup",
 				"input" : {
-					"ssid" : "VEriK2",
-					"auth" : -2 ,
-					"password" : "verik****"
+					"ssid": "VEriK_Belkin",
+					"passcode": "766572696b73797374656d7332303135",
+					"auth": "WPA_AUTO",
+					"getVersion": "on",
+					"getState": "off",
+					"getLastErr": "on",
+					"getScanInfo": "on",
+					"configAndConnectWifi": "on",
+					"offBoard": "off" 
+
 				}
 
 			},
+
 			{
 				"name" : "controlonoff",
 				"input" : {
-					"type" : "zwave",
-					"deviceid" : "01"
+					"devicetype" : "zwave",
+					"deviceid" : "01",
+					"value" : "0"
 				}
 
 			},

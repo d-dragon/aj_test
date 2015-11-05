@@ -1,25 +1,60 @@
 {
 	"add_devices" :[
-		{ "arg": "type", "value" : "na" }
+		{ "arg": "devicetype", "value" : "na" }
 	],
 
 	"list_devices" :[
-		{ "arg": "type", "value" : "na" }
+		{ "arg": "devicetype", "value" : "na" }
 	],
 
 	"get_binary" :[
-		{ "arg": "type", "value" : "na" },
+		{ "arg": "devicetype", "value" : "na" },
 		{ "arg": "id", "value" : "na" },
 		{ "arg": "epnum", "value" : "na" },
 		{ "arg": "proid", "value" : "na" }
 	],
 
 	"set_binary" :[
-		{ "arg": "type", "value" : "na" },
+		{ "arg": "devicetype", "value" : "na" },
 		{ "arg": "id", "value" : "na" },
 		{ "arg": "value", "value" : "na" },
 		{ "arg": "epnum", "value" : "na" },
 		{ "arg": "proid", "value" : "na" }
+	],
+
+	"read_spec" :[
+		{ "arg": "devicetype", "value" : "na" },
+		{ "arg": "id", "value" : "na" },
+		{ "arg": "class", "value" : "na" },
+		{ "arg": "command", "value" : "na" },
+		{ "arg": "type", "value" : "na" },
+		{ "arg": "scale", "value" : "na" },
+		{ "arg": "force", "value" : "na" }
+	],
+	"write_spec" :[
+		{ "arg": "devicetype", "value" : "na" },
+		{ "arg": "id", "value" : "na" },
+		{ "arg": "class", "value" : "na" },
+		{ "arg": "command", "value" : "na" },
+		{ "arg": "data0", "value" : "na" },
+		{ "arg": "data1", "value" : "na" },
+		{ "arg": "data2", "value" : "na" }
+	],
+	"read_s_spec" :[
+		{ "arg": "devicetype", "value" : "na" },
+		{ "arg": "id", "value" : "na" },
+		{ "arg": "class", "value" : "na" },
+		{ "arg": "command", "value" : "na" },
+		{ "arg": "data0", "value" : "na" }
+	],
+	"write_s_spec" :[
+		{ "arg": "devicetype", "value" : "na" },
+		{ "arg": "id", "value" : "na" },
+		{ "arg": "class", "value" : "na" },
+		{ "arg": "command", "value" : "na" },
+		{ "arg": "data0", "value" : "na" },
+		{ "arg": "data1", "value" : "na" },
+		{ "arg": "data2", "value" : "na" }
 	],
 
 	"update_firmware" :[
@@ -56,9 +91,9 @@
 		{ "arg" : "getLastErr", "value" : "na"},
 		{ "arg" : "getScanInfo", "value" : "na"},
 		{ "arg" : "configAndConnectWifi", "value" : "na"},
-		 { "arg" : "offBoard", "value" : "na"}
+		{ "arg" : "offBoard", "value" : "na"}
 
 	]
 
 }
- 
+

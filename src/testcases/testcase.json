@@ -11,16 +11,34 @@
 			{ "name": "list_devices" }
 		]
 	},
-
 	"controlonoff":{
 		"testitems": [
-			{"name" : "set_binary"},
-			{"name" : "get_binary"},
 			{"name" : "set_binary"},
 			{"name" : "get_binary"}
 		]
 	},
+	
+	"readspec":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"writespec":{
+		"testitems": [
+			{"name" : "write_spec"}
+		]
+	},
 
+	"readsecurespec":{
+		"testitems": [
+			{"name" : "read_s_spec"}
+		]
+	},
+	"writesecurespec":{
+		"testitems": [
+			{"name" : "write_s_spec"}
+		]
+	},
 	"firmwareupdate":{
 		"testitems": [
 			{"name" : "update_firmware"}
