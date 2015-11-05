@@ -19,11 +19,12 @@ class JsonParser {
 		json_t *testSuitRoot;
 		json_error_t err;
 		TestWorker *worker;
+		json_t *tcTemplateRoot;
+		json_t *tiRoot;
 
 		const char *dfTSPath;
 		const char *dfTCPath;
 		const char *dfTIPath;
-
 
 		int TestsuitParser(json_t *tsObj);
 		int TestCaseCollector(json_t *tcRoot);

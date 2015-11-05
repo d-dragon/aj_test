@@ -14,7 +14,10 @@ using namespace std;
 
 JsonParser::JsonParser(const char *tsPath, const char *tcPath, const char *tiPath){
 
-	testSuitRoot = NULL;
+	testSuitRoot	= NULL;
+	tcTemplateRoot	= NULL;
+	tiRoot			= NULL;
+
 	dfTSPath = tsPath;
 	dfTCPath = tcPath;
 	dfTIPath = tiPath;
@@ -22,7 +25,12 @@ JsonParser::JsonParser(const char *tsPath, const char *tcPath, const char *tiPat
 
 
 JsonParser::~JsonParser(){
-
+	if ( NULL != tiRoot )
+		json_decref(tiRoot);
+	if ( NULL != tcTemplateRoot )
+		json_decref(tcTemplateRoot);
+	if ( NULL != testSuitRoot )	
+		json_decref(testSuitRoot);
 }
 
 int JsonParser::startParser(){
@@ -99,8 +107,6 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 	json_t *tcObj;
 	json_t *tcInputArg;
 	const char *tcName = NULL;
-	static json_t *tcTemplateRoot = NULL;
-	
 	json_array_foreach(tcRoot, index, tcObj){
 
 		if(!json_is_object(tcObj)){
@@ -230,7 +236,6 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 }
 json_t* JsonParser::getTestItemTemplateObj(const char *tiName){
 
-	static json_t *tiRoot = NULL;
 	json_t *tiObj;
 
 	if(tiRoot == NULL){

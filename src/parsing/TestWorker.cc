@@ -79,7 +79,11 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 		//Save infor of Test Case
 		mTestCaseInfo.Signal.assign(testItem.c_str());
 		mTestCaseInfo.Type.assign(tiArg[0]);
-	//	mTestCaseInfo.ID.assign(tiArg[1]);
+		if ( numArg > 2 ){
+//			mTestCaseInfo.ID.assign(tiArg[1]);
+			UpdateDevIDOfTC(&tiArg[1], tiArg[2]);
+			LOGCXX("Update device ID: "<<tiArg[1] );
+		}
 
 		printf("processing signal test\n");
 		ajClient->SendRequestSignal(testItem.c_str(), numArg, tiArg);
@@ -96,6 +100,7 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 			}
 
 		}
+		ParseRespondedMsg();
 		signalRespFlag = 0;
 	
 	}
@@ -148,9 +153,55 @@ void TestWorker::generateReportFileName(){
 }
 
 int TestWorker::ParseRespondedMsg(){
+	// TODO: make a structure of signal name 
 	int ret = 0;
-	
+	LOGCXX("TestWorker::ParseRespondedMsg");
+	ret =  mTestCaseInfo.Signal.compare("list_devices");
+	if ((0 == ret) && (0 == mTestCaseInfo.Type.compare("zwave")))
+	{
+		if ( NULL != mRespMsg ){
+			GetDevIDFromList();	
+		}
+	}
 
 
 	return ret;
+}
+
+void TestWorker::UpdateDevIDOfTC(string *output, string condition){
+	LOGCXX("TestWorker::UpdateDevIDOfTC");
+	if (mTestCaseInfo.Signal.compare("set_binary") == 0){ 
+//		if (0 == condition.compare("from_adddevice_output")){
+			output->assign(mTestCaseInfo.DeviceList.front());
+			LOGCXX("Update output: "<< output->c_str()); 
+//		}
+	}	
+	if(mTestCaseInfo.Signal.compare("get_binary") == 0){
+		output->assign(mTestCaseInfo.DeviceList.front());
+		LOGCXX("Update output: "<< output->c_str()); 
+	}
+}
+
+
+void TestWorker::GetDevIDFromList(){ 
+	char *devInfo, *info,*devID,  *tmp, *tmp1, *tmp2;
+	int cnt = 0;
+	char *listDevs =(char *) mRespMsg->c_str();
+	for ( devInfo = strtok_r(listDevs, "\n", &tmp); devInfo; devInfo = strtok_r( NULL, "\n", &tmp ) ){
+		cnt = 0;
+		// devInfo store Responded Msg from CRESS of only 1 dev zwave
+		for ( info = strtok_r(devInfo, "|", &tmp1 ); info; info = strtok_r(NULL, "|", &tmp1) ){
+			if ( cnt == 3 ) // Position of Dev ID in response message
+			{
+				devID = strtok_r(info, " ", &tmp2);				
+				mTestCaseInfo.DeviceList.push_back(std::string(devID));
+				LOGCXX("Found device ID: ["<<mTestCaseInfo.DeviceList.back().c_str()<<"]");
+				break;
+			}
+			cnt++;
+		}
+	}
+	delete mRespMsg;
+	mRespMsg = NULL;
+
 }

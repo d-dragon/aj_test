@@ -31,6 +31,7 @@ class TestWorker {
 		static int exportStuffToFile(const char* content);
 
 	private:
+		// Store all base infor of Test case and list all Devices.
 		struct TestCaseInfo mTestCaseInfo;
 		static int signalRespFlag;
 		static string *mRespMsg;
@@ -40,6 +41,8 @@ class TestWorker {
 
 		void  generateReportFileName();
 		int ParseRespondedMsg();
+		void GetDevIDFromList();
+		void UpdateDevIDOfTC(string*, string);
 };
 
 #endif
