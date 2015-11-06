@@ -184,6 +184,10 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 	char *cstring, *saveptr;
 	int cnt = 0;
 	int pos;
+	if (mTestCaseInfo.DeviceList.size() == 0){
+		LOGCXX("There is no Dev ID was recorded");
+		return;
+	}
 	if (mTestCaseInfo.Signal.compare("set_binary") == 0){ 
 //		if (0 == condition.compare("from_adddevice_output")){
 			arg[1].assign(mTestCaseInfo.DeviceList.front());
