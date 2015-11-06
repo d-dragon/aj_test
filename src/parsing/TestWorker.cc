@@ -184,22 +184,28 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 	char *cstring, *saveptr;
 	int cnt = 0;
 	int pos;
+	string tempdevId, actions;
+
 	if (mTestCaseInfo.DeviceList.size() == 0){
 		LOGCXX("There is no Dev ID was recorded");
 		return;
 	}
-	if (mTestCaseInfo.Signal.compare("set_binary") == 0){ 
-//		if (0 == condition.compare("from_adddevice_output")){
-			arg[1].assign(mTestCaseInfo.DeviceList.front());
-			LOGCXX("Update output: "<< arg[1].c_str()); 
-//		}
-	}	
-	if(mTestCaseInfo.Signal.compare("get_binary") == 0){
+
+	//Update read ID 
+	if ((mTestCaseInfo.Signal.compare("set_binary") 	== 0) ||
+		(mTestCaseInfo.Signal.compare("get_binary") 	== 0) ||
+		(mTestCaseInfo.Signal.compare("read_spec") 		== 0) ||
+		(mTestCaseInfo.Signal.compare("write_spec") 	== 0) ||
+		(mTestCaseInfo.Signal.compare("read_s_spec") 	== 0) ||
+		(mTestCaseInfo.Signal.compare("write_s_spec") 	== 0)
+		)
+	{
 		arg[1].assign(mTestCaseInfo.DeviceList.front());
 		LOGCXX("Update output: "<< arg[1].c_str()); 
+
 	}
-	if(mTestCaseInfo.Signal.compare("set_rule") == 0) {
-		string tempdevId, actions;
+
+	if(mTestCaseInfo.Signal.compare("set_rule") 		== 0) {
 		LOGCXX("arg [3]: "<< arg[3].c_str());
 		actions.assign(arg[3]);
 		for ( cstring = strtok_r((char*)actions.c_str(), ";",&saveptr); cstring; cstring = strtok_r(NULL, ";", &saveptr)) {
@@ -211,11 +217,30 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 		}
 		// Save the first occurent
 		pos = actions.find(tempdevId);
-		LOGCXX("Temp deviD: " << tempdevId.c_str());
+		LOGCXX("Temporary dev id: " << tempdevId.c_str());
 		//Replace 
 		actions = arg[3].substr(0,pos) + ";" + mTestCaseInfo.DeviceList.front() + ";" + arg[3].substr(pos+tempdevId.length(), arg[3].length()- (pos+tempdevId.length()));
 		LOGCXX("New actions string: " << actions); 
 		arg[3].assign(actions);
+	}
+
+	if(mTestCaseInfo.Signal.compare("rule_actions") 		== 0){
+		LOGCXX("arg [5]: "<< arg[5].c_str());
+		actions.assign(arg[5]);
+		for ( cstring = strtok_r((char*)actions.c_str(), ";",&saveptr); cstring; cstring = strtok_r(NULL, ";", &saveptr)) {
+			if (cnt++ == 1){
+				LOGCXX(cstring);
+				tempdevId.assign(cstring);
+				break;
+			}
+		}
+		// Save the first occurent
+		pos = actions.find(tempdevId);
+		LOGCXX("Temporary dev id: " << tempdevId.c_str());
+		//Replace 
+		actions = arg[5].substr(0,pos) + ";" + mTestCaseInfo.DeviceList.front() + ";" + arg[5].substr(pos+tempdevId.length(), arg[5].length()- (pos+tempdevId.length()));
+		LOGCXX("New actions string: " << actions); 
+		arg[5].assign(actions);
 	}
 }
 
