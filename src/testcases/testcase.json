@@ -51,6 +51,15 @@
 			{"name" : "get_rule"},
 			{"name" : "rule_actions"}
 		]
+	},
+
+	"wemoupnp" : {
+		"testitems" : [
+			{"name" : "listennotification"},
+			{"name" : "get_binary"},
+			{"name" : "set_binary"}
+
+		]
 	}
 
 }

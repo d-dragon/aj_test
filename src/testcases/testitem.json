@@ -93,6 +93,10 @@
 		{ "arg" : "configAndConnectWifi", "value" : "na"},
 		{ "arg" : "offBoard", "value" : "na"}
 
+	],
+	"listennotification" : [
+		{"arg" : "devicetype", "value" : "na"},
+		{"arg" : "time", "value" : "na"}
 	]
 
 }

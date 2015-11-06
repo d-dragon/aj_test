@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[]){
 
-	JsonParser *tester = new JsonParser("src/testcases/testsuit.json", "src/testcases/testcase.json", "src/testcases/testitem.json");
+	JsonParser *tester = new JsonParser(argv[1], "src/testcases/testcase.json", "src/testcases/testitem.json");
 	
 	tester->startParser();
 	return 1;

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
+#include <string>
 #include <string.h>
 #include "TestWorker.h"
 #include "OnboardingTest.h"
@@ -75,6 +76,16 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 		}
 		onboardingTestApp->FinishBusAttachment();
 	 
+	}else if(!testItem.compare("listennotification")){
+	
+		if(!tiArg[0].compare("upnp")){
+
+			int time;
+			time = stoi(tiArg[1]);
+
+			cout << "listen notification in: " <<  time << "s" << endl;
+			sleep(time);
+		}
 	}else{
 		//Save infor of Test Case
 		mTestCaseInfo.Signal.assign(testItem.c_str());
