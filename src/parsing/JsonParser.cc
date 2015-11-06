@@ -162,6 +162,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			if(status == ERROR){
 				cout << "run test item failed" << endl;
 			}
+			cout << "*************************************************\n" << endl;
 		}
 	 }
 	return status;

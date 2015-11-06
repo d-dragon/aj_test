@@ -1,0 +1,36 @@
+[ 
+	{
+		"testsuit" : "newdevice",
+		"testcases" :	[
+			{ 
+				"name" : "adddevice", 
+				"input" : { 
+					"devicetype" : "zwave" 
+				}
+			},
+
+			{
+				"name" : "controlonoff",
+				"input" : {
+					"devicetype" : "zwave",
+					"value" : "1"
+				}
+			},
+			{ 
+				"name" : "adddevice", 
+				"input" : { 
+					"devicetype" : "zwave" 
+				}
+			},
+
+			{
+				"name" : "controlonoff",
+				"input" : {
+					"devicetype" : "zwave",
+					"value" : "0"
+				}
+			}
+			
+		]
+	}
+]

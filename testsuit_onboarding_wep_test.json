@@ -1,0 +1,24 @@
+[ 
+	{
+		"testsuit" : "onboarding",
+		"testcases" :	[ 
+			{
+				"name" : "wifisetup",
+				"input" : {
+					"ssid": "wep_test",
+					"passcode": "766572696b74706c696e6b0d0a",
+					"auth": "WPA2_AUTO",
+					"getVersion": "on",
+					"getState": "off",
+					"getLastErr": "on",
+					"getScanInfo": "on",
+					"configAndConnectWifi": "on",
+					"offBoard": "off" 
+
+				}
+
+			}
+
+		]
+	}
+]

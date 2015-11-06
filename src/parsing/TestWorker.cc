@@ -132,7 +132,6 @@ void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *sr
 
 int TestWorker::exportStuffToFile(const char* content){
 
-	cout << "export content to file" << endl;
 	//TODO - auto generate file name
 	fstream outFile;
 	outFile.open(reportFile.c_str(), fstream::out | fstream::app);

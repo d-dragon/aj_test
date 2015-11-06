@@ -1,0 +1,65 @@
+[ 
+	{
+		"testsuit" : "sensor",
+		"testcases" :	[
+
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" : "zwave",
+					"id" : "0D",
+					"class": "ASSOCIATION",
+					"command":"GET"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" : "zwave",
+					"id" : "12",
+					"class": "BATTERY",
+					"command":"GET",
+					"force":"1"
+				}
+			},
+{
+				"name" : "writespec",
+				"input" : {
+					"devicetype" : "zwave",
+					"id" : "12",
+					"class": "ASSOCIATION",
+					"command":"SET",
+					"data0": "2",
+					"data1": "0D",
+					"data2": "1"
+
+				}
+			},
+
+			{
+				"name" : "controlonoff",
+				"input" : {
+					"devicetype" : "zwave",
+					"id" : "0D",
+					"value" : "0"
+				}
+			},
+
+			{
+				"name" : "rules",
+				"input" : {
+					"devicetype" : "all",
+					"ruletype" : "time",
+					"rulename" : "rule1",
+					"ruleaction" : "activate",
+					"conditions" : "15:40;1,2,3,4,5",
+					"actions" : "zwave;33D5;1;01;0104",
+					"newname" : "rule2",
+					"newcondition" : "16:00;1,2,3",
+					"newaction" : "zwave;33D5;0;01;0104"
+				}
+			}
+
+		]
+	}
+]

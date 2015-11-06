@@ -1,0 +1,14 @@
+[ 
+	{
+		"testsuit" : "newdevice",
+		"testcases" :	[
+			{ 
+				"name" : "removedevice", 
+				"input" : { 
+					"devicetype" : "zwave",
+					"id" : "12"
+				}
+			}
+		]
+	}
+]

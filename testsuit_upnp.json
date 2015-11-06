@@ -1,0 +1,18 @@
+[ 
+	{
+		"testsuit" : "newdevice",
+		"testcases" :	[
+
+			{
+				"name" : "wemoupnp",
+				"input" : {
+					"devicetype" : "upnp",
+					"time" : "90",
+					"id" : "insight_852",
+					"value" : "1"
+				}
+			}
+
+		]
+	}
+]
