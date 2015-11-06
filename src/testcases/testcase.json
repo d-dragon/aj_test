@@ -11,6 +11,13 @@
 			{ "name": "list_devices" }
 		]
 	},
+	"removedevice": {
+		"testitems": [
+			{ "name": "remove_device" },
+			{ "name": "list_devices" }
+		]
+	},
+
 	"controlonoff":{
 		"testitems": [
 			{"name" : "set_binary"},
@@ -55,7 +62,7 @@
 
 	"wemoupnp" : {
 		"testitems" : [
-			{"name" : "listennotification"},
+			{"name" : "listen_notification"},
 			{"name" : "get_binary"},
 			{"name" : "set_binary"}
 

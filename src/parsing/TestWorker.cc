@@ -76,7 +76,7 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 		}
 		onboardingTestApp->FinishBusAttachment();
 	 
-	}else if(!testItem.compare("listennotification")){
+	}else if(!testItem.compare("listen_notification")){
 	
 		if(!tiArg[0].compare("upnp")){
 

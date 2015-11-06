@@ -56,6 +56,13 @@
 		{ "arg": "data1", "value" : "na" },
 		{ "arg": "data2", "value" : "na" }
 	],
+	"remove_device" :[
+		{ "arg": "devicetype", "value" : "na" },
+		{ "arg": "id", "value" : "na" }
+	],
+	"reset" :[
+		{ "arg": "devicetype", "value" : "na" }
+	],
 
 	"update_firmware" :[
 		{ "arg": "url", "value" : "na" }
@@ -94,7 +101,7 @@
 		{ "arg" : "offBoard", "value" : "na"}
 
 	],
-	"listennotification" : [
+	"listen_notification" : [
 		{"arg" : "devicetype", "value" : "na"},
 		{"arg" : "time", "value" : "na"}
 	]
