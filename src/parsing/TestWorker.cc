@@ -93,7 +93,6 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 		if ( numArg > 2 ){
 //			mTestCaseInfo.ID.assign(tiArg[1]);
 			UpdateDevIDOfTC(tiArg);
-			LOGCXX("Update device ID: "<<tiArg[1] );
 		}
 
 		printf("processing signal test\n");
@@ -169,6 +168,8 @@ int TestWorker::ParseRespondedMsg(){
 	ret =  mTestCaseInfo.Signal.compare("list_devices");
 	if ((0 == ret) && (0 == mTestCaseInfo.Type.compare("zwave")))
 	{
+		// Clear list dev iD before add it again
+		mTestCaseInfo.DeviceList.clear();
 		if ( NULL != mRespMsg ){
 			GetDevIDFromList();	
 		}
@@ -177,20 +178,29 @@ int TestWorker::ParseRespondedMsg(){
 
 	return ret;
 }
-
+	/*
+	Function: 	support user update device ID of test case, base on index of test case
+	Input: 		String from test case
+	Output: 	arg with ID of device will be changed corresponding with index
+				if wrong index: the first device will be fill instead.
+	*/
 void TestWorker::UpdateDevIDOfTC(string arg[]){
 	LOGCXX("TestWorker::UpdateDevIDOfTC: "<< mTestCaseInfo.Signal.c_str());
 	char *cstring, *saveptr;
 	int cnt = 0;
 	int pos;
-	string tempdevId, actions;
+	string tempdevId, actions, newIDValue, stringsuffix, *saveActionInput;
+
+	saveActionInput = NULL;
 
 	if (mTestCaseInfo.DeviceList.size() == 0){
 		LOGCXX("There is no Dev ID was recorded");
 		return;
 	}
 
-	//Update read ID 
+	/*
+		Handle normal signals
+	*/
 	if ((mTestCaseInfo.Signal.compare("set_binary") 	== 0) ||
 		(mTestCaseInfo.Signal.compare("get_binary") 	== 0) ||
 		(mTestCaseInfo.Signal.compare("read_spec") 		== 0) ||
@@ -199,15 +209,33 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 		(mTestCaseInfo.Signal.compare("write_s_spec") 	== 0)
 		)
 	{
-		arg[1].assign(mTestCaseInfo.DeviceList.front());
-		LOGCXX("Update output: "<< arg[1].c_str()); 
+		if(arg[1].find("ID") == std::string::npos){
+			// Keep the input from user
+			return;
+		}
+		newIDValue 		= mTestCaseInfo.DeviceList.at(GetIndexByCondition(arg[1]));
+		arg[1].assign(newIDValue);
+		LOGCXX("Update new Dev ID: "<< arg[1].c_str()); 
 
 	}
 
+	/*
+		Handle actions 
+	*/
 	if(mTestCaseInfo.Signal.compare("set_rule") 		== 0) {
-		LOGCXX("arg [3]: "<< arg[3].c_str());
-		actions.assign(arg[3]);
-		for ( cstring = strtok_r((char*)actions.c_str(), ";",&saveptr); cstring; cstring = strtok_r(NULL, ";", &saveptr)) {
+		saveActionInput = &arg[3];
+	}
+	if(mTestCaseInfo.Signal.compare("rule_actions") 	== 0){
+		saveActionInput = &arg[5];
+	}
+	if (saveActionInput != NULL){
+		if(saveActionInput->find("ID") == std::string::npos){
+			// Keep the input from user
+			return;
+		}
+		LOGCXX("Action input "<< saveActionInput->c_str());
+		actions.assign(*saveActionInput);
+		for ( cstring 	= strtok_r((char*)actions.c_str(), ";",&saveptr); cstring; cstring = strtok_r(NULL, ";", &saveptr)) {
 			if (cnt++ == 1){
 				LOGCXX(cstring);
 				tempdevId.assign(cstring);
@@ -215,34 +243,24 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 			}
 		}
 		// Save the first occurent
-		pos = actions.find(tempdevId);
+		pos 			= actions.find(tempdevId);
 		LOGCXX("Temporary dev id: " << tempdevId.c_str());
 		//Replace 
-		actions = arg[3].substr(0,pos) + ";" + mTestCaseInfo.DeviceList.front() + ";" + arg[3].substr(pos+tempdevId.length(), arg[3].length()- (pos+tempdevId.length()));
-		LOGCXX("New actions string: " << actions); 
-		arg[3].assign(actions);
+		newIDValue 		= mTestCaseInfo.DeviceList.at(GetIndexByCondition(tempdevId));
+		stringsuffix	= saveActionInput->substr(pos+tempdevId.length(), saveActionInput->length()- (pos+tempdevId.length()));
+		actions 		= saveActionInput->substr(0,pos) + ";" + newIDValue + ";" + stringsuffix;
+		saveActionInput->assign(actions);
+		LOGCXX("Update new Dev ID -> Updated actions: "<< *saveActionInput);
 	}
-
-	if(mTestCaseInfo.Signal.compare("rule_actions") 		== 0){
-		LOGCXX("arg [5]: "<< arg[5].c_str());
-		actions.assign(arg[5]);
-		for ( cstring = strtok_r((char*)actions.c_str(), ";",&saveptr); cstring; cstring = strtok_r(NULL, ";", &saveptr)) {
-			if (cnt++ == 1){
-				LOGCXX(cstring);
-				tempdevId.assign(cstring);
-				break;
-			}
-		}
-		// Save the first occurent
-		pos = actions.find(tempdevId);
-		LOGCXX("Temporary dev id: " << tempdevId.c_str());
-		//Replace 
-		actions = arg[5].substr(0,pos) + ";" + mTestCaseInfo.DeviceList.front() + ";" + arg[5].substr(pos+tempdevId.length(), arg[5].length()- (pos+tempdevId.length()));
-		LOGCXX("New actions string: " << actions); 
-		arg[5].assign(actions);
-	}
+	/*
+		Handle other
+	*/
 }
-
+	/*
+	Function: 	Get device IDs from response of list_devices signal on Zwave
+	Input: 		responded msg from list_devices
+	Output: 	save all device order in this list: mTestCaseInfo.DeviceList
+	*/
 
 void TestWorker::GetDevIDFromList(){ 
 	char *devInfo, *info,*devID,  *tmp, *tmp1, *tmp2;
@@ -265,4 +283,41 @@ void TestWorker::GetDevIDFromList(){
 	delete mRespMsg;
 	mRespMsg = NULL;
 
+}
+	/*
+	Function: 		Get index of Dev by parsing input
+	Input format: 	"ID index"
+					index is an integer value
+	Return:			valid index.
+	*/
+
+int TestWorker::GetIndexByCondition(string condition){
+	int ret = 0;
+	int found = -1, cnt;
+	char *index, *saveptr;
+	/*
+		Condition format: "ID index"
+		ID: string
+		index: integer
+	*/
+	LOGCXX("TestWorker::GetIndexByCondition condition: " << condition);
+	found = condition.find("ID");
+	if (found != std::string::npos){
+		cnt = 0;
+		for ( index = strtok_r((char*)condition.c_str(), " ", &saveptr); index; index = strtok_r(NULL, " ", &saveptr)){
+			if (cnt++ == 1){
+				ret = atoi(index);
+				LOGCXX("Found index [" <<ret<<"]");
+				break;
+			}
+		}
+	}
+
+	/*Cover out of range*/
+
+	if ((ret < 0) || (ret >= mTestCaseInfo.DeviceList.size())){
+		LOGCXX("Invalid index (out of range), set it to first dev index with ID: "<< mTestCaseInfo.DeviceList.front());
+		ret = 0;
+	}
+	return ret;
 }
