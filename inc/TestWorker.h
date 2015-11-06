@@ -43,6 +43,7 @@ class TestWorker {
 		int ParseRespondedMsg();
 		void GetDevIDFromList();
 		void UpdateDevIDOfTC(string*);
+		int GetIndexByCondition(string);
 };
 
 #endif
