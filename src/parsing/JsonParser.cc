@@ -17,6 +17,7 @@ JsonParser::JsonParser(const char *tsPath, const char *tcPath, const char *tiPat
 	testSuitRoot	= NULL;
 	tcTemplateRoot	= NULL;
 	tiRoot			= NULL;
+	worker 			= NULL;
 
 	dfTSPath = tsPath;
 	dfTCPath = tcPath;
@@ -31,6 +32,9 @@ JsonParser::~JsonParser(){
 		json_decref(tcTemplateRoot);
 	if ( NULL != testSuitRoot )	
 		json_decref(testSuitRoot);
+	if ( NULL != worker ){
+		delete worker;
+	} 
 }
 
 int JsonParser::startParser(){
