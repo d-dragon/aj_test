@@ -14,8 +14,8 @@
 				"name" : "controlonoff",
 				"input" : {
 					"devicetype" : "zwave",
-					"id" : "",
-					"value" : "0"
+					"id" : "ID 0",
+					"value" : "1"
 				}
 			},
 			{ 
@@ -28,9 +28,9 @@
 			{
 				"name" : "controlonoff",
 				"input" : {
-					"devicetype" : "zwave",
-					"id" : "",
-					"value" : "1"
+			"devicetype" : "zwave",
+					"id" : "ID 0",
+					"value" : "0"
 				}
 			}
 

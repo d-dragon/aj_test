@@ -6,7 +6,7 @@
 				"name" : "removedevice", 
 				"input" : { 
 					"devicetype" : "zwave",
-					"id" : "12"
+					"id" : "15"
 				}
 			}
 		]

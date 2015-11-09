@@ -11,6 +11,13 @@
 			{ "name": "list_devices" }
 		]
 	},
+
+	"listdevice" :{
+		"testitems": [
+			{"name": "list_devices"}
+		]
+	},
+
 	"removedevice": {
 		"testitems": [
 			{ "name": "remove_device" },

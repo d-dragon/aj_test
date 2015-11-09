@@ -54,6 +54,7 @@ AlljoynTester: $(AJCLIENT_OBJECTS) $(ONBOARDING_OBJECTS) $(PARSINGMODULE_OBJS)
 	@echo "**********Build Alljoyn Tester Application**********"
 	$(CXX) -c $(SRCDIR)/AlljoynTester.cc $(CXXFLAGS) $(LIBS) -o $(OBJDIR)/$@.o
 	$(CXX) -o $(BINDIR)/$@ $^ $(OBJDIR)/$@.o $(CXXFLAGS) $(LIBS)
+	cp $(SRCDIR)/.dev_env $(BINDIR)/
 
 OnboardingTestApp: $(ONBOARDING_OBJECTS) $(AJCLIENT_OBJECTS) $(PARSINGMODULE_OBJS)
 	@echo "Build Onboarding app"
