@@ -8,6 +8,8 @@
 using namespace ajn;
 using namespace std;
 
+AboutData *AlljoynClient::mAboutData = NULL;
+
 // Print out the fields found in the AboutData. Only fields with known signatures
 // are printed out.  All others will be treated as an unknown field.
 //this is temperary function for testing
@@ -60,11 +62,15 @@ void printAboutData(AboutData& aboutData, const char* language, int tabNum)
 AlljoynClient::AlljoynClient() : mainBus(NULL), remoteObject(NULL), proxyObject(NULL){
 
 	printf("AlljoynClient Contructor\n");
+    mAboutData  =   NULL;
 }
 
 AlljoynClient::~AlljoynClient(){
 
 	printf("AlljoynClient Destructor\n");
+    if (NULL != mAboutData){
+        delete mAboutData;
+    }
 	mainBus->UnregisterAboutListener(aboutListener);
 	delete mainBus;
 	AllJoynRouterShutdown();
@@ -194,7 +200,8 @@ void AlljoynClient::AlljoynClientAboutListener::Announced(const char* busName, u
 	printAboutData(aboutData, NULL, 2);
 	printf("================================================\n");
 #endif
-	/*Join to provider session then fetch more announcement data*/
+    mAboutData = new AboutData(aboutDataArg);
+    /*Join to provider session then fetch more announcement data*/
 /*	QStatus status;
 	if (mainBus != NULL) {
 		SessionOpts opts(SessionOpts::TRAFFIC_MESSAGES, false, SessionOpts::PROXIMITY_ANY, TRANSPORT_ANY);
@@ -241,6 +248,11 @@ QStatus AlljoynClient::InitAlljoynClient(const char* interface){
 		printf("WhoImplements call FAILED with status %s\n", QCC_StatusText(status));
 	}
 	return status;
+}
+
+QStatus AlljoynClient::GetTargetDeviceID(char **devID){
+    if (mAboutData == NULL) return ER_FAIL;
+    return (mAboutData->GetDeviceId(devID));
 }
 
 QStatus AlljoynClient::ConnectServiceProvider(const char* interface){

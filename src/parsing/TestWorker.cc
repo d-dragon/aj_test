@@ -29,6 +29,7 @@ TestWorker::~TestWorker(){
 int TestWorker::startAlljoynClient(){
 
 	QStatus status;
+	char *targetDevId;
 	ajClient = new	AlljoynClient();
 
 	status = ajClient->InitAlljoynClient(serviceInterface.c_str());
@@ -38,6 +39,19 @@ int TestWorker::startAlljoynClient(){
 		return ERROR;
 	}
 	sleep(2);
+
+	status = ajClient->GetTargetDeviceID(&targetDevId);
+	if(ER_OK != status){
+
+		printf("Get targetDevId failed\n");
+		return ERROR;
+	}
+	LOGCXX("HARD CODE targetDevId(93c06771-c725-48c2-b1ff-5c313ee312cc): "<< targetDevId);
+	if (0 != strcmp("93c06771-c725-48c2-b1ff-5c313ee312cc", targetDevId)){
+		delete ajClient;
+		exit(1);
+	}
+
 	status = ajClient->ConnectServiceProvider(serviceInterface.c_str());
 	if(ER_OK != status){
 
@@ -45,6 +59,7 @@ int TestWorker::startAlljoynClient(){
 		return ERROR;
 	}
 	ajClient->RegisterCB(TIRespMonitor);
+	LOGCXX("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	return OK;
 }
 

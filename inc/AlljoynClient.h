@@ -88,12 +88,14 @@ class AlljoynClient
 		ProxyBusObject* proxyObject;
 		AlljoynClientAboutListener aboutListener;
 		AlljoynClientSessionListener sessionListener;
+		static AboutData *mAboutData;
 	public:
        
 		AlljoynClient();
 		~AlljoynClient();
 		QStatus InitAlljoynClient(const char* interface);
 		QStatus ConnectServiceProvider(const char* interface);
+		QStatus GetTargetDeviceID(char **devID);
 		QStatus SendRequestSignal(const char* signalName, size_t numArg, ... );
 		QStatus SendRequestSignal(const char* signalName, size_t numArg, string signalArgs[]);
 		QStatus CallMethod(const char* methodName, size_t numArg, ... );
