@@ -1,6 +1,7 @@
 [ 
 	{
 		"testsuit" : "onboarding",
+		"serviceid" : "avnasdfjdf",
 		"testcases" :	[ 
 			{
 				"name" : "wifisetup",

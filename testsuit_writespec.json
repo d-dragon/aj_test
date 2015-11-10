@@ -4,18 +4,20 @@
 		"serviceid" : "avnasdfjdf",
 		"testcases" :	[
 
-			{
-				"name" : "readspec",
+{
+				"name" : "writespec",
 				"input" : {
 					"devicetype" : "zwave",
 					"id" : "15",
-					"class": "ASSOCIATION",
-					"command":"GET"
+					"class": "CONFIGURATION",
+					"command":"SET",
+					"data0": "04",
+					"data1": "1"
+ 
 				}
 			}
-			
-			
 
+			
 		]
 	}
 ]

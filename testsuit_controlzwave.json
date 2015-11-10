@@ -1,6 +1,7 @@
 [ 
 	{
 		"testsuit" : "controlzwave",
+		"serviceid" : "avnasdfjdf",
 		"testcases" :	[
 
 			{

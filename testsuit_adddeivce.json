@@ -1,6 +1,7 @@
 [ 
 	{
 		"testsuit" : "newdevice",
+		"serviceid" : "avnasdfjdf",
 		"testcases" :	[
 			{ 
 				"name" : "adddevice", 

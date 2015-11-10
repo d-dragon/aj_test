@@ -23,7 +23,7 @@ class TestWorker {
 
 		TestWorker(char *interface);
 		~TestWorker();
-		int startAlljoynClient();
+		int startAlljoynClient(const char *serviceId);
 		int stopAlljoynClient();
 		int restartAlljoynClient();
 		int executeTestItem(string testItem, size_t numArg, string tiArg[]);

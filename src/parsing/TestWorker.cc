@@ -26,12 +26,13 @@ TestWorker::~TestWorker(){
 
 }
 
-int TestWorker::startAlljoynClient(){
+int TestWorker::startAlljoynClient(const char *serviceId){
 
 	QStatus status;
 	char *targetDevId;
 	ajClient = new	AlljoynClient();
 
+	cout << "connect to service provider: " << serviceId << endl;
 	status = ajClient->InitAlljoynClient(serviceInterface.c_str());
 	if(ER_OK != status){
 

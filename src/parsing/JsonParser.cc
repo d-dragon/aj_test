@@ -52,10 +52,6 @@ int JsonParser::startParser(){
 		return -1;
 	}
 
-	status = worker->startAlljoynClient();
-	if(status == ERROR){
-		return status;
-	}
 
 	worker->exportStuffToFile("<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
 	json_array_foreach(testSuitRoot, arrayIndex, tsObj){
@@ -84,8 +80,16 @@ int JsonParser::TestsuitParser(json_t *tsObj){
 
 	int status;
 	const char *tsName;
+	const char *serviceId = NULL;
 	json_t *tcRoot;
 	
+	serviceId = json_string_value(json_object_get(tsObj, "serviceid"));
+	//FIXME-need move this block code to suitable position
+	status = worker->startAlljoynClient(serviceId);
+	if(status == ERROR){
+		return status;
+	}
+
 	tsName = json_string_value(json_object_get(tsObj, "testsuit"));
 	cout << "run test suit: " << tsName << endl;
 

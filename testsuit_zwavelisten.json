@@ -3,13 +3,15 @@
 		"testsuit" : "newdevice",
 		"serviceid" : "avnasdfjdf",
 		"testcases" :	[
-			{ 
-				"name" : "removedevice", 
-				"input" : { 
+
+			{
+				"name" : "wemoupnp",
+				"input" : {
 					"devicetype" : "zwave",
-					"id" : "15"
+					"time" : "90"
 				}
 			}
+
 		]
 	}
 ]
