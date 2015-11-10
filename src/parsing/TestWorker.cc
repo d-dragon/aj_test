@@ -64,6 +64,12 @@ int TestWorker::startAlljoynClient(const char *serviceId){
 	return OK;
 }
 
+void TestWorker::StopAlljoynClient(){
+
+	delete ajClient;
+	mTestCaseInfo.Signal = "";
+}
+
 int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 
 	

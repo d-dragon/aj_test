@@ -89,6 +89,8 @@ class AlljoynClient
 		AlljoynClientAboutListener aboutListener;
 		AlljoynClientSessionListener sessionListener;
 		static AboutData *mAboutData;
+		void AlljoynClientByeBye();
+
 	public:
        
 		AlljoynClient();

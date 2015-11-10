@@ -32,9 +32,6 @@ JsonParser::~JsonParser(){
 		json_decref(tcTemplateRoot);
 	if ( NULL != testSuitRoot )	
 		json_decref(testSuitRoot);
-	if ( NULL != worker ){
-		delete worker;
-	} 
 }
 
 int JsonParser::startParser(){
@@ -43,7 +40,6 @@ int JsonParser::startParser(){
 	int status;
 	json_t *tsObj;
 	
-	worker = new TestWorker("com.verik.bus.VENUS_BOARD");
 
 	testSuitRoot = json_load_file(dfTSPath, 0, &err);
 	if ((testSuitRoot == NULL) || !(json_is_array(testSuitRoot))){
@@ -52,6 +48,7 @@ int JsonParser::startParser(){
 		return -1;
 	}
 
+	worker = new TestWorker("com.verik.bus.VENUS_BOARD");
 
 	worker->exportStuffToFile("<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
 	json_array_foreach(testSuitRoot, arrayIndex, tsObj){
@@ -62,16 +59,30 @@ int JsonParser::startParser(){
 			json_decref(testSuitRoot);
 			return -1;
 		}
+
+		const char *serviceId = NULL;
+		serviceId = json_string_value(json_object_get(tsObj, "serviceid"));
+		//FIXME-need move this block code to suitable position for starting Alljoyn Client
+		status = worker->startAlljoynClient(serviceId);
+		if(status == ERROR){
+			return status;
+		}
+
 		status = TestsuitParser(tsObj);
  
 		if(status == ERROR){
 			cout << "Parsed test suit failed" << endl;
 			return status;
 		}
+		//TODO - Stop Alljoyn Client
+		worker->StopAlljoynClient();
+		
 	}
 
 	worker->exportStuffToFile("</body></html>");
 
+	cout << "JsonParser exit" << endl;
+	delete worker;
 	return status;
 }
 
@@ -80,15 +91,8 @@ int JsonParser::TestsuitParser(json_t *tsObj){
 
 	int status;
 	const char *tsName;
-	const char *serviceId = NULL;
 	json_t *tcRoot;
 	
-	serviceId = json_string_value(json_object_get(tsObj, "serviceid"));
-	//FIXME-need move this block code to suitable position
-	status = worker->startAlljoynClient(serviceId);
-	if(status == ERROR){
-		return status;
-	}
 
 	tsName = json_string_value(json_object_get(tsObj, "testsuit"));
 	cout << "run test suit: " << tsName << endl;

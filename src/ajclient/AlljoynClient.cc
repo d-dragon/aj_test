@@ -61,20 +61,17 @@ void printAboutData(AboutData& aboutData, const char* language, int tabNum)
 
 AlljoynClient::AlljoynClient() : mainBus(NULL), remoteObject(NULL), proxyObject(NULL){
 
-	printf("AlljoynClient Contructor\n");
     mAboutData  =   NULL;
 }
 
 AlljoynClient::~AlljoynClient(){
 
-	printf("AlljoynClient Destructor\n");
     if (NULL != mAboutData){
         delete mAboutData;
     }
-	mainBus->UnregisterAboutListener(aboutListener);
-	delete mainBus;
-	AllJoynRouterShutdown();
-	AllJoynShutdown();
+	AlljoynClientByeBye();
+
+
 }
 /****************************************************/
 AlljoynClient::AlljoynClientSessionListener::AlljoynClientSessionListener(){
@@ -310,6 +307,30 @@ QStatus AlljoynClient::ConnectServiceProvider(const char* interface){
 		printf("BusAttachment RegisterBusObject success\n");
 	}
 	return status;
+}
+
+void AlljoynClient::AlljoynClientByeBye(){
+
+	QStatus status;
+	cout << "Alljoyn Client is stopping..." << endl;
+	status = mainBus->LeaveJoinedSession(sessionId);
+	if(status != ER_OK){
+		cout << "left joined session failed" << endl;
+	}
+	mainBus->UnregisterAboutListener(aboutListener);
+	mainBus->UnregisterBusObject(*remoteObject);
+	mainBus->Disconnect();
+	mainBus->Stop();
+
+	delete remoteObject;
+	delete proxyObject;
+	delete mainBus;
+
+	AllJoynRouterShutdown();
+	AllJoynShutdown();
+	cout << "*********************************************************************" << endl;
+	cout << "******************** Alljoyn Client bye bye :) **********************" << endl;
+	cout << "*********************************************************************" << endl;
 }
 
 QStatus AlljoynClient::SendRequestSignal(const char* signalName, size_t numArg, ... ){

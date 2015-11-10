@@ -24,7 +24,7 @@ class TestWorker {
 		TestWorker(char *interface);
 		~TestWorker();
 		int startAlljoynClient(const char *serviceId);
-		int stopAlljoynClient();
+		void StopAlljoynClient();
 		int restartAlljoynClient();
 		int executeTestItem(string testItem, size_t numArg, string tiArg[]);
 		static void TIRespMonitor(int respFlag, const char *respMsg, const char *srcPath, const char *member);
