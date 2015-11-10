@@ -1,0 +1,136 @@
+[ 
+	{
+		"testsuit" : "AeonLabsGen5MultiSensor",
+		"testcases" :	[
+			{ 
+				"name" : "removedevice", 
+				"input" : { 
+					"devicetype" 	: "zwave",
+					"id"			: "15"
+				}
+			},
+
+			{ 
+				"name" : "adddevice", 
+				"input" : { 
+					"devicetype" : "zwave" 
+				}
+			},
+
+			{
+				"name" : "controlonoff",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id"			: "ID 0",
+					"value" 		: "0"
+				}
+			},
+			{ 
+				"name" : "adddevice", 
+				"input" : { 
+					"devicetype" : "zwave" 
+				}
+			},
+
+			{
+				"name" : "controlonoff",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id"			: "ID 0",
+					"value" 		: "1"
+				}
+			},
+
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "BATTERY",
+					"command"		: "GET"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "3"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "4"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "GET",
+					"type"			: "1"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "GET",
+					"type"			: "2"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "GET",
+					"type"			: "3"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "SENSOR_MULTILEVEL",
+					"command"		: "GET",
+					"type"			: "TEMP"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "SENSOR_MULTILEVEL",
+					"command"		: "GET",
+					"type"			: "HUMI"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "SENSOR_MULTILEVEL",
+					"command"		: "GET",
+					"type"			: "LUMI"
+				}
+			}
+			
+		]
+	}
+]
