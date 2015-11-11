@@ -14,6 +14,18 @@ int TestWorker::signalRespFlag;
 string TestWorker::reportFile;
 string *TestWorker::mRespMsg = NULL;
 
+
+
+string ReplaceAll(string str, const string& from, const string& to) {
+	size_t start_pos = 0;
+	while((start_pos = str.find(from, start_pos)) != string::npos) {
+		str.replace(start_pos, from.length(), to);
+		start_pos += to.length(); // Handles case where 'to' is a substring of 'from'
+	}
+	return str;
+}
+
+
 TestWorker::TestWorker(char *interface){
 
 	serviceInterface.assign(interface);
@@ -31,6 +43,7 @@ int TestWorker::startAlljoynClient(const char *serviceId){
 	QStatus status;
 	char *targetDevId;
 	ajClient = new	AlljoynClient();
+
 	ajClient->SetRefTargetDeviceID(serviceId);
 	cout << "connect to service provider: " << serviceId << endl;
 	status = ajClient->InitAlljoynClient(serviceInterface.c_str());
@@ -49,8 +62,8 @@ int TestWorker::startAlljoynClient(const char *serviceId){
 	}
 	LOGCXX("Compare DEV ID : "<< targetDevId);
 	if (0 != strcmp(serviceId, targetDevId)){
-		delete ajClient;
-		exit(1);
+		//deallocate ajClient will be handled by caller (call StopAlljoynClient) 
+		return ERROR;
 	}
 
 	status = ajClient->ConnectServiceProvider(serviceInterface.c_str());
@@ -141,11 +154,14 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *srcPath, const char *member){
 
 	mRespMsg = new string(respMsg);
+	string tmpStr;
+	tmpStr.assign(respMsg);
 	cout << "Received Message: " << respMsg << endl;
 	//TODO - export the result to file
-	
-	exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
-	exportStuffToFile(respMsg);
+	tmpStr = ReplaceAll(tmpStr, "\n", "<br><br>");
+	exportStuffToFile("<tr><th>Result</th><td colspan=\"2\" rowspan=\"2\">");
+
+	exportStuffToFile(tmpStr.c_str());
 	exportStuffToFile("</td></tr></table><br>");
 	signalRespFlag = respFlag;
 }

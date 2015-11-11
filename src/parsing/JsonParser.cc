@@ -65,6 +65,7 @@ int JsonParser::startParser(){
 		//FIXME-need move this block code to suitable position for starting Alljoyn Client
 		status = worker->startAlljoynClient(serviceId);
 		if(status == ERROR){
+			worker->StopAlljoynClient();
 			return status;
 		}
 
