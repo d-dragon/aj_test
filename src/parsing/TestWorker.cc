@@ -14,8 +14,6 @@ int TestWorker::signalRespFlag;
 string TestWorker::reportFile;
 string *TestWorker::mRespMsg = NULL;
 
-
-
 string ReplaceAll(string str, const string& from, const string& to) {
 	size_t start_pos = 0;
 	while((start_pos = str.find(from, start_pos)) != string::npos) {
@@ -25,6 +23,8 @@ string ReplaceAll(string str, const string& from, const string& to) {
 	return str;
 }
 
+
+struct TestWorker::TestCaseInfo TestWorker::mTestCaseInfo;
 
 TestWorker::TestWorker(char *interface){
 
@@ -52,7 +52,7 @@ int TestWorker::startAlljoynClient(const char *serviceId){
 		printf("init alljoyn client failed\n");
 		return ERROR;
 	}
-	sleep(2);
+	sleep(10);
 
 	status = ajClient->GetTargetDeviceID(&targetDevId);
 	if(ER_OK != status){
@@ -153,6 +153,11 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 
 void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *srcPath, const char *member){
 
+	// TO DO
+	if (0 != mTestCaseInfo.Signal.compare(member))
+	{
+		return;
+	}
 	mRespMsg = new string(respMsg);
 	string tmpStr;
 	tmpStr.assign(respMsg);
