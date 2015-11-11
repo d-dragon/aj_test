@@ -31,7 +31,7 @@ int TestWorker::startAlljoynClient(const char *serviceId){
 	QStatus status;
 	char *targetDevId;
 	ajClient = new	AlljoynClient();
-
+	ajClient->SetRefTargetDeviceID(serviceId);
 	cout << "connect to service provider: " << serviceId << endl;
 	status = ajClient->InitAlljoynClient(serviceInterface.c_str());
 	if(ER_OK != status){
@@ -47,8 +47,8 @@ int TestWorker::startAlljoynClient(const char *serviceId){
 		printf("Get targetDevId failed\n");
 		return ERROR;
 	}
-	LOGCXX("HARD CODE targetDevId(93c06771-c725-48c2-b1ff-5c313ee312cc): "<< targetDevId);
-	if (0 != strcmp("93c06771-c725-48c2-b1ff-5c313ee312cc", targetDevId)){
+	LOGCXX("Compare DEV ID : "<< targetDevId);
+	if (0 != strcmp(serviceId, targetDevId)){
 		delete ajClient;
 		exit(1);
 	}

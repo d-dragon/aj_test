@@ -9,6 +9,7 @@ using namespace ajn;
 using namespace std;
 
 AboutData *AlljoynClient::mAboutData = NULL;
+string AlljoynClient::mRefDevID = "";
 
 // Print out the fields found in the AboutData. Only fields with known signatures
 // are printed out.  All others will be treated as an unknown field.
@@ -62,6 +63,7 @@ void printAboutData(AboutData& aboutData, const char* language, int tabNum)
 AlljoynClient::AlljoynClient() : mainBus(NULL), remoteObject(NULL), proxyObject(NULL){
 
     mAboutData  =   NULL;
+    mRefDevID   = "";
 }
 
 AlljoynClient::~AlljoynClient(){
@@ -181,31 +183,48 @@ AlljoynClient::AlljoynClientAboutListener::~AlljoynClientAboutListener(){
 
 void AlljoynClient::AlljoynClientAboutListener::Announced(const char* busName, uint16_t version, SessionPort port, const MsgArg& objectDescriptionArg, const MsgArg& aboutDataArg){
 
-	aboutInfo.objectDescription.CreateFromMsgArg(objectDescriptionArg);
-	aboutInfo.busName = string(busName);
-	aboutInfo.port = port;
-#ifdef DEBUG_ENABLED
-	printf("================================================\n");
-	printf("Announce signal discovered\n");
-	printf("\tFrom bus %s\n", busName);
-	printf("\tAbout version %hu\n", version);
-	printf("\tSessionPort %hu\n", port);
-	printf("\tObjectDescription:\n");
+    char *devID;
+    QStatus ret;
+    if ((mRefDevID != "") && (mAboutData == NULL))
+    {
+        mAboutData = new AboutData(aboutDataArg);
+        ret = mAboutData->GetDeviceId(&devID);
+        cout << "Find out dev id :"<< devID <<std::endl;
+        if (ER_OK != ret)
+        {
+            return;
+        }
+        if ( 0 != strcmp (mRefDevID.c_str(),devID ))
+        {
+            delete mAboutData;
+            mAboutData = NULL;
+            return;
+        }
+    	aboutInfo.objectDescription.CreateFromMsgArg(objectDescriptionArg);
+    	aboutInfo.busName = string(busName);
+    	aboutInfo.port = port;
+    #ifdef DEBUG_ENABLED
+    	printf("================================================\n");
+    	printf("Announce signal discovered\n");
+    	printf("\tFrom bus %s\n", busName);
+    	printf("\tAbout version %hu\n", version);
+    	printf("\tSessionPort %hu\n", port);
+    	printf("\tObjectDescription:\n");
 
-	printf("\tAboutData\n");
-	AboutData aboutData(aboutDataArg);
-	printAboutData(aboutData, NULL, 2);
-	printf("================================================\n");
-#endif
-    mAboutData = new AboutData(aboutDataArg);
-    /*Join to provider session then fetch more announcement data*/
-/*	QStatus status;
-	if (mainBus != NULL) {
-		SessionOpts opts(SessionOpts::TRAFFIC_MESSAGES, false, SessionOpts::PROXIMITY_ANY, TRANSPORT_ANY);
-		mainBus->EnableConcurrentCallbacks();
-		status = mainBus-> JoinSession(busName, port, &sessionListener, sessionId, opts);
-		printf("SessionJoined sessionId = %u, status = %s\n", sessionId, QCC_StatusText(status));
-	}*/
+    	printf("\tAboutData\n");
+    	AboutData aboutData(aboutDataArg);
+    	printAboutData(aboutData, NULL, 2);
+    	printf("================================================\n");
+    #endif        
+        /*Join to provider session then fetch more announcement data*/
+        /*	QStatus status;
+    	if (mainBus != NULL) {
+    		SessionOpts opts(SessionOpts::TRAFFIC_MESSAGES, false, SessionOpts::PROXIMITY_ANY, TRANSPORT_ANY);
+    		mainBus->EnableConcurrentCallbacks();
+    		status = mainBus-> JoinSession(busName, port, &sessionListener, sessionId, opts);
+    		printf("SessionJoined sessionId = %u, status = %s\n", sessionId, QCC_StatusText(status));
+    	}*/
+    }
 }
 
 QStatus AlljoynClient::InitAlljoynClient(const char* interface){
@@ -252,6 +271,12 @@ QStatus AlljoynClient::GetTargetDeviceID(char **devID){
     return (mAboutData->GetDeviceId(devID));
 }
 
+QStatus AlljoynClient::SetRefTargetDeviceID(const char* refDevID){
+    QStatus status = ER_OK;
+    mRefDevID      = refDevID;
+
+    return status;
+}
 QStatus AlljoynClient::ConnectServiceProvider(const char* interface){
 
 	QStatus status;

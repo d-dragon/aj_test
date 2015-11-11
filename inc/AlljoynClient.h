@@ -90,13 +90,17 @@ class AlljoynClient
 		AlljoynClientSessionListener sessionListener;
 		static AboutData *mAboutData;
 		void AlljoynClientByeBye();
-
+		static string mRefDevID;
 	public:
        
 		AlljoynClient();
 		~AlljoynClient();
 		QStatus InitAlljoynClient(const char* interface);
 		QStatus ConnectServiceProvider(const char* interface);
+		/*
+			This method must be execute before InitAlljoynClient
+		*/
+		QStatus SetRefTargetDeviceID(const char* refDevID);
 		QStatus GetTargetDeviceID(char **devID);
 		QStatus SendRequestSignal(const char* signalName, size_t numArg, ... );
 		QStatus SendRequestSignal(const char* signalName, size_t numArg, string signalArgs[]);
