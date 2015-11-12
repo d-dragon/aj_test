@@ -247,6 +247,7 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 	worker->exportStuffToFile(tmpContent.c_str());
 	worker->executeTestItem(tiName, arraySize, tiArg);
 
+	sleep(5);
 }
 json_t* JsonParser::getTestItemTemplateObj(const char *tiName){
 

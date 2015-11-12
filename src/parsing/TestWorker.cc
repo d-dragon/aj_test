@@ -125,7 +125,7 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 		//Save infor of Test Case
 		mTestCaseInfo.Signal.assign(testItem.c_str());
 		mTestCaseInfo.Type.assign(tiArg[0]);
-		if ( numArg > 2 ){
+		if ( numArg > 1 ){
 //			mTestCaseInfo.ID.assign(tiArg[1]);
 			UpdateDevIDOfTC(tiArg);
 		}
@@ -249,6 +249,7 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 		(mTestCaseInfo.Signal.compare("read_spec") 		== 0) ||
 		(mTestCaseInfo.Signal.compare("write_spec") 	== 0) ||
 		(mTestCaseInfo.Signal.compare("read_s_spec") 	== 0) ||
+		(mTestCaseInfo.Signal.compare("remove_device") 	== 0) ||
 		(mTestCaseInfo.Signal.compare("write_s_spec") 	== 0)
 		)
 	{

@@ -1,7 +1,7 @@
 [ 
 	{
 		"testsuit" : "newdevice",
-		"serviceid" : "avnasdfjdf",
+		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee314e4",
 		"testcases" :	[
 			{ 
 				"name" : "adddevice", 
@@ -17,13 +17,7 @@
 					"value" : "1"
 				}
 			},
-			{ 
-				"name" : "adddevice", 
-				"input" : { 
-					"devicetype" : "zwave" 
-				}
-			},
-
+			
 			{
 				"name" : "controlonoff",
 				"input" : {

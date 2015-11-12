@@ -1,0 +1,120 @@
+[ 
+	{
+		"testsuit" : "newdevice",
+		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee314e4",
+		"testcases" :	[
+			{ 
+				"name" : "adddevice", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0"
+				}
+			},
+			{ 
+				"name" : "addsensor", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 1",
+					"class" : "BATTERY",
+					"command": "GET"
+				}
+			},
+			{ 
+				"name" : "writespec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 1",
+					"class" : "CONFIGURATION",
+					"command" : "SET",
+					"data0" : "6301",
+					"data1" : "FF",
+					"data2" : "1"
+				}
+			},
+			{ 
+				"name" : "readspec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 1",
+					"class" : "CONFIGURATION",
+					"command" : "GET",
+					"type" : "63"
+				}
+			},
+			
+			
+
+
+
+			{ 
+				"name" : "writespec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 1",
+					"class" : "ASSOCIATION",
+					"command" : "SET",
+					"data0" : "2",
+					"data1" : "1F",
+					"data2" : "1"
+				}
+			},
+			{ 
+				"name" : "readspec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 1",
+					"class" : "ASSOCIATION",
+					"command" : "GET",
+					"type" : "2",
+					"force" : "1"
+				}
+			},
+
+
+
+
+			{ 
+				"name" : "writespec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 1",
+					"class" : "ASSOCIATION",
+					"command" : "REMOVE",
+					"data0" : "2",
+					"data1" : "1F",
+					"data2" : "1"
+				}
+			},
+			{ 
+				"name" : "readspec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 1",
+					"class" : "ASSOCIATION",
+					"command" : "GET",
+					"type" : "2",
+					"force" : "1"
+				}
+			},
+
+
+			{ 
+				"name" : "removedevice", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0"
+				}
+			},
+
+
+
+			{ 
+				"name" : "removedevice", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 1"
+				}
+			}
+		]
+	}
+]
