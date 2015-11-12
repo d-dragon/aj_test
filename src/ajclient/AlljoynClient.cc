@@ -343,7 +343,12 @@ void AlljoynClient::AlljoynClientByeBye(){
 		cout << "left joined session failed" << endl;
 	}
 	mainBus->UnregisterAboutListener(aboutListener);
-	mainBus->UnregisterBusObject(*remoteObject);
+
+	if(remoteObject != NULL){
+
+		mainBus->UnregisterBusObject(*remoteObject);
+	}
+
 	mainBus->Disconnect();
 	mainBus->Stop();
 
