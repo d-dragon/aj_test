@@ -32,7 +32,7 @@ class TestWorker {
 
 	private:
 		// Store all base infor of Test case and list all Devices.
-		struct TestCaseInfo mTestCaseInfo;
+		static struct TestCaseInfo mTestCaseInfo;
 		static int signalRespFlag;
 		static string *mRespMsg;
 		string serviceInterface;

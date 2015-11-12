@@ -7,7 +7,14 @@
 				"name" : "removedevice", 
 				"input" : { 
 					"devicetype" 	: "zwave",
-					"id"			: ""
+					"id"			: "1A"
+				}
+			},
+			{ 
+				"name" : "removedevice", 
+				"input" : { 
+					"devicetype" 	: "zwave",
+					"id"			: "1B"
 				}
 			},
 
@@ -130,7 +137,140 @@
 					"command"		: "GET",
 					"type"			: "LUMI"
 				}
+			},
+			{
+				"name" : "writespec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "4",
+					"data1"			: "1",
+					"data2"			: "0"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "4"
+				}
+			},
+			{
+				"name" : "writespec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "4",
+					"data1"			: "1",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "4"
+				}
+			},
+			{
+				"name" : "writespec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "4",
+					"data1"			: "1",
+					"data2"			: "100"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "4"
+				}
+			},
+			{
+				"name" : "writespec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "3",
+					"data1"			: "2",
+					"data2"			: "10"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "3"
+				}
+			},
+			{
+				"name" : "writespec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "3",
+					"data1"			: "2",
+					"data2"			: "3BC4"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "3"
+				}
+			},
+			{
+				"name" : "writespec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "3",
+					"data1"			: "2",
+					"data2"			: "3BC5"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "3"
+				}
 			}
+
 			
 		]
 	}
