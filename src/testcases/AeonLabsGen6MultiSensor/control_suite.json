@@ -17,7 +17,7 @@
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
 					"data0"			: "01",
-					"data1"			: "3D",
+					"data1"			: "3F",
 					"data2"			: "1"
 				}
 			},
@@ -323,7 +323,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "0402",
+					"data0"			: "0401",
 					"data1"			: "02",
 					"data2"			: "1"
 				}
@@ -345,7 +345,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "0402",
+					"data0"			: "0401",
 					"data1"			: "03",
 					"data2"			: "1"
 				}
@@ -367,7 +367,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "0402",
+					"data0"			: "0401",
 					"data1"			: "04",
 					"data2"			: "1"
 				}
@@ -389,7 +389,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "0402",
+					"data0"			: "0401",
 					"data1"			: "05",
 					"data2"			: "1"
 				}
@@ -456,7 +456,7 @@
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
                     "data0"         : "01",
-                    "data1"         : "3D",
+                    "data1"         : "3F",
                     "data2"         : "1"
                 }
             },
