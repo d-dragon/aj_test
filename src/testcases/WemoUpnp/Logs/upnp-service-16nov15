@@ -1,0 +1,272 @@
+SELECT UDN from CONTROL_DEVS where RealName='MediaServer_6e2' SUCCESS
+Received Notify from Device: uuid:Insight-1_0-221342K12005ED
+[2015/11/16][05:10:57.134832] <alljoyn_service.c:sessionportlistener_acceptsessionjoiner_cb:505> [0xb6903520:""] joiner = :3Dmc77b7.2
+
+[2015/11/16][05:10:57.140307] <alljoyn_service.c:sessionportlistener_sessionjoined_cb:494> [0xb6903520:""] joiner = :3Dmc77b7.2
+
+[2015/11/16][05:10:57.140539] <alljoyn_service.c:sessionportlistener_sessionjoined_cb:495> [0xb6903520:""] Session Joined SessionId = 1188886575
+
+BinaryState = 0|1447650716|0|0|0|1187240|0|0|0|0
+
+########### Devices Updated ###########
+insight_5ED | WeMo Insight | uuid:Insight-1_0-221342K12005ED | http://192.168.2.19:49153/setup.xml
+UDN = uuid:Insight-1_0-221342K12005ED
+
+SELECT UDN from CONTROL_DEVS where RealName='insight_5ED' SUCCESS
+data = (null) | BinaryState = 0|1447650716|0|0|0|1187240|0|0|0|0
+[2015/11/16][05:12:11.447424] <alljoyn_service.c:recive_notify_cb:358> [0xb6fb4000:"alljoyn-service"] recive_notify_cb
+
+[2015/11/16][05:12:11.447685] <alljoyn_service.c:Send_Signal:527> [0xb6fb4000:"alljoyn-service"] in Send_Signal
+
+[2015/11/16][05:12:11.447800] <alljoyn_service.c:Send_Signal:541> [0xb6fb4000:"alljoyn-service"] signature = s
+
+[2015/11/16][05:12:11.447891] <alljoyn_service.c:Send_Signal:542> [0xb6fb4000:"alljoyn-service"] msg = (null) | BinaryState = 0|1447650716|0|0|0|1187240|0|0|0|0
+
+[2015/11/16][05:12:11.448162] <alljoyn_service.c:recive_notify_cb:367> [0xb6fb4000:"alljoyn-service"] msgstr notify = (null) | BinaryState = 0|1447650716|0|0|0|1187240|
+0|0|0|0
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+[2015/11/16][07:39:11.116188] <alljoyn_service.c:sessionportlistener_acceptsessionjoiner_cb:505> [0xb6943520:""] joiner = :HH3CAqiv.2
+
+[2015/11/16][07:39:11.121753] <alljoyn_service.c:sessionportlistener_sessionjoined_cb:494> [0xb6943520:""] joiner = :HH3CAqiv.2
+
+[2015/11/16][07:39:11.122022] <alljoyn_service.c:sessionportlistener_sessionjoined_cb:495> [0xb6943520:""] Session Joined SessionId = 3127832630
+
+[2015/11/16][07:39:30.147740] <alljoyn_service.c:listdevices_signal_handle:601> [0xb69c3520:""] listdevices_signal 
+
+[2015/11/16][07:39:30.148042] <alljoyn_service.c:listdevices_signal_handle:611> [0xb69c3520:""] type = upnp
+
+[2015/11/16][07:39:30.148146] <alljoyn_service.c:listdevices_signal_handle:617> [0xb69c3520:""] sessionId = 3127832630
+
+[2015/11/16][07:39:30.148227] <alljoyn_service.c:listdevices_signal_handle:663> [0xb69c3520:""] daemon_services[0].name = zigbee id = 0
+
+[2015/11/16][07:39:30.148303] <alljoyn_service.c:listdevices_signal_handle:663> [0xb69c3520:""] daemon_services[1].name = zwave id = 2225285987
+
+[2015/11/16][07:39:30.148378] <alljoyn_service.c:listdevices_signal_handle:663> [0xb69c3520:""] daemon_services[2].name = upnp id = 1469236973
+
+[2015/11/16][07:39:30.148460] <alljoyn_service.c:add_list_allbus_data:45> [0xb69c3520:""] in add_list_allbus_data 
+
+in show
+[2015/11/16][07:39:30.150340] <alljoyn_service.c:recive_data_cb:189> [0xb6fb4000:"alljoyn-service"] receive msg from server
+[2015/11/16][07:39:30.150538] <alljoyn_service.c:recive_data_cb:198> [0xb6fb4000:"alljoyn-service"] msgstr = insight_5ED | WeMo Insight | uuid:Insight-1_0-221342K12005E
+D | http://192.168.2.19:49153/setup.xml | upnp
+
+
+[2015/11/16][07:39:30.150627] <alljoyn_service.c:recive_data_cb:201> [0xb6fb4000:"alljoyn-service"] req.priv = 2033c8
+
+[2015/11/16][07:39:30.150741] <alljoyn_service.c:recive_data_cb:202> [0xb6fb4000:"alljoyn-service"] alldata = 2033c8
+
+[2015/11/16][07:39:30.150820] <alljoyn_service.c:recive_data_cb:204> [0xb6fb4000:"alljoyn-service"] data.name = list_devices
+
+[2015/11/16][07:39:30.150893] <alljoyn_service.c:recive_data_cb:205> [0xb6fb4000:"alljoyn-service"] data.id = 3127832630
+
+[2015/11/16][07:39:30.150965] <alljoyn_service.c:recive_data_cb:206> [0xb6fb4000:"alljoyn-service"] data.type = 1
+
+[2015/11/16][07:39:30.151034] <alljoyn_service.c:recive_data_cb:207> [0xb6fb4000:"alljoyn-service"] data.numArgs = 1
+
+[2015/11/16][07:39:30.151107] <alljoyn_service.c:Send_Signal:527> [0xb6fb4000:"alljoyn-service"] in Send_Signal
+
+[2015/11/16][07:39:30.151199] <alljoyn_service.c:Send_Signal:541> [0xb6fb4000:"alljoyn-service"] signature = s
+
+[2015/11/16][07:39:30.151272] <alljoyn_service.c:Send_Signal:542> [0xb6fb4000:"alljoyn-service"] msg = insight_5ED | WeMo Insight | uuid:Insight-1_0-221342K12005ED | ht
+tp://192.168.2.19:49153/setup.xml | upnp
+
+
+tmp -> name = list_devices
+ tmp->id = 3127832630
+alldata -> name = list_devices
+ alldata->id = 3127832630
+[2015/11/16][07:39:30.151598] <alljoyn_service.c:recive_data_cb:239> [0xb6fb4000:"alljoyn-service"] free req
+
+[2015/11/16][07:39:30.151696] <alljoyn_service.c:recive_data_cb:254> [0xb6fb4000:"alljoyn-service"] free done
+
+[2015/11/16][07:39:35.248727] <alljoyn_service.c:setbinary_signal_handle:685> [0xb69c3520:""] setbinary_signal_handle
+
+[2015/11/16][07:39:35.249030] <alljoyn_service.c:setbinary_signal_handle:723> [0xb69c3520:""] servicename = upnp
+
+[2015/11/16][07:39:35.249124] <alljoyn_service.c:setbinary_signal_handle:724> [0xb69c3520:""] id = insight_5ED
+
+[2015/11/16][07:39:35.249195] <alljoyn_service.c:setbinary_signal_handle:725> [0xb69c3520:""] value = 1
+
+[2015/11/16][07:39:35.249266] <alljoyn_service.c:setbinary_signal_handle:726> [0xb69c3520:""] epnum = na
+
+[2015/11/16][07:39:35.249339] <alljoyn_service.c:setbinary_signal_handle:727> [0xb69c3520:""] proid = na
+
+[2015/11/16][07:39:35.249409] <alljoyn_service.c:setbinary_signal_handle:728> [0xb69c3520:""] sessionId = 3127832630
+
+[2015/11/16][07:39:35.249502] <alljoyn_service.c:add_list_allbus_data:45> [0xb69c3520:""] in add_list_allbus_data 
+
+ex_command =client setdevstatus -d insight_5ED -b na -ci na -cv 1 | tail -n3 | head -n1
+[2015/11/16][07:39:35.283904] <alljoyn_service.c:recive_data_cb:189> [0xb6fb4000:"alljoyn-service"] receive msg from server
+[2015/11/16][07:39:35.284132] <alljoyn_service.c:recive_data_cb:198> [0xb6fb4000:"alljoyn-service"] msgstr = wrong CapabilityID
+
+
+[2015/11/16][07:39:35.284222] <alljoyn_service.c:recive_data_cb:201> [0xb6fb4000:"alljoyn-service"] req.priv = 2160f0
+
+[2015/11/16][07:39:35.284295] <alljoyn_service.c:recive_data_cb:202> [0xb6fb4000:"alljoyn-service"] alldata = 2160f0
+
+[2015/11/16][07:39:35.284366] <alljoyn_service.c:recive_data_cb:204> [0xb6fb4000:"alljoyn-service"] data.name = set_binary
+
+[2015/11/16][07:39:35.284437] <alljoyn_service.c:recive_data_cb:205> [0xb6fb4000:"alljoyn-service"] data.id = 3127832630
+
+[2015/11/16][07:39:35.284510] <alljoyn_service.c:recive_data_cb:206> [0xb6fb4000:"alljoyn-service"] data.type = 0
+
+[2015/11/16][07:39:35.284610] <alljoyn_service.c:recive_data_cb:207> [0xb6fb4000:"alljoyn-service"] data.numArgs = 5
+
+[2015/11/16][07:39:35.284687] <alljoyn_service.c:Send_Signal:527> [0xb6fb4000:"alljoyn-service"] in Send_Signal
+
+[2015/11/16][07:39:35.284783] <alljoyn_service.c:Send_Signal:541> [0xb6fb4000:"alljoyn-service"] signature = sssss
+
+[2015/11/16][07:39:35.284857] <alljoyn_service.c:Send_Signal:542> [0xb6fb4000:"alljoyn-service"] msg = wrong CapabilityID
+
+
+tmp -> name = set_binary
+ tmp->id = 3127832630
+alldata -> name = set_binary
+ alldata->id = 3127832630
+[2015/11/16][07:39:35.287033] <alljoyn_service.c:recive_data_cb:239> [0xb6fb4000:"alljoyn-service"] free req
+
+[2015/11/16][07:39:35.287205] <alljoyn_service.c:recive_data_cb:254> [0xb6fb4000:"alljoyn-service"] free done
+
+[2015/11/16][07:39:40.358670] <alljoyn_service.c:getbinary_signal_handle:776> [0xb69c3520:""] getbinary_signal_handle
+
+[2015/11/16][07:39:40.358964] <alljoyn_service.c:getbinary_signal_handle:809> [0xb69c3520:""] servicename = upnp
+
+[2015/11/16][07:39:40.359065] <alljoyn_service.c:getbinary_signal_handle:810> [0xb69c3520:""] id = insight_5ED
+
+[2015/11/16][07:39:40.359139] <alljoyn_service.c:getbinary_signal_handle:811> [0xb69c3520:""] epnum = na
+
+[2015/11/16][07:39:40.359211] <alljoyn_service.c:getbinary_signal_handle:812> [0xb69c3520:""] proid = na
+
+[2015/11/16][07:39:40.359282] <alljoyn_service.c:getbinary_signal_handle:813> [0xb69c3520:""] sessionId = 3127832630
+
+[2015/11/16][07:39:40.359374] <alljoyn_service.c:add_list_allbus_data:45> [0xb69c3520:""] in add_list_allbus_data 
+
+ex_command =client getdevstatus -d insight_5ED -b na | tail -n3 | head -n1
+[2015/11/16][07:39:40.396848] <alljoyn_service.c:recive_data_cb:189> [0xb6fb4000:"alljoyn-service"] receive msg from server
+[2015/11/16][07:39:40.397081] <alljoyn_service.c:recive_data_cb:198> [0xb6fb4000:"alljoyn-service"] msgstr = 
+
+
+[2015/11/16][07:39:40.397169] <alljoyn_service.c:recive_data_cb:201> [0xb6fb4000:"alljoyn-service"] req.priv = 21d448
+
+[2015/11/16][07:39:40.397242] <alljoyn_service.c:recive_data_cb:202> [0xb6fb4000:"alljoyn-service"] alldata = 21d448
+
+[2015/11/16][07:39:40.397314] <alljoyn_service.c:recive_data_cb:204> [0xb6fb4000:"alljoyn-service"] data.name = get_binary
+
+[2015/11/16][07:39:40.397386] <alljoyn_service.c:recive_data_cb:205> [0xb6fb4000:"alljoyn-service"] data.id = 3127832630
+
+[2015/11/16][07:39:40.397491] <alljoyn_service.c:recive_data_cb:206> [0xb6fb4000:"alljoyn-service"] data.type = 1
+
+[2015/11/16][07:39:40.397569] <alljoyn_service.c:recive_data_cb:207> [0xb6fb4000:"alljoyn-service"] data.numArgs = 4
+
+[2015/11/16][07:39:40.397641] <alljoyn_service.c:Send_Signal:527> [0xb6fb4000:"alljoyn-service"] in Send_Signal
+
+[2015/11/16][07:39:40.397736] <alljoyn_service.c:Send_Signal:541> [0xb6fb4000:"alljoyn-service"] signature = ssss
+
+[2015/11/16][07:39:40.397812] <alljoyn_service.c:Send_Signal:542> [0xb6fb4000:"alljoyn-service"] msg = 
+
+
+tmp -> name = get_binary
+ tmp->id = 3127832630
+alldata -> name = get_binary
+ alldata->id = 3127832630
+[2015/11/16][07:39:40.400209] <alljoyn_service.c:recive_data_cb:239> [0xb6fb4000:"alljoyn-service"] free req
+
+[2015/11/16][07:39:40.400513] <alljoyn_service.c:recive_data_cb:254> [0xb6fb4000:"alljoyn-service"] free done
+
+[2015/11/16][07:39:47.452035] <alljoyn_service.c:setbinary_signal_handle:685> [0xb69c3520:""] setbinary_signal_handle
+
+[2015/11/16][07:39:47.452337] <alljoyn_service.c:setbinary_signal_handle:723> [0xb69c3520:""] servicename = upnp
+
+[2015/11/16][07:39:47.452437] <alljoyn_service.c:setbinary_signal_handle:724> [0xb69c3520:""] id = insight_5ED
+
+[2015/11/16][07:39:47.452511] <alljoyn_service.c:setbinary_signal_handle:725> [0xb69c3520:""] value = 0
+
+[2015/11/16][07:39:47.452583] <alljoyn_service.c:setbinary_signal_handle:726> [0xb69c3520:""] epnum = na
+
+[2015/11/16][07:39:47.452654] <alljoyn_service.c:setbinary_signal_handle:727> [0xb69c3520:""] proid = na
+
+[2015/11/16][07:39:47.452724] <alljoyn_service.c:setbinary_signal_handle:728> [0xb69c3520:""] sessionId = 3127832630
+
+[2015/11/16][07:39:47.453089] <alljoyn_service.c:add_list_allbus_data:45> [0xb69c3520:""] in add_list_allbus_data 
+
+ex_command =client setdevstatus -d insight_5ED -b na -ci na -cv 0 | tail -n3 | head -n1
+[2015/11/16][07:39:47.486914] <alljoyn_service.c:recive_data_cb:189> [0xb6fb4000:"alljoyn-service"] receive msg from server
+[2015/11/16][07:39:47.487180] <alljoyn_service.c:recive_data_cb:198> [0xb6fb4000:"alljoyn-service"] msgstr = wrong CapabilityID
+
+
+[2015/11/16][07:39:47.487277] <alljoyn_service.c:recive_data_cb:201> [0xb6fb4000:"alljoyn-service"] req.priv = 21d448
+
+[2015/11/16][07:39:47.487351] <alljoyn_service.c:recive_data_cb:202> [0xb6fb4000:"alljoyn-service"] alldata = 21d448
+
+[2015/11/16][07:39:47.487421] <alljoyn_service.c:recive_data_cb:204> [0xb6fb4000:"alljoyn-service"] data.name = set_binary
+
+[2015/11/16][07:39:47.487493] <alljoyn_service.c:recive_data_cb:205> [0xb6fb4000:"alljoyn-service"] data.id = 3127832630
+
+[2015/11/16][07:39:47.487564] <alljoyn_service.c:recive_data_cb:206> [0xb6fb4000:"alljoyn-service"] data.type = 0
+
+[2015/11/16][07:39:47.487634] <alljoyn_service.c:recive_data_cb:207> [0xb6fb4000:"alljoyn-service"] data.numArgs = 5
+
+[2015/11/16][07:39:47.487704] <alljoyn_service.c:Send_Signal:527> [0xb6fb4000:"alljoyn-service"] in Send_Signal
+
+[2015/11/16][07:39:47.487798] <alljoyn_service.c:Send_Signal:541> [0xb6fb4000:"alljoyn-service"] signature = sssss
+
+[2015/11/16][07:39:47.487873] <alljoyn_service.c:Send_Signal:542> [0xb6fb4000:"alljoyn-service"] msg = wrong CapabilityID
+
+
+tmp -> name = set_binary
+ tmp->id = 3127832630
+alldata -> name = set_binary
+ alldata->id = 3127832630
+[2015/11/16][07:39:47.490076] <alljoyn_service.c:recive_data_cb:239> [0xb6fb4000:"alljoyn-service"] free req
+
+[2015/11/16][07:39:47.490253] <alljoyn_service.c:recive_data_cb:254> [0xb6fb4000:"alljoyn-service"] free done
+
+[2015/11/16][07:39:52.551786] <alljoyn_service.c:getbinary_signal_handle:776> [0xb69c3520:""] getbinary_signal_handle
+
+[2015/11/16][07:39:52.552087] <alljoyn_service.c:getbinary_signal_handle:809> [0xb69c3520:""] servicename = upnp
+
+[2015/11/16][07:39:52.552185] <alljoyn_service.c:getbinary_signal_handle:810> [0xb69c3520:""] id = insight_5ED
+
+[2015/11/16][07:39:52.552261] <alljoyn_service.c:getbinary_signal_handle:811> [0xb69c3520:""] epnum = na
+
+[2015/11/16][07:39:52.552333] <alljoyn_service.c:getbinary_signal_handle:812> [0xb69c3520:""] proid = na
+
+[2015/11/16][07:39:52.552404] <alljoyn_service.c:getbinary_signal_handle:813> [0xb69c3520:""] sessionId = 3127832630
+
+[2015/11/16][07:39:52.552499] <alljoyn_service.c:add_list_allbus_data:45> [0xb69c3520:""] in add_list_allbus_data 
+
+ex_command =client getdevstatus -d insight_5ED -b na | tail -n3 | head -n1
+[2015/11/16][07:39:52.590014] <alljoyn_service.c:recive_data_cb:189> [0xb6fb4000:"alljoyn-service"] receive msg from server
+[2015/11/16][07:39:52.590270] <alljoyn_service.c:recive_data_cb:198> [0xb6fb4000:"alljoyn-service"] msgstr = 
+
+
+[2015/11/16][07:39:52.590360] <alljoyn_service.c:recive_data_cb:201> [0xb6fb4000:"alljoyn-service"] req.priv = 2125b8
+
+[2015/11/16][07:39:52.590436] <alljoyn_service.c:recive_data_cb:202> [0xb6fb4000:"alljoyn-service"] alldata = 2125b8
+
+[2015/11/16][07:39:52.590509] <alljoyn_service.c:recive_data_cb:204> [0xb6fb4000:"alljoyn-service"] data.name = get_binary
+
+[2015/11/16][07:39:52.590580] <alljoyn_service.c:recive_data_cb:205> [0xb6fb4000:"alljoyn-service"] data.id = 3127832630
+
+[2015/11/16][07:39:52.590652] <alljoyn_service.c:recive_data_cb:206> [0xb6fb4000:"alljoyn-service"] data.type = 1
+
+[2015/11/16][07:39:52.590722] <alljoyn_service.c:recive_data_cb:207> [0xb6fb4000:"alljoyn-service"] data.numArgs = 4
+
+[2015/11/16][07:39:52.590792] <alljoyn_service.c:Send_Signal:527> [0xb6fb4000:"alljoyn-service"] in Send_Signal
+
+[2015/11/16][07:39:52.590887] <alljoyn_service.c:Send_Signal:541> [0xb6fb4000:"alljoyn-service"] signature = ssss
+
+[2015/11/16][07:39:52.590962] <alljoyn_service.c:Send_Signal:542> [0xb6fb4000:"alljoyn-service"] msg = 
+
+
+tmp -> name = get_binary
+ tmp->id = 3127832630
+alldata -> name = get_binary
+ alldata->id = 3127832630
+[2015/11/16][07:39:52.593660] <alljoyn_service.c:recive_data_cb:239> [0xb6fb4000:"alljoyn-service"] free req
+
+[2015/11/16][07:39:52.593883] <alljoyn_service.c:recive_data_cb:254> [0xb6fb4000:"alljoyn-service"] free done
+

@@ -91,6 +91,9 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 	int timeout = 0;
 
 	cout << "executeTestItem: " << testItem << endl;
+	//Save infor of Test Case
+	mTestCaseInfo.Signal.assign(testItem.c_str());
+	mTestCaseInfo.Type.assign(tiArg[0]);
 	for(size_t i = 0; i < numArg; i++){
 
 		cout << "argument " << i << ": " << tiArg[i] << endl;
@@ -119,12 +122,11 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 			time = stoi(tiArg[1]);
 
 			cout << "listen notification in: " <<  time << "s" << endl;
+			exportStuffToFile("<tr><th>Result</th>");
 			sleep(time);
+			exportStuffToFile("</tr></table><br>");
 		}
 	}else{
-		//Save infor of Test Case
-		mTestCaseInfo.Signal.assign(testItem.c_str());
-		mTestCaseInfo.Type.assign(tiArg[0]);
 		if ( numArg > 1 ){
 //			mTestCaseInfo.ID.assign(tiArg[1]);
 			UpdateDevIDOfTC(tiArg);
@@ -153,15 +155,24 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 
 void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *srcPath, const char *member){
 
-	// TO DO
-	if (0 != mTestCaseInfo.Signal.compare(member))
-	{
-		return;
-	}
-	mRespMsg = new string(respMsg);
 	string tmpStr;
 	tmpStr.assign(respMsg);
 	cout << "Received Message: " << respMsg << endl;
+	// TO DO
+	if (0 != mTestCaseInfo.Signal.compare(member))
+	{
+		cout <<"test item: " << mTestCaseInfo.Signal.c_str() <<  "signal member received: "<< member << endl;
+		if((0 == mTestCaseInfo.Signal.compare("listen_notification")) && (strcmp(member, "notify") == 0)){
+			//export the result to report file	
+			cout << "export notify message to report file" << endl;
+			tmpStr = ReplaceAll(tmpStr, "\n", "<br><br>");
+			exportStuffToFile("<td colspan=\"2\">");
+			exportStuffToFile(tmpStr.c_str());
+			exportStuffToFile("</td>");
+		}
+		return;
+	}
+	mRespMsg = new string(respMsg);
 	//TODO - export the result to file
 	tmpStr = ReplaceAll(tmpStr, "\n", "<br><br>");
 	exportStuffToFile("<tr><th>Result</th><td colspan=\"2\" rowspan=\"2\">");

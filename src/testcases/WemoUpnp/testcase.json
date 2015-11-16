@@ -1,0 +1,51 @@
+{
+
+	"adddevice": {
+		"testitems": [
+			{ "name": "add_devices" },
+			{ "name": "list_devices" }
+		]
+	},
+
+	"listdevice" :{
+		"testitems": [
+			{"name": "list_devices"}
+		]
+	},
+
+	"removedevice": {
+		"testitems": [
+			{ "name": "remove_device" },
+			{ "name": "list_devices" }
+		]
+	},
+
+	"controlonoff":{
+		"testitems": [
+			{"name" : "set_binary"},
+			{"name" : "get_binary"}
+		]
+	},
+	"firmwareupdate":{
+		"testitems": [
+			{"name" : "update_firmware"}
+		]
+	},
+
+	"rules":{
+		"testitems" : [
+			{"name" : "set_rule"},
+			{"name" : "get_rule"},
+			{"name" : "rule_actions"}
+		]
+	},
+
+	"wemoupnp" : {
+		"testitems" : [
+			{"name" : "listen_notification"},
+			{"name" : "list_devices"}
+
+		]
+	}
+
+}
