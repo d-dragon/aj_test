@@ -1,0 +1,208 @@
+[ 
+	{
+		"testsuit" : "EcoLink/Schlage home motion sensor",
+		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
+		"testcases" :	[
+			{	
+				"name"				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zwave"
+				}
+			},
+			{
+                "name" 				: "readspec",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "01"
+                }
+            },
+            {
+                "name" 				: "readspec",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "02"
+                }
+            },
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "01",
+					"data1"			: "41",
+					"data2"			: "1"
+				}
+			},
+            {
+                "name" 				: "readspec",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "01"
+                }
+            },
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "BATTERY",
+					"command"		: "GET"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "63"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "6301",
+					"data1"			: "FF",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "63"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "02",
+					"data1"			: "41",
+					"data2"			: "1"
+				}
+			},
+            {
+                "name" 				: "readspec",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "02"
+                }
+            },
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "6301",
+					"data1"			: "00",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "63"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "02",
+					"data1"			: "ff",
+					"data2"			: "1"
+				}
+			},
+            {
+                "name" 				: "readspec",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "02"
+                }
+            },
+
+			{
+                "name" 				: "writespec",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "REMOVE",
+                    "data0"         : "01",
+                    "data1"         : "41",
+                    "data2"         : "1"
+                }
+            },
+            {
+                "name" 				: "readspec",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "01"
+                }
+            },
+            {
+                "name" 				: "writespec",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "REMOVE",
+                    "data0"         : "02",
+                    "data1"         : "41",
+                    "data2"         : "1"
+                }
+            },
+            {
+                "name" 				: "readspec",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "02"
+                }
+            }
+		]
+	}
+]

@@ -258,7 +258,7 @@
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
 					"data0"			: "6504",
-					"data1"			: "E3",
+					"data1"			: "F1",
 					"data2"			: "1"
 				}
 			},
