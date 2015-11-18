@@ -1,7 +1,7 @@
 #ifndef _COMMON_DEP_H_
 #define _COMMON_DEP_H_
 #include "alljoyn/onboarding/Onboarding.h"
-
+#include <string>
 #define LOGCXX(msg)  (std::cout<< "DBG: "  << msg << std::endl )
 /*
 *	Session of OnBoarding
@@ -27,4 +27,14 @@ struct WifiAuthenticationType{
     ajn::services::OBAuthType Val;
 
 };
+struct DeviceInfo{
+			std::string Owner;
+			std::string Serial;
+			std::string FriendlyName;
+			std::string ID;
+			std::string Capability;
+			std::string ProfileID;
+			std::string EndPoint_num;
+	void operator=(const DeviceInfo& rhs){ Owner=rhs.Owner; Serial=rhs.Serial; FriendlyName=rhs.FriendlyName; ID=rhs.ID; Capability=rhs.Capability;	ProfileID=rhs.ProfileID; EndPoint_num=rhs.EndPoint_num;};
+	};
 #endif

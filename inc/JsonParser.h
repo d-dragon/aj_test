@@ -15,6 +15,7 @@ class JsonParser {
 		~JsonParser();
 		int startParser();
 		const char *JSONGetObjectValue(const char *inputString, const char *objectName);
+		static int GetDevIDInJSMsg(string *input, vector<DeviceInfo> *devList);
 
 	private:
 		json_t *testSuitRoot;

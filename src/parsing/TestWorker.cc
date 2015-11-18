@@ -14,6 +14,7 @@ using namespace std;
 int TestWorker::signalRespFlag;
 string TestWorker::reportFile;
 string *TestWorker::mRespMsg = NULL;
+vector<struct DeviceInfo> TestWorker::mDeviceList;
 
 string ReplaceAll(string str, const string& from, const string& to) {
 	size_t start_pos = 0;
@@ -33,6 +34,7 @@ TestWorker::TestWorker(char *interface){
 	ajClient = NULL;
 	signalRespFlag = 0;
 	mRespMsg = NULL;
+	mDeviceList.clear(); 
 	generateReportFileName();
 }
 TestWorker::~TestWorker(){
@@ -134,8 +136,8 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 		ajClient->SendRequestSignal(testItem.c_str(), numArg, tiArg);
 
 		cout << "call ResponseAnalyst" << endl;
-	//	ParseRespondedMsg();
 		ResponseAnalyst();
+		ParseRespondedMsg();
 
 		signalRespFlag = 0;
 		mTestCaseInfo.Signal.clear();
@@ -256,7 +258,8 @@ int TestWorker::ParseRespondedMsg(){
 	if ((0 == ret) && (0 == mTestCaseInfo.Type.compare("zwave")))
 	{
 		// Clear list dev iD before add it again
-		mTestCaseInfo.DeviceList.clear();
+		LOGCXX("TestWorker::ParseRespondedMsg condition");
+		mDeviceList.clear();
 		if ( NULL != mRespMsg ){
 			GetDevIDFromList();	
 		}
@@ -280,7 +283,7 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 
 	saveActionInput = NULL;
 
-	if (mTestCaseInfo.DeviceList.size() == 0){
+	if (mDeviceList.size() == 0){
 		LOGCXX("There is no Dev ID was recorded");
 		return;
 	}
@@ -301,7 +304,7 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 			// Keep the input from user
 			return;
 		}
-		newIDValue 		= mTestCaseInfo.DeviceList.at(GetIndexByCondition(arg[1]));
+		newIDValue 		= mDeviceList.at(GetIndexByCondition(arg[1])).ID;
 		arg[1].assign(newIDValue);
 		LOGCXX("Update new Dev ID: "<< arg[1].c_str()); 
 
@@ -334,7 +337,7 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 		pos 			= actions.find(tempdevId);
 		LOGCXX("Temporary dev id: " << tempdevId.c_str());
 		//Replace 
-		newIDValue 		= mTestCaseInfo.DeviceList.at(GetIndexByCondition(tempdevId));
+		newIDValue 		= mDeviceList.at(GetIndexByCondition(tempdevId)).ID;
 		stringsuffix	= saveActionInput->substr(pos+tempdevId.length(), saveActionInput->length()- (pos+tempdevId.length()));
 		actions 		= saveActionInput->substr(0,pos) + ";" + newIDValue + ";" + stringsuffix;
 		saveActionInput->assign(actions);
@@ -351,6 +354,7 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 	*/
 
 void TestWorker::GetDevIDFromList(){ 
+#if 0
 	char *devInfo, *info,*devID,  *tmp, *tmp1, *tmp2;
 	int cnt = 0;
 	char *listDevs =(char *) mRespMsg->c_str();
@@ -368,8 +372,9 @@ void TestWorker::GetDevIDFromList(){
 			cnt++;
 		}
 	}
-	delete mRespMsg;
-	mRespMsg = NULL;
+#endif
+	JsonParser::GetDevIDInJSMsg(mRespMsg, &mDeviceList);
+	LOGCXX("number of devices "<< mDeviceList.size());
 
 }
 	/*
@@ -403,8 +408,8 @@ int TestWorker::GetIndexByCondition(string condition){
 
 	/*Cover out of range*/
 
-	if ((ret < 0) || (ret >= mTestCaseInfo.DeviceList.size())){
-		LOGCXX("Invalid index (out of range), set it to first dev index with ID: "<< mTestCaseInfo.DeviceList.front());
+	if ((ret < 0) || (ret >= mDeviceList.size())){
+		LOGCXX("Invalid index (out of range), set it to first dev index with ID: "<< mDeviceList.front().ID);
 		ret = 0;
 	}
 	return ret;
