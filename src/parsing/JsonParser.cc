@@ -88,6 +88,9 @@ int JsonParser::GetDevIDInJSMsg(string *input, vector<DeviceInfo> *devList){
 		LOGCXX("Input list devices is invalid");
     }
 
+	if (NULL != jsonMsg){
+		json_decref(jsonMsg);
+	}
 	return 0;
 }
 const char *JsonParser::JSONGetObjectValue(const char *inputString, const char *objectName){
