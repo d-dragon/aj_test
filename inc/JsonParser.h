@@ -14,6 +14,7 @@ class JsonParser {
 		JsonParser(const char *tsPath, const char *tcPath, const char *tiPath);
 		~JsonParser();
 		int startParser();
+		const char *JSONGetObjectValue(const char *inputString, const char *objectName);
 
 	private:
 		json_t *testSuitRoot;

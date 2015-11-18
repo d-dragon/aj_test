@@ -2,7 +2,6 @@
 #include <iomanip>
 #include <stdio.h>
 #include <stdlib.h>
-#include <jansson.h>
 #include <string.h>
 #include "TestWorker.h"
 #include "JsonParser.h"
@@ -32,6 +31,27 @@ JsonParser::~JsonParser(){
 		json_decref(tcTemplateRoot);
 	if ( NULL != testSuitRoot )	
 		json_decref(testSuitRoot);
+}
+
+const char *JsonParser::JSONGetObjectValue(const char *inputString, const char *objectName){
+
+	json_t *rootObj;
+	json_t *targetObj;
+
+	rootObj = json_loads(inputString, 0, &err);
+	if(!json_is_object(rootObj)){
+		cout << "json format invalid" << endl;
+		return NULL;
+	}
+
+	targetObj = json_object_get(rootObj, objectName);
+	if (targetObj == NULL){
+		cout << "found no status object" << endl;
+		return NULL;
+	}
+
+	
+	return json_string_value(targetObj);
 }
 
 int JsonParser::startParser(){

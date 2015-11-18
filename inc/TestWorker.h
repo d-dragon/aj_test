@@ -44,6 +44,7 @@ class TestWorker {
 		void GetDevIDFromList();
 		void UpdateDevIDOfTC(string*);
 		int GetIndexByCondition(string);
+		void ResponseAnalyst();
 };
 
 #endif

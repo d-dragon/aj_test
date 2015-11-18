@@ -7,6 +7,7 @@
 #include <string.h>
 #include "TestWorker.h"
 #include "OnboardingTest.h"
+#include "JsonParser.h"
 #define TIME_OUT 100
 
 using namespace std;
@@ -87,10 +88,10 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 
 	
 	QStatus status;
-	OnboardingTest *onboardingTestApp;
 	int timeout = 0;
-
-	cout << "executeTestItem: " << testItem << endl;
+	OnboardingTest *onboardingTestApp;
+	
+	cout << "execute test item: " << testItem << endl;
 	//Save infor of Test Case
 	mTestCaseInfo.Signal.assign(testItem.c_str());
 	mTestCaseInfo.Type.assign(tiArg[0]);
@@ -101,7 +102,6 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 
 	if(!testItem.compare("onboarding")){
 
-		std::cout<<"procesing onboarding test\n";
 		onboardingTestApp = new OnboardingTest(tiArg);
 		status = onboardingTestApp->CreateBusAttachment();
 		if ( ER_OK != status )
@@ -128,43 +128,75 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 		}
 	}else{
 		if ( numArg > 1 ){
-//			mTestCaseInfo.ID.assign(tiArg[1]);
 			UpdateDevIDOfTC(tiArg);
 		}
 
-		printf("processing signal test\n");
 		ajClient->SendRequestSignal(testItem.c_str(), numArg, tiArg);
-		while((signalRespFlag != 1) && (timeout < 300)){
-			usleep(100000);
-			timeout++;
-			if(timeout == 300){
-				cout << "Test item execution timeout!!!" << endl;
-				//TODO - need implement action for this case
-				exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
-				exportStuffToFile("Test item execution timeout!!!");
-				exportStuffToFile("</td></tr></table><br>");
 
-			}
+		cout << "call ResponseAnalyst" << endl;
+	//	ParseRespondedMsg();
+		ResponseAnalyst();
 
-		}
-		ParseRespondedMsg();
 		signalRespFlag = 0;
+		mTestCaseInfo.Signal.clear();
+		mTestCaseInfo.Type.clear();
+		delete mRespMsg;
 	
 	}
 }
 
+void TestWorker::ResponseAnalyst(){
+
+	int timeout = 0;
+
+	cout << "debuging" << endl;
+	while((signalRespFlag != 1) && (timeout < 300)){
+		usleep(100000);
+		timeout++;
+		if(timeout == 300){
+			cout << "Test item execution timeout!!!" << endl;
+			//TODO - need implement action for this case
+			exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
+			exportStuffToFile("Test item execution timeout!!!");
+			exportStuffToFile("</td></tr></table><br>");
+
+		}
+
+	}
+	if(timeout < 300){
+		//received response message from callback
+		//parse and analyse json message then export 
+		
+		JsonParser parser(NULL, NULL, NULL);
+
+		cout << "Received Message: " << mRespMsg->c_str() << endl;
+		const char *status = parser.JSONGetObjectValue(mRespMsg->c_str(), "status");
+		if(status != NULL){
+
+			cout << "status " << status << endl;
+		}
+
+		exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
+		exportStuffToFile(status);
+		exportStuffToFile("</td></tr>");
+		
+
+		exportStuffToFile("<tr><th>Response Message</th><td colspan=\"2\">");
+		exportStuffToFile(mRespMsg->c_str());
+		exportStuffToFile("</td></tr></table><br>");
+	}
+
+}
 void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *srcPath, const char *member){
 
 	string tmpStr;
 	tmpStr.assign(respMsg);
-	cout << "Received Message: " << respMsg << endl;
+	mRespMsg = new string(respMsg);
 	// TO DO
 	if (0 != mTestCaseInfo.Signal.compare(member))
 	{
-		cout <<"test item: " << mTestCaseInfo.Signal.c_str() <<  "signal member received: "<< member << endl;
 		if((0 == mTestCaseInfo.Signal.compare("listen_notification")) && (strcmp(member, "notify") == 0)){
 			//export the result to report file	
-			cout << "export notify message to report file" << endl;
 			tmpStr = ReplaceAll(tmpStr, "\n", "<br><br>");
 			exportStuffToFile("<td colspan=\"2\">");
 			exportStuffToFile(tmpStr.c_str());
@@ -172,13 +204,14 @@ void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *sr
 		}
 		return;
 	}
-	mRespMsg = new string(respMsg);
 	//TODO - export the result to file
+	/*
 	tmpStr = ReplaceAll(tmpStr, "\n", "<br><br>");
 	exportStuffToFile("<tr><th>Result</th><td colspan=\"2\" rowspan=\"2\">");
 
 	exportStuffToFile(tmpStr.c_str());
 	exportStuffToFile("</td></tr></table><br>");
+	*/
 	signalRespFlag = respFlag;
 }
 
