@@ -25,6 +25,7 @@ class JsonParser {
 
 		template<class Type1> 
 		void JSONGetStuff(Type1 *input,string objectName, int index, Type1 *output);
+		static int GetDevIDInJSMsg(string *input, vector<DeviceInfo> *devList);
 
 	private:
 		json_t *testSuitRoot;

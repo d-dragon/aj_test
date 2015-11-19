@@ -12,12 +12,11 @@
 using namespace std;
 
 class TestWorker {
-	struct TestCaseInfo
+		struct TestCaseInfo
 		{
 			string Signal;
 			string Type;
 			string ID;
-			vector<string> DeviceList;
 		};
 	public:
 
@@ -33,6 +32,7 @@ class TestWorker {
 	private:
 		// Store all base infor of Test case and list all Devices.
 		static struct TestCaseInfo mTestCaseInfo;
+		static vector<struct DeviceInfo> mDeviceList;
 		static int signalRespFlag;
 		static string *mRespMsg;
 		string serviceInterface;

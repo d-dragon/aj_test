@@ -5,6 +5,7 @@
 #include <string.h>
 #include "TestWorker.h"
 #include "JsonParser.h"
+#include "common_def.h"
 
 #define OK 0
 #define ERROR -1
@@ -33,6 +34,64 @@ JsonParser::~JsonParser(){
 		json_decref(testSuitRoot);
 }
 
+int JsonParser::GetDevIDInJSMsg(string *input, vector<DeviceInfo> *devList){
+	LOGCXX("JsonParser::GetDevIDInJSMsg");
+
+	int index;
+	json_error_t jsonErr;
+    void *iter;
+	struct DeviceInfo devInfo;
+    json_t *jsonMsg = NULL, *value = NULL, *object = NULL;
+    json_t *jsListDevs = NULL;
+    jsonMsg = json_loadb(input->c_str(), input->size(), 0, &jsonErr);
+    if ( NULL == jsonMsg )
+    {
+        LOGCXX("Error while loading file: "<< jsonErr.text << " at line: " << jsonErr.line << std::endl);
+        return -1;
+    }
+    // Get List of Devices in JSON Format
+    jsListDevs = json_object_get(jsonMsg, "devicesList");
+    if (NULL == jsListDevs) {
+        LOGCXX("There's error in input list of devices");
+        return -1;
+    }
+    if (true == json_is_array(jsListDevs)){
+		if (0 == json_array_size(jsListDevs))
+		{
+			LOGCXX("There is no device in the list");
+			return -1;
+		}
+		json_array_foreach(jsListDevs, index, value){
+			if (true == json_is_object(value)){
+				object					= json_object_get(value, "Owner");
+				devInfo.Owner			= json_string_value(object);
+                object					= json_object_get(value, "Serial");
+                devInfo.Serial			= json_string_value(object);
+                object					= json_object_get(value, "FriendlyName");
+                devInfo.FriendlyName	= json_string_value(object);
+                object					= json_object_get(value, "ID");
+                devInfo.ID				= json_string_value(object);
+                object					= json_object_get(value, "Capability");
+                devInfo.Capability		= json_string_value(object);
+                object					= json_object_get(value, "ProfileID");
+                devInfo.ProfileID		= json_string_value(object);
+                object					= json_object_get(value, "EndPoint_num");
+                devInfo.EndPoint_num	= json_string_value(object);
+				devList->push_back(devInfo);
+			}
+
+		}
+
+    }
+    else{
+		LOGCXX("Input list devices is invalid");
+    }
+
+	if (NULL != jsonMsg){
+		json_decref(jsonMsg);
+	}
+	return 0;
+}
 void JsonParser::JSONGetObjectValue(string *inputString, string objectName, string *output){
 
 	json_t *rootObj;
