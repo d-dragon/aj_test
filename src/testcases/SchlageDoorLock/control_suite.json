@@ -25,9 +25,9 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "03",
-					"data1"			: "1",
-					"data2"			: "FF"
+					"data0"			: "BEEPER",
+					"data1"			: "FF",
+					"data2"			: ""
 				}
 			},
 			{
@@ -37,7 +37,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"data0"			: "03"
+					"data0"			: "BEEPER"
 				}
 			},
             {
@@ -47,9 +47,9 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
-                    "data0"         : "03",
-                    "data1"         : "1",
-                    "data2"         : "00"
+                    "data0"         : "BEEPER",
+                    "data1"         : "00",
+                    "data2"         : ""
                 }
             },
             {
@@ -59,7 +59,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "data0"         : "03"
+                    "data0"         : "BEEPER"
                 }
             },
             {
@@ -69,9 +69,9 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
-                    "data0"         : "04",
-                    "data1"         : "1",
-                    "data2"         : "FF"
+                    "data0"         : "VACATION",
+                    "data1"         : "FF",
+                    "data2"         : ""
                 }
             },
             {
@@ -81,7 +81,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "data0"         : "04"
+                    "data0"         : "VACATION"
                 }
             },
             {
@@ -91,9 +91,9 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
-                    "data0"         : "04",
-                    "data1"         : "1",
-                    "data2"         : "00"
+                    "data0"         : "VACATION",
+                    "data1"         : "00",
+                    "data2"         : ""
                 }
             },
             {
@@ -103,7 +103,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "data0"         : "04"
+                    "data0"         : "VACATION"
                 }
             },
             {
@@ -113,9 +113,9 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
-                    "data0"         : "05",
-                    "data1"         : "1",
-                    "data2"         : "FF"
+                    "data0"         : "LOCKANDLEAVE",
+                    "data1"         : "FF",
+                    "data2"         : ""
                 }
             },
             {
@@ -125,7 +125,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "data0"         : "05"
+                    "data0"         : "LOCKANDLEAVE"
                 }
             },
             {
@@ -135,9 +135,9 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
-                    "data0"         : "05",
-                    "data1"         : "1",
-                    "data2"         : "00"
+                    "data0"         : "LOCKANDLEAVE",
+                    "data1"         : "00",
+                    "data2"         : ""
                 }
             },
             {
@@ -147,7 +147,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "data0"         : "05"
+                    "data0"         : "LOCKANDLEAVE"
                 }
             },
             {
@@ -157,9 +157,9 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
-                    "data0"         : "0F",
-                    "data1"         : "1",
-                    "data2"         : "FF"
+                    "data0"         : "AUTO_LOCK",
+                    "data1"         : "FF",
+                    "data2"         : ""
                 }
             },
             {
@@ -169,7 +169,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "data0"         : "0F"
+                    "data0"         : "AUTO_LOCK"
                 }
             },
             {
@@ -179,9 +179,9 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
-                    "data0"         : "0F",
-                    "data1"         : "1",
-                    "data2"         : "00"
+                    "data0"         : "AUTO_LOCK",
+                    "data1"         : "00",
+                    "data2"         : ""
                 }
             },
             {
@@ -191,7 +191,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "data0"         : "0F"
+                    "data0"         : "AUTO_LOCK"
                 }
             },
             {
@@ -201,9 +201,9 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
-                    "data0"         : "10",
-                    "data1"         : "1",
-                    "data2"         : "05"
+                    "data0"         : "PIN_LENGTH",
+                    "data1"         : "05",
+                    "data2"         : ""
                 }
             },
             {
@@ -213,7 +213,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "data0"         : "10"
+                    "data0"         : "PIN_LENGTH"
                 }
             },
             {
@@ -223,9 +223,9 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
-                    "data0"         : "10",
-                    "data1"         : "1",
-                    "data2"         : "08"
+                    "data0"         : "PIN_LENGTH",
+                    "data1"         : "08",
+                    "data2"         : ""
                 }
             },
             {
@@ -235,7 +235,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "data0"         : "10"
+                    "data0"         : "PIN_LENGTH"
                 }
             },
             {

@@ -16,7 +16,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "01"
+                    "type"          : "ONOFF_GROUP"
                 }
             },
             {
@@ -26,7 +26,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "02"
+                    "type"          : "TAMPER_ALARM"
                 }
             },
             {
@@ -36,7 +36,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "03"
+                    "type"          : "REPORT_GROUP"
                 }
             },
 			{
@@ -75,7 +75,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "06"
+					"type"			: "PIR_SENSOR"
 				}
 			},
 			{
@@ -85,7 +85,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "0602",
+					"data0"			: "PIR_SENSOR",
 					"data1"			: "FFFF",
 					"data2"			: "1"
 				}
@@ -97,7 +97,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "06"
+					"type"			: "PIR_SENSOR"
 				}
 			},
 			{
@@ -107,7 +107,7 @@
 					"id"			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "0602",
+					"data0"			: "PIR_SENSOR",
 					"data1"			: "000F",
 					"data2"			: "1"
 				}
@@ -119,7 +119,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "type"          : "06"
+                    "type"          : "PIR_SENSOR"
                 }
             },
 			{
@@ -129,7 +129,7 @@
 					"id" 			: "ID 0",
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
-					"data0"			: "01",
+					"data0"			: "ONOFF_GROUP",
 					"data1"			: "47",
 					"data2"			: "1"
 				}
@@ -141,7 +141,7 @@
 					"id" 			: "ID 0",
 					"class"			: "ASSOCIATION",
 					"command"		: "GET",
-					"type"			: "01"
+					"type"			: "ONOFF_GROUP"
 				}
 			},
 			{
@@ -151,7 +151,7 @@
 					"id"			: "ID 0",
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
-					"data0"			: "02",
+					"data0"			: "TAMPER_ALARM",
 					"data1"			: "47",
 					"data2"			: "1"
 				}
@@ -163,7 +163,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "02"
+                    "type"          : "TAMPER_ALARM"
                 }
             },
 
@@ -174,7 +174,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "SET",
-                    "data0"         : "03",
+                    "data0"         : "REPORT_GROUP",
                     "data1"         : "01",
                     "data2"         : "1"
                 }
@@ -186,7 +186,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "03"
+                    "type"          : "REPORT_GROUP"
                 }
             },
             {
@@ -196,7 +196,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
-                    "data0"         : "01",
+                    "data0"         : "ONOFF_GROUP",
                     "data1"         : "47",
                     "data2"         : "1"
                 }
@@ -208,7 +208,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "01"
+                    "type"          : "ONOFF_GROUP"
                 }
             },
 			{
@@ -218,7 +218,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
-                    "data0"         : "02",
+                    "data0"         : "TAMPER_ALARM",
                     "data1"         : "47",
                     "data2"         : "1"
                 }
@@ -230,7 +230,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "02"
+                    "type"          : "TAMPER_ALARM"
                 }
             },
 			{
@@ -240,7 +240,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
-                    "data0"         : "03",
+                    "data0"         : "REPORT_GROUP",
                     "data1"         : "01",
                     "data2"         : "1"
                 }
@@ -252,7 +252,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "01"
+                    "type"          : "REPORT_GROUP"
                 }
             }
 		]

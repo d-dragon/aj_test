@@ -13,7 +13,7 @@
 				"name" 				: "removedevice", 
 				"input" 			: { 
 					"devicetype" 	: "zwave",
-					"id"			: "4A"
+					"id"			: ""
 				}
 			},
 			{ 
