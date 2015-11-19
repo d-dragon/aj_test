@@ -1,0 +1,44 @@
+[ 
+	{
+		"testsuit" 					: "GE Lighting Control Duplex Receptacle",
+		"serviceid" 				: "93c06771-c725-48c2-b1ff-5c313ee312cc",
+		"testcases" 				:	[
+			{
+				"name" 				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zwave"
+				}
+			},
+          	{ 
+				"name" 				: "removedevice", 
+				"input" 			: { 
+					"devicetype" 	: "zwave",
+					"id"			: ""
+				}
+			},
+			{ 
+				"name" 				: "removedevice", 
+				"input" 			: { 
+					"devicetype" 	: "zwave",
+					"id"			: ""
+				}
+			},
+
+			{ 
+				"name" 				: "adddevice", 
+				"input" 			: { 
+					"devicetype" 	: "zwave" 
+				}
+			},
+
+			{ 
+				"name" 				: "adddevice", 
+				"input" 			: { 
+					"devicetype" 	: "zwave" 
+				}
+			}
+
+			
+		]
+	}
+]
