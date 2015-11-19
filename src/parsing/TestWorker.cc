@@ -144,6 +144,7 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 		mTestCaseInfo.Type.clear();
 		if ( NULL != mRespMsg ){
 			delete mRespMsg;
+			mRespMsg = NULL;
 		}
 		
 	
