@@ -1,6 +1,6 @@
 [ 
 	{
-		"testsuit" : "Ecolink-DW-Sensor",
+		"testsuit" : "Ecolink-Tilt-Sensor",
 		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee314e4",
 		"testcases" :	[
 			{ 
@@ -55,7 +55,7 @@
 					"class" : "ASSOCIATION",
 					"command" : "SET",
 					"data0" : "ONOFF_GROUP",
-					"data1" : "2C",
+					"data1" : "27",
 					"data2" : "1"
 				}
 			},
@@ -82,7 +82,7 @@
 					"class" : "ASSOCIATION",
 					"command" : "REMOVE",
 					"data0" : "ONOFF_GROUP",
-					"data1" : "2C",
+					"data1" : "27",
 					"data2" : "1"
 				}
 			},
