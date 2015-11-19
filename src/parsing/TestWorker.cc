@@ -142,7 +142,10 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 		signalRespFlag = 0;
 		mTestCaseInfo.Signal.clear();
 		mTestCaseInfo.Type.clear();
-		delete mRespMsg;
+		if ( NULL != mRespMsg ){
+			delete mRespMsg;
+		}
+		
 	
 	}
 }
