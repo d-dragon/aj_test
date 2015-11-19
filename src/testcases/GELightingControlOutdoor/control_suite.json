@@ -1,0 +1,44 @@
+[ 
+	{
+		"testsuit" : "GE Lighting Control Outdoor",
+		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
+		"testcases" :	[
+			{	
+				"name"				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zwave"
+				}
+			},
+			{
+                "name" 				: "controlonoff",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "value"         : "1",
+                    "epnum"         : "",
+                    "proid"         : ""
+                }
+            },
+            {
+                "name"              : "controlonoff",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "value"         : "0",
+                    "epnum"         : "",
+                    "proid"         : ""
+                }
+            },
+            {
+                "name"              : "controlonoff",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "value"         : "1",
+                    "epnum"         : "",
+                    "proid"         : ""
+                }
+            }
+		]
+	}
+]
