@@ -21,7 +21,7 @@ class TestWorker {
 		};
 	public:
 
-		TestWorker(char *interface);
+		TestWorker(const char *interface);
 		~TestWorker();
 		int startAlljoynClient(const char *serviceId);
 		void StopAlljoynClient();

@@ -27,7 +27,7 @@ string ReplaceAll(string str, const string& from, const string& to) {
 
 struct TestWorker::TestCaseInfo TestWorker::mTestCaseInfo;
 
-TestWorker::TestWorker(char *interface){
+TestWorker::TestWorker(const char *interface){
 
 	serviceInterface.assign(interface);
 	ajClient = NULL;
@@ -143,13 +143,13 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 		delete mRespMsg;
 	
 	}
+	return status;
 }
 
 void TestWorker::ResponseAnalyst(){
 
 	int timeout = 0;
 
-	cout << "debuging" << endl;
 	while((signalRespFlag != 1) && (timeout < 300)){
 		usleep(100000);
 		timeout++;
@@ -167,17 +167,30 @@ void TestWorker::ResponseAnalyst(){
 		//received response message from callback
 		//parse and analyse json message then export 
 		
+		string status;
+		string reason;
 		JsonParser parser(NULL, NULL, NULL);
 
 		cout << "Received Message: " << mRespMsg->c_str() << endl;
-		const char *status = parser.JSONGetObjectValue(mRespMsg->c_str(), "status");
-		if(status != NULL){
+		parser.JSONGetObjectValue(mRespMsg,"status", &status);
+		exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
+		if(status.length() > 0){
 
 			cout << "status " << status << endl;
+			exportStuffToFile(status.c_str());
+			if(status.compare("failed") == 0){
+				parser.JSONGetObjectValue(mRespMsg, "reason", &reason);
+				if(reason.length() > 0){
+					exportStuffToFile(" | Reason: ");
+					exportStuffToFile(reason.c_str());
+				}
+			}
+		}else{
+
+			exportStuffToFile("Response message has no execution status");
 		}
 
-		exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
-		exportStuffToFile(status);
+
 		exportStuffToFile("</td></tr>");
 		
 

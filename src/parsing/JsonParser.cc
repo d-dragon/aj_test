@@ -33,25 +33,60 @@ JsonParser::~JsonParser(){
 		json_decref(testSuitRoot);
 }
 
-const char *JsonParser::JSONGetObjectValue(const char *inputString, const char *objectName){
+void JsonParser::JSONGetObjectValue(string *inputString, string objectName, string *output){
 
 	json_t *rootObj;
 	json_t *targetObj;
+	const char *retString;
+	int strLen;
 
-	rootObj = json_loads(inputString, 0, &err);
+	rootObj = json_loads(inputString->c_str(), 0, &err);
 	if(!json_is_object(rootObj)){
 		cout << "json format invalid" << endl;
-		return NULL;
+		return;
 	}
 
-	targetObj = json_object_get(rootObj, objectName);
+	targetObj = json_object_get(rootObj, objectName.c_str());
 	if (targetObj == NULL){
-		cout << "found no status object" << endl;
+		cout << "found no object" << endl;
+		return;
+	}
+		
+	retString = json_string_value(targetObj);
+	if(retString != NULL){
+		output->assign(retString);
+	}
+	json_decref(rootObj);
+	json_decref(targetObj);	
+ }
+
+void JsonParser::JSONGetObjectValue(json_t *inputObj, string objectName, string *output){
+	
+	json_t *targetObj;
+	const char *retString;
+
+	targetObj = json_object_get(inputObj, objectName.c_str());
+	if(targetObj == NULL){
+		cout << "found no required object" << endl;
+		return;
+	}
+	retString = json_string_value(targetObj);
+	if(retString != NULL){
+		output->assign(retString);
+	}
+	json_decref(targetObj);
+}
+json_t *JsonParser::JSONGetObjectFromString(string *inputString, string objectName){
+
+	json_t *rootObj;
+
+	rootObj = json_loads(inputString->c_str(), 0, &err);
+	if(!json_is_object(rootObj)){
+		cout << err.text << "at line " << err.line << endl;
 		return NULL;
 	}
 
-	
-	return json_string_value(targetObj);
+	return json_object_get(rootObj, objectName.c_str());
 }
 
 int JsonParser::startParser(){
