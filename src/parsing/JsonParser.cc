@@ -337,25 +337,18 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 
 		if(json_is_string(inputArgEle)){
 			
-			status = json_object_set(tiArgObj, "value", inputArgEle);
-			if(status != OK){
+			tiArg[index].assign(json_string_value(inputArgEle));
+		}else{
 
-				cout << "update test item value for "  << inputArgName << "failed" << endl;
-			}
+			tiArg[index].assign(json_string_value(json_object_get(tiArgObj, "value")));
 		}
 
-		tiArg[index].assign(json_string_value(json_object_get(tiArgObj, "value")));
 
 		sprintf(tmp, "<tr><td>%s</td><td>%s</td></tr>", inputArgName, tiArg[index].c_str());
+		cout << "index: " << index << " " << inputArgName << ": " << tiArg[index] << endl;
 		tmpContent.append(tmp);
 		memset(tmp, 0, 256);
-		/*
-		tmpContent.append("\n");
-		tmpContent.append(inputArgName);
-		tmpContent.append(":");
-		tmpContent.append(tiArg[index]);
-		*/
-
+	
 	}
 //	tmpContent.append("\n");
 	worker->exportStuffToFile(tmpContent.c_str());
