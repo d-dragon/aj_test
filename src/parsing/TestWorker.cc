@@ -234,16 +234,9 @@ void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *sr
 			exportStuffToFile("</td>");
 		}
 		return;
+	}else{
+		signalRespFlag = respFlag;
 	}
-	//TODO - export the result to file
-	/*
-	tmpStr = ReplaceAll(tmpStr, "\n", "<br><br>");
-	exportStuffToFile("<tr><th>Result</th><td colspan=\"2\" rowspan=\"2\">");
-
-	exportStuffToFile(tmpStr.c_str());
-	exportStuffToFile("</td></tr></table><br>");
-	*/
-	signalRespFlag = respFlag;
 }
 
 
