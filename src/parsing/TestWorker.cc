@@ -93,6 +93,7 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 	QStatus status;
 	int timeout = 0;
 	OnboardingTest *onboardingTestApp;
+	signalRespFlag = 0;
 	
 	cout << "execute test item: " << testItem << endl;
 	//Save infor of Test Case
@@ -140,11 +141,11 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 		ResponseAnalyst();
 		ParseRespondedMsg();
 
-		signalRespFlag = 0;
 		
 	
 	}
 
+	signalRespFlag = 0;
 	mTestCaseInfo.Signal.clear();
 	mTestCaseInfo.Type.clear();
 	respmsg.message.clear();
@@ -179,7 +180,6 @@ void TestWorker::ResponseAnalyst(){
 			string reason;
 			JsonParser parser(NULL, NULL, NULL);
 
-			cout << "Received Message: " << respmsg.message.c_str() << endl;
 			parser.JSONGetObjectValue(&respmsg.message,"status", &status);
 			exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
 			if(status.length() > 0){
@@ -201,7 +201,6 @@ void TestWorker::ResponseAnalyst(){
 			exportStuffToFile("</td></tr>");
 		}else if(mTestCaseInfo.Type.compare("upnp") == 0){
 
-			cout << "Received Message: " << respmsg.message.c_str() << endl;
 
 			respmsg.message = ReplaceAll(respmsg.message, "\n", "<br><br>");
 			exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
@@ -220,9 +219,7 @@ void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *sr
 
 	string tmpStr;
 	tmpStr.assign(respMsg);
-	respmsg.message.assign(respMsg);
-	respmsg.srcpath.assign(srcPath);
-	respmsg.signalname.assign(member);
+	cout << "Message: " << respMsg << endl; 
 	// TO DO
 	if (0 != mTestCaseInfo.Signal.compare(member))
 	{
@@ -235,6 +232,10 @@ void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *sr
 		}
 		return;
 	}else{
+
+		respmsg.message.assign(respMsg);
+		respmsg.srcpath.assign(srcPath);
+		respmsg.signalname.assign(member);
 		signalRespFlag = respFlag;
 	}
 }
