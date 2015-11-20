@@ -1,109 +1,109 @@
 {
 	"add_devices" :[
-		{ "arg": "devicetype", "value" : "na" }
+		{ "arg": "devicetype", "value" : "" }
 	],
 
 	"list_devices" :[
-		{ "arg": "devicetype", "value" : "na" }
+		{ "arg": "devicetype", "value" : "" }
 	],
 
 	"get_binary" :[
-		{ "arg": "devicetype", "value" : "na" },
-		{ "arg": "id", "value" : "na" },
-		{ "arg": "epnum", "value" : "na" },
-		{ "arg": "proid", "value" : "na" }
+		{ "arg": "devicetype", "value" : "" },
+		{ "arg": "id", "value" : "" },
+		{ "arg": "epnum", "value" : "" },
+		{ "arg": "proid", "value" : "" }
 	],
 
 	"set_binary" :[
-		{ "arg": "devicetype", "value" : "na" },
-		{ "arg": "id", "value" : "na" },
-		{ "arg": "value", "value" : "na" },
-		{ "arg": "epnum", "value" : "na" },
-		{ "arg": "proid", "value" : "na" }
+		{ "arg": "devicetype", "value" : "" },
+		{ "arg": "id", "value" : "" },
+		{ "arg": "value", "value" : "" },
+		{ "arg": "epnum", "value" : "" },
+		{ "arg": "proid", "value" : "" }
 	],
 
 	"read_spec" :[
-		{ "arg": "devicetype", "value" : "na" },
-		{ "arg": "id", "value" : "na" },
-		{ "arg": "class", "value" : "na" },
-		{ "arg": "command", "value" : "na" },
-		{ "arg": "type", "value" : "na" },
-		{ "arg": "scale", "value" : "na" },
-		{ "arg": "force", "value" : "na" }
+		{ "arg": "devicetype", "value" : "" },
+		{ "arg": "id", "value" : "" },
+		{ "arg": "class", "value" : "" },
+		{ "arg": "command", "value" : "" },
+		{ "arg": "type", "value" : "" },
+		{ "arg": "scale", "value" : "" },
+		{ "arg": "force", "value" : "" }
 	],
 	"write_spec" :[
-		{ "arg": "devicetype", "value" : "na" },
-		{ "arg": "id", "value" : "na" },
-		{ "arg": "class", "value" : "na" },
-		{ "arg": "command", "value" : "na" },
-		{ "arg": "data0", "value" : "na" },
-		{ "arg": "data1", "value" : "na" },
-		{ "arg": "data2", "value" : "na" }
+		{ "arg": "devicetype", "value" : "" },
+		{ "arg": "id", "value" : "" },
+		{ "arg": "class", "value" : "" },
+		{ "arg": "command", "value" : "" },
+		{ "arg": "data0", "value" : "" },
+		{ "arg": "data1", "value" : "" },
+		{ "arg": "data2", "value" : "" }
 	],
 	"read_s_spec" :[
-		{ "arg": "devicetype", "value" : "na" },
-		{ "arg": "id", "value" : "na" },
-		{ "arg": "class", "value" : "na" },
-		{ "arg": "command", "value" : "na" },
-		{ "arg": "data0", "value" : "na" }
+		{ "arg": "devicetype", "value" : "" },
+		{ "arg": "id", "value" : "" },
+		{ "arg": "class", "value" : "" },
+		{ "arg": "command", "value" : "" },
+		{ "arg": "data0", "value" : "" }
 	],
 	"write_s_spec" :[
-		{ "arg": "devicetype", "value" : "na" },
-		{ "arg": "id", "value" : "na" },
-		{ "arg": "class", "value" : "na" },
-		{ "arg": "command", "value" : "na" },
-		{ "arg": "data0", "value" : "na" },
-		{ "arg": "data1", "value" : "na" },
-		{ "arg": "data2", "value" : "na" }
+		{ "arg": "devicetype", "value" : "" },
+		{ "arg": "id", "value" : "" },
+		{ "arg": "class", "value" : "" },
+		{ "arg": "command", "value" : "" },
+		{ "arg": "data0", "value" : "" },
+		{ "arg": "data1", "value" : "" },
+		{ "arg": "data2", "value" : "" }
 	],
 	"remove_device" :[
-		{ "arg": "devicetype", "value" : "na" },
-		{ "arg": "id", "value" : "na" }
+		{ "arg": "devicetype", "value" : "" },
+		{ "arg": "id", "value" : "" }
 	],
 	"reset" :[
-		{ "arg": "devicetype", "value" : "na" }
+		{ "arg": "devicetype", "value" : "" }
 	],
 
 	"update_firmware" :[
-		{ "arg": "url", "value" : "na" }
+		{ "arg": "url", "value" : "" }
 	],
 
 	"set_rule" :[
-		{ "arg": "ruletype", "value" : "na" },
-		{ "arg": "rulename", "value" : "na" },
-		{ "arg": "conditions", "value" : "na" },
-		{ "arg": "actions", "value" : "na" }
+		{ "arg": "ruletype", "value" : "" },
+		{ "arg": "rulename", "value" : "" },
+		{ "arg": "conditions", "value" : "" },
+		{ "arg": "actions", "value" : "" }
 	],
 
 	"get_rule" :[
-		{ "arg": "devicetype", "value" : "na" }
+		{ "arg": "devicetype", "value" : "" }
 
 	],
 
 	"rule_actions" :[
-		{ "arg": "ruleaction", "value" : "na" },
-		{ "arg": "ruletype", "value" : "na" },
-		{ "arg": "rulename", "value" : "na" },
-		{ "arg": "newname", "value" : "na" },
-		{ "arg": "newcondition", "value" : "na" },
-		{ "arg": "newaction", "value" : "na" }
+		{ "arg": "ruleaction", "value" : "" },
+		{ "arg": "ruletype", "value" : "" },
+		{ "arg": "rulename", "value" : "" },
+		{ "arg": "newname", "value" : "" },
+		{ "arg": "newcondition", "value" : "" },
+		{ "arg": "newaction", "value" : "" }
 	],
 
 	"onboarding" : [
-		{ "arg" : "ssid", "value" : "na"},
-		{ "arg" : "passcode", "value" : "na"},
-		{ "arg" : "auth", "value" : "na"},
-		{ "arg" : "getVersion", "value" : "na"},
-		{ "arg" : "getState", "value" : "na"},
-		{ "arg" : "getLastErr", "value" : "na"},
-		{ "arg" : "getScanInfo", "value" : "na"},
-		{ "arg" : "configAndConnectWifi", "value" : "na"},
-		{ "arg" : "offBoard", "value" : "na"}
+		{ "arg" : "ssid", "value" : ""},
+		{ "arg" : "passcode", "value" : ""},
+		{ "arg" : "auth", "value" : ""},
+		{ "arg" : "getVersion", "value" : ""},
+		{ "arg" : "getState", "value" : ""},
+		{ "arg" : "getLastErr", "value" : ""},
+		{ "arg" : "getScanInfo", "value" : ""},
+		{ "arg" : "configAndConnectWifi", "value" : ""},
+		{ "arg" : "offBoard", "value" : ""}
 
 	],
 	"listen_notification" : [
-		{"arg" : "devicetype", "value" : "na"},
-		{"arg" : "time", "value" : "na"}
+		{"arg" : "devicetype", "value" : ""},
+		{"arg" : "time", "value" : ""}
 	]
 
 }
