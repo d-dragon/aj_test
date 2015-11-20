@@ -18,6 +18,13 @@ class TestWorker {
 			string Type;
 			string ID;
 		};
+
+		struct ResponseMessageInfo
+		{
+			string message;
+			string srcpath;
+			string signalname;
+		};
 	public:
 
 		TestWorker(const char *interface);
@@ -32,6 +39,7 @@ class TestWorker {
 	private:
 		// Store all base infor of Test case and list all Devices.
 		static struct TestCaseInfo mTestCaseInfo;
+		static struct ResponseMessageInfo respmsg;
 		static vector<struct DeviceInfo> mDeviceList;
 		static int signalRespFlag;
 		static string *mRespMsg;

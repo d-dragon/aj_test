@@ -1,7 +1,7 @@
 [ 
 
 	{
-		"testsuit" : "newdevice",
+		"testsuit" : "WemoUpnp",
 		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee314e4",
 		"testcases" :	[
 			{ 
@@ -17,7 +17,9 @@
 				"input" : {
 					"devicetype" : "upnp",
 					"id" : "insight_5ED",
-					"value" : "1"
+					"value" : "1",
+					"epnum" : "",
+					"proid":""
 				}
 			},
 			{
@@ -25,7 +27,9 @@
 				"input" : {
 					"devicetype" : "upnp",
 					"id" : "insight_5ED",
-					"value" : "0"
+					"value" : "0",
+					"epnum" : "",
+					"proid":""
 				}
 			}
 

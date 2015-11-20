@@ -27,6 +27,7 @@ string ReplaceAll(string str, const string& from, const string& to) {
 
 
 struct TestWorker::TestCaseInfo TestWorker::mTestCaseInfo;
+struct TestWorker::ResponseMessageInfo TestWorker::respmsg;
 
 TestWorker::TestWorker(const char *interface){
 
@@ -140,15 +141,15 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 		ParseRespondedMsg();
 
 		signalRespFlag = 0;
-		mTestCaseInfo.Signal.clear();
-		mTestCaseInfo.Type.clear();
-		if ( NULL != mRespMsg ){
-			delete mRespMsg;
-			mRespMsg = NULL;
-		}
 		
 	
 	}
+
+	mTestCaseInfo.Signal.clear();
+	mTestCaseInfo.Type.clear();
+	respmsg.message.clear();
+	respmsg.srcpath.clear();
+	respmsg.signalname.clear();
 	return status;
 }
 
@@ -173,35 +174,44 @@ void TestWorker::ResponseAnalyst(){
 		//received response message from callback
 		//parse and analyse json message then export 
 		
-		string status;
-		string reason;
-		JsonParser parser(NULL, NULL, NULL);
+		if((mTestCaseInfo.Type.compare("zwave") == 0) && (respmsg.signalname.compare("notify") != 0 )){
+			string status;
+			string reason;
+			JsonParser parser(NULL, NULL, NULL);
 
-		cout << "Received Message: " << mRespMsg->c_str() << endl;
-		parser.JSONGetObjectValue(mRespMsg,"status", &status);
-		exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
-		if(status.length() > 0){
+			cout << "Received Message: " << respmsg.message.c_str() << endl;
+			parser.JSONGetObjectValue(&respmsg.message,"status", &status);
+			exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
+			if(status.length() > 0){
 
-			cout << "status " << status << endl;
-			exportStuffToFile(status.c_str());
-			if(status.compare("failed") == 0){
-				parser.JSONGetObjectValue(mRespMsg, "reason", &reason);
-				if(reason.length() > 0){
-					exportStuffToFile(" | Reason: ");
-					exportStuffToFile(reason.c_str());
+				cout << "status " << status << endl;
+				exportStuffToFile(status.c_str());
+				if(status.compare("failed") == 0){
+					parser.JSONGetObjectValue(&respmsg.message, "reason", &reason);
+					if(reason.length() > 0){
+						exportStuffToFile(" | Reason: ");
+						exportStuffToFile(reason.c_str());
+					}
 				}
-			}
-		}else{
+			}else{
 
-			exportStuffToFile("Response message has no execution status");
+				exportStuffToFile("Response message has no execution status");
+			}
+
+			exportStuffToFile("</td></tr>");
+		}else if(mTestCaseInfo.Type.compare("upnp") == 0){
+
+			cout << "Received Message: " << respmsg.message.c_str() << endl;
+
+			respmsg.message = ReplaceAll(respmsg.message, "\n", "<br><br>");
+			exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
+
+			exportStuffToFile(respmsg.message.c_str());
+			exportStuffToFile("</td></tr>");
 		}
 
-
-		exportStuffToFile("</td></tr>");
-		
-
 		exportStuffToFile("<tr><th>Response Message</th><td colspan=\"2\">");
-		exportStuffToFile(mRespMsg->c_str());
+		exportStuffToFile(respmsg.message.c_str());
 		exportStuffToFile("</td></tr></table><br>");
 	}
 
@@ -210,7 +220,9 @@ void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *sr
 
 	string tmpStr;
 	tmpStr.assign(respMsg);
-	mRespMsg = new string(respMsg);
+	respmsg.message.assign(respMsg);
+	respmsg.srcpath.assign(srcPath);
+	respmsg.signalname.assign(member);
 	// TO DO
 	if (0 != mTestCaseInfo.Signal.compare(member))
 	{
