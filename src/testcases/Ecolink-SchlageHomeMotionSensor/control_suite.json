@@ -16,7 +16,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "01"
+                    "type"          : "REPORT_GROUP"
                 }
             },
             {
@@ -26,7 +26,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "02"
+                    "type"          : "ONOFF_GROUP"
                 }
             },
 			{
@@ -36,7 +36,7 @@
 					"id"			: "ID 0",
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
-					"data0"			: "01",
+					"data0"			: "REPORT_GROUP",
 					"data1"			: "41",
 					"data2"			: "1"
 				}
@@ -48,7 +48,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "01"
+                    "type"          : "REPORT_GROUP"
                 }
             },
 			{
@@ -67,7 +67,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "63"
+					"type"			: "ENABLE_ONOFF"
 				}
 			},
 			{
@@ -77,7 +77,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "6301",
+					"data0"			: "ENABLE_ONOFF",
 					"data1"			: "FF",
 					"data2"			: "1"
 				}
@@ -89,7 +89,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "63"
+					"type"			: "ENABLE_ONOFF"
 				}
 			},
 			{
@@ -99,7 +99,7 @@
 					"id"			: "ID 0",
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
-					"data0"			: "02",
+					"data0"			: "ONOFF_GROUP",
 					"data1"			: "41",
 					"data2"			: "1"
 				}
@@ -111,7 +111,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "02"
+                    "type"          : "ONOFF_GROUP"
                 }
             },
 			{
@@ -121,7 +121,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "6301",
+					"data0"			: "ENABLE_ONOFF",
 					"data1"			: "00",
 					"data2"			: "1"
 				}
@@ -133,7 +133,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "63"
+					"type"			: "ENABLE_ONOFF"
 				}
 			},
 			{
@@ -143,7 +143,7 @@
 					"id"			: "ID 0",
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
-					"data0"			: "02",
+					"data0"			: "ONOFF_GROUP",
 					"data1"			: "ff",
 					"data2"			: "1"
 				}
@@ -155,7 +155,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "02"
+                    "type"          : "ONOFF_GROUP"
                 }
             },
 
@@ -166,7 +166,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
-                    "data0"         : "01",
+                    "data0"         : "REPORT_GROUP",
                     "data1"         : "41",
                     "data2"         : "1"
                 }
@@ -178,7 +178,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "01"
+                    "type"          : "REPORT_GROUP"
                 }
             },
             {
@@ -188,7 +188,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
-                    "data0"         : "02",
+                    "data0"         : "ONOFF_GROUP",
                     "data1"         : "41",
                     "data2"         : "1"
                 }
@@ -200,7 +200,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "02"
+                    "type"          : "ONOFF_GROUP"
                 }
             }
 		]

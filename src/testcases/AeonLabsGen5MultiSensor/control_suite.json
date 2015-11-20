@@ -25,7 +25,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "3"
+					"type"			: "TIME"
 				}
 			},
 			{
@@ -35,7 +35,27 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "4"
+					"type"			: "ENABLE_MOTION"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "REPORT_SENSOR"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "TIME_AUTO_REPORT"
 				}
 			},
 			{
@@ -45,7 +65,7 @@
 					"id" 			: "ID 0",
 					"class"			: "ASSOCIATION",
 					"command"		: "GET",
-					"type"			: "1"
+					"type"			: "ONOFF_GROUP"
 				}
 			},
 			{
@@ -85,7 +105,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "0401",
+					"data0"			: "ENABLE_MOTION",
 					"data1"			: "0",
 					"data2"			: "1"
 				}
@@ -97,7 +117,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "04"
+					"type"			: "ENABLE_MOTION"
 				}
 			},
 			{
@@ -107,7 +127,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "0401",
+					"data0"			: "ENABLE_MOTION",
 					"data1"			: "1",
 					"data2"			: "1"
 				}
@@ -119,7 +139,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "04"
+					"type"			: "ENABLE_MOTION"
 				}
 			},
 			{
@@ -129,7 +149,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "0302",
+					"data0"			: "TIME",
 					"data1"			: "3BC4",
 					"data2"			: "1"
 				}
@@ -141,7 +161,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "03"
+					"type"			: "TIME"
 				}
 			},
 			{
@@ -151,7 +171,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "0302",
+					"data0"			: "TIME",
 					"data1"			: "3BC5",
 					"data2"			: "1"
 				}
@@ -163,7 +183,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "03"
+					"type"			: "TIME"
 				}
 			},
 			{
@@ -173,7 +193,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "0302",
+					"data0"			: "TIME",
 					"data1"			: "0003",
 					"data2"			: "1"
 				}
@@ -185,7 +205,95 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "3"
+					"type"			: "TIME"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "TIME_AUTO_REPORT",
+					"data1"			: "28DE80",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "TIME_AUTO_REPORT"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "REPORT_SENSOR",
+					"data1"			: "0",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "REPORT_SENSOR"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "REPORT_SENSOR",
+					"data1"			: "E1",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "REPORT_SENSOR"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "TIME_AUTO_REPORT",
+					"data1"			: "05",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "TIME_AUTO_REPORT"
 				}
 			},
 			{
@@ -195,7 +303,7 @@
 					"id"			: "ID 0",
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
-					"data0"			: "01",
+					"data0"			: "ONOFF_GROUP",
 					"data1"			: "2F",
 					"data2"			: "1"
 				}
@@ -208,25 +316,21 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "01"
+                    "type"          : "ONOFF_GROUP"
                 }
             },
-
-			 {
+			{
                 "name" : "writespec",
                 "input" : {
                     "devicetype"    : "zwave",
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
-                    "data0"         : "01",
+                    "data0"         : "ONOFF_GROUP",
                     "data1"         : "2F",
                     "data2"         : "1"
                 }
             }
-
-
-			
 		]
 	}
 ]
