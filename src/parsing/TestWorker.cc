@@ -289,7 +289,7 @@ int TestWorker::ParseRespondedMsg(){
 		// Clear list dev iD before add it again
 		LOGCXX("TestWorker::ParseRespondedMsg condition");
 		mDeviceList.clear();
-		if ( NULL != mRespMsg ){
+		if (respmsg.message.length() > 0){
 			GetDevIDFromList();	
 		}
 	}
@@ -402,7 +402,7 @@ void TestWorker::GetDevIDFromList(){
 		}
 	}
 #endif
-	JsonParser::GetDevIDInJSMsg(mRespMsg, &mDeviceList);
+	JsonParser::GetDevIDInJSMsg(&respmsg.message, &mDeviceList);
 	LOGCXX("number of devices "<< mDeviceList.size());
 
 }
