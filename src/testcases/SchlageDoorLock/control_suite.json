@@ -308,7 +308,7 @@
                     "devicetype"    : "zwave",
                     "id"            : "ID 0",
                     "class"         : "USER_CODE",
-                    "command"       : "GET"
+                    "command"       : "GET_NUM"
                 }
             },
             {
