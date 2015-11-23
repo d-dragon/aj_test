@@ -9,6 +9,28 @@
 					"devicetype"	: "zwave"
 				}
 			},
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "REPORT_GROUP"
+                }
+            },
+            {
+                "name" : "writespec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "SET",
+                    "data0"         : "REPORT_GROUP",
+                    "data1"         : "59",
+                    "data2"         : "1"
+                }
+            },
 			{
 				"name" : "readspec",
 				"input" : {
@@ -16,31 +38,100 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "25"
+					"type"			: "SOUND_VOLUME"
 				}
 			},
 			{
-				"name" : "writespec",
-				"input" : {
+				"name"              : "writespec",
+				"input"             : {
 					"devicetype" 	: "zwave",
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "2502",
+					"data0"			: "SOUND_VOLUME",
 					"data1"			: "0101",
 					"data2"			: "1"
 				}
 			},
+            {
+                "name"              : "controlonoff",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "value"         : "0"
+                }
+            },
 			{
-				"name" : "readspec",
-				"input" : {
+				"name"              : "readspec",
+				"input"             : {
 					"devicetype" 	: "zwave",
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "25"
+					"type"			: "SOUND_VOLUME"
 				}
 			},
+            {
+                "name"              : "writespec",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "SET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "0202",
+                    "data2"         : "1"
+                }
+            },
+            {
+                "name"              : "controlonoff",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "value"         : "0"
+                }
+            },
+            {
+                "name"              : "readspec",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "SOUND_VOLUME"
+                }
+            },
+            {
+                "name"              : "writespec",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "SET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "0303",
+                    "data2"         : "1"
+                }
+            },
+            {
+                "name"              : "controlonoff",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "value"         : "0"
+                }
+            },
+            {
+                "name"              : "readspec",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "SOUND_VOLUME"
+                }
+            },
+
 			{
 				"name" : "writespec",
 				"input" : {
@@ -48,11 +139,29 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
-					"data0"			: "2502",
-					"data1"			: "0403",
+					"data0"			: "SOUND_VOLUME",
+					"data1"			: "0400",
 					"data2"			: "1"
 				}
 			},
+            {
+                "name"              : "controlonoff",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "value"         : "0"
+                }
+            },
+            {
+                "name"              : "readspec",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "SOUND_VOLUME"
+                }
+            },
             {
                 "name" : "writespec",
                 "input" : {
@@ -60,7 +169,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
-                    "data0"         : "5001",
+                    "data0"         : "NOTIFICATION",
                     "data1"         : "01",
                     "data2"         : "1"
                 }
@@ -72,7 +181,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "type"          : "50"
+                    "type"          : "NOTIFICATION"
                 }
             },
             {
@@ -82,7 +191,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
-                    "data0"         : "5001",
+                    "data0"         : "NOTIFICATION",
                     "data1"         : "02",
                     "data2"         : "1"
                 }
@@ -94,7 +203,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "type"          : "50"
+                    "type"          : "NOTIFICATION"
                 }
             },
             {
@@ -104,7 +213,7 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
-                    "data0"         : "5001",
+                    "data0"         : "NOTIFICATION",
                     "data1"         : "00",
                     "data2"         : "1"
                 }
@@ -116,31 +225,10 @@
                     "id"            : "ID 0",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "type"          : "50"
+                    "type"          : "NOTIFICATION"
                 }
             },
-             {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "ID 0",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "01"
-                }
-            },
-            {
-                "name" : "writespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "ID 0",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "SET",
-                    "data0"         : "01",
-                    "data1"         : "39",
-                    "data2"         : "1"
-                }
-            },
+             
             {
                 "name" : "readspec",
                 "input" : {
@@ -148,7 +236,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "01"
+                    "type"          : "REPORT_GROUP"
                 }
 
             },
@@ -175,8 +263,8 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
-                    "data0"         : "01",
-                    "data1"         : "39",
+                    "data0"         : "REPORT_GROUP",
+                    "data1"         : "59",
                     "data2"         : "1"
                 }
             },
@@ -187,7 +275,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "01"
+                    "type"          : "REPORT_GROUP"
                 }
             }
 		]
