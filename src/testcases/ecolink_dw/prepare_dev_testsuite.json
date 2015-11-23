@@ -1,0 +1,40 @@
+[ 
+	{
+		"testsuit" : "Ecolink-DW-Sensor-prepare-device",
+		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee314e4",
+		"testcases" :	[
+			{ 
+				"name" : "removedevice", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "23"
+				}
+			},
+			{ 
+				"name" : "removedevice", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : ""
+				}
+			},
+
+			{ 
+				"name" : "adddevice", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0"
+				}
+			},
+			{ 
+				"name" : "addsensor", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 1",
+					"class" : "BATTERY",
+					"command": "GET",
+					"force" : "1"
+				}
+			}
+		]
+	}
+]

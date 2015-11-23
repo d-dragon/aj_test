@@ -1,0 +1,297 @@
+[
+	{
+		"testsuit" : "Fibaro-MotionLightTempSensor",
+		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee314e4",
+		"testcases" :	[
+			{	
+				"name"				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zwave"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "BATTERY",
+					"command"       : "GET",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "REPORT_GROUP"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "ONOFF_GROUP"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "TAMPER_ALARM"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "PIR_SENSOR",
+					"data1"         : "15",
+					"data2"         : "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "PIR_SENSOR"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "REPORT_GROUP",
+					"data1"			: "01",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "REPORT_GROUP"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "BATTERY",
+					"force"			: "1",
+					"command"		: "GET"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "ONOFF_GROUP",
+					"data1"			: "3D",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec_takeaction",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "ONOFF_GROUP",
+					"time"			: "90"
+
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "ONOFF_GROUP",
+					"data1"			: "ff",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "ONOFF_GROUP"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "TAMPER_GROUP"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "TAMPER_GROUP",
+					"data1"			: "3D",
+					"data2"			: "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "TAMPER_GROUP"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "REMOVE",
+					"data0"         : "REPORT_GROUP",
+					"data1"         : "3D",
+					"data2"         : "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "REPORT_GROUP"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "REMOVE",
+					"data0"         : "ONOFF_GROUP",
+					"data1"         : "3D",
+					"data2"         : "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "ONOFF_GROUP"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "REMOVE",
+					"data0"         : "TAMPER_GROUP",
+					"data1"         : "3D",
+					"data2"         : "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "TAMPER_GROUP"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "SENSOR_MULTILEVEL",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "TEMP"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "SENSOR_MULTILEVEL",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "HUMI"
+				}
+			}
+
+		]
+	}
+]

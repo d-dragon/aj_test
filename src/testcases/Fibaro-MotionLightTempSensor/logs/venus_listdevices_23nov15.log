@@ -1,0 +1,132 @@
+root@OpenWrt:/# [2015/11/23][04:26:37.328011] <alljoyn_service.c:sessionportlistener_acceptsessionjoiner_cb:507> [0xb6a94520:""] joiner = :a9KDJTO8.2
+
+[2015/11/23][04:26:37.333283] <alljoyn_service.c:sessionportlistener_sessionjoined_cb:496> [0xb6a94520:""] joiner = :a9KDJTO8.2
+
+[2015/11/23][04:26:37.333514] <alljoyn_service.c:sessionportlistener_sessionjoined_cb:497> [0xb6a94520:""] Session Joined SessionId = 2655745475
+
+[2015/11/23][04:26:37.372101] <alljoyn_service.c:listdevices_signal_handle:603> [0xb6954520:""] listdevices_signal 
+
+[2015/11/23][04:26:37.372538] <alljoyn_service.c:listdevices_signal_handle:613> [0xb6954520:""] type = zwave
+
+[2015/11/23][04:26:37.372671] <alljoyn_service.c:listdevices_signal_handle:619> [0xb6954520:""] sessionId = 2655745475
+
+[2015/11/23][04:26:37.372754] <alljoyn_service.c:listdevices_signal_handle:665> [0xb6954520:""] daemon_services[0].name = zigbee id = 00000000
+
+[2015/11/23][04:26:37.372832] <alljoyn_service.c:listdevices_signal_handle:665> [0xb6954520:""] daemon_services[1].name = zwave id = 17F45511
+
+[2015/11/23][04:26:37.372960] <alljoyn_service.c:add_list_allbus_data:46> [0xb6954520:""] in add_list_allbus_data 
+
+[2015/11/23][04:26:37.373481] <zw_handler_cli.c:add_remove_list_reset_device:333> [0xb6fab000:"zwave-service"] zwave list_devices
+
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252797
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252798
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252799
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252800
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252801
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252802
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252803
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252804
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252805
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252806
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252807
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252808
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252809                     
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252810                     
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252811                     
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252812                     
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252813                     
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252814                     
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252815                     
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252816                     
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252817                     
+tmp->name = list_devices tmp->id = 2655745475 tmp->action_time = 1448252797 time_now = 1448252818                     
+[2015/11/23][04:26:58.556281] <alljoyn_service.c:Send_Signal:529> [0xb6fc5000:"alljoyn-service"] in Send_Signal       
+                                                                                                                      
+[2015/11/23][04:26:58.556496] <alljoyn_service.c:Send_Signal:543> [0xb6fc5000:"alljoyn-service"] signature = s        
+                                                                                                                      
+[2015/11/23][04:26:58.556584] <alljoyn_service.c:Send_Signal:544> [0xb6fc5000:"alljoyn-service"] msg = Action list_devices timeout
+                                                                                                                      
+                                                                                                                      
+[2015/11/23][04:26:58.556845] <alljoyn_service.c:remove_action_timeout_cb:2429> [0xb6fc5000:"alljoyn-service"] free req
+                                                                                                                      
+[2015/11/23][04:26:58.556964] <alljoyn_service.c:remove_action_timeout_cb:2431> [0xb6fc5000:"alljoyn-service"] free done 1
+                                                                                                                      
+[2015/11/23][04:26:58.557042] <alljoyn_service.c:remove_action_timeout_cb:2435> [0xb6fc5000:"alljoyn-service"] free done 2
+
+[2015/11/23][04:26:58.557115] <alljoyn_service.c:remove_action_timeout_cb:2437> [0xb6fc5000:"alljoyn-service"] free done 3
+
+[2015/11/23][04:26:58.557184] <alljoyn_service.c:remove_action_timeout_cb:2442> [0xb6fc5000:"alljoyn-service"] tmp == pre
+
+[2015/11/23][04:26:58.557253] <alljoyn_service.c:remove_action_timeout_cb:2449> [0xb6fc5000:"alljoyn-service"] free tmp
+
+[2015/11/23][04:26:58.557325] <alljoyn_service.c:remove_action_timeout_cb:2451> [0xb6fc5000:"alljoyn-service"] free tmp done
+
+
+root@OpenWrt:/# 
+root@OpenWrt:/# ubus call zwave list_devices
+[2015/11/23][04:27:22.636105] <zw_handler_cli.c:add_remove_list_reset_device:333> [0xb6fab000:"zwave-service"] zwave list_devices
+
+{
+        "msg": "{ \"type\": \"zwave\", \"method\": \"list_devicesR\", \"devicesList\": [ { \"Owner\": \"E4D1CE4701\", \"Serial\": \"3520010F08002001\", \"FriendlyName\"
+}
+root@OpenWrt:/# ubus call zwave list_devices
+[2015/11/23][04:27:28.462368] <zw_handler_cli.c:add_remove_list_reset_device:333> [0xb6fab000:"zwave-service"] zwave list_devices
+
+{
+        "msg": "{ \"type\": \"zwave\", \"method\": \"list_devicesR\", \"devicesList\": [ { \"Owner\": \"E4D1CE4701\", \"Serial\": \"3520010F08002001\", \"FriendlyName\"
+: \"FIBARGROUP Z-wave Motion Sensor (Fibaro)\", \"ID\": \"35\", \"Capability\": \"ASSOCIATION,BATTERY,CONFIGURATION,SENSOR_MULTILEVEL\", \"ProfileID\": \"NULL\", \"Endo
+int_num\": \"NULL\" }, { \"Owner\": \"E4D1CE4701\", \"Serial\": \"3611013100020002\", \"FriendlyName\": \"ZIPATO\", \"ID\": \"36\", \"Capability\": \"BASIC,ASSOCIATION,
+COLOR_CONTROL,SWITCH_MULTILEVEL,CONFIGURATION\", \"ProfileID\": \"NULL\", \"EndPoint_num\": \"NULL\" } ] }"
+}
+root@OpenWrt:/# [2015/11/23][04:29:12.754336] <alljoyn_service.c:sessionportlistener_acceptsessionjoiner_cb:507> [0xb6954520:""] joiner = :Mt1uunAd.2
+
+[2015/11/23][04:29:12.759847] <alljoyn_service.c:sessionportlistener_sessionjoined_cb:496> [0xb6954520:""] joiner = :Mt1uunAd.2
+
+[2015/11/23][04:29:12.760119] <alljoyn_service.c:sessionportlistener_sessionjoined_cb:497> [0xb6954520:""] Session Joined SessionId = 299306793
+
+[2015/11/23][04:29:12.787832] <alljoyn_service.c:listdevices_signal_handle:603> [0xb6a94520:""] listdevices_signal 
+
+[2015/11/23][04:29:12.788211] <alljoyn_service.c:listdevices_signal_handle:613> [0xb6a94520:""] type = zwave
+
+[2015/11/23][04:29:12.788328] <alljoyn_service.c:listdevices_signal_handle:619> [0xb6a94520:""] sessionId = 299306793
+
+[2015/11/23][04:29:12.788436] <alljoyn_service.c:listdevices_signal_handle:665> [0xb6a94520:""] daemon_services[0].name = zigbee id = 00000000
+
+[2015/11/23][04:29:12.788860] <alljoyn_service.c:listdevices_signal_handle:665> [0xb6a94520:""] daemon_services[1].name = zwave id = 17F45511
+
+[2015/11/23][04:29:12.788967] <alljoyn_service.c:add_list_allbus_data:46> [0xb6a94520:""] in add_list_allbus_data 
+
+[2015/11/23][04:29:12.789334] <zw_handler_cli.c:add_remove_list_reset_device:333> [0xb6fab000:"zwave-service"] zwave list_devices
+
+[2015/11/23][04:29:12.791064] <alljoyn_service.c:recive_data_cb:190> [0xb6fc5000:"alljoyn-service"] receive msg from server
+[2015/11/23][04:29:12.791287] <alljoyn_service.c:recive_data_cb:199> [0xb6fc5000:"alljoyn-service"] msgstr = { "type": "zwave", "method": "list_devicesR", "devicesList"
+: [ { "Owner": "E4D1CE4701", "Serial": "3520010F08002001", "FriendlyName": "FIBARGROUP Z-wave Motion Sensor (Fibaro)", "ID": "35", "Capability": "ASSOCIATION,BATTERY,CO
+NFIGURATION,SENSOR_MULTILEVEL", "ProfileID": "NULL", "EndPoint_num": "NULL" }, { "Owner": "E4D1CE4701", "Serial": "3611013100020002", "FriendlyName": "ZIPATO", "ID": "3
+6", "Capability": "BASIC,ASSOCIATION,COLOR_CONTROL,SWITCH_MULTILEVEL,CONFIGURATION", "ProfileID": "NULL", "EndPoint_num": "NULL" } ] }
+
+[2015/11/23][04:29:12.791398] <alljoyn_service.c:recive_data_cb:202> [0xb6fc5000:"alljoyn-service"] req.priv = d4ee20
+
+[2015/11/23][04:29:12.791475] <alljoyn_service.c:recive_data_cb:203> [0xb6fc5000:"alljoyn-service"] alldata = d4ee20
+
+[2015/11/23][04:29:12.791548] <alljoyn_service.c:recive_data_cb:205> [0xb6fc5000:"alljoyn-service"] data.name = list_devices
+
+[2015/11/23][04:29:12.791642] <alljoyn_service.c:recive_data_cb:206> [0xb6fc5000:"alljoyn-service"] data.id = 299306793
+
+[2015/11/23][04:29:12.791720] <alljoyn_service.c:recive_data_cb:207> [0xb6fc5000:"alljoyn-service"] data.type = 1
+
+[2015/11/23][04:29:12.791791] <alljoyn_service.c:recive_data_cb:208> [0xb6fc5000:"alljoyn-service"] data.numArgs = 1
+
+[2015/11/23][04:29:12.791863] <alljoyn_service.c:Send_Signal:529> [0xb6fc5000:"alljoyn-service"] in Send_Signal
+
+[2015/11/23][04:29:12.791954] <alljoyn_service.c:Send_Signal:543> [0xb6fc5000:"alljoyn-service"] signature = s
+
+[2015/11/23][04:29:12.792031] <alljoyn_service.c:Send_Signal:544> [0xb6fc5000:"alljoyn-service"] msg = { "type": "zwave", "method": "list_devicesR", "devicesList": [ { 
+"Owner": "E4D1CE4701", "Serial": "3520010F08002001", "FriendlyName": "FIBARGROUP Z-wave Motion Sensor (Fibaro)", "ID": "35", "Capability": "ASSOCIATION,BATTERY,CONFIGUR
+ATION,SENSOR_MULTILEVEL", "ProfileID": "NULL", "EndPoint_num": "NULL" }, { "Owner": "E4D1CE4701", "Serial": "3611013100020002", "FriendlyName": "ZIPATO", "ID": "36", "C
+apability": "BASIC,ASSOCIATION,COLOR_CONTROL,SWITCH_MULTILEVEL,CONFIGURATION", "ProfileID": "NULL", "EndPoint_num": "NULL" } ] }
+
+tmp -> name = list_devices
+ tmp->id = 299306793
+alldata -> name = list_devices
+ alldata->id = 299306793
+

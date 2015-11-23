@@ -4,19 +4,17 @@
 			{"name" : "onboarding"}
 		]
 	},
+	
+	"listdevices": {
+		"testitems": [
+			{"name": "list_devices"}
+		]
+	},
 
 	"adddevice": {
 		"testitems": [
 			{ "name": "add_devices" },
-			{ "name": "list_devices" },
-			{ "name": "get_binary" }
-		]
-	},
-	"addsensor": {
-		"testitems": [
-			{ "name": "add_devices" },
-			{ "name": "list_devices" },
-			{ "name": "read_spec" }
+			{ "name": "list_devices" }
 		]
 	},
 
@@ -45,13 +43,14 @@
 			{"name" : "read_spec"}
 		]
 	},
-			
+
 	"readspec_takeaction":{
 		"testitems": [
 			{"name" : "read_spec"},
 			{"name" : "listen_notification"}
 		]
 	},
+
 	"writespec":{
 		"testitems": [
 			{"name" : "write_spec"}
@@ -72,5 +71,23 @@
 		"testitems": [
 			{"name" : "update_firmware"}
 		]
+	},
+
+	"rules":{
+		"testitems" : [
+			{"name" : "set_rule"},
+			{"name" : "get_rule"},
+			{"name" : "rule_actions"}
+		]
+	},
+
+	"wemoupnp" : {
+		"testitems" : [
+			{"name" : "listen_notification"},
+			{"name" : "get_binary"},
+			{"name" : "set_binary"}
+
+		]
 	}
+
 }

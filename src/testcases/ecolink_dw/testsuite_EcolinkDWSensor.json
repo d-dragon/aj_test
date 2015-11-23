@@ -3,18 +3,18 @@
 		"testsuit" : "Ecolink-DW-Sensor",
 		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee314e4",
 		"testcases" :	[
+
 			{ 
-				"name" : "adddevice", 
+				"name" : "listdevice", 
 				"input" : { 
-					"devicetype" : "zwave", 
-					"id" : "ID 0"
+					"devicetype" : "zwave"
 				}
 			},
 			{ 
-				"name" : "addsensor", 
+				"name" : "readspec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1",
+					"id" : "ID 0",
 					"class" : "BATTERY",
 					"command": "GET",
 					"force" : "1"
@@ -24,7 +24,7 @@
 				"name" : "writespec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1",
+					"id" : "ID 0",
 					"class" : "CONFIGURATION",
 					"command" : "SET",
 					"data0" : "ENABLE_ONOFF",
@@ -36,9 +36,10 @@
 				"name" : "readspec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1",
+					"id" : "ID 0",
 					"class" : "CONFIGURATION",
 					"command" : "GET",
+					"force" : "1",
 					"type" : "ENABLE_ONOFF"
 				}
 			},
@@ -51,27 +52,26 @@
 				"name" : "writespec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1",
+					"id" : "ID 0",
 					"class" : "ASSOCIATION",
 					"command" : "SET",
 					"data0" : "ONOFF_GROUP",
-					"data1" : "2C",
+					"data1" : "32",
 					"data2" : "1"
 				}
 			},
 			{ 
-				"name" : "readspec", 
+				"name" : "readspec_takeaction", 
 				"input" : { 
 					"devicetype" : "zwave", 
 					"id" : "ID 1",
 					"class" : "ASSOCIATION",
 					"command" : "GET",
 					"type" : "ONOFF_GROUP",
-					"force" : "1"
+					"force" : "1",
+					"time"	: "120"
 				}
 			},
-
-
 
 
 			{ 
@@ -82,7 +82,7 @@
 					"class" : "ASSOCIATION",
 					"command" : "REMOVE",
 					"data0" : "ONOFF_GROUP",
-					"data1" : "2C",
+					"data1" : "32",
 					"data2" : "1"
 				}
 			},
@@ -103,7 +103,7 @@
 				"name" : "removedevice", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0"
+					"id" : ""
 				}
 			},
 
@@ -113,7 +113,7 @@
 				"name" : "removedevice", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1"
+					"id" : ""
 				}
 			}
 		]

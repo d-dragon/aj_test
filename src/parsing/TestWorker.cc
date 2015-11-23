@@ -120,7 +120,6 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 	 
 	}else if(!testItem.compare("listen_notification")){
 	
-		if(!tiArg[0].compare("upnp")){
 
 			int time;
 			time = stoi(tiArg[1]);
@@ -129,7 +128,6 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 			exportStuffToFile("<tr><th>Result</th>");
 			sleep(time);
 			exportStuffToFile("</tr></table><br>");
-		}
 	}else{
 		if ( numArg > 1 ){
 			UpdateDevIDOfTC(tiArg);

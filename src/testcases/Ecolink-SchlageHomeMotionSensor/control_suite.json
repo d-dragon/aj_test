@@ -1,7 +1,7 @@
 [ 
 	{
 		"testsuit" : "EcoLink/Schlage home motion sensor",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
+		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee314e4",
 		"testcases" :	[
 			{	
 				"name"				: "listdevices",
@@ -16,6 +16,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
+					"force"			: "1",
                     "type"          : "REPORT_GROUP"
                 }
             },
@@ -26,6 +27,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
+					"force"			: "1",
                     "type"          : "ONOFF_GROUP"
                 }
             },
@@ -37,7 +39,7 @@
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
 					"data0"			: "REPORT_GROUP",
-					"data1"			: "41",
+					"data1"			: "60",
 					"data2"			: "1"
 				}
 			},
@@ -48,6 +50,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
+					"force"			: "1",
                     "type"          : "REPORT_GROUP"
                 }
             },
@@ -57,6 +60,7 @@
 					"devicetype" 	: "zwave",
 					"id" 			: "ID 0",
 					"class"			: "BATTERY",
+					"force"			: "1",
 					"command"		: "GET"
 				}
 			},
@@ -67,6 +71,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
+					"force"			: "1",
 					"type"			: "ENABLE_ONOFF"
 				}
 			},
@@ -89,6 +94,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
+					"force"			: "1",
 					"type"			: "ENABLE_ONOFF"
 				}
 			},
@@ -100,7 +106,7 @@
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
 					"data0"			: "ONOFF_GROUP",
-					"data1"			: "41",
+					"data1"			: "60",
 					"data2"			: "1"
 				}
 			},
@@ -111,6 +117,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
+					"force"			: "1",
                     "type"          : "ONOFF_GROUP"
                 }
             },
@@ -133,6 +140,7 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
+					"force"			: "1",
 					"type"			: "ENABLE_ONOFF"
 				}
 			},
@@ -155,6 +163,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
+					"force"			: "1",
                     "type"          : "ONOFF_GROUP"
                 }
             },
@@ -167,7 +176,7 @@
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
                     "data0"         : "REPORT_GROUP",
-                    "data1"         : "41",
+                    "data1"         : "60",
                     "data2"         : "1"
                 }
             },
@@ -178,6 +187,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
+					"force"			: "1",
                     "type"          : "REPORT_GROUP"
                 }
             },
@@ -189,7 +199,7 @@
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "41",
+                    "data1"         : "60",
                     "data2"         : "1"
                 }
             },
@@ -200,6 +210,7 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
+					"force"			: "1",
                     "type"          : "ONOFF_GROUP"
                 }
             }
