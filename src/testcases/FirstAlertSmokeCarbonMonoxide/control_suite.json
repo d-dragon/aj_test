@@ -1,0 +1,183 @@
+[ 
+	{
+		"testsuit" : "First Alert Smoke and Carbon Monoxide",
+		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
+		"testcases" :	[
+			{	
+				"name"	: "listdevices",
+				"input" :{
+					"devicetype"	: "zwave"
+				}
+			},			
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "BATTERY",
+					"command"		: "GET",
+					"force"			: "1"	
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "BEEPER",
+					"force"			: "1"	
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "GET",
+					"type"			: "REPORT_GROUP",
+					"force"			: "1"	
+				}
+			},
+			{
+				"name" : "writespec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "BEEPER",
+					"data1"			: "1",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "BEEPER",
+					"force"			: "1"	
+				}
+			},
+			{
+				"name" : "writespec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "BEEPER",
+					"data1"			: "0",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "BEEPER"
+				}
+			},
+			{
+				"name" : "writespec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "REPORT_GROUP",
+					"data1"			: "63",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "REPORT_GROUP",
+					"force"			: "1"	
+				}
+			},
+			{
+				"name" : "writespec",
+				"input" : {
+					"devicetype"	: "zwave",
+					"id"			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "REPORT_GROUP",
+					"data1"			: "01",
+					"data2"			: "1"
+				}
+			},
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "REPORT_GROUP",
+					"force"			: "1"	
+                }
+            },
+            {
+                "name" : "writespec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "REMOVE",
+                    "data0"         : "REPORT_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1"
+                }
+            },
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "REPORT_GROUP",
+					"force"			: "1"	
+                }
+            },
+            {
+                "name" : "writespec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "REMOVE",
+                    "data0"         : "REPORT_GROUP",
+                    "data1"         : "31",
+                    "data2"         : "1"
+                }
+            },
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "REPORT_GROUP",
+					"force"			: "1"	
+                }
+            }			
+		]
+	}
+]
