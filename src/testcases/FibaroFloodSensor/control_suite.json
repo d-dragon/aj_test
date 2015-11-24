@@ -1,0 +1,345 @@
+[ 
+	{
+		"testsuit" : "FIBARO flood sensor",
+		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
+		"testcases" :	[
+			{	
+				"name"	: "listdevices",
+				"input" :{
+					"devicetype"	: "zwave"
+				}
+			},			
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "BATTERY",
+					"command"		: "GET"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "ALARM_BOARDCAST",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "ALARM_BOARDCAST",
+					"data1"         : "0",
+					"data2"         : "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "ALARM_BOARDCAST",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "ALARM_BOARDCAST",
+					"data1"         : "1",
+					"data2"         : "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "ALARM_BOARDCAST",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "ALARM_BOARDCAST",
+					"data1"         : "2",
+					"data2"         : "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "ALARM_BOARDCAST",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "ALARM_BOARDCAST",
+					"data1"         : "3",
+					"data2"         : "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "ALARM_BOARDCAST",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "DELAY_ALARM",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "DELAY_ALARM",
+					"data1"         : "0E10",
+					"data2"         : "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "DELAY_ALARM",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "DELAY_ALARM",
+					"data1"         : "0",
+					"data2"         : "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "DELAY_ALARM",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "DISABLE",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "DISABLE",
+					"data1"         : "0",
+					"data2"         : "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "DISABLE",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "DISABLE",
+					"data1"         : "FF",
+					"data2"         : "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "DISABLE",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "GET",
+					"type"			: "ONOFF_GROUP",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "ONOFF_GROUP",
+					"data1"			: "01",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "GET",
+					"type"			: "TAMPER_ALARM",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "TAMPER_ALARM",
+					"data1"			: "01",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "GET",
+					"type"			: "REPORT_GROUP",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "REPORT_GROUP",
+					"data1"			: "01",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "REMOVE",
+					"data0"         : "ONOFF_GROUP",
+					"data1"         : "01",
+					"data2"         : "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "REMOVE",
+					"data0"         : "REPORT_GROUP",
+					"data1"         : "3D",
+					"data2"         : "1"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"class"         : "ASSOCIATION",
+					"command"       : "REMOVE",
+					"data0"         : "TAMPER_GROUP",
+					"data1"         : "3D",
+					"data2"         : "1"
+				}
+			},
+		]
+	}
+]
