@@ -15,6 +15,7 @@ int TestWorker::signalRespFlag;
 string TestWorker::reportFile;
 string *TestWorker::mRespMsg = NULL;
 vector<struct DeviceInfo> TestWorker::mDeviceList;
+string TestWorker::htmlResultContent;
 
 string ReplaceAll(string str, const string& from, const string& to) {
 	size_t start_pos = 0;
@@ -96,6 +97,7 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 	signalRespFlag = 0;
 	
 	cout << "execute test item: " << testItem << endl;
+	htmlResultContent.clear();
 	//Save infor of Test Case
 	mTestCaseInfo.Signal.assign(testItem.c_str());
 	mTestCaseInfo.Type.assign(tiArg[0]);
@@ -125,9 +127,9 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 			time = stoi(tiArg[1]);
 
 			cout << "listen notification in: " <<  time << "s" << endl;
-			exportStuffToFile("<tr><th>Result</th>");
+			htmlResultContent.append("<tr><th>Result</th>");
 			sleep(time);
-			exportStuffToFile("</tr></table><br>");
+			htmlResultContent.append("</tr></table><br>");
 	}else{
 		if ( numArg > 1 ){
 			UpdateDevIDOfTC(tiArg);
@@ -162,9 +164,9 @@ void TestWorker::ResponseAnalyst(){
 		if(timeout == 300){
 			cout << "Test item execution timeout!!!" << endl;
 			//TODO - need implement action for this case
-			exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
-			exportStuffToFile("Test item execution timeout!!!");
-			exportStuffToFile("</td></tr></table><br>");
+			htmlResultContent.append("<tr><th>Result</th><td colspan=\"2\">");
+			htmlResultContent.append("Test item execution timeout!!!");
+			htmlResultContent.append("</td></tr></table><br>");
 
 		}
 
@@ -176,40 +178,40 @@ void TestWorker::ResponseAnalyst(){
 		if((mTestCaseInfo.Type.compare("zwave") == 0) && (respmsg.signalname.compare("notify") != 0 )){
 			string status;
 			string reason;
-			JsonParser parser(NULL, NULL, NULL);
+			JsonParser parser(NULL, NULL, NULL, NULL);
 
 			parser.JSONGetObjectValue(&respmsg.message,"status", &status);
-			exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
+			htmlResultContent.append("<tr><th>Result</th><td colspan=\"2\">");
 			if(status.length() > 0){
 
 				cout << "status " << status << endl;
-				exportStuffToFile(status.c_str());
+				htmlResultContent.append(status.c_str());
 				if(status.compare("failed") == 0){
 					parser.JSONGetObjectValue(&respmsg.message, "reason", &reason);
 					if(reason.length() > 0){
-						exportStuffToFile(" | Reason: ");
-						exportStuffToFile(reason.c_str());
+						htmlResultContent.append(" | Reason: ");
+						htmlResultContent.append(reason.c_str());
 					}
 				}
 			}else{
 
-				exportStuffToFile("Response message has no execution status");
+				htmlResultContent.append("Response message has no execution status");
 			}
 
-			exportStuffToFile("</td></tr>");
+			htmlResultContent.append("</td></tr>");
 		}else if(mTestCaseInfo.Type.compare("upnp") == 0){
 
 
 			respmsg.message = ReplaceAll(respmsg.message, "\n", "<br><br>");
-			exportStuffToFile("<tr><th>Result</th><td colspan=\"2\">");
+			htmlResultContent.append("<tr><th>Result</th><td colspan=\"2\">");
 
-			exportStuffToFile(respmsg.message.c_str());
-			exportStuffToFile("</td></tr>");
+			htmlResultContent.append(respmsg.message.c_str());
+			htmlResultContent.append("</td></tr>");
 		}
 
-		exportStuffToFile("<tr><th>Response Message</th><td colspan=\"2\">");
-		exportStuffToFile(respmsg.message.c_str());
-		exportStuffToFile("</td></tr></table><br>");
+		htmlResultContent.append("<tr><th>Response Message</th><td colspan=\"2\">");
+		htmlResultContent.append(respmsg.message.c_str());
+		htmlResultContent.append("</td></tr></table><br>");
 	}
 
 }
@@ -224,9 +226,9 @@ void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *sr
 		if((0 == mTestCaseInfo.Signal.compare("listen_notification")) && (strcmp(member, "notify") == 0)){
 			//export the result to report file	
 			tmpStr = ReplaceAll(tmpStr, "\n", "<br><br>");
-			exportStuffToFile("<td colspan=\"2\">");
-			exportStuffToFile(tmpStr.c_str());
-			exportStuffToFile("</td>");
+			htmlResultContent.append("<td colspan=\"2\">");
+			htmlResultContent.append(tmpStr.c_str());
+			htmlResultContent.append("</td>");
 		}
 		return;
 	}else{
@@ -321,11 +323,13 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 		(mTestCaseInfo.Signal.compare("write_s_spec") 	== 0)
 		)
 	{
+		/*
 		if(arg[1].find("ID") == std::string::npos){
 			// Keep the input from user
 			return;
 		}
-		newIDValue 		= mDeviceList.at(GetIndexByCondition(arg[1])).ID;
+		*/
+		newIDValue = mDeviceList.at(GetIndexByCondition(mConfig.deviceIndex)).ID;
 		arg[1].assign(newIDValue);
 		LOGCXX("Update new Dev ID: "<< arg[1].c_str()); 
 

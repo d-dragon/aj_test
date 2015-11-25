@@ -1,0 +1,302 @@
+[2015/11/24][08:48:36.685635] <alljoyn_service.c:readspec_signal_handle:1386> [0xb69ac520:""] device_id = 45
+
+[2015/11/24][08:48:36.685914] <alljoyn_service.c:readspec_signal_handle:1387> [0xb69ac520:""] class = BATTERY
+
+[2015/11/24][08:48:36.686011] <alljoyn_service.c:readspec_signal_handle:1388> [0xb69ac520:""] command = GET
+
+[2015/11/24][08:48:36.686089] <alljoyn_service.c:readspec_signal_handle:1389> [0xb69ac520:""] data0 = 
+
+[2015/11/24][08:48:36.686160] <alljoyn_service.c:readspec_signal_handle:1390> [0xb69ac520:""] data1 = 
+
+[2015/11/24][08:48:36.686232] <alljoyn_service.c:readspec_signal_handle:1391> [0xb69ac520:""] data2 = 1
+
+[2015/11/24][08:48:36.686330] <alljoyn_service.c:add_list_allbus_data:46> [0xb69ac520:""] in add_list_allbus_data 
+
+[2015/11/24][08:48:36.686714] <zw_handler_cli.c:getspecification:755> [0xb6f50000:"zwave-service"] NodeID = 45
+
+[2015/11/24][08:48:36.686843] <zw_handler_cli.c:getspecification:756> [0xb6f50000:"zwave-service"] CommandClass = BATTERY
+
+[2015/11/24][08:48:36.686923] <zw_handler_cli.c:getspecification:757> [0xb6f50000:"zwave-service"] Command = GET
+
+[2015/11/24][08:48:36.686994] <zw_handler_cli.c:getspecification:758> [0xb6f50000:"zwave-service"] data0 = (unknown)
+
+[2015/11/24][08:48:36.687064] <zw_handler_cli.c:getspecification:759> [0xb6f50000:"zwave-service"] data1 = (unknown)
+
+[2015/11/24][08:48:36.687135] <zw_handler_cli.c:getspecification:761> [0xb6f50000:"zwave-service"] data2 = 1
+
+[2015/11/24][08:48:36.687278] <zw_handler_cli.c:getspecification:912> [0xb6f50000:"zwave-service"] pzwParam->param2 = 45
+
+[2015/11/24][08:48:36.687360] <zw_handler_cli.c:getspecification:913> [0xb6f50000:"zwave-service"] pzwParam->param3 = 01
+
+[2015/11/24][08:48:36.687433] <zw_handler_cli.c:getspecification:916> [0xb6f50000:"zwave-service"] pzwParam->cmd_set.cmd[0] = 80
+
+[2015/11/24][08:48:36.687504] <zw_handler_cli.c:getspecification:916> [0xb6f50000:"zwave-service"] pzwParam->cmd_set.cmd[1] = 02
+
+[2015/11/24][08:48:36.687575] <zw_handler_cli.c:getspecification:919> [0xb6f50000:"zwave-service"] START Send Zwave Command
+
+tmp->name = read_spec tmp->id = 2886822530 tmp->action_time = 1448354916 time_now = 1448354917
+tmp->name = read_spec tmp->id = 2886822530 tmp->action_time = 1448354916 time_now = 1448354918
+tmp->name = read_spec tmp->id = 2886822530 tmp->action_time = 1448354916 time_now = 1448354919
+tmp->name = read_spec tmp->id = 2886822530 tmp->action_time = 1448354916 time_now = 1448354920
+tmp->name = read_spec tmp->id = 2886822530 tmp->action_time = 1448354916 time_now = 1448354921
+WARNING: SEND DATA COMMAND is timeout! Please try again! 
+[2015/11/24][08:48:42.194806] <zw_handler_cli.c:getspecification:921> [0xb6f50000:"zwave-service"] END Zwave Command
+
+[2015/11/24][08:48:42.195621] <alljoyn_service.c:recive_data_cb:190> [0xb6f9d000:"alljoyn-service"] receive msg from server
+[2015/11/24][08:48:42.195768] <alljoyn_service.c:recive_data_cb:199> [0xb6f9d000:"alljoyn-service"] msgstr = { "type": "zwave", "method": "read_specR", "deviceid": "45}
+
+[2015/11/24][08:48:42.195883] <alljoyn_service.c:recive_data_cb:202> [0xb6f9d000:"alljoyn-service"] req.priv = 1222400
+
+[2015/11/24][08:48:42.195963] <alljoyn_service.c:recive_data_cb:203> [0xb6f9d000:"alljoyn-service"] alldata = 1222400
+
+[2015/11/24][08:48:42.196036] <alljoyn_service.c:recive_data_cb:205> [0xb6f9d000:"alljoyn-service"] data.name = read_spec
+
+[2015/11/24][08:48:42.196135] <alljoyn_service.c:recive_data_cb:206> [0xb6f9d000:"alljoyn-service"] data.id = 2886822530
+
+[2015/11/24][08:48:42.196209] <alljoyn_service.c:recive_data_cb:207> [0xb6f9d000:"alljoyn-service"] data.type = 1
+
+[2015/11/24][08:48:42.196280] <alljoyn_service.c:recive_data_cb:208> [0xb6f9d000:"alljoyn-service"] data.numArgs = 7
+
+[2015/11/24][08:48:42.196352] <alljoyn_service.c:Send_Signal:529> [0xb6f9d000:"alljoyn-service"] in Send_Signal
+
+[2015/11/24][08:48:42.196445] <alljoyn_service.c:Send_Signal:543> [0xb6f9d000:"alljoyn-service"] signature = sssssss
+
+[2015/11/24][08:48:42.196522] <alljoyn_service.c:Send_Signal:544> [0xb6f9d000:"alljoyn-service"] msg = { "type": "zwave", "method": "read_specR", "deviceid": "45", "co}
+
+tmp -> name = read_spec
+ tmp->id = 2886822530
+alldata -> name = read_spec
+ alldata->id = 2886822530
+[2015/11/24][08:48:42.197156] <alljoyn_service.c:recive_data_cb:240> [0xb6f9d000:"alljoyn-service"] free req
+
+[2015/11/24][08:48:42.197275] <alljoyn_service.c:recive_data_cb:255> [0xb6f9d000:"alljoyn-service"] free done
+
+[2015/11/24][08:48:47.330347] <alljoyn_service.c:writespec_signal_handle:1481> [0xb69ac520:""] device_id = 45
+
+[2015/11/24][08:48:47.330626] <alljoyn_service.c:writespec_signal_handle:1482> [0xb69ac520:""] class = CONFIGURATION
+
+[2015/11/24][08:48:47.330724] <alljoyn_service.c:writespec_signal_handle:1483> [0xb69ac520:""] command = SET
+
+[2015/11/24][08:48:47.330798] <alljoyn_service.c:writespec_signal_handle:1484> [0xb69ac520:""] data0 = SET_DIMMER
+
+[2015/11/24][08:48:47.330870] <alljoyn_service.c:writespec_signal_handle:1485> [0xb69ac520:""] data1 = 10
+
+[2015/11/24][08:48:47.330969] <alljoyn_service.c:add_list_allbus_data:46> [0xb69ac520:""] in add_list_allbus_data 
+
+[2015/11/24][08:48:47.331354] <zw_handler_cli.c:setspecification:1142> [0xb6f50000:"zwave-service"] NodeID = 45
+
+[2015/11/24][08:48:47.331484] <zw_handler_cli.c:setspecification:1143> [0xb6f50000:"zwave-service"] CommandClass = CONFIGURATION
+
+[2015/11/24][08:48:47.331564] <zw_handler_cli.c:setspecification:1144> [0xb6f50000:"zwave-service"] Command = SET
+
+[2015/11/24][08:48:47.331635] <zw_handler_cli.c:setspecification:1145> [0xb6f50000:"zwave-service"] data0 = SET_DIMMER
+
+[2015/11/24][08:48:47.331706] <zw_handler_cli.c:setspecification:1146> [0xb6f50000:"zwave-service"] data1 = 10
+
+[2015/11/24][08:48:47.331776] <zw_handler_cli.c:setspecification:1147> [0xb6f50000:"zwave-service"] data2 = 1
+
+[2015/11/24][08:48:47.332593] <zw_handler_cli.c:db_callback:159> [0xb6f50000:"zwave-service"] Serial = 4520010F07002000
+
+
+[2015/11/24][08:48:47.332821] <zw_handler_cli.c:searching_database:185> [0xb6f50000:"zwave-service"] SELECT Serial from SUB_DEVICES where ID='45' AND Owner=(SELECT UDNS
+
+[2015/11/24][08:48:47.332923] <zw_handler_cli.c:setspecification:1278> [0xb6f50000:"zwave-service"] pzwParam->param2 (NodeID) = 45
+
+[2015/11/24][08:48:47.333002] <zw_handler_cli.c:setspecification:1279> [0xb6f50000:"zwave-service"] pzwParam->param3 (Force) = 01
+
+[2015/11/24][08:48:47.333075] <zw_handler_cli.c:setspecification:1282> [0xb6f50000:"zwave-service"] pzwParam->cmd_set.cmd[0] = 70
+
+[2015/11/24][08:48:47.333148] <zw_handler_cli.c:setspecification:1282> [0xb6f50000:"zwave-service"] pzwParam->cmd_set.cmd[1] = 04
+
+[2015/11/24][08:48:47.333220] <zw_handler_cli.c:setspecification:1285> [0xb6f50000:"zwave-service"] START Send Zwave Command
+
+tmp->name = write_spec tmp->id = 2886822530 tmp->action_time = 1448354927 time_now = 1448354927
+tmp->name = write_spec tmp->id = 2886822530 tmp->action_time = 1448354927 time_now = 1448354928
+tmp->name = write_spec tmp->id = 2886822530 tmp->action_time = 1448354927 time_now = 1448354929
+tmp->name = write_spec tmp->id = 2886822530 tmp->action_time = 1448354927 time_now = 1448354930
+tmp->name = write_spec tmp->id = 2886822530 tmp->action_time = 1448354927 time_now = 1448354931
+tmp->name = write_spec tmp->id = 2886822530 tmp->action_time = 1448354927 time_now = 1448354932
+WARNING: SEND DATA COMMAND is timeout! Please try again! 
+[2015/11/24][08:48:53.156166] <zw_handler_cli.c:setspecification:1287> [0xb6f50000:"zwave-service"] END Zwave Command
+
+[2015/11/24][08:48:53.157031] <alljoyn_service.c:recive_data_cb:190> [0xb6f9d000:"alljoyn-service"] receive msg from server
+[2015/11/24][08:48:53.157182] <alljoyn_service.c:recive_data_cb:199> [0xb6f9d000:"alljoyn-service"] msgstr = { "type": "zwave", "method": "write_specR", "deviceid": "4}
+
+[2015/11/24][08:48:53.157273] <alljoyn_service.c:recive_data_cb:202> [0xb6f9d000:"alljoyn-service"] req.priv = 123c110
+
+[2015/11/24][08:48:53.157348] <alljoyn_service.c:recive_data_cb:203> [0xb6f9d000:"alljoyn-service"] alldata = 123c110
+
+[2015/11/24][08:48:53.157451] <alljoyn_service.c:recive_data_cb:205> [0xb6f9d000:"alljoyn-service"] data.name = write_spec
+
+[2015/11/24][08:48:53.157525] <alljoyn_service.c:recive_data_cb:206> [0xb6f9d000:"alljoyn-service"] data.id = 2886822530
+
+[2015/11/24][08:48:53.157599] <alljoyn_service.c:recive_data_cb:207> [0xb6f9d000:"alljoyn-service"] data.type = 1
+
+[2015/11/24][08:48:53.157670] <alljoyn_service.c:recive_data_cb:208> [0xb6f9d000:"alljoyn-service"] data.numArgs = 7
+
+[2015/11/24][08:48:53.157741] <alljoyn_service.c:Send_Signal:529> [0xb6f9d000:"alljoyn-service"] in Send_Signal
+
+[2015/11/24][08:48:53.157838] <alljoyn_service.c:Send_Signal:543> [0xb6f9d000:"alljoyn-service"] signature = sssssss
+
+[2015/11/24][08:48:53.157913] <alljoyn_service.c:Send_Signal:544> [0xb6f9d000:"alljoyn-service"] msg = { "type": "zwave", "method": "write_specR", "deviceid": "45", "c}
+
+tmp -> name = write_spec
+ tmp->id = 2886822530
+alldata -> name = write_spec
+ alldata->id = 2886822530
+[2015/11/24][08:48:53.158567] <alljoyn_service.c:recive_data_cb:240> [0xb6f9d000:"alljoyn-service"] free req
+
+[2015/11/24][08:48:53.158684] <alljoyn_service.c:recive_data_cb:255> [0xb6f9d000:"alljoyn-service"] free done
+
+[2015/11/24][08:48:58.211234] <alljoyn_service.c:readspec_signal_handle:1386> [0xb69ac520:""] device_id = 45
+
+[2015/11/24][08:48:58.211518] <alljoyn_service.c:readspec_signal_handle:1387> [0xb69ac520:""] class = CONFIGURATION
+
+[2015/11/24][08:48:58.211614] <alljoyn_service.c:readspec_signal_handle:1388> [0xb69ac520:""] command = GET
+
+[2015/11/24][08:48:58.211688] <alljoyn_service.c:readspec_signal_handle:1389> [0xb69ac520:""] data0 = SET_DIMMER
+
+[2015/11/24][08:48:58.211760] <alljoyn_service.c:readspec_signal_handle:1390> [0xb69ac520:""] data1 = 
+
+[2015/11/24][08:48:58.211831] <alljoyn_service.c:readspec_signal_handle:1391> [0xb69ac520:""] data2 = 1
+
+[2015/11/24][08:48:58.211930] <alljoyn_service.c:add_list_allbus_data:46> [0xb69ac520:""] in add_list_allbus_data 
+
+[2015/11/24][08:48:58.212311] <zw_handler_cli.c:getspecification:755> [0xb6f50000:"zwave-service"] NodeID = 45
+
+[2015/11/24][08:48:58.212440] <zw_handler_cli.c:getspecification:756> [0xb6f50000:"zwave-service"] CommandClass = CONFIGURATION
+
+[2015/11/24][08:48:58.212518] <zw_handler_cli.c:getspecification:757> [0xb6f50000:"zwave-service"] Command = GET
+
+[2015/11/24][08:48:58.212590] <zw_handler_cli.c:getspecification:758> [0xb6f50000:"zwave-service"] data0 = SET_DIMMER
+
+[2015/11/24][08:48:58.212659] <zw_handler_cli.c:getspecification:759> [0xb6f50000:"zwave-service"] data1 = (unknown)
+
+[2015/11/24][08:48:58.212728] <zw_handler_cli.c:getspecification:761> [0xb6f50000:"zwave-service"] data2 = 1
+
+[2015/11/24][08:48:58.213592] <zw_handler_cli.c:db_callback:159> [0xb6f50000:"zwave-service"] Serial = 4520010F07002000
+
+
+[2015/11/24][08:48:58.213819] <zw_handler_cli.c:searching_database:185> [0xb6f50000:"zwave-service"] SELECT Serial from SUB_DEVICES where ID='45' AND Owner=(SELECT UDNS
+
+[2015/11/24][08:48:58.213920] <zw_handler_cli.c:getspecification:912> [0xb6f50000:"zwave-service"] pzwParam->param2 = 45
+
+[2015/11/24][08:48:58.213995] <zw_handler_cli.c:getspecification:913> [0xb6f50000:"zwave-service"] pzwParam->param3 = 01
+
+[2015/11/24][08:48:58.214067] <zw_handler_cli.c:getspecification:916> [0xb6f50000:"zwave-service"] pzwParam->cmd_set.cmd[0] = 70
+
+[2015/11/24][08:48:58.214139] <zw_handler_cli.c:getspecification:916> [0xb6f50000:"zwave-service"] pzwParam->cmd_set.cmd[1] = 05
+
+[2015/11/24][08:48:58.214237] <zw_handler_cli.c:getspecification:919> [0xb6f50000:"zwave-service"] START Send Zwave Command
+
+tmp->name = read_spec tmp->id = 2886822530 tmp->action_time = 1448354938 time_now = 1448354938
+tmp->name = read_spec tmp->id = 2886822530 tmp->action_time = 1448354938 time_now = 1448354939
+tmp->name = read_spec tmp->id = 2886822530 tmp->action_time = 1448354938 time_now = 1448354940
+tmp->name = read_spec tmp->id = 2886822530 tmp->action_time = 1448354938 time_now = 1448354941
+tmp->name = read_spec tmp->id = 2886822530 tmp->action_time = 1448354938 time_now = 1448354942
+tmp->name = read_spec tmp->id = 2886822530 tmp->action_time = 1448354938 time_now = 1448354943
+WARNING: SEND DATA COMMAND is timeout! Please try again! 
+[2015/11/24][08:49:03.602654] <zw_handler_cli.c:getspecification:921> [0xb6f50000:"zwave-service"] END Zwave Command
+
+[2015/11/24][08:49:03.603515] <alljoyn_service.c:recive_data_cb:190> [0xb6f9d000:"alljoyn-service"] receive msg from server
+[2015/11/24][08:49:03.603657] <alljoyn_service.c:recive_data_cb:199> [0xb6f9d000:"alljoyn-service"] msgstr = { "type": "zwave", "method": "read_specR", "deviceid": "45}
+
+[2015/11/24][08:49:03.603778] <alljoyn_service.c:recive_data_cb:202> [0xb6f9d000:"alljoyn-service"] req.priv = 1222400
+
+[2015/11/24][08:49:03.603857] <alljoyn_service.c:recive_data_cb:203> [0xb6f9d000:"alljoyn-service"] alldata = 1222400
+
+[2015/11/24][08:49:03.603957] <alljoyn_service.c:recive_data_cb:205> [0xb6f9d000:"alljoyn-service"] data.name = read_spec
+
+[2015/11/24][08:49:03.604034] <alljoyn_service.c:recive_data_cb:206> [0xb6f9d000:"alljoyn-service"] data.id = 2886822530
+
+[2015/11/24][08:49:03.604106] <alljoyn_service.c:recive_data_cb:207> [0xb6f9d000:"alljoyn-service"] data.type = 1
+
+[2015/11/24][08:49:03.604176] <alljoyn_service.c:recive_data_cb:208> [0xb6f9d000:"alljoyn-service"] data.numArgs = 7
+
+[2015/11/24][08:49:03.604247] <alljoyn_service.c:Send_Signal:529> [0xb6f9d000:"alljoyn-service"] in Send_Signal
+
+[2015/11/24][08:49:03.604343] <alljoyn_service.c:Send_Signal:543> [0xb6f9d000:"alljoyn-service"] signature = sssssss
+
+[2015/11/24][08:49:03.604418] <alljoyn_service.c:Send_Signal:544> [0xb6f9d000:"alljoyn-service"] msg = { "type": "zwave", "method": "read_specR", "deviceid": "45", "co}
+
+tmp -> name = read_spec
+ tmp->id = 2886822530
+alldata -> name = read_spec
+ alldata->id = 2886822530
+[2015/11/24][08:49:03.605057] <alljoyn_service.c:recive_data_cb:240> [0xb6f9d000:"alljoyn-service"] free req
+
+[2015/11/24][08:49:03.605175] <alljoyn_service.c:recive_data_cb:255> [0xb6f9d000:"alljoyn-service"] free done
+
+[2015/11/24][08:49:08.719143] <alljoyn_service.c:writespec_signal_handle:1481> [0xb69ac520:""] device_id = 45
+
+[2015/11/24][08:49:08.719420] <alljoyn_service.c:writespec_signal_handle:1482> [0xb69ac520:""] class = ASSOCIATION
+
+[2015/11/24][08:49:08.719514] <alljoyn_service.c:writespec_signal_handle:1483> [0xb69ac520:""] command = SET
+
+[2015/11/24][08:49:08.719591] <alljoyn_service.c:writespec_signal_handle:1484> [0xb69ac520:""] data0 = ONOFF_GROUP
+
+[2015/11/24][08:49:08.719665] <alljoyn_service.c:writespec_signal_handle:1485> [0xb69ac520:""] data1 = 47
+
+[2015/11/24][08:49:08.719762] <alljoyn_service.c:add_list_allbus_data:46> [0xb69ac520:""] in add_list_allbus_data 
+
+[2015/11/24][08:49:08.720148] <zw_handler_cli.c:setspecification:1142> [0xb6f50000:"zwave-service"] NodeID = 45
+
+[2015/11/24][08:49:08.720276] <zw_handler_cli.c:setspecification:1143> [0xb6f50000:"zwave-service"] CommandClass = ASSOCIATION
+
+[2015/11/24][08:49:08.720356] <zw_handler_cli.c:setspecification:1144> [0xb6f50000:"zwave-service"] Command = SET
+
+[2015/11/24][08:49:08.720426] <zw_handler_cli.c:setspecification:1145> [0xb6f50000:"zwave-service"] data0 = ONOFF_GROUP
+
+[2015/11/24][08:49:08.720497] <zw_handler_cli.c:setspecification:1146> [0xb6f50000:"zwave-service"] data1 = 47
+
+[2015/11/24][08:49:08.720568] <zw_handler_cli.c:setspecification:1147> [0xb6f50000:"zwave-service"] data2 = 1
+
+[2015/11/24][08:49:08.721438] <zw_handler_cli.c:db_callback:159> [0xb6f50000:"zwave-service"] Serial = 4520010F07002000
+
+
+[2015/11/24][08:49:08.721666] <zw_handler_cli.c:searching_database:185> [0xb6f50000:"zwave-service"] SELECT Serial from SUB_DEVICES where ID='45' AND Owner=(SELECT UDNS
+
+[2015/11/24][08:49:08.721768] <zw_handler_cli.c:setspecification:1278> [0xb6f50000:"zwave-service"] pzwParam->param2 (NodeID) = 45
+
+[2015/11/24][08:49:08.721844] <zw_handler_cli.c:setspecification:1279> [0xb6f50000:"zwave-service"] pzwParam->param3 (Force) = 01
+
+[2015/11/24][08:49:08.721914] <zw_handler_cli.c:setspecification:1282> [0xb6f50000:"zwave-service"] pzwParam->cmd_set.cmd[0] = 85
+
+[2015/11/24][08:49:08.721986] <zw_handler_cli.c:setspecification:1282> [0xb6f50000:"zwave-service"] pzwParam->cmd_set.cmd[1] = 01
+
+[2015/11/24][08:49:08.722057] <zw_handler_cli.c:setspecification:1285> [0xb6f50000:"zwave-service"] START Send Zwave Command
+
+tmp->name = write_spec tmp->id = 2886822530 tmp->action_time = 1448354948 time_now = 1448354949
+tmp->name = write_spec tmp->id = 2886822530 tmp->action_time = 1448354948 time_now = 1448354950
+tmp->name = write_spec tmp->id = 2886822530 tmp->action_time = 1448354948 time_now = 1448354951
+tmp->name = write_spec tmp->id = 2886822530 tmp->action_time = 1448354948 time_now = 1448354952
+tmp->name = write_spec tmp->id = 2886822530 tmp->action_time = 1448354948 time_now = 1448354953
+tmp->name = write_spec tmp->id = 2886822530 tmp->action_time = 1448354948 time_now = 1448354954
+WARNING: SEND DATA COMMAND is timeout! Please try again! 
+[2015/11/24][08:49:14.477572] <zw_handler_cli.c:setspecification:1287> [0xb6f50000:"zwave-service"] END Zwave Command
+
+[2015/11/24][08:49:14.478411] <alljoyn_service.c:recive_data_cb:190> [0xb6f9d000:"alljoyn-service"] receive msg from server
+[2015/11/24][08:49:14.478579] <alljoyn_service.c:recive_data_cb:199> [0xb6f9d000:"alljoyn-service"] msgstr = { "type": "zwave", "method": "write_specR", "deviceid": "4}
+
+[2015/11/24][08:49:14.478676] <alljoyn_service.c:recive_data_cb:202> [0xb6f9d000:"alljoyn-service"] req.priv = 123c140
+
+[2015/11/24][08:49:14.478751] <alljoyn_service.c:recive_data_cb:203> [0xb6f9d000:"alljoyn-service"] alldata = 123c140
+
+[2015/11/24][08:49:14.478822] <alljoyn_service.c:recive_data_cb:205> [0xb6f9d000:"alljoyn-service"] data.name = write_spec
+
+[2015/11/24][08:49:14.478922] <alljoyn_service.c:recive_data_cb:206> [0xb6f9d000:"alljoyn-service"] data.id = 2886822530
+
+[2015/11/24][08:49:14.478995] <alljoyn_service.c:recive_data_cb:207> [0xb6f9d000:"alljoyn-service"] data.type = 1
+
+[2015/11/24][08:49:14.479065] <alljoyn_service.c:recive_data_cb:208> [0xb6f9d000:"alljoyn-service"] data.numArgs = 7
+
+[2015/11/24][08:49:14.479136] <alljoyn_service.c:Send_Signal:529> [0xb6f9d000:"alljoyn-service"] in Send_Signal
+
+[2015/11/24][08:49:14.479231] <alljoyn_service.c:Send_Signal:543> [0xb6f9d000:"alljoyn-service"] signature = sssssss
+
+[2015/11/24][08:49:14.479305] <alljoyn_service.c:Send_Signal:544> [0xb6f9d000:"alljoyn-service"] msg = { "type": "zwave", "method": "write_specR", "deviceid": "45", "c}
+
+tmp -> name = write_spec
+ tmp->id = 2886822530
+alldata -> name = write_spec
+

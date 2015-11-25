@@ -1,0 +1,194 @@
+[ 
+	{
+		"testsuit" : "Schlage-HomeDWSensor",
+		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee314e4",
+		"testcases" :	[
+
+			{ 
+				"name" : "listdevice", 
+				"input" : { 
+					"devicetype" : "zwave"
+				}
+			},
+			{ 
+				"name" : "readspec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0",
+					"class" : "BATTERY",
+					"command": "GET",
+					"force" : "1"
+				}
+			},
+			{ 
+				"name" : "writespec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0",
+					"class" : "CONFIGURATION",
+					"command" : "SET",
+					"data0" : "ENABLE_ONOFF",
+					"data1" : "FF",
+					"data2" : "1"
+				}
+			},
+			{ 
+				"name" : "readspec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0",
+					"class" : "CONFIGURATION",
+					"command" : "GET",
+					"force" : "1",
+					"type" : "ENABLE_ONOFF"
+				}
+			},
+			
+			
+
+
+
+			{ 
+				"name" : "writespec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0",
+					"class" : "ASSOCIATION",
+					"command" : "SET",
+					"data0" : "ONOFF_GROUP",
+					"data1" : "32",
+					"data2" : "1"
+				}
+			},
+			{ 
+				"name" : "readspec_takeaction", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0",
+					"class" : "ASSOCIATION",
+					"command" : "GET",
+					"type" : "ONOFF_GROUP",
+					"force" : "1",
+					"time"	: "120"
+				}
+			},
+
+
+			{ 
+				"name" : "writespec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0",
+					"class" : "ASSOCIATION",
+					"command" : "REMOVE",
+					"data0" : "ONOFF_GROUP",
+					"data1" : "32",
+					"data2" : "1"
+				}
+			},
+			{ 
+				"name" : "readspec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0",
+					"class" : "ASSOCIATION",
+					"command" : "GET",
+					"type" : "ONOFF_GROUP",
+					"force" : "1"
+				}
+			},
+
+			{ 
+				"name" : "writespec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0",
+					"class" : "ASSOCIATION",
+					"command" : "SET",
+					"data0" : "REPORT_GROUP",
+					"data1" : "32",
+					"data2" : "1"
+				}
+			},
+			{ 
+				"name" : "readspec_takeaction", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0",
+					"class" : "ASSOCIATION",
+					"command" : "GET",
+					"type" : "REPORT_GROUP",
+					"force" : "1",
+					"time"	: "120"
+				}
+			},
+
+
+			{ 
+				"name" : "writespec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0",
+					"class" : "ASSOCIATION",
+					"command" : "REMOVE",
+					"data0" : "REPORT_GROUP",
+					"data1" : "32",
+					"data2" : "1"
+				}
+			},
+			{ 
+				"name" : "readspec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0",
+					"class" : "ASSOCIATION",
+					"command" : "GET",
+					"type" : "REPORT_GROUP",
+					"force" : "1"
+				}
+			},
+
+			{ 
+				"name" : "writespec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0",
+					"class" : "CONFIGURATION",
+					"command" : "SET",
+					"data0" : "ENABLE_ONOFF",
+					"data1" : "0",
+					"data2" : "1"
+				}
+			},
+			{ 
+				"name" : "readspec", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : "ID 0",
+					"class" : "CONFIGURATION",
+					"command" : "GET",
+					"force" : "1",
+					"type" : "ENABLE_ONOFF"
+				}
+			},
+
+			{ 
+				"name" : "removedevice", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : ""
+				}
+			},
+
+
+
+			{ 
+				"name" : "removedevice", 
+				"input" : { 
+					"devicetype" : "zwave", 
+					"id" : ""
+				}
+			}
+		]
+	}
+]

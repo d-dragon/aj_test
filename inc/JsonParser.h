@@ -12,7 +12,7 @@ using namespace std;
 class JsonParser {
 
 	public:
-		JsonParser(const char *tsPath, const char *tcPath, const char *tiPath);
+		JsonParser(const char *tsPath, const char *tcPath, const char *tiPath, const char *configPath);
 		~JsonParser();
 		int startParser();
 
@@ -37,11 +37,13 @@ class JsonParser {
 		const char *dfTSPath;
 		const char *dfTCPath;
 		const char *dfTIPath;
+		const char *dfConfigPath;
 
 		int TestsuitParser(json_t *tsObj);
 		int TestCaseCollector(json_t *tcRoot);
 		int TestItemProcessor(json_t *inputArg, json_t *tiObj);
 		json_t *getTestItemTemplateObj(const char *tiName);
+		int UpdateWorkerConfiguration(TestWorker *worker, const char *dfConfigPath);
 
 };
 

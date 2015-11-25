@@ -7,12 +7,10 @@
 #include "JsonParser.h"
 #include "common_def.h"
 
-#define OK 0
-#define ERROR -1
 
 using namespace std;
 
-JsonParser::JsonParser(const char *tsPath, const char *tcPath, const char *tiPath){
+JsonParser::JsonParser(const char *tsPath, const char *tcPath, const char *tiPath, const char *configPath){
 
 	testSuitRoot	= NULL;
 	tcTemplateRoot	= NULL;
@@ -22,6 +20,7 @@ JsonParser::JsonParser(const char *tsPath, const char *tcPath, const char *tiPat
 	dfTSPath = tsPath;
 	dfTCPath = tcPath;
 	dfTIPath = tiPath;
+	dfConfigPath = configPath;
 }
 
 
@@ -154,7 +153,6 @@ int JsonParser::startParser(){
 	int status;
 	json_t *tsObj;
 	
-
 	testSuitRoot = json_load_file(dfTSPath, 0, &err);
 	if ((testSuitRoot == NULL) || !(json_is_array(testSuitRoot))){
 
@@ -163,6 +161,14 @@ int JsonParser::startParser(){
 	}
 
 	worker = new TestWorker("com.verik.bus.VENUS_BOARD");
+
+	
+	status = UpdateWorkerConfiguration(worker, dfConfigPath);
+	if(status == ERROR){
+		cout << "read program configuration at " << dfConfigPath << " failed!!" << endl;
+		delete worker;
+		return status;
+	}
 
 	worker->exportStuffToFile("<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
 	json_array_foreach(testSuitRoot, arrayIndex, tsObj){
@@ -174,10 +180,8 @@ int JsonParser::startParser(){
 			return -1;
 		}
 
-		const char *serviceId = NULL;
-		serviceId = json_string_value(json_object_get(tsObj, "serviceid"));
 		//FIXME-need move this block code to suitable position for starting Alljoyn Client
-		status = worker->startAlljoynClient(serviceId);
+		status = worker->startAlljoynClient(worker->mConfig.serviceId.c_str());
 		if(status == ERROR){
 			worker->StopAlljoynClient();
 			return status;
@@ -327,13 +331,15 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 	char tmp[256];
 	sprintf(tmp, "</td></tr><tr><th rowspan=\"%d\">Input</th></tr>", arraySize+1);
 	tmpContent.append(tmp);
+	worker->exportStuffToFile(tmpContent.c_str());
+	tmpContent.clear();
 	memset(tmp, 0,256);
 
+	const char *inputArgName[arraySize];
 	json_array_foreach(tiExObj, index, tiArgObj){
 
-		const char *inputArgName;
-		inputArgName = json_string_value(json_object_get(tiArgObj, "arg"));
-		inputArgEle = json_object_get(inputArg, inputArgName);
+		inputArgName[index] = json_string_value(json_object_get(tiArgObj, "arg"));
+		inputArgEle = json_object_get(inputArg, inputArgName[index]);
 
 		if(json_is_string(inputArgEle)){
 			
@@ -344,16 +350,21 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 		}
 
 
-		sprintf(tmp, "<tr><td>%s</td><td>%s</td></tr>", inputArgName, tiArg[index].c_str());
-		cout << "index: " << index << " " << inputArgName << ": " << tiArg[index] << endl;
-		tmpContent.append(tmp);
-		memset(tmp, 0, 256);
+		cout << "index: " << index << " " << inputArgName[index] << ": " << tiArg[index] << endl;
 	
 	}
-//	tmpContent.append("\n");
-	worker->exportStuffToFile(tmpContent.c_str());
 	worker->executeTestItem(tiName, arraySize, tiArg);
 
+	for(int i = 0; i < arraySize; i++){
+
+		sprintf(tmp, "<tr><td>%s</td><td>%s</td></tr>", inputArgName[i], tiArg[i].c_str());
+		tmpContent.append(tmp);
+		memset(tmp, 0, 256);
+		//	tmpContent.append("\n");
+	}
+
+	worker->exportStuffToFile(tmpContent.c_str());
+	worker->exportStuffToFile(worker->htmlResultContent.c_str());
 	sleep(5);
 }
 json_t* JsonParser::getTestItemTemplateObj(const char *tiName){
@@ -380,3 +391,22 @@ json_t* JsonParser::getTestItemTemplateObj(const char *tiName){
 }
 
 
+int JsonParser::UpdateWorkerConfiguration(TestWorker *worker, const char *dfConfigPath){
+
+	json_t *configRootObj;
+
+	configRootObj = json_load_file(dfConfigPath, 0 , &err);
+	if(configRootObj == NULL || !json_is_object(configRootObj)){
+		cout << "load configuration file failed!!!" << err.text << err.line << endl;
+		return ERROR;
+	}
+
+	JSONGetObjectValue(configRootObj, "serviceid", &(worker->mConfig.serviceId));
+	JSONGetObjectValue(configRootObj, "deviceindex", &(worker->mConfig.deviceIndex));
+	JSONGetObjectValue(configRootObj, "devicetype", &(worker->mConfig.deviceType));
+	JSONGetObjectValue(configRootObj, "associationdevidx", &(worker->mConfig.associationDevIndex));
+
+	json_decref(configRootObj);
+
+	return OK;
+}

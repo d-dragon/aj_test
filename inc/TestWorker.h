@@ -12,6 +12,13 @@
 using namespace std;
 
 class TestWorker {
+
+		struct InputConfiguration{
+			string serviceId;
+			string deviceIndex;
+			string deviceType;
+			string associationDevIndex;
+		};
 		struct TestCaseInfo
 		{
 			string Signal;
@@ -27,6 +34,8 @@ class TestWorker {
 		};
 	public:
 
+		struct InputConfiguration mConfig;
+		static string htmlResultContent;
 		TestWorker(const char *interface);
 		~TestWorker();
 		int startAlljoynClient(const char *serviceId);
@@ -48,6 +57,7 @@ class TestWorker {
 		static string reportFile;
 
 		void  generateReportFileName();
+
 		int ParseRespondedMsg();
 		void GetDevIDFromList();
 		void UpdateDevIDOfTC(string*);
