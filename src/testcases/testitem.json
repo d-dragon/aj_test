@@ -1,6 +1,9 @@
 {
 	"add_devices" :[
-		{ "arg": "devicetype", "value" : "" }
+		{ "arg": "devicetype", "value" : "" },
+		{ "arg": "id", "value" : "" },
+		{ "arg": "subdevID", "value" : "" }
+
 	],
 
 	"list_devices" :[
@@ -58,7 +61,8 @@
 	],
 	"remove_device" :[
 		{ "arg": "devicetype", "value" : "" },
-		{ "arg": "id", "value" : "" }
+		{ "arg": "id", "value" : "" },
+		{ "arg": "subdevID", "value" : "" }
 	],
 	"reset" :[
 		{ "arg": "devicetype", "value" : "" }

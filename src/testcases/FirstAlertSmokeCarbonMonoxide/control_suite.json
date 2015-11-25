@@ -89,29 +89,6 @@
 			{
 				"name" : "writespec",
 				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "REPORT_GROUP",
-					"data1"			: "63",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "REPORT_GROUP",
-					"force"			: "1"	
-				}
-			},
-			{
-				"name" : "writespec",
-				"input" : {
 					"devicetype"	: "zwave",
 					"id"			: "ID 0",
 					"class"			: "ASSOCIATION",
@@ -141,29 +118,6 @@
                     "command"       : "REMOVE",
                     "data0"         : "REPORT_GROUP",
                     "data1"         : "01",
-                    "data2"         : "1"
-                }
-            },
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "ID 0",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "REPORT_GROUP",
-					"force"			: "1"	
-                }
-            },
-            {
-                "name" : "writespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "ID 0",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "REMOVE",
-                    "data0"         : "REPORT_GROUP",
-                    "data1"         : "31",
                     "data2"         : "1"
                 }
             },
