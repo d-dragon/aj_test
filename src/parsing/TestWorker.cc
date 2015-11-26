@@ -328,19 +328,28 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 			return;
 		}
 		int index;
-		index = stoi(mConfig.deviceIndex);
-		newIDValue = mDeviceList.at(index).ID;
-		arg[1].assign(newIDValue);
-		LOGCXX("Update new Dev ID: "<< arg[1].c_str()); 
+		if(mConfig.altDeviceId.length() > 0){
+			arg[1].assign(mConfig.altDeviceId);
+		}else{
+			index = stoi(mConfig.deviceIndex);
+			newIDValue = mDeviceList.at(index).ID;
+			arg[1].assign(newIDValue);
+			LOGCXX("Update new Dev ID: "<< arg[1].c_str()); 
+		}
 		newIDValue.clear();
 		//in case of sensor set association with another device, update associated device id
 		if((mTestCaseInfo.Signal.compare("write_spec")	 == 0) ||
 				(mTestCaseInfo.Signal.compare("write_s_spec")	== 0)){
 
 			if(arg[5].find("ID") != string::npos){
-				index = stoi(mConfig.associationDevIndex);
-				newIDValue = mDeviceList.at(index).ID;
-				arg[5].assign(newIDValue);
+				if(mConfig.altAssDevId.length() > 0){
+					arg[5].assign(mConfig.altAssDevId);
+				}else{
+
+					index = stoi(mConfig.associationDevIndex);
+					newIDValue = mDeviceList.at(index).ID;
+					arg[5].assign(newIDValue);
+				}
 			}
 			newIDValue.clear();
 		}

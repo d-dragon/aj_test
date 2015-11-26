@@ -16,8 +16,10 @@ class TestWorker {
 		struct InputConfiguration{
 			string serviceId;
 			string deviceIndex;
+			string altDeviceId;
 			string deviceType;
 			string associationDevIndex;
+			string altAssDevId;
 		};
 		struct TestCaseInfo
 		{

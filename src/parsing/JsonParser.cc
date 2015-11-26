@@ -124,15 +124,17 @@ void JsonParser::JSONGetObjectValue(json_t *inputObj, string objectName, string 
 	const char *retString;
 
 	targetObj = json_object_get(inputObj, objectName.c_str());
+	inputObj = json_incref(inputObj);
 	if(targetObj == NULL){
 		cout << "found no required object" << endl;
 		return;
 	}
 	retString = json_string_value(targetObj);
 	if(retString != NULL){
+		cout << objectName.c_str() << " : " << retString << endl;
 		output->assign(retString);
 	}
-	json_decref(targetObj);
+	json_decref(inputObj);
 }
 json_t *JsonParser::JSONGetObjectFromString(string *inputString, string objectName){
 
@@ -402,10 +404,12 @@ int JsonParser::UpdateWorkerConfiguration(TestWorker *worker, const char *dfConf
 
 	JSONGetObjectValue(configRootObj, "serviceid", &(worker->mConfig.serviceId));
 	JSONGetObjectValue(configRootObj, "deviceindex", &(worker->mConfig.deviceIndex));
+	JSONGetObjectValue(configRootObj, "altdeviceid", &(worker->mConfig.altDeviceId));
 	JSONGetObjectValue(configRootObj, "devicetype", &(worker->mConfig.deviceType));
 	JSONGetObjectValue(configRootObj, "associationdevidx", &(worker->mConfig.associationDevIndex));
+	JSONGetObjectValue(configRootObj, "altassdevid", &(worker->mConfig.altAssDevId));
 
-	//json_decref(configRootObj);
+	json_decref(configRootObj);
 
 	return OK;
 }
