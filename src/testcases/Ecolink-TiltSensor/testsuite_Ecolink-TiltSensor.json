@@ -7,14 +7,14 @@
 				"name" : "adddevice", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0"
+					"id" : "D_ID"
 				}
 			},
 			{ 
 				"name" : "addsensor", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1",
+					"id" : "A_ID",
 					"class" : "BATTERY",
 					"command": "GET",
 					"force" : "1"
@@ -24,7 +24,7 @@
 				"name" : "writespec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1",
+					"id" : "A_ID",
 					"class" : "CONFIGURATION",
 					"command" : "SET",
 					"data0" : "ENABLE_ONOFF",
@@ -36,7 +36,7 @@
 				"name" : "readspec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1",
+					"id" : "A_ID",
 					"class" : "CONFIGURATION",
 					"command" : "GET",
 					"type" : "ENABLE_ONOFF"
@@ -51,7 +51,7 @@
 				"name" : "writespec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1",
+					"id" : "A_ID",
 					"class" : "ASSOCIATION",
 					"command" : "SET",
 					"data0" : "ONOFF_GROUP",
@@ -63,7 +63,7 @@
 				"name" : "readspec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1",
+					"id" : "A_ID",
 					"class" : "ASSOCIATION",
 					"command" : "GET",
 					"type" : "ONOFF_GROUP",
@@ -78,7 +78,7 @@
 				"name" : "writespec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1",
+					"id" : "A_ID",
 					"class" : "ASSOCIATION",
 					"command" : "REMOVE",
 					"data0" : "ONOFF_GROUP",
@@ -90,7 +90,7 @@
 				"name" : "readspec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1",
+					"id" : "A_ID",
 					"class" : "ASSOCIATION",
 					"command" : "GET",
 					"type" : "ONOFF_GROUP",
@@ -103,7 +103,7 @@
 				"name" : "removedevice", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0"
+					"id" : "D_ID"
 				}
 			},
 
@@ -113,7 +113,7 @@
 				"name" : "removedevice", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1"
+					"id" : "A_ID"
 				}
 			}
 		]

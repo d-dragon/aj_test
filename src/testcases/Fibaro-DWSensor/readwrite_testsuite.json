@@ -14,7 +14,7 @@
 				"name" : "readspec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "BATTERY",
 					"command": "GET",
 					"force" : "1"
@@ -24,7 +24,7 @@
 				"name" : "writespec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "CONFIGURATION",
 					"command" : "SET",
 					"data0" : "SET_DIMMER",
@@ -36,7 +36,7 @@
 				"name" : "readspec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "CONFIGURATION",
 					"command" : "GET",
 					"force" : "1",
@@ -48,7 +48,7 @@
 				"name" : "writespec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "ASSOCIATION",
 					"command" : "SET",
 					"data0" : "ONOFF_GROUP",
@@ -60,7 +60,7 @@
 				"name" : "readspec_takeaction", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "ASSOCIATION",
 					"command" : "GET",
 					"type" : "ONOFF_GROUP",
@@ -74,7 +74,7 @@
 				"name" : "writespec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "ASSOCIATION",
 					"command" : "REMOVE",
 					"data0" : "ONOFF_GROUP",
@@ -86,7 +86,7 @@
 				"name" : "readspec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "ASSOCIATION",
 					"command" : "GET",
 					"type" : "ONOFF_GROUP",
@@ -98,7 +98,7 @@
 				"name" : "writespec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "ASSOCIATION",
 					"command" : "SET",
 					"data0" : "ALARM_GENERIC",
@@ -110,7 +110,7 @@
 				"name" : "readspec_takeaction", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "ASSOCIATION",
 					"command" : "GET",
 					"type" : "ALARM_GENERIC",
@@ -124,7 +124,7 @@
 				"name" : "writespec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "ASSOCIATION",
 					"command" : "REMOVE",
 					"data0" : "ALARM_GENERIC",
@@ -136,7 +136,7 @@
 				"name" : "readspec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "ASSOCIATION",
 					"command" : "GET",
 					"type" : "ALARM_GENERIC",
@@ -148,7 +148,7 @@
 				"name" : "writespec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "ASSOCIATION",
 					"command" : "SET",
 					"data0" : "REPORT_GROUP",
@@ -160,7 +160,7 @@
 				"name" : "readspec_takeaction", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "ASSOCIATION",
 					"command" : "GET",
 					"force" : "1",
@@ -172,7 +172,7 @@
 				"name" : "writespec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "ASSOCIATION",
 					"command" : "REMOVE",
 					"data0" : "REPORT_GROUP",
@@ -184,7 +184,7 @@
 				"name" : "readspec", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0",
+					"id" : "D_ID",
 					"class" : "ASSOCIATION",
 					"command" : "GET",
 					"type" : "ALARM_GENERIC",

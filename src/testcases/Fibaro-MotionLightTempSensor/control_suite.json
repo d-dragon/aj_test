@@ -14,7 +14,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "BATTERY",
 					"command"       : "GET",
 					"force"			: "1"
@@ -24,7 +24,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "GET",
 					"force"			: "1",
@@ -35,7 +35,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "GET",
 					"force"			: "1",
@@ -47,7 +47,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "GET",
 					"force"			: "1",
@@ -58,7 +58,7 @@
 				"name" 				: "writespec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "CONFIGURATION",
 					"command"       : "SET",
 					"data0"         : "PIR_SENSOR",
@@ -71,7 +71,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "CONFIGURATION",
 					"command"       : "GET",
 					"force"			: "1",
@@ -83,7 +83,7 @@
 				"name" 				: "writespec",
 				"input" 			: {
 					"devicetype"	: "zwave",
-					"id"			: "ID 0",
+					"id"			: "D_ID",
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
 					"data0"			: "REPORT_GROUP",
@@ -95,7 +95,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "GET",
 					"force"			: "1",
@@ -106,7 +106,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "BATTERY",
 					"force"			: "1",
 					"command"		: "GET"
@@ -116,7 +116,7 @@
 				"name" 				: "writespec",
 				"input" 			: {
 					"devicetype"	: "zwave",
-					"id"			: "ID 0",
+					"id"			: "D_ID",
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
 					"data0"			: "ONOFF_GROUP",
@@ -128,7 +128,7 @@
 				"name" 				: "readspec_takeaction",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "GET",
 					"force"			: "1",
@@ -141,7 +141,7 @@
 				"name" 				: "writespec",
 				"input" 			: {
 					"devicetype"	: "zwave",
-					"id"			: "ID 0",
+					"id"			: "D_ID",
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
 					"data0"			: "ONOFF_GROUP",
@@ -153,7 +153,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "GET",
 					"force"			: "1",
@@ -164,7 +164,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "GET",
 					"force"			: "1",
@@ -176,7 +176,7 @@
 				"name" 				: "writespec",
 				"input" 			: {
 					"devicetype"	: "zwave",
-					"id"			: "ID 0",
+					"id"			: "D_ID",
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
 					"data0"			: "TAMPER_GROUP",
@@ -189,7 +189,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "GET",
 					"force"			: "1",
@@ -200,7 +200,7 @@
 				"name" 				: "writespec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "REMOVE",
 					"data0"         : "REPORT_GROUP",
@@ -212,7 +212,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "GET",
 					"force"			: "1",
@@ -223,7 +223,7 @@
 				"name" 				: "writespec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "REMOVE",
 					"data0"         : "ONOFF_GROUP",
@@ -235,7 +235,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "GET",
 					"force"			: "1",
@@ -247,7 +247,7 @@
 				"name" 				: "writespec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "REMOVE",
 					"data0"         : "TAMPER_GROUP",
@@ -260,7 +260,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "ASSOCIATION",
 					"command"       : "GET",
 					"force"			: "1",
@@ -272,7 +272,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "SENSOR_MULTILEVEL",
 					"command"       : "GET",
 					"force"			: "1",
@@ -284,7 +284,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"class"         : "SENSOR_MULTILEVEL",
 					"command"       : "GET",
 					"force"			: "1",

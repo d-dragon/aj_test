@@ -13,7 +13,7 @@
                 "name" 				: "controlonoff",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "value"         : "1",
                     "epnum"         : "",
                     "proid"         : ""
@@ -23,7 +23,7 @@
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "value"         : "0",
                     "epnum"         : "",
                     "proid"         : ""
@@ -33,7 +33,7 @@
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "value"         : "1",
                     "epnum"         : "",
                     "proid"         : ""

@@ -14,7 +14,7 @@
 				"name" : "writespec",
 				"input" : {
 					"devicetype"	: "zwave",
-					"id"			: "ID 0",
+					"id"			: "D_ID",
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
 					"data0"			: "REPORT_GROUP",
@@ -27,7 +27,7 @@
                 "name" : "readspec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
                     "type"          : "REPORT_GROUP",
@@ -40,7 +40,7 @@
                 "name" : "writespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "SET",
                     "data0"         : "ONOFF_GROUP",
@@ -53,7 +53,7 @@
                 "name" : "readspec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
                     "type"          : "ONOFF_GROUP",
@@ -65,7 +65,7 @@
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "BATTERY",
 					"command"		: "GET",
 					"force"			: "1"
@@ -76,7 +76,7 @@
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
 					"type"			: "SET_DIMMER",
@@ -88,7 +88,7 @@
 				"name" : "writespec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
 					"data0"			: "SET_DIMMER",
@@ -101,7 +101,7 @@
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
 					"type"			: "SET_DIMMER",
@@ -113,7 +113,7 @@
 				"name"				: "waitingfor",
 				"input"				: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"time"			: "30"
 				},
 				"description"		: "Wait 30s and try to test flood notification and the associated dimmer device."
@@ -122,7 +122,7 @@
 				"name" : "writespec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
 					"data0"			: "SET_DIMMER",
@@ -135,7 +135,7 @@
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
 					"type"			: "SET_DIMMER",
@@ -147,7 +147,7 @@
 				"name"				: "waitingfor",
 				"input"				: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"time"			: "30"
 				},
 				"description"		: "Wait 30s and try to test flood notification and the associated dimmer device."
@@ -156,7 +156,7 @@
 				"name" : "writespec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
 					"data0"			: "SET_DIMMER",
@@ -169,7 +169,7 @@
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
 					"type"			: "SET_DIMMER",
@@ -181,7 +181,7 @@
 				"name"				: "waitingfor",
 				"input"				: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"time"			: "30"
 				},
 				"description"		: "Wait 30s and try to test flood notification and the associated dimmer device."
@@ -190,7 +190,7 @@
                 "name" : "writespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
                     "data0"         : "REPORT_GROUP",
@@ -203,7 +203,7 @@
                 "name" : "readspec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
                     "type"          : "REPORT_GROUP",
@@ -215,7 +215,7 @@
 				"name"				: "waitingfor",
 				"input"				: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"time"			: "10"
 				},
 				"description"		: "Wait 10 and try to test flood notification."
@@ -224,7 +224,7 @@
                 "name" : "writespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
                     "data0"         : "ONOFF_GROUP",
@@ -237,7 +237,7 @@
                 "name" : "readspec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
                     "type"          : "ONOFF_GROUP",
@@ -249,7 +249,7 @@
 				"name"				: "waitingfor",
 				"input"				: {
 					"devicetype"    : "zwave",
-					"id"            : "ID 0",
+					"id"            : "D_ID",
 					"time"			: "10"
 				},
 				"description"		: "Wait 10 and try to test flood associated dimmer device."

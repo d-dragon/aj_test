@@ -13,7 +13,7 @@
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
 					"type"			: "ONOFF_LED"
@@ -23,7 +23,7 @@
 				"name" : "writespec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
 					"data0"			: "ONOFF_LED",
@@ -35,7 +35,7 @@
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
 					"type"			: "ONOFF_LED"
@@ -45,7 +45,7 @@
 				"name" : "writespec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
 					"data0"			: "ONOFF_LED",
@@ -57,7 +57,7 @@
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
 					"type"			: "ONOFF_LED"
@@ -67,7 +67,7 @@
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "value"         : "1"
                 }
             },
@@ -75,7 +75,7 @@
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "value"         : "0"
                 }
             },
@@ -83,7 +83,7 @@
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "value"         : "30"
                 }
             },
@@ -91,7 +91,7 @@
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "value"         : "63"
                 }
             }		

@@ -13,7 +13,7 @@
 				"name" : "readsecurespec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "BATTERY",
 					"command"		: "GET"
 				}
@@ -22,7 +22,7 @@
 				"name" : "writesecurespec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
 					"data0"			: "BEEPER",
@@ -34,7 +34,7 @@
 				"name" : "readsecurespec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
 					"data0"			: "BEEPER"
@@ -44,7 +44,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
                     "data0"         : "BEEPER",
@@ -56,7 +56,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
                     "data0"         : "BEEPER"
@@ -66,7 +66,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
                     "data0"         : "VACATION",
@@ -78,7 +78,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
                     "data0"         : "VACATION"
@@ -88,7 +88,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
                     "data0"         : "VACATION",
@@ -100,7 +100,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
                     "data0"         : "VACATION"
@@ -110,7 +110,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
                     "data0"         : "LOCKANDLEAVE",
@@ -122,7 +122,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
                     "data0"         : "LOCKANDLEAVE"
@@ -132,7 +132,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
                     "data0"         : "LOCKANDLEAVE",
@@ -144,7 +144,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
                     "data0"         : "LOCKANDLEAVE"
@@ -154,7 +154,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
                     "data0"         : "AUTO_LOCK",
@@ -166,7 +166,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
                     "data0"         : "AUTO_LOCK"
@@ -176,7 +176,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
                     "data0"         : "AUTO_LOCK",
@@ -188,7 +188,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
                     "data0"         : "AUTO_LOCK"
@@ -198,7 +198,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
                     "data0"         : "PIN_LENGTH",
@@ -210,7 +210,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
                     "data0"         : "PIN_LENGTH"
@@ -220,7 +220,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "SET",
                     "data0"         : "PIN_LENGTH",
@@ -232,7 +232,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
                     "data0"         : "PIN_LENGTH"
@@ -242,7 +242,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "command"       : "GET",
                     "data0"         : "0F"
@@ -252,7 +252,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "command"       : "SET",
                     "data0"         : "0F",
@@ -264,7 +264,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "command"       : "GET",
                     "data0"         : "0F"
@@ -274,7 +274,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "command"       : "GET",
                     "data0"         : "11"
@@ -284,7 +284,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "command"       : "SET",
                     "data0"         : "11",
@@ -296,7 +296,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "command"       : "GET",
                     "data0"         : "11"
@@ -306,7 +306,7 @@
                 "name" : "readsecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "command"       : "GET_NUM"
                 }
@@ -315,7 +315,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "DOOR_LOCK",
                     "command"       : "SET",
                     "data0"         : "open"
@@ -325,7 +325,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "DOOR_LOCK",
                     "command"       : "SET",
                     "data0"         : "close"
@@ -335,7 +335,7 @@
                 "name" : "writesecurespec",
                 "input" : {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "DOOR_LOCK",
                     "command"       : "SET",
                     "data0"         : "open"

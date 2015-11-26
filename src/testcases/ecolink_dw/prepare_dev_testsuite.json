@@ -22,14 +22,14 @@
 				"name" : "adddevice", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 0"
+					"id" : "D_ID"
 				}
 			},
 			{ 
 				"name" : "addsensor", 
 				"input" : { 
 					"devicetype" : "zwave", 
-					"id" : "ID 1",
+					"id" : "A_ID",
 					"class" : "BATTERY",
 					"command": "GET",
 					"force" : "1"

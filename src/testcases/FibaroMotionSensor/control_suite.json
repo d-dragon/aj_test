@@ -13,7 +13,7 @@
                 "name" 				: "readspec",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
                     "type"          : "ONOFF_GROUP"
@@ -23,7 +23,7 @@
                 "name" 				: "readspec",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
                     "type"          : "TAMPER_ALARM"
@@ -33,7 +33,7 @@
                 "name" 				: "readspec",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
                     "type"          : "REPORT_GROUP"
@@ -43,7 +43,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "BATTERY",
 					"command"		: "GET"
 				}
@@ -52,7 +52,7 @@
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "SENSOR_MULTILEVEL",
 					"command"		: "GET",
 					"type"			: "TEMP"
@@ -62,7 +62,7 @@
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "SENSOR_MULTILEVEL",
 					"command"		: "GET",
 					"type"			: "LUMI"
@@ -72,7 +72,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
 					"type"			: "PIR_SENSOR"
@@ -82,7 +82,7 @@
 				"name" 				: "writespec",
 				"input" 			: {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
 					"data0"			: "PIR_SENSOR",
@@ -94,7 +94,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
 					"type"			: "PIR_SENSOR"
@@ -104,7 +104,7 @@
 				"name" 				: "writespec",
 				"input" 			: {
 					"devicetype"	: "zwave",
-					"id"			: "ID 0",
+					"id"			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "SET",
 					"data0"			: "PIR_SENSOR",
@@ -116,7 +116,7 @@
                 "name" 				: "readspec",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
                     "type"          : "PIR_SENSOR"
@@ -126,7 +126,7 @@
 				"name" 				: "writespec",
 				"input" 			: {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
 					"data0"			: "ONOFF_GROUP",
@@ -138,7 +138,7 @@
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype" 	: "zwave",
-					"id" 			: "ID 0",
+					"id" 			: "D_ID",
 					"class"			: "ASSOCIATION",
 					"command"		: "GET",
 					"type"			: "ONOFF_GROUP"
@@ -148,7 +148,7 @@
 				"name" 				: "writespec",
 				"input" 			: {
 					"devicetype"	: "zwave",
-					"id"			: "ID 0",
+					"id"			: "D_ID",
 					"class"			: "ASSOCIATION",
 					"command"		: "SET",
 					"data0"			: "TAMPER_ALARM",
@@ -160,7 +160,7 @@
                 "name" 				: "readspec",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
                     "type"          : "TAMPER_ALARM"
@@ -171,7 +171,7 @@
                 "name" 				: "writespec",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "SET",
                     "data0"         : "REPORT_GROUP",
@@ -183,7 +183,7 @@
                 "name" 				: "readspec",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
                     "type"          : "REPORT_GROUP"
@@ -193,7 +193,7 @@
                 "name" 				: "writespec",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
                     "data0"         : "ONOFF_GROUP",
@@ -205,7 +205,7 @@
                 "name" 				: "readspec",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
                     "type"          : "ONOFF_GROUP"
@@ -215,7 +215,7 @@
                 "name" 				: "writespec",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
                     "data0"         : "TAMPER_ALARM",
@@ -227,7 +227,7 @@
                 "name" 				: "readspec",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
                     "type"          : "TAMPER_ALARM"
@@ -237,7 +237,7 @@
                 "name" 				: "writespec",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
                     "data0"         : "REPORT_GROUP",
@@ -249,7 +249,7 @@
                 "name" 				: "readspec",
                 "input" 			: {
                     "devicetype"    : "zwave",
-                    "id"            : "ID 0",
+                    "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
                     "type"          : "REPORT_GROUP"
