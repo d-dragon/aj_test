@@ -7,15 +7,66 @@
 				"name"	: "listdevices",
 				"input" :{
 					"devicetype"	: "zwave"
+				},
+				"description"		: "Get list of available devices in the controller"
+			},	
+			{
+				"name" : "writespec",
+				"input" : {
+					"devicetype"	: "zwave",
+					"id"			: "ID 0",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "REPORT_GROUP",
+					"data1"			: "01",
+					"data2"			: "1"
 				}
-			},			
+			},
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "REPORT_GROUP",
+					"force"			: "1"
+
+                }
+            },
+			{
+                "name" : "writespec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "SET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "A_ID 1",
+                    "data2"         : "1"
+                }
+            },
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "ID 0",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "ONOFF_GROUP",
+					"force"			: "1"
+
+                }
+            },
 			{
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
 					"id" 			: "ID 0",
 					"class"			: "BATTERY",
-					"command"		: "GET"
+					"command"		: "GET",
+					"force"			: "1"
+
 				}
 			},
 			{
@@ -75,6 +126,15 @@
 				}
 			},
 			{
+				"name"				: "waitingfor",
+				"input"				: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"time"			: "30"
+
+				}
+			},
+			{
 				"name" : "writespec",
 				"input" : {
 					"devicetype" 	: "zwave",
@@ -98,6 +158,15 @@
 				}
 			},
 			{
+				"name"				: "waitingfor",
+				"input"				: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"time"			: "30"
+
+				}
+			},
+			{
 				"name" : "writespec",
 				"input" : {
 					"devicetype" 	: "zwave",
@@ -116,53 +185,20 @@
 					"id" 			: "ID 0",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "SET_DIMMER"
+					"type"			: "SET_DIMMER",
+					"force"			: "1"
+
 				}
 			},
 			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype"	: "zwave",
-					"id"			: "ID 0",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "REPORT_GROUP",
-					"data1"			: "01",
-					"data2"			: "1"
+				"name"				: "waitingfor",
+				"input"				: {
+					"devicetype"    : "zwave",
+					"id"            : "ID 0",
+					"time"			: "30"
+
 				}
 			},
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "ID 0",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "REPORT_GROUP"
-                }
-            },
-			{
-                "name" : "writespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "ID 0",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "SET",
-                    "data0"         : "ONOFF_GROUP",
-                    "data1"         : "31",
-                    "data2"         : "1"
-                }
-            },
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "ID 0",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "ONOFF_GROUP"
-                }
-            },
             {
                 "name" : "writespec",
                 "input" : {
@@ -182,7 +218,9 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "REPORT_GROUP"
+                    "type"          : "REPORT_GROUP",
+					"force"			: "1"
+
                 }
             },
             {
@@ -193,7 +231,7 @@
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "31",
+                    "data1"         : "A_ID 1",
                     "data2"         : "1"
                 }
             },
@@ -204,7 +242,9 @@
                     "id"            : "ID 0",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "ONOFF_GROUP"
+                    "type"          : "ONOFF_GROUP",
+					"force"			: "1"
+
                 }
             }			
 		]
