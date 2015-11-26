@@ -323,15 +323,27 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 		(mTestCaseInfo.Signal.compare("write_s_spec") 	== 0)
 		)
 	{
-		/*
 		if(arg[1].find("ID") == std::string::npos){
 			// Keep the input from user
 			return;
 		}
-		*/
-		newIDValue = mDeviceList.at(GetIndexByCondition(mConfig.deviceIndex)).ID;
+		int index;
+		index = stoi(mConfig.deviceIndex);
+		newIDValue = mDeviceList.at(index).ID;
 		arg[1].assign(newIDValue);
 		LOGCXX("Update new Dev ID: "<< arg[1].c_str()); 
+		newIDValue.clear();
+		//in case of sensor set association with another device, update associated device id
+		if((mTestCaseInfo.Signal.compare("write_spec")	 == 0) ||
+				(mTestCaseInfo.Signal.compare("write_s_spec")	== 0)){
+
+			if(arg[5].find("ID") != string::npos){
+				index = stoi(mConfig.associationDevIndex);
+				newIDValue = mDeviceList.at(index).ID;
+				arg[5].assign(newIDValue);
+			}
+			newIDValue.clear();
+		}
 
 	}
 

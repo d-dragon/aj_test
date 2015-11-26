@@ -162,7 +162,6 @@ int JsonParser::startParser(){
 
 	worker = new TestWorker("com.verik.bus.VENUS_BOARD");
 
-	
 	status = UpdateWorkerConfiguration(worker, dfConfigPath);
 	if(status == ERROR){
 		cout << "read program configuration at " << dfConfigPath << " failed!!" << endl;
@@ -406,7 +405,7 @@ int JsonParser::UpdateWorkerConfiguration(TestWorker *worker, const char *dfConf
 	JSONGetObjectValue(configRootObj, "devicetype", &(worker->mConfig.deviceType));
 	JSONGetObjectValue(configRootObj, "associationdevidx", &(worker->mConfig.associationDevIndex));
 
-	json_decref(configRootObj);
+	//json_decref(configRootObj);
 
 	return OK;
 }
