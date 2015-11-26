@@ -7,35 +7,40 @@
 				"name" : "listdevices",
 				"input" : {
 					"devicetype"	: "zwave"
-				}
+				},
+				"description"		: "Get list of available devices in the controller"
 			},
           	{ 
 				"name" : "removedevice", 
 				"input" : { 
 					"devicetype" 	: "zwave",
 					"id"			: ""
-				}
+				},
+				"description"		: "Remove device (existed devices or new device we want to add later steps"
 			},
 			{ 
 				"name" : "removedevice", 
 				"input" : { 
 					"devicetype" 	: "zwave",
 					"id"			: ""
-				}
+				},
+				"description"		: "Remove device (existed devices or new device we want to add later steps"
 			},
 
 			{ 
 				"name" : "adddevice", 
 				"input" : { 
 					"devicetype" : "zwave" 
-				}
+				},
+				"description"		: "Add device where we want to test"
 			},
 
 			{ 
 				"name" : "adddevice", 
 				"input" : { 
 					"devicetype" : "zwave" 
-				}
+				},
+				"description"		: "Add association device, this device should support dimmer and on/off"
 			}
 
 			
