@@ -78,8 +78,11 @@
 			{"name" : "listen_notification"},
 			{"name" : "get_binary"},
 			{"name" : "set_binary"}
-
 		]
+	},
+	"waitingfor":{
+		 "testitems" : [
+            {"name" : "listen_notification"}
+        ]
 	}
-
 }

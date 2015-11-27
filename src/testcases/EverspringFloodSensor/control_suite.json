@@ -47,7 +47,7 @@
                     "data1"         : "A_ID 1",
                     "data2"         : "1"
                 },
-				"description"		: "Set ASSOCIATION REPORT_GROUP, associated device must support dimmer, on/off "
+				"description"		: "Set ASSOCIATION ONOFF_GROUP, associated device must be dimmable, on/off "
             },
             {
                 "name" : "readspec",
