@@ -1,0 +1,884 @@
+[
+	{
+		"testsuit" : "Aoetec-DoorWindowSensor",
+		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee314e4",
+		"testcases" :	[
+			{	
+				"name"				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zwave"
+				},
+				"description"		: "Get list of available devices in the controller"
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "BATTERY",
+					"command"       : "GET",
+					"force"			: "1"
+				},
+				"description"		: "Get status of Battery of Aoetec-DoorWindowSensor."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "REPORT_GROUP"
+				},
+				"description"		: "Get status of REPORT_GROUP for verifying value."
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "SET",
+					"data0"         : "REPORT_GROUP",
+					"data1"         : "01",
+					"data2"         : "1"
+				},
+				"description"		: "Set ASSOCIATION REPORT_GROUP, this case is our controller, those notification will be sent whenever door/window open/close"
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "REPORT_GROUP"
+				},
+				"description"		: "Get status of REPORT_GROUP for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "REPORT_GROUP",
+					"data1"			: "A_ID",
+					"data2"			: "1"
+				},
+				"description"		: "Set ASSOCIATION REPORT_GROUP, this case is Z-wave Led, those notification will be sent to associated device whenever door/window open/close ."
+			},
+
+			{
+				"name" 				: "readspec_takeaction",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "REPORT_GROUP",
+					"time"			: "60"
+				},
+				"description"		: "Wait 60s to test open/close door notification to on/off Z-wave Led."
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "REMOVE",
+					"data0"			: "REPORT_GROUP",
+					"data1"			: "A_ID",
+					"data2"			: "1"
+				},
+				"description"		: "Remove associated Z-wave Led from REPORT_GROUP."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "REPORT_GROUP"
+				},
+				"description"		: "Verify associated Z-wave Led after removing."
+			},
+
+					{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "BINARY_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable binary report which will be sent to our controller."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "BINARY_REPORT"
+				},
+				"description"		: "Get status of BINARY_REPORT for verifying value which we set before"
+			},
+
+					{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "BINARY_REPORT",
+					"data1"         : "FF",
+					"data2"         : "1"
+				},
+				"description"       : "Set value FF to disable binary report which will be sent to our controller."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "BINARY_REPORT"
+				},
+				"description"		: "Get status of BINARY_REPORT for verifying value which we set before"
+			},
+
+
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "SET_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable set report which will be sent to associated device."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "SET_REPORT"
+				},
+				"description"		: "Get status of SET_REPORT for verifying value which we set before"
+			},
+
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "SET_REPORT",
+					"data1"         : "FF",
+					"data2"         : "1"
+				},
+				"description"       : "Set value FF to disable set report which will be sent to associated device."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "SET_REPORT"
+				},
+				"description"		: "Get status of SET_REPORT for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "DETERMINES",
+					"data1"         : "00000111",
+					"data2"         : "1"
+				},
+				"description"		: "Set CONFIGURATION DETERMINES, this case we enable basic set, sensor binary and battery report."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "DETERMINES"
+				},
+				"description"		: "Get status of DETERMINES for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "BATTERY",
+					"command"       : "GET",
+					"force"			: "1"
+				},
+				"description"		: "Get status of Battery of Aoetec-DoorWindowSensor."
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "BINARY_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable binary report which will be sent to our controller."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "BINARY_REPORT"
+				},
+				"description"		: "Get status of BINARY_REPORT for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "SET_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable set report which will be sent to associated device."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "SET_REPORT"
+				},
+				"description"		: "Get status of SET_REPORT for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "DETERMINES",
+					"data1"         : "00000110",
+					"data2"         : "1"
+				},
+				"description"		: "Set CONFIGURATION DETERMINES, this case we enable basic set, sensor binary and disable battery report."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "DETERMINES"
+				},
+				"description"		: "Get status of DETERMINES for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "BATTERY",
+					"command"       : "GET",
+					"force"			: "1"
+				},
+				"description"		: "Get status of Battery of Aoetec-DoorWindowSensor."
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "BINARY_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable binary report which will be sent to our controller."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "BINARY_REPORT"
+				},
+				"description"		: "Get status of BINARY_REPORT for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "SET_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable set report which will be sent to associated device."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "SET_REPORT"
+				},
+				"description"		: "Get status of SET_REPORT for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "DETERMINES",
+					"data1"         : "00000100",
+					"data2"         : "1"
+				},
+				"description"		: "Set CONFIGURATION DETERMINES, this case we enable basic set and  disable sensor binary , battery report."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "DETERMINES"
+				},
+				"description"		: "Get status of DETERMINES for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "BATTERY",
+					"command"       : "GET",
+					"force"			: "1"
+				},
+				"description"		: "Get BATTERY infomation of Aoetec-DoorWindowSensor."
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "BINARY_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable binary report which will be sent to our controller."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "BINARY_REPORT"
+				},
+				"description"		: "Get status of BINARY_REPORT for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "SET_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable set report which will be sent to associated device."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "SET_REPORT"
+				},
+				"description"		: "Get status of SET_REPORT for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "DETERMINES",
+					"data1"         : "00000010",
+					"data2"         : "1"
+				},
+				"description"		: "Set CONFIGURATION DETERMINES, this case we enable binary report, basic set and battery report."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "DETERMINES"
+				},
+				"description"		: "Get status of DETERMINES for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "BATTERY",
+					"command"       : "GET",
+					"force"			: "1"
+				},
+				"description"		: "Get BATTERY infomation of Aoetec-DoorWindowSensor."
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "BINARY_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable binary report which will be sent to our controller."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "BINARY_REPORT"
+				},
+				"description"		: "Get status of BINARY_REPORT for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "SET_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable set report which will be sent to associated device."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "SET_REPORT"
+				},
+				"description"		: "Get status of SET_REPORT for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "DETERMINES",
+					"data1"         : "00000011",
+					"data2"         : "1"
+				},
+				"description"		: "Set CONFIGURATION DETERMINES, this case we enable sensor binary and battery report and  disable basic set."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "DETERMINES"
+				},
+				"description"		: "Get status of DETERMINES for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "BATTERY",
+					"command"       : "GET",
+					"force"			: "1"
+				},
+				"description"		: "Get BATTERY infomation of Aoetec-DoorWindowSensor."
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "BINARY_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable binary report which will be sent to our controller."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "BINARY_REPORT"
+				},
+				"description"		: "Get status of BINARY_REPORT for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "SET_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable set report which will be sent to associated device."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "SET_REPORT"
+				},
+				"description"		: "Get status of SET_REPORT for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "DETERMINES",
+					"data1"         : "00000001",
+					"data2"         : "1"
+				},
+				"description"		: "Set CONFIGURATION DETERMINES, this case we enable battery report and disable battery report, basic set."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "DETERMINES"
+				},
+				"description"		: "Get status of DETERMINES for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "BATTERY",
+					"command"       : "GET",
+					"force"			: "1"
+				},
+				"description"		: "Get BATTERY infomation of Aoetec-DoorWindowSensor."
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "BINARY_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable binary report which will be sent to our controller."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "BINARY_REPORT"
+				},
+				"description"		: "Get status of BINARY_REPORT for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "SET_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable set report which will be sent to associated device."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "SET_REPORT"
+				},
+				"description"		: "Get status of SET_REPORT for verifying value which we set before"
+			},
+
+					{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "DETERMINES",
+					"data1"         : "00000000",
+					"data2"         : "1"
+				},
+				"description"		: "Set CONFIGURATION DETERMINES, this case we disable basic set, sensor binary and battery report."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "DETERMINES"
+				},
+				"description"		: "Get status of DETERMINES for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "BATTERY",
+					"command"       : "GET",
+					"force"			: "1"
+				},
+				"description"		: "Get BATTERY infomation of Aoetec-DoorWindowSensor."
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "BINARY_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable binary report which will be sent to our controller."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "BINARY_REPORT"
+				},
+				"description"		: "Get status of BINARY_REPORT for verifying value which we set before"
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "SET_REPORT",
+					"data1"         : "00",
+					"data2"         : "1"
+				},
+				"description"       : "Set value 00 to enable set report which will be sent to associated device."
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "SET_REPORT"
+				},
+				"description"		: "Get status of SET_REPORT for verifying value which we set before"
+			}
+		]
+	}
+]
