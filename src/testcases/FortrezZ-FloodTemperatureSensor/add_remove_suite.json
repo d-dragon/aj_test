@@ -1,0 +1,43 @@
+[ 
+	{
+		"testsuit" 					: "FortrezZ-FloodTempuratureSensor",
+		"testcases" 				:	[
+			{
+				"name" 				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zwave"
+				}
+			},
+          	{ 
+				"name" 				: "removedevice", 
+				"input" 			: { 
+					"devicetype" 	: "zwave",
+					"id"			: ""
+				}
+			},
+			{ 
+				"name" 				: "removedevice", 
+				"input" 			: { 
+					"devicetype" 	: "zwave",
+					"id"			: ""
+				}
+			},
+
+			{ 
+				"name" 				: "adddevice", 
+				"input" 			: { 
+					"devicetype" 	: "zwave" 
+				}
+			},
+
+			{ 
+				"name" 				: "adddevice", 
+				"input" 			: { 
+					"devicetype" 	: "zwave" 
+				}
+			}
+
+			
+		]
+	}
+]
