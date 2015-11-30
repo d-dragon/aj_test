@@ -13,16 +13,14 @@
 	"get_binary" :[
 		{ "arg": "devicetype", "value" : "" },
 		{ "arg": "id", "value" : "" },
-		{ "arg": "epnum", "value" : "" },
-		{ "arg": "proid", "value" : "" }
+		{ "arg": "subdevID", "value" : "" }
 	],
 
 	"set_binary" :[
 		{ "arg": "devicetype", "value" : "" },
 		{ "arg": "id", "value" : "" },
 		{ "arg": "value", "value" : "" },
-		{ "arg": "epnum", "value" : "" },
-		{ "arg": "proid", "value" : "" }
+		{ "arg": "subdevID", "value" : "" }
 	],
 
 	"read_spec" :[
