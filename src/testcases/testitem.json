@@ -91,6 +91,18 @@
 		{ "arg": "newaction", "value" : "" }
 	],
 
+	"open_closenetwork" :[
+		{ "arg": "devicetype", "value" : "" },
+		{ "arg": "id", "value" : "" },
+		{ "arg": "action", "value" : "" }
+	],
+
+
+	"get_subdevs" :[
+		{ "arg": "devicetype", "value" : "" },
+		{ "arg": "id", "value" : "" },
+		{ "arg": "listtype", "value" : "" }
+	],
 	"onboarding" : [
 		{ "arg" : "ssid", "value" : ""},
 		{ "arg" : "passcode", "value" : ""},
