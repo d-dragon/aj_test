@@ -55,7 +55,7 @@
 				"input" :{
 					"devicetype"	: "zigbee"
 				},
-				"description"		: "Verify wheter zigbee SmartThings(TM) SmartSense Moisture was removed or not?"
+				"description"		: "Verify whether zigbee SmartThings(TM) SmartSense Moisture was removed or not?"
 			}
 		]
 	}

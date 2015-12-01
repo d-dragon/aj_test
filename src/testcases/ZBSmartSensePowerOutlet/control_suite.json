@@ -1,0 +1,65 @@
+[ 
+	{
+		"testsuit" : "SSmartThings(TM) SmartSense Power Outlet",
+		"testcases" :	[
+			{	
+				"name"	: "listdevices",
+				"input" :{
+					"devicetype"	: "zigbee"
+				},
+				"description"		: "List all device(s) in which are handled by this controller"
+			},
+			{
+                "name"              : "controlonoff",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "value"         : "1"
+                },
+                "description"		: "Turn ON the power socket (you can plug a bulb into the socket for easy verify)"
+            },
+            {
+				"name"				: "waitingfor",
+				"input"				: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"time"			: "10"
+				},
+				"description"		: "Please verify the it was turn ON "
+			},
+			{
+                "name"              : "controlonoff",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "description"		: "Turn OFF the power supply on socket"
+            },
+            {
+				"name"				: "waitingfor",
+				"input"				: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"time"			: "10"
+				},
+				"description"		: "Please verify the it was turn OFF (verify via status of the bulb plug before)"
+			},
+			{
+				"name" 				: "removedevice",
+				"input" 			: {
+					"devicetype" 	: "zigbee",
+					"id" 			: "D_ID"
+				},
+				"description"		: "Remove SmartThings(TM) SmartSense Power Outlet was added before"
+			},
+			{	
+				"name"	: "listdevices",
+				"input" :{
+					"devicetype"	: "zigbee"
+				},
+				"description"		: "Verify whether zigbee SmartThings(TM) SmartSense Power Outlet was removed or not?"
+			}
+		]
+	}
+]
