@@ -1,6 +1,6 @@
 [ 
 	{
-		"testsuit" : "SSmartThings(TM) SmartSense Power Outlet",
+		"testsuit" : "SmartThings(TM) SmartSense Power Outlet",
 		"testcases" :	[
 			{	
 				"name"	: "listdevices",

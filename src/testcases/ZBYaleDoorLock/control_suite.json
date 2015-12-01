@@ -1,0 +1,236 @@
+[ 
+	{
+		"testsuit" : "Yale Door Lock",
+		"testcases" :	[
+			{	
+				"name"	: "listdevices",
+				"input" :{
+					"devicetype"	: "zigbee"
+				},
+				"description"		: "List all device(s) in which are handled by this controller"
+			},
+			{
+                "name"              : "readsecurespec",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "BATTERY",
+                    "command"       : "PERCENT",
+                    "type"          : "",
+                    "force"         : "1"
+                },
+                "description"       : "Get remained battery of the Yale Door Lock (%)"
+            },
+            {
+                "name" : "readsecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "DOOR_LOCK",
+                    "command"       : "STATUS",
+                    "data0"         : ""
+                },
+                "description"       : "Get status of the lock (open/close)"
+            },
+            {
+                "name" : "writesecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "command"       : "REMOVE_ALL",
+                    "data0"         : "",
+                    "data1"         : "",
+                    "data2"         : ""
+                },
+                 "description"       : "Remove all existed user which stored in the lock"
+            },
+            {
+                "name" : "readsecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "command"       : "STATUS",
+                    "data0"         : "3"
+                },
+                "description"       : "Get status of user code at 3rd (It should be free)"
+            },
+            {
+                "name" : "writesecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "command"       : "ADD",
+                    "data0"         : "3",
+                    "data1"         : "12345678",
+                    "data2"         : ""
+                },
+                 "description"       : "Set passcode for user 3rd"
+            },
+            {
+                "name" : "readsecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "command"       : "STATUS",
+                    "data0"         : "3"
+                },
+                "description"       : "Verify status of passcode for user 3rd (It should be occupied)"
+            },
+            {
+                "name"              : "waitingfor",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                },
+                "description"       : "Please try to open the lock with passcode of user 3rd, it should be succesful"
+            },
+            {
+                "name" : "readsecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "command"       : "STATUS",
+                    "data0"         : "250"
+                },
+                "description"       : "Verify status of passcode for user 250th (It should be free)"
+            },
+            {
+                "name" : "writesecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "command"       : "ADD",
+                    "data0"         : "250",
+                    "data1"         : "00001111",
+                    "data2"         : ""
+                },
+                 "description"       : "Set passcode for user 250th"
+            },
+            {
+                "name" : "readsecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "command"       : "STATUS",
+                    "data0"         : "250"
+                },
+                "description"       : "Verify status of passcode for user 250th (It should be occupied)"
+            },
+            {
+                "name"              : "waitingfor",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                },
+                "description"       : "Please try to open the lock with passcode of user 250"
+            },
+            {
+                "name" : "writesecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "command"       : "REMOVE",
+                    "data0"         : "250",
+                    "data1"         : "",
+                    "data2"         : ""
+                },
+                 "description"       : "Remove passcode for user 250th"
+            },
+            {
+                "name" : "readsecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "command"       : "STATUS",
+                    "data0"         : "250"
+                },
+                "description"       : "Verify status of passcode for user 250th (It should be free)"
+            },
+            {
+                "name"              : "waitingfor",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                },
+                "description"       : "Please try to open the lock with passcode of user 250, it should be failed"
+            },
+            {
+                "name" : "writesecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "command"       : "REMOVE_ALL",
+                    "data0"         : "",
+                    "data1"         : "",
+                    "data2"         : ""
+                },
+                 "description"       : "Remove all existed user which stored in the lock"
+            },
+            {
+                "name" : "readsecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "command"       : "STATUS",
+                    "data0"         : "3"
+                },
+                "description"       : "Get status of user code at 3rd (It should be free)"
+            },
+            {
+                "name" : "writesecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "DOOR_LOCK",
+                    "command"       : "OPEN",
+                    "data0"         : "",
+                    "data1"         : "",
+                    "data2"         : ""
+                },
+                 "description"       : "Open the lock, please verify it is in open state"
+            },
+            {
+                "name" : "writesecurespec",
+                "input" : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "DOOR_LOCK",
+                    "command"       : "CLOSE",
+                    "data0"         : "",
+                    "data1"         : "",
+                    "data2"         : ""
+                },
+                 "description"       : "Close the lock, please verify it is in closed state"
+            },
+            {
+                "name"              : "removedevice",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID"
+                },
+                "description"       : "Remove Yale Door Lock was added before"
+            },
+			{	
+				"name"	: "listdevices",
+				"input" :{
+					"devicetype"	: "zigbee"
+				},
+				"description"		: "Verify whether zigbee Yale Door Lock was removed or not?"
+			}
+		]
+	}
+]
