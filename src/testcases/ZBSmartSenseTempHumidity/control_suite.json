@@ -1,0 +1,72 @@
+[ 
+	{
+		"testsuit" : "SmartThings(TM) SmartSense Temp/Humidity",
+		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
+		"testcases" :	[
+			{	
+				"name"	: "listdevices",
+				"input" :{
+					"devicetype"	: "zigbee"
+				},
+				"description"		: "List all device(s) in which are handled by this controller"
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zigbee",
+					"id" 			: "D_ID",
+					"class"			: "SENSOR",
+					"command"		: "TEMP",
+					"type"			: "",
+					"force"			: "1"
+				},
+				"description"		: "Get value of temperature which is measured by Sensor"
+			},
+			{
+				"name"				: "waitingfor",
+				"input"				: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"time"			: "30"
+				},
+				"description"		: "Please try to wake up zigbee device and observe the output message which having temperature of environment."
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zigbee",
+					"id" 			: "D_ID",
+					"class"			: "SENSOR",
+					"command"		: "HUMI",
+					"type"			: "",
+					"force"			: "1"
+				},
+				"description"		: "Get value of Humidity (%) is measured by Sensor"
+			},
+			{
+				"name"				: "waitingfor",
+				"input"				: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"time"			: "30"
+				},
+				"description"		: "Please try to wake up zigbee device and observe the output message which having Humidity of environment."
+			},
+			{
+				"name" 				: "removedevice",
+				"input" 			: {
+					"devicetype" 	: "zigbee",
+					"id" 			: "D_ID"
+				},
+				"description"		: "Remove SmartThings(TM) SmartSense Temp/Humidity was added before"
+			},
+			{	
+				"name"	: "listdevices",
+				"input" :{
+					"devicetype"	: "zigbee"
+				},
+				"description"		: "Verify wheter zigbee SmartThings(TM) SmartSense Temp/Humidity was removed or not?"
+			}
+		]
+	}
+]
