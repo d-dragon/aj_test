@@ -1,0 +1,91 @@
+[
+	{
+		"testsuit" : "ZB-NYCEMotionSensor",
+		"testcases" :	[
+			{	
+				"name"				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zigbee"
+				}
+			},
+
+
+			{
+				"name" 				: "writespec",
+				"description"		: "Add JoinID which sensor will report to",
+				"input" 			: {
+					"devicetype"	: "zigbee",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "REPORT",
+					"data0"			: "ADD",
+					"data1"			: "01",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "SENSOR",
+					"command"       : "TEMP"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "SENSOR",
+					"command"       : "HUMI"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "BATTERY",
+					"command"       : "VOLT"
+				}
+			},
+
+
+			{
+				"name" 				: "readspec_takeaction",
+				"description"		: "Get delay time of motion notifications then listen notifications for 4 mins",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "TIME",
+					"time"			: "240"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "TIME",
+					"data0"         : "000A"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"description"		: "Get delay time of motion notifications to verify the result of previous case",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "TIME"
+				}
+			}
+		]
+	}
+]

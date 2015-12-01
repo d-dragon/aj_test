@@ -1,0 +1,32 @@
+[ 
+	{
+		"testsuite" 					: "ZB-SmartSenseMotion",
+		"testcases" 				:	[
+			{
+				"name" 				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zigbee"
+				}
+			},
+
+			{ 
+				"name" 				: "adddevice", 
+				"input" 			: { 
+					"devicetype" 	: "zigbee",
+					"action"		: "open",
+					"time"			: "60"
+				}
+			},
+
+			{ 
+				"name" 				: "closenetwork", 
+				"input" 			: { 
+					"devicetype" 	: "zigbee",
+					"action"		: "close"
+				}
+			}
+
+			
+		]
+	}
+]
