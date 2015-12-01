@@ -1,6 +1,6 @@
 [ 
 	{
-		"testsuit" : "SmartThings(TM) SmartSense Temp/Humidity",
+		"testsuit" : "SmartThings(TM) SmartSense Moisture",
 		"testcases" :	[
 			{
 				"name" 				: "listdevices",
@@ -8,7 +8,7 @@
 					"devicetype"	: "zigbee"
 				}
 				,
-				"description"		: "List device(s) which is available in the zigbee controller"
+				"description"		: "List devices which is available in the zigbee controller"
 			},
 			{
 				"name" 				: "openclosenetwork",
@@ -27,6 +27,19 @@
 					"time"			: "180"
 				},
 				"description"		: "Reset zigbee device and wait 3 minutes to add zigbee device"
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zigbee",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "REPORT",
+					"data0"			: "ADD",
+					"data1"			: "01",
+					"data2"			: "1"
+				},
+				"description"		: "Set association for this device to report alarm information"
 			},
 			{
 				"name" 				: "openclosenetwork",
