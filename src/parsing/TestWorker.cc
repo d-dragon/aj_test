@@ -282,7 +282,7 @@ int TestWorker::ParseRespondedMsg(){
 	int ret = 0;
 	LOGCXX("TestWorker::ParseRespondedMsg");
 	ret =  mTestCaseInfo.Signal.compare("list_devices");
-	if ( 0 == ret )
+	if (0 == ret)
 	{
 		// Clear list dev iD before add it again
 		LOGCXX("TestWorker::ParseRespondedMsg condition");

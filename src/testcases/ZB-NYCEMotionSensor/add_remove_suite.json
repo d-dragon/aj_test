@@ -24,9 +24,22 @@
 					"devicetype" 	: "zigbee",
 					"action"		: "close"
 				}
-			}
+			},
 
 			
+			{
+				"name" 				: "writespec",
+				"description"		: "Add JoinID which sensor will report to",
+				"input" 			: {
+					"devicetype"	: "zigbee",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "REPORT",
+					"data0"			: "ADD",
+					"data1"			: "01",
+					"data2"			: "1"
+				}
+			}
 		]
 	}
 ]

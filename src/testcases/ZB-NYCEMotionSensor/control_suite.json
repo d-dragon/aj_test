@@ -11,19 +11,6 @@
 
 
 			{
-				"name" 				: "writespec",
-				"description"		: "Add JoinID which sensor will report to",
-				"input" 			: {
-					"devicetype"	: "zigbee",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "REPORT",
-					"data0"			: "ADD",
-					"data1"			: "01",
-					"data2"			: "1"
-				}
-			},
-			{
 				"name" 				: "readspec",
 				"input" 			: {
 					"devicetype"    : "zigbee",
@@ -48,7 +35,7 @@
 					"devicetype"    : "zigbee",
 					"id"            : "D_ID",
 					"class"         : "BATTERY",
-					"command"       : "VOLT"
+					"command"       : "PERCENT"
 				}
 			},
 
@@ -61,7 +48,7 @@
 					"id"            : "D_ID",
 					"class"         : "CONFIGURATION",
 					"command"       : "TIME",
-					"time"			: "240"
+					"time"			: "60"
 				}
 			},
 
@@ -72,7 +59,7 @@
 					"id"            : "D_ID",
 					"class"         : "CONFIGURATION",
 					"command"       : "TIME",
-					"data0"         : "000A"
+					"data0"         : "15"
 				}
 			},
 
