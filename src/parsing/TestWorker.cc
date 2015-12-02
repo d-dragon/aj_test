@@ -128,7 +128,7 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 	
 
 			int time;
-			time = stoi(tiArg[1]);
+			time = stoi(tiArg[2]);
 
 			cout << "listen notification in: " <<  time << "s" << endl;
 			htmlResultContent.append("<tr><th>Result</th>");
@@ -282,7 +282,7 @@ int TestWorker::ParseRespondedMsg(){
 	int ret = 0;
 	LOGCXX("TestWorker::ParseRespondedMsg");
 	ret =  mTestCaseInfo.Signal.compare("list_devices");
-	if ((0 == ret) && (0 == mTestCaseInfo.Type.compare("zwave")))
+	if ( 0 == ret )
 	{
 		// Clear list dev iD before add it again
 		LOGCXX("TestWorker::ParseRespondedMsg condition");

@@ -23,10 +23,17 @@
 				"name"				: "waitingfor",
 				"input"				: {
 					"devicetype"    : "zwave",
-					"id"            : "D_ID",
+					"id"            : "",
 					"time"			: "180"
 				},
 				"description"		: "Reset zigbee device and wait 3 minutes to add zigbee device"
+			},
+			{	
+				"name"	: "listdevices",
+				"input" :{
+					"devicetype"	: "zigbee"
+				},
+				"description"		: "List all device(s) in which are handled by this controller"
 			},
 			{
 				"name" 				: "writespec",
