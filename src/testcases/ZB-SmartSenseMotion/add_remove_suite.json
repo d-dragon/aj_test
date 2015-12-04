@@ -1,6 +1,6 @@
 [ 
 	{
-		"testsuite" 					: "ZB-SmartSenseMotion",
+		"testsuit" 					: "ZB-SmartSenseMotion",
 		"testcases" 				:	[
 			{
 				"name" 				: "listdevices",
@@ -18,6 +18,19 @@
 				}
 			},
 
+			{
+				"name" 				: "writespec",
+				"description"		: "Add JoinID which sensor will report to (within 15 mins after add sensor)",
+				"input" 			: {
+					"devicetype"	: "zigbee",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "REPORT",
+					"data0"			: "ADD",
+					"data1"			: "01",
+					"data2"			: "1"
+				}
+			},
 			{ 
 				"name" 				: "closenetwork", 
 				"input" 			: { 

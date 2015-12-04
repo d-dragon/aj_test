@@ -1,6 +1,6 @@
 [
 	{
-		"testsuite" : "ZB-SmartSenseOpenClose",
+		"testsuit" : "ZB-SmartSenseOpenClose",
 		"testcases" :	[
 			{	
 				"name"				: "listdevices",
@@ -10,19 +10,6 @@
 			},
 
 
-			{
-				"name" 				: "writespec",
-				"description"		: "Add JoinID which sensor will report to",
-				"input" 			: {
-					"devicetype"	: "zigbee",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "REPORT",
-					"data0"			: "ADD",
-					"data1"			: "01",
-					"data2"			: "1"
-				}
-			},
 			{
 				"name" 				: "readspec",
 				"input" 			: {
@@ -38,7 +25,7 @@
 					"devicetype"    : "zigbee",
 					"id"            : "D_ID",
 					"class"         : "BATTERY",
-					"command"       : "VOLT"
+					"command"       : "PERCENT"
 				}
 			},
 
@@ -49,7 +36,7 @@
 				"input" 			: {
 					"devicetype"    : "zigbee",
 					"id"			: "D_ID",
-					"time"			: "240"
+					"time"			: "120"
 				}
 			}		
 		]

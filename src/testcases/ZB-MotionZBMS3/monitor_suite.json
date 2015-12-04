@@ -1,6 +1,6 @@
 [
 	{
-		"testsuit" : "ZB-MotionZBMS3",
+		"testsuite" : "ZB-MotionZBMS3",
 		"testcases" :	[
 			{	
 				"name"				: "listdevices",
@@ -9,27 +9,6 @@
 				}
 			},
 
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zigbee",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "ONOFF",
-					"data0"			: "REMOVE",
-					"data1"			: "A_ID",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zigbee",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "ONOFF"
-				}
-			},
 
 			{
 				"name" 				: "readspec",
@@ -38,6 +17,15 @@
 					"id"            : "D_ID",
 					"class"         : "SENSOR",
 					"command"       : "TEMP"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "BATTERY",
+					"command"       : "PERCENT"
 				}
 			},
 
@@ -65,21 +53,13 @@
 			},
 
 			{
-				"name" 				: "controlonoff",
-				"input" 			: {
-					"devicetype"    : "zigbee",
-					"id"            : "18FE",
-					"value"         : "0"
-				}
-			},
-			{
 
 				"name" 				: "monitortrigger",
 				"description"		: "Monitor sensor status",
 				"input" 			: {
 					"devicetype"    : "zigbee",
 					"id"			: "D_ID",
-					"time"			: "90"
+					"time"			: "60"
 				}
 			},
 
@@ -112,7 +92,7 @@
 				"input" 			: {
 					"devicetype"    : "zigbee",
 					"id"			: "D_ID",
-					"time"			: "90"
+					"time"			: "30"
 				}
 			}
 		]

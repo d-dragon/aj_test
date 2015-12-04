@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dirent.h>
 #include "TestWorker.h"
 #include "JsonParser.h"
 #include "common_def.h"
@@ -17,10 +18,10 @@ JsonParser::JsonParser(const char *tsPath, const char *tcPath, const char *tiPat
 	tiRoot			= NULL;
 	worker 			= NULL;
 
-	dfTSPath = tsPath;
-	dfTCPath = tcPath;
+//	dfTSPath = tsPath;
+//	dfTCPath = tcPath;
 	dfTIPath = tiPath;
-	dfConfigPath = configPath;
+//	dfConfigPath = configPath;
 }
 
 
@@ -164,7 +165,7 @@ int JsonParser::startParser(){
 
 	worker = new TestWorker("com.verik.bus.VENUS_BOARD");
 
-	status = UpdateWorkerConfiguration(worker, dfConfigPath);
+	status = GetWorkerConfiguration(worker, dfConfigPath);
 	if(status == ERROR){
 		cout << "read program configuration at " << dfConfigPath << " failed!!" << endl;
 		delete worker;
@@ -392,7 +393,7 @@ json_t* JsonParser::getTestItemTemplateObj(const char *tiName){
 }
 
 
-int JsonParser::UpdateWorkerConfiguration(TestWorker *worker, const char *dfConfigPath){
+int JsonParser::GetWorkerConfiguration(TestWorker *worker, const char *dfConfigPath){
 
 	json_t *configRootObj;
 
@@ -412,4 +413,94 @@ int JsonParser::UpdateWorkerConfiguration(TestWorker *worker, const char *dfConf
 	json_decref(configRootObj);
 
 	return OK;
+}
+void JsonParser::PrintConfigurationInfo(const char *filePath) {
+
+	json_t *configRootObj;
+
+	configRootObj = json_load_file(filePath, 0 , &err);
+	if(configRootObj == NULL || !json_is_object(configRootObj)){
+		cout << "load configuration file failed!!!" << err.text << err.line << endl;
+	}
+
+	const char *key;
+	json_t *value;
+
+	cout << "********************Configuration*******************" << endl;
+	json_object_foreach(configRootObj, key, value) {
+
+		cout << "*\t" << key << " : " << json_string_value(value) << endl;
+	}
+	cout << "****************************************************" << endl;
+	json_decref(configRootObj);
+}
+
+int JsonParser::UpdateConfiguration(const char *filePath) {
+
+	json_t *config_root_obj;
+
+	config_root_obj = json_load_file(filePath, 0 , &err);
+	if (NULL == config_root_obj || !json_is_object(config_root_obj)) {
+		cout << "load configuration file failed!!!" << err.text << err.line << endl;
+		return ERROR;
+	}
+	const char *key;
+	json_t *value;
+	string input_value;
+
+	json_object_foreach(config_root_obj, key, value) {
+		
+		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+		cout << key << " : " << json_string_value(value) << endl;
+		cout << "New value (Press 'Enter' to keep current value): ";
+		getline(cin, input_value);
+		if (!input_value.empty()) {
+			json_string_set(value, input_value.c_str());
+			cout << key << " : " << json_string_value(value) << endl;
+		} else {
+
+			cout << key << " : " << json_string_value(value) << endl;
+		}
+		cout << endl;
+	}
+	if (0 == json_dump_file(config_root_obj, filePath, JSON_INDENT(4) | JSON_PRESERVE_ORDER)) {
+		cout << "Updated Configuration successfully!" << endl;
+	} else {
+		cout << "Updated Configuration failed!" << endl;
+		return ERROR;
+	}
+	json_decref(config_root_obj);
+	return OK;
+}
+int JsonParser::GetTestSuiteFileList(const char *dirPath){
+
+	DIR *dir = NULL;
+	struct dirent *dir_node = NULL;
+	
+	dir = opendir(dirPath);
+	if (NULL == dir) {
+		closedir(dir);
+		cout << dirPath << "not found" << endl;
+		return ERROR;
+	}
+
+	string file_name;
+	while (NULL != (dir_node = readdir(dir))) {
+	
+		/* just only get regular file */
+		if(dir_node->d_type == DT_REG) {
+			file_name.clear();\
+			file_name.assign(dir_node->d_name);
+			mFileList.push_back(file_name);
+		}
+
+	}
+	closedir(dir);
+}
+
+void JsonParser::ApplyPaths(const char *tsPath, const char *tcPath, const char *configPath) {
+
+	dfTSPath = tsPath;
+	dfTCPath = tcPath;
+	dfConfigPath = configPath;
 }
