@@ -1,6 +1,6 @@
 [
 	{
-		"testsuite" : "ZB-MotionZBMS3",
+		"testsuit" : "ZB-MotionZBMS3",
 		"testcases" :	[
 			{	
 				"name"				: "listdevices",
