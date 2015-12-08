@@ -20,6 +20,7 @@ string TestWorker::reportFile;
 string *TestWorker::mRespMsg = NULL;
 vector<struct DeviceInfo> TestWorker::mDeviceList;
 string TestWorker::htmlResultContent;
+vector<string> TestWorker::mLogPool;
 
 string ReplaceAll(string str, const string& from, const string& to) {
 	size_t start_pos = 0;
@@ -31,7 +32,7 @@ string ReplaceAll(string str, const string& from, const string& to) {
 }
 
 
-struct TestWorker::TestCaseInfo TestWorker::mTestCaseInfo;
+struct TestWorker::TestItemInfo TestWorker::mTestItemInfo;
 struct TestWorker::ResponseMessageInfo TestWorker::respmsg;
 
 TestWorker::TestWorker(const char *interface){
@@ -40,6 +41,7 @@ TestWorker::TestWorker(const char *interface){
 	ajClient = NULL;
 	signalRespFlag = 0;
 	mRespMsg = NULL;
+	mLogPool.reserve(LEN_512B);
 	mDeviceList.clear(); 
 	generateReportFileName();
 }
@@ -89,22 +91,29 @@ int TestWorker::startAlljoynClient(const char *serviceId){
 void TestWorker::StopAlljoynClient(){
 
 	delete ajClient;
-	mTestCaseInfo.Signal = "";
+	mTestItemInfo.Signal = "";
 }
 
-int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
+int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[], TestItemInfo *test_item_info){
 
 	
 	QStatus status;
 	int timeout = 0;
 	OnboardingTest *onboardingTestApp;
 	signalRespFlag = 0;
+	static unsigned int last_log_index = 0;
 	
 	cout << "execute test item: " << testItem << endl;
+
+	mTestItemInfo.Signal.clear();
+	mTestItemInfo.Type.clear();
+	
 	htmlResultContent.clear();
 	//Save infor of Test Case
-	mTestCaseInfo.Signal.assign(testItem.c_str());
-	mTestCaseInfo.Type.assign(tiArg[0]);
+	mTestItemInfo.Signal.assign(testItem);
+	mTestItemInfo.Type.assign(tiArg[0]);
+	mTestItemInfo.StartLogIndex = last_log_index;
+
 	for(size_t i = 0; i < numArg; i++){
 
 		cout << "argument " << i << ": " << tiArg[i] << endl;
@@ -149,9 +158,16 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 	
 	}
 
+	last_log_index = (unsigned int)mLogPool.size();
+	mTestItemInfo.EndLogIndex = last_log_index - 1;
+	
+	cout << "Start log at: " << mTestItemInfo.StartLogIndex << endl;
+	cout << "End Log at: " << mTestItemInfo.EndLogIndex << endl;
+	cout << "Matched Log at: " << mTestItemInfo.MatchedLogIndex << endl;
+	
+	test_item_info = &mTestItemInfo;
+	
 	signalRespFlag = 0;
-	mTestCaseInfo.Signal.clear();
-	mTestCaseInfo.Type.clear();
 	respmsg.message.clear();
 	respmsg.srcpath.clear();
 	respmsg.signalname.clear();
@@ -179,7 +195,7 @@ void TestWorker::ResponseAnalyst(){
 		//received response message from callback
 		//parse and analyse json message then export 
 		
-		if((mTestCaseInfo.Type.compare("zwave") == 0) && (respmsg.signalname.compare("notify") != 0 )){
+		if((mTestItemInfo.Type.compare("zwave") == 0) && (respmsg.signalname.compare("notify") != 0 )){
 			string status;
 			string reason;
 			JsonParser parser(NULL, NULL, NULL, NULL);
@@ -203,7 +219,7 @@ void TestWorker::ResponseAnalyst(){
 			}
 
 			htmlResultContent.append("</td></tr>");
-		}else if(mTestCaseInfo.Type.compare("upnp") == 0){
+		}else if(mTestItemInfo.Type.compare("upnp") == 0){
 
 
 			respmsg.message = ReplaceAll(respmsg.message, "\n", "<br><br>");
@@ -223,16 +239,18 @@ void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *sr
 
 	string tmpStr;
 	tmpStr.assign(respMsg);
+	mLogPool.push_back(tmpStr);
 	cout << "Message: " << respMsg << endl; 
 	// TO DO
-	if (0 != mTestCaseInfo.Signal.compare(member))
+	if (0 != mTestItemInfo.Signal.compare(member))
 	{
-		if((0 == mTestCaseInfo.Signal.compare("listen_notification")) && (strcmp(member, "notify") == 0)){
+		if((0 == mTestItemInfo.Signal.compare("listen_notification")) && (strcmp(member, "notify") == 0)){
 			//export the result to report file	
 			tmpStr = ReplaceAll(tmpStr, "\n", "<br><br>");
 			htmlResultContent.append("<td colspan=\"2\">");
 			htmlResultContent.append(tmpStr.c_str());
 			htmlResultContent.append("</td>");
+			mTestItemInfo.MatchedLogIndex = ((unsigned int)mLogPool.size() - 1);
 		}
 		return;
 	}else{
@@ -240,6 +258,7 @@ void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *sr
 		respmsg.message.assign(respMsg);
 		respmsg.srcpath.assign(srcPath);
 		respmsg.signalname.assign(member);
+		mTestItemInfo.MatchedLogIndex = ((unsigned int)mLogPool.size() - 1);
 		signalRespFlag = respFlag;
 	}
 }
@@ -281,7 +300,7 @@ int TestWorker::ParseRespondedMsg(){
 	// TODO: make a structure of signal name 
 	int ret = 0;
 	LOGCXX("TestWorker::ParseRespondedMsg");
-	ret =  mTestCaseInfo.Signal.compare("list_devices");
+	ret =  mTestItemInfo.Signal.compare("list_devices");
 	if (0 == ret)
 	{
 		// Clear list dev iD before add it again
@@ -302,7 +321,7 @@ int TestWorker::ParseRespondedMsg(){
 				if wrong index: the first device will be fill instead.
 	*/
 void TestWorker::UpdateDevIDOfTC(string arg[]){
-	LOGCXX("TestWorker::UpdateDevIDOfTC: "<< mTestCaseInfo.Signal.c_str());
+	LOGCXX("TestWorker::UpdateDevIDOfTC: "<< mTestItemInfo.Signal.c_str());
 	char *cstring, *saveptr;
 	int cnt = 0;
 	int pos;
@@ -318,13 +337,13 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 	/*
 		Handle normal signals
 	*/
-	if ((mTestCaseInfo.Signal.compare("set_binary") 	== 0) ||
-		(mTestCaseInfo.Signal.compare("get_binary") 	== 0) ||
-		(mTestCaseInfo.Signal.compare("read_spec") 		== 0) ||
-		(mTestCaseInfo.Signal.compare("write_spec") 	== 0) ||
-		(mTestCaseInfo.Signal.compare("read_s_spec") 	== 0) ||
-		(mTestCaseInfo.Signal.compare("remove_device") 	== 0) ||
-		(mTestCaseInfo.Signal.compare("write_s_spec") 	== 0)
+	if ((mTestItemInfo.Signal.compare("set_binary") 	== 0) ||
+		(mTestItemInfo.Signal.compare("get_binary") 	== 0) ||
+		(mTestItemInfo.Signal.compare("read_spec") 		== 0) ||
+		(mTestItemInfo.Signal.compare("write_spec") 	== 0) ||
+		(mTestItemInfo.Signal.compare("read_s_spec") 	== 0) ||
+		(mTestItemInfo.Signal.compare("remove_device") 	== 0) ||
+		(mTestItemInfo.Signal.compare("write_s_spec") 	== 0)
 		)
 	{
 		if(arg[DEVICE_INDEX].find("ID") == std::string::npos){
@@ -345,8 +364,8 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 		newIDValue.clear();
 
 		//in case of sensor set association with another device, update associated device id
-		if((mTestCaseInfo.Signal.compare("write_spec")	 == 0) ||
-				(mTestCaseInfo.Signal.compare("write_s_spec")	== 0)){
+		if((mTestItemInfo.Signal.compare("write_spec")	 == 0) ||
+				(mTestItemInfo.Signal.compare("write_s_spec")	== 0)){
 
 			//if A_ID is defined in test suite, it will be replaced by users  configuration. If not, kepp the defined test suite value
 			if(arg[ASSOCIATED_INDEX].find("ID") != string::npos){ 				if(mConfig.altAssDevId.length() > 0){
@@ -366,10 +385,10 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 	/*
 		Handle actions 
 	*/
-	if(mTestCaseInfo.Signal.compare("set_rule") 		== 0) {
+	if(mTestItemInfo.Signal.compare("set_rule") 		== 0) {
 		saveActionInput = &arg[3];
 	}
-	if(mTestCaseInfo.Signal.compare("rule_actions") 	== 0){
+	if(mTestItemInfo.Signal.compare("rule_actions") 	== 0){
 		saveActionInput = &arg[5];
 	}
 	if (saveActionInput != NULL){
@@ -403,7 +422,7 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 	/*
 	Function: 	Get device IDs from response of list_devices signal on Zwave
 	Input: 		responded msg from list_devices
-	Output: 	save all device order in this list: mTestCaseInfo.DeviceList
+	Output: 	save all device order in this list: mTestItemInfo.DeviceList
 	*/
 
 void TestWorker::GetDevIDFromList(){ 
@@ -418,8 +437,8 @@ void TestWorker::GetDevIDFromList(){
 			if ( cnt == 3 ) // Position of Dev ID in response message
 			{
 				devID = strtok_r(info, " ", &tmp2);				
-				mTestCaseInfo.DeviceList.push_back(std::string(devID));
-				LOGCXX("Found device ID: ["<<mTestCaseInfo.DeviceList.back().c_str()<<"]");
+				mTestItemInfo.DeviceList.push_back(std::string(devID));
+				LOGCXX("Found device ID: ["<<mTestItemInfo.DeviceList.back().c_str()<<"]");
 				break;
 			}
 			cnt++;
@@ -466,4 +485,17 @@ int TestWorker::GetIndexByCondition(string condition){
 		ret = 0;
 	}
 	return ret;
+}
+
+string TestWorker::GetPoolEleValue(int pool_index) {
+
+	return mLogPool[pool_index];
+}
+
+void TestWorker::ClearLogPool() {
+	mLogPool.clear();
+}
+
+unsigned int TestWorker::GetPoolSize() {
+	return (unsigned int) mLogPool.size();
 }

@@ -290,11 +290,13 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		size_t tiIndex;
 
 		json_array_foreach(tiArray, tiIndex, tiObj){
-
-			status = TestItemProcessor(tcInputArg, tiObj);
+			
+			TestWorker::TestItemInfo *ti_info;
+			status = TestItemProcessor(tcInputArg, tiObj, ti_info);
 			if(status == ERROR){
 				cout << "run test item failed" << endl;
 			}
+			//cout << ti_info->Signal << " | " << ti_info->MatchedLogIndex << endl;
 			cout << "*************************************************\n" << endl;
 		}
 	 }
@@ -302,7 +304,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 
 }
 
-int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
+int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestWorker::TestItemInfo *ti_info){
 
 	int status;
 	string tiName;
@@ -355,7 +357,8 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj){
 		cout << "index: " << index << " " << inputArgName[index] << ": " << tiArg[index] << endl;
 	
 	}
-	worker->executeTestItem(tiName, arraySize, tiArg);
+	struct TestWorker::TestItemInfo test_item_info;
+	worker->executeTestItem(tiName, arraySize, tiArg, ti_info);
 
 	for(int i = 0; i < arraySize; i++){
 

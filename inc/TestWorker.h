@@ -15,6 +15,8 @@ using namespace std;
 
 class TestWorker {
 
+	public:
+
 		struct InputConfiguration{
 			string serviceId;
 			string deviceIndex;
@@ -23,11 +25,15 @@ class TestWorker {
 			string associationDevIndex;
 			string altAssDevId;
 		};
-		struct TestCaseInfo
+
+		struct TestItemInfo
 		{
 			string Signal;
 			string Type;
 			string ID;
+			unsigned int StartLogIndex;
+			unsigned int EndLogIndex;
+			unsigned int MatchedLogIndex;
 		};
 
 		struct ResponseMessageInfo
@@ -36,8 +42,6 @@ class TestWorker {
 			string srcpath;
 			string signalname;
 		};
-	public:
-
 		struct InputConfiguration mConfig;
 		static string htmlResultContent;
 		TestWorker(const char *interface);
@@ -45,15 +49,23 @@ class TestWorker {
 		int startAlljoynClient(const char *serviceId);
 		void StopAlljoynClient();
 		int restartAlljoynClient();
-		int executeTestItem(string testItem, size_t numArg, string tiArg[]);
+		int executeTestItem(string testItem, size_t numArg, string tiArg[], TestItemInfo *test_item_info);
 		static void TIRespMonitor(int respFlag, const char *respMsg, const char *srcPath, const char *member);
 		static int exportStuffToFile(const char* content);
 
+		/* Each worker has a Log Pool which store all response message 
+		 * Worker will immediately push log into pool while callback invoked
+		 * There are interfaces that manipulate Log Pool
+		 */
+		string GetPoolEleValue(int pool_index);
+		void ClearLogPool();
+		unsigned int GetPoolSize();
 	private:
 		// Store all base infor of Test case and list all Devices.
-		static struct TestCaseInfo mTestCaseInfo;
+		static struct TestItemInfo mTestItemInfo;
 		static struct ResponseMessageInfo respmsg;
 		static vector<struct DeviceInfo> mDeviceList;
+		static vector<string> mLogPool;
 		static int signalRespFlag;
 		static string *mRespMsg;
 		string serviceInterface;

@@ -51,7 +51,7 @@ class JsonParser {
 
 		int TestsuitParser(json_t *tsObj);
 		int TestCaseCollector(json_t *tcRoot);
-		int TestItemProcessor(json_t *inputArg, json_t *tiObj);
+		int TestItemProcessor(json_t *inputArg, json_t *tiObj, TestWorker::TestItemInfo *ti_info);
 		json_t *getTestItemTemplateObj(const char *tiName);
 		int GetWorkerConfiguration(TestWorker *worker, const char *dfConfigPath);
 
