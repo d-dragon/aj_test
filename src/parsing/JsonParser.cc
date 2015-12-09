@@ -301,10 +301,6 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 				// TO DO: a test item
 				// 
 			}
-				// TO DO: a test item
-				// 
-			}
-			//cout << ti_info->Signal << " | " << ti_info->MatchedLogIndex << endl;
 			cout << "*************************************************\n" << endl;
 		}
 		// TO DO: test case
