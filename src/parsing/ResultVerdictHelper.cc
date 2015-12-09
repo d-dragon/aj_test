@@ -1,5 +1,4 @@
 #include "ResultVerdictHelper.h"
-#include "common_def.h"
 
 ResultVerdictHelper::ResultVerdictHelper(){
     mLocalTestItemInfo = new LocalTestItemInfo;
@@ -12,13 +11,13 @@ ResultVerdictHelper::~ResultVerdictHelper(){
     }
 }
 
-void SaveInfoOfTestItem(struct TestItemInfo info){
-    mLocalTestItemInfo->s_TIinfo.Signal           = info.Signal;
-    mLocalTestItemInfo->s_TIinfo.Type             = info.Type;
-    mLocalTestItemInfo->s_TIinfo.ID               = info.ID;
-    mLocalTestItemInfo->s_TIinfo.StartLogIndex    = info.StartLogIndex;
-    mLocalTestItemInfo->s_TIinfo.EndLogIndex      = info.EndLogIndex;
-    mLocalTestItemInfo->s_TIinfo.MatchedLogIndex  = info.MatchedLogIndex;
+void ResultVerdictHelper::SaveInfoOfTestItem(struct TestItemInfo *info){
+    mLocalTestItemInfo->s_TIinfo.Signal           = info->Signal;
+    mLocalTestItemInfo->s_TIinfo.Type             = info->Type;
+    mLocalTestItemInfo->s_TIinfo.ID               = info->ID;
+    mLocalTestItemInfo->s_TIinfo.StartLogIndex    = info->StartLogIndex;
+    mLocalTestItemInfo->s_TIinfo.EndLogIndex      = info->EndLogIndex;
+    mLocalTestItemInfo->s_TIinfo.MatchedLogIndex  = info->MatchedLogIndex;
 }
 /*
     Function: compare 2 json string input

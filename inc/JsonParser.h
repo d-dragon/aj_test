@@ -8,6 +8,7 @@
 #include <vector>
 #include "common_def.h"
 #include "TestWorker.h"
+#include "ResultVerdictHelper.h"
 #define CONFIG_FILE "configuration.json"
 #define TEST_CASE_FILE "testcase.json"
 using namespace std;

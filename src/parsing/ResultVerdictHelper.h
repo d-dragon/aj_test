@@ -3,12 +3,14 @@
 #include <iostream>
 #include <string>
 #include <jansson.h>
-
+#include "common_def.h"
 
 using namespace std;
 
 
 class ResultVerdictHelper{
+
+public:
     struct LocalTestItemInfo{
         struct TestItemInfo s_TIinfo;
         string              responseMsg;
@@ -24,7 +26,7 @@ class ResultVerdictHelper{
     /*
         Save info of current test case
      */
-    void SaveInfoOfTestItem(struct TestItemInfo info);
+    void SaveInfoOfTestItem(struct TestItemInfo *info);
     /*
         Get addtional verdict information.
      */

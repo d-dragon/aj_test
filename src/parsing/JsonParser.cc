@@ -7,7 +7,6 @@
 #include "TestWorker.h"
 #include "JsonParser.h"
 #include "common_def.h"
-#include "ResultVerdictHelper.h"
 
 using namespace std;
 
