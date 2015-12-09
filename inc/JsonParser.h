@@ -44,6 +44,7 @@ class JsonParser {
 		TestWorker *worker;
 		json_t *tcTemplateRoot;
 		json_t *tiRoot;
+		ResultVerdictHelper *mVerdictHelper;
 
 		const char *dfTSPath;
 		const char *dfTCPath;

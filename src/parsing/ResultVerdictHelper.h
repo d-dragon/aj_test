@@ -9,6 +9,10 @@ using namespace std;
 
 
 class ResultVerdictHelper{
+    struct LocalTestItemInfo{
+        struct TestItemInfo s_TIinfo;
+        string              responseMsg;
+    };
     /*
         Constructor
      */
@@ -17,7 +21,10 @@ class ResultVerdictHelper{
         Destructor
      */
     ~ResultVerdictHelper();
-
+    /*
+        Save info of current test case
+     */
+    void SaveInfoOfTestItem(struct TestItemInfo info);
     /*
         Get addtional verdict information.
      */
@@ -48,6 +55,11 @@ private:
     int ValidateWriteSpecResult(const string writespecsInput, const string readspecsOutput);
     int AssociationSetGetCompare(const string testcaseInput, const json_t * nodefollowJSON);
     int ConfigurationSetGetCompare(const void* testcaseInput, const json_t * nodefollowJSON);
+    /*
+    Private members
+     */
+    struct LocalTestItemInfo *mLocalTestItemInfo;
+
 
 };
 

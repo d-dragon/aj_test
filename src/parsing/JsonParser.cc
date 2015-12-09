@@ -7,7 +7,7 @@
 #include "TestWorker.h"
 #include "JsonParser.h"
 #include "common_def.h"
-
+#include "ResultVerdictHelper.h"
 
 using namespace std;
 
@@ -22,6 +22,7 @@ JsonParser::JsonParser(const char *tsPath, const char *tcPath, const char *tiPat
 //	dfTCPath = tcPath;
 	dfTIPath = tiPath;
 //	dfConfigPath = configPath;
+	mVerdictHelper = new ResultVerdictHelper();
 }
 
 
@@ -32,6 +33,10 @@ JsonParser::~JsonParser(){
 		json_decref(tcTemplateRoot);
 	if ( NULL != testSuitRoot )	
 		json_decref(testSuitRoot);
+	if ( NULL != mVerdictHelper){
+		delete mVerdictHelper;
+		mVerdictHelper = NULL;
+	}
 }
 
 int JsonParser::GetDevIDInJSMsg(string *input, vector<DeviceInfo> *devList){
@@ -299,7 +304,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			else{
 				cout << "Matched message: " << worker->GetPoolEleValue(ti_info->MatchedLogIndex) << endl;
 				// TO DO: a test item
-				// 
+				mVerdictHelper->SaveInfoOfTestItem(ti_info);
 			}
 			cout << "*************************************************\n" << endl;
 		}
