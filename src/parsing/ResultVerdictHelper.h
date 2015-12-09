@@ -14,6 +14,13 @@ public:
     struct LocalTestItemInfo{
         struct TestItemInfo s_TIinfo;
         string              responseMsg;
+        bool                isValid;
+    };
+    enum EnumSettingPara{
+        FIRST_GET           = 0,
+        SECOND_SET          = 1,
+        THIRD_GET           = 2,
+        MAXBUFF
     };
     /*
         Constructor
@@ -26,7 +33,7 @@ public:
     /*
         Save info of current test case
      */
-    void SaveInfoOfTestItem(struct TestItemInfo *info);
+    void SaveInfoOfTestItem(struct TestItemInfo *info, string matchedResponseMsg);
     /*
         Get addtional verdict information.
      */
@@ -60,7 +67,7 @@ private:
     /*
     Private members
      */
-    struct LocalTestItemInfo *mLocalTestItemInfo;
+    struct LocalTestItemInfo mLocalTestItemInfo[MAXBUFF];
 
 
 };

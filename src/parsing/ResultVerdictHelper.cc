@@ -1,23 +1,46 @@
 #include "ResultVerdictHelper.h"
 
 ResultVerdictHelper::ResultVerdictHelper(){
-    mLocalTestItemInfo = new LocalTestItemInfo;
-}
-
-ResultVerdictHelper::~ResultVerdictHelper(){
-    if (mLocalTestItemInfo != NULL){
-        delete mLocalTestItemInfo;
-        mLocalTestItemInfo = NULL;
+    int i;
+    for ( i = 0; i < MAXBUFF; i++)
+    {
+        mLocalTestItemInfo[i].isValid = false;
     }
 }
 
-void ResultVerdictHelper::SaveInfoOfTestItem(struct TestItemInfo *info){
-    mLocalTestItemInfo->s_TIinfo.Signal           = info->Signal;
-    mLocalTestItemInfo->s_TIinfo.Type             = info->Type;
-    mLocalTestItemInfo->s_TIinfo.ID               = info->ID;
-    mLocalTestItemInfo->s_TIinfo.StartLogIndex    = info->StartLogIndex;
-    mLocalTestItemInfo->s_TIinfo.EndLogIndex      = info->EndLogIndex;
-    mLocalTestItemInfo->s_TIinfo.MatchedLogIndex  = info->MatchedLogIndex;
+ResultVerdictHelper::~ResultVerdictHelper(){
+
+}
+/*
+    Function: Save test case info
+              First parameter: save infor of test item
+              Second Paramter: save responded msg of that case
+    Return: none
+*/
+void ResultVerdictHelper::SaveInfoOfTestItem(struct TestItemInfo *info, string matchedResponseMsg){
+    int i = MAXBUFF;
+    // Verify input parameters
+    if (NULL == info )
+        return;
+
+    if (true == mLocalTestItemInfo[THIRD_GET].isValid) // reset value which are saved
+    {
+        for ( i = 0; i < MAXBUFF; i++)
+        {
+            mLocalTestItemInfo[i].isValid = false;
+        }
+    }
+
+
+
+    mLocalTestItemInfo[i].s_TIinfo.Signal           = info->Signal;
+    mLocalTestItemInfo[i].s_TIinfo.Type             = info->Type;
+    mLocalTestItemInfo[i].s_TIinfo.ID               = info->ID;
+    mLocalTestItemInfo[i].s_TIinfo.StartLogIndex    = info->StartLogIndex;
+    mLocalTestItemInfo[i].s_TIinfo.EndLogIndex      = info->EndLogIndex;
+    mLocalTestItemInfo[i].s_TIinfo.MatchedLogIndex  = info->MatchedLogIndex;
+    mLocalTestItemInfo[i].responseMsg               = matchedResponseMsg;
+    mLocalTestItemInfo[i].isValid                   = true;
 }
 /*
     Function: compare 2 json string input
