@@ -1,6 +1,7 @@
 #ifndef _TEST_WORKER_H
 #define _TEST_WORKER_H
 
+#include "common_def.h"
 #include "AlljoynClient.h"
 #include <string>
 #include <vector>
@@ -24,16 +25,6 @@ class TestWorker {
 			string deviceType;
 			string associationDevIndex;
 			string altAssDevId;
-		};
-
-		struct TestItemInfo
-		{
-			string Signal;
-			string Type;
-			string ID;
-			unsigned int StartLogIndex;
-			unsigned int EndLogIndex;
-			unsigned int MatchedLogIndex;
 		};
 
 		struct ResponseMessageInfo

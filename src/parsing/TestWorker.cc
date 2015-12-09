@@ -32,7 +32,7 @@ string ReplaceAll(string str, const string& from, const string& to) {
 }
 
 
-struct TestWorker::TestItemInfo TestWorker::mTestItemInfo;
+struct TestItemInfo TestWorker::mTestItemInfo;
 struct TestWorker::ResponseMessageInfo TestWorker::respmsg;
 
 TestWorker::TestWorker(const char *interface){

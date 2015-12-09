@@ -2,6 +2,7 @@
 #define _COMMON_DEP_H_
 #include "alljoyn/onboarding/Onboarding.h"
 #include <string>
+
 #define LOGCXX(msg)  (std::cout<< "DBG: "  << msg << std::endl )
 /*
 *	Session of OnBoarding
@@ -36,5 +37,14 @@ struct DeviceInfo{
 			std::string ProfileID;
 			std::string EndPoint_num;
 	void operator=(const DeviceInfo& rhs){ Owner=rhs.Owner; Serial=rhs.Serial; FriendlyName=rhs.FriendlyName; ID=rhs.ID; Capability=rhs.Capability;	ProfileID=rhs.ProfileID; EndPoint_num=rhs.EndPoint_num;};
+	};
+struct TestItemInfo
+	{
+		std::string Signal;
+		std::string Type;
+		std::string ID;
+		unsigned int StartLogIndex;
+		unsigned int EndLogIndex;
+		unsigned int MatchedLogIndex;
 	};
 #endif

@@ -6,6 +6,7 @@
 #include <jansson.h>
 #include <typeinfo>
 #include <vector>
+#include "common_def.h"
 #include "TestWorker.h"
 #define CONFIG_FILE "configuration.json"
 #define TEST_CASE_FILE "testcase.json"
@@ -51,7 +52,7 @@ class JsonParser {
 
 		int TestsuitParser(json_t *tsObj);
 		int TestCaseCollector(json_t *tcRoot);
-		int TestItemProcessor(json_t *inputArg, json_t *tiObj, TestWorker::TestItemInfo *ti_info);
+		int TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo *ti_info);
 		json_t *getTestItemTemplateObj(const char *tiName);
 		int GetWorkerConfiguration(TestWorker *worker, const char *dfConfigPath);
 
