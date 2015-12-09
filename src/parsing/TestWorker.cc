@@ -32,7 +32,7 @@ string ReplaceAll(string str, const string& from, const string& to) {
 }
 
 
-struct TestWorker::TestItemInfo TestWorker::mTestItemInfo;
+struct TestItemInfo TestWorker::mTestItemInfo;
 struct TestWorker::ResponseMessageInfo TestWorker::respmsg;
 
 TestWorker::TestWorker(const char *interface){
@@ -166,7 +166,6 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[], 
 	cout << "Matched Log at: " << mTestItemInfo.MatchedLogIndex << endl;
 	
 	*test_item_info = &mTestItemInfo;
-	//test_item_info->MatchedLogIndex = mTestItemInfo.MatchedLogIndex;
 	
 	signalRespFlag = 0;
 	respmsg.message.clear();

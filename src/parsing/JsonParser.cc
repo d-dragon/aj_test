@@ -291,20 +291,25 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 
 		json_array_foreach(tiArray, tiIndex, tiObj){
 			
-			TestWorker::TestItemInfo *ti_info;
+			TestItemInfo *ti_info;
 			status = TestItemProcessor(tcInputArg, tiObj, &ti_info);
 			if(status == ERROR){
 				cout << "run test item failed" << endl;
 			}
-			cout << "Log at " << ti_info->MatchedLogIndex << worker->GetPoolEleValue(ti_info->MatchedLogIndex) << endl;
+			else{
+				cout << "Matched message: " << worker->GetPoolEleValue(ti_info->MatchedLogIndex) << endl;
+				// TO DO: a test item
+				// 
+			}
 			cout << "*************************************************\n" << endl;
 		}
+		// TO DO: test case
 	 }
 	return status;
 
 }
 
-int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestWorker::TestItemInfo **ti_info){
+int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo **ti_info){
 
 	int status;
 	string tiName;
@@ -358,7 +363,6 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestWorker::T
 	
 	}
 	worker->executeTestItem(tiName, arraySize, tiArg, ti_info);
-	cout << "Matched log at: " << (*ti_info)->MatchedLogIndex << endl;
 
 	for(int i = 0; i < arraySize; i++){
 
