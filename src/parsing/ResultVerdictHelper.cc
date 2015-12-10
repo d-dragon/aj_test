@@ -1,11 +1,7 @@
 #include "ResultVerdictHelper.h"
 
 ResultVerdictHelper::ResultVerdictHelper(){
-    int i;
-    for ( i = 0; i < MAXBUFF; i++)
-    {
-        mLocalTestItemInfo[i].isValid = false;
-    }
+   SetInvalidAllData();
 }
 
 ResultVerdictHelper::~ResultVerdictHelper(){
@@ -17,20 +13,39 @@ ResultVerdictHelper::~ResultVerdictHelper(){
               Second Paramter: save responded msg of that case
     Return: none
 */
-void ResultVerdictHelper::SaveInfoOfTestItem(struct TestItemInfo *info, string matchedResponseMsg){
-    int i = MAXBUFF;
+void ResultVerdictHelper::SaveInfoOfTestItem(const json_t *testInput, struct TestItemInfo *info, string matchedResponseMsg){
+    enum EnumSettingPara i = MAXBUFF;
+    string command;
+    int cnt;
     // Verify input parameters
     if (NULL == info )
         return;
+    if (0 != info->Type.compare("zwave")){ // It does not support other signal now.
+        return;
+    }
 
     if (true == mLocalTestItemInfo[THIRD_GET].isValid) // reset value which are saved
     {
-        for ( i = 0; i < MAXBUFF; i++)
-        {
-            mLocalTestItemInfo[i].isValid = false;
-        }
+        SetInvalidAllData();
     }
 
+    if (false == mLocalTestItemInfo[FIRST_GET].isValid)
+    {
+        if (false == mLocalTestItemInfo[SECOND_SET].isValid){ // All is available
+            i = FIRST_GET;
+        }
+        else{
+            i = THIRD_GET;
+        }
+    }
+    else{
+        if (false == mLocalTestItemInfo[SECOND_SET].isValid){ // All is available
+            i = SECOND_SET;
+        }
+        else{
+            i = THIRD_GET;
+        }
+    }
 
 
     mLocalTestItemInfo[i].s_TIinfo.Signal           = info->Signal;
@@ -209,4 +224,11 @@ int ResultVerdictHelper::ConfigurationSetGetCompare(const void* testcaseInput, c
     }
 
     return ret;
+}
+
+void ResultVerdictHelper::SetInvalidAllData(){
+    for ( int cnt = 0; cnt < MAXBUFF; cnt++)
+    {
+        mLocalTestItemInfo[cnt].isValid = false;
+    }
 }

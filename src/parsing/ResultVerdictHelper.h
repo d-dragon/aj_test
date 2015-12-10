@@ -14,6 +14,8 @@ public:
     struct LocalTestItemInfo{
         struct TestItemInfo s_TIinfo;
         string              responseMsg;
+        string              funClass;
+        string              cmd;
         bool                isValid;
     };
     enum EnumSettingPara{
@@ -33,7 +35,7 @@ public:
     /*
         Save info of current test case
      */
-    void SaveInfoOfTestItem(struct TestItemInfo *info, string matchedResponseMsg);
+    void SaveInfoOfTestItem(const json_t *testInput, struct TestItemInfo *info, string matchedResponseMsg);
     /*
         Get addtional verdict information.
      */
@@ -68,7 +70,7 @@ private:
     Private members
      */
     struct LocalTestItemInfo mLocalTestItemInfo[MAXBUFF];
-
+    void SetInvalidAllData();
 
 };
 

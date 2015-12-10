@@ -47,4 +47,8 @@ struct TestItemInfo
 		unsigned int EndLogIndex;
 		unsigned int MatchedLogIndex;
 	};
+
+#define KEY_READSPEC_CMD 				"command"
+#define KEY_WRITESPEC_CMD 				"command"
+#define KEY_CLASS						"class"
 #endif

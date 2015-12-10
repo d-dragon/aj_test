@@ -303,7 +303,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			else{
 				cout << "Matched message: " << worker->GetPoolEleValue(ti_info->MatchedLogIndex) << endl;
 				// TO DO: a test item
-				mVerdictHelper->SaveInfoOfTestItem(ti_info, worker->GetPoolEleValue(ti_info->MatchedLogIndex));
+				mVerdictHelper->SaveInfoOfTestItem(tcInputArg, ti_info, worker->GetPoolEleValue(ti_info->MatchedLogIndex));
 			}
 			cout << "*************************************************\n" << endl;
 		}
