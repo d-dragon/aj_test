@@ -27,7 +27,7 @@
 		{ "arg": "devicetype", "value" : "" },
 		{ "arg": "id", "value" : "" },
 		{ "arg": "class", "value" : "" },
-		{ "arg": "command", "value" : "" },
+		{ "arg": "readcommand", "value" : "" },
 		{ "arg": "type", "value" : "" },
 		{ "arg": "scale", "value" : "" },
 		{ "arg": "force", "value" : "" }
@@ -36,7 +36,7 @@
 		{ "arg": "devicetype", "value" : "" },
 		{ "arg": "id", "value" : "" },
 		{ "arg": "class", "value" : "" },
-		{ "arg": "command", "value" : "" },
+		{ "arg": "writecommand", "value" : "" },
 		{ "arg": "data0", "value" : "" },
 		{ "arg": "data1", "value" : "" },
 		{ "arg": "data2", "value" : "" }
@@ -45,14 +45,14 @@
 		{ "arg": "devicetype", "value" : "" },
 		{ "arg": "id", "value" : "" },
 		{ "arg": "class", "value" : "" },
-		{ "arg": "command", "value" : "" },
+		{ "arg": "readcommand", "value" : "" },
 		{ "arg": "data0", "value" : "" }
 	],
 	"write_s_spec" :[
 		{ "arg": "devicetype", "value" : "" },
 		{ "arg": "id", "value" : "" },
 		{ "arg": "class", "value" : "" },
-		{ "arg": "command", "value" : "" },
+		{ "arg": "writecommand", "value" : "" },
 		{ "arg": "data0", "value" : "" },
 		{ "arg": "data1", "value" : "" },
 		{ "arg": "data2", "value" : "" }
