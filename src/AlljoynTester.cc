@@ -2,22 +2,119 @@
 #include <iostream>
 #include <string>
 #include <string.h>
+#include <getopt.h>
 #include "JsonParser.h"
 #include "TestWorker.h"
 
+#define TRUE 1
+#define FALSE 0
+#define PROGRAM_NAME "AlljoynTester"
+#define VERSION "1.0"
 using namespace std;
+
+
+int g_update_config = TRUE;
+int g_run_all = FALSE;
+int g_test_suite_number = 0;
+
+static void program_help(char *program_name) {
+	
+	cout << PROGRAM_NAME << " - Version " << VERSION << endl;
+	cout << "Usage: " << PROGRAM_NAME << " [OPTION]... [PATH]..." << endl;
+	cout << "Supported options: " << endl;
+	cout << "\t-a, --all\t\tRun all test suite follow prefix number of file name." << endl;
+	cout << "\t-t, --testsuite\t\tChoose specific test suite number." << endl;
+//	cout << "\t-u, --update\t\tUpdate test suite configuration. Default use current value of configuration.json" << endl;
+	cout << "\t-v, --version\t\tPrint Version." << endl;
+	cout << "\t-h, --help\t\tPrint Helper." << endl;
+}
+
+static void parse_options(int argc, char* argv[]) {
+
+	int c;
+	if(argc == 1) {
+		program_help(argv[0]);
+		exit(1);
+	}
+	while(1) {
+		
+		int option_index = 0;
+		static struct option long_options[] = {
+//			{"update",		no_argument,		0,	'u'},
+			{"all",			no_argument,		0,	'a'},
+			{"testsuite",	required_argument,	0,	't'},
+			{"version",		no_argument,		0,	'v'},
+			{"help",		no_argument,		0,	'h'},
+			{0,				0,					0,	0}
+
+		};
+
+		c =getopt_long(argc, argv,"uat:vh0", long_options, &option_index);
+		if (c == -1) {
+			break;
+		}
+
+		switch(c) {
+			case 'a':
+				g_run_all = TRUE;
+				break;
+			case 't':
+				g_test_suite_number = atoi(optarg);
+				break;
+/*
+			case 'u':
+				g_update_config = FALSE;
+				break;
+*/
+			case 'h':
+				program_help(argv[0]);
+				exit(1);
+			case 'v':
+				cout << "Version " << VERSION << endl;
+				exit(0);
+			case '?':
+				if(optopt == 't') {
+					cout << " Option " << optopt << "requires an argument." << endl;
+				} else if (isprint(optopt)) {
+					cout << "Unknown option " << optopt << endl;
+				} else {
+					cout << "Unkown option character" << endl;
+				}
+				exit(1);
+			default:
+				cout << "getopt returned???" << endl;
+				exit(1);
+		}
+	}
+/*
+	if (optind < argc) {
+		while(optind < argc) {
+			cout << argv[optind++] << endl;
+		}
+	}
+*/
+}
 int main(int argc, char *argv[]){
 
 	int found_config_flag = 0;
 	int ret;
-	const char * dir_path = argv[1];
 	char ts_path[LEN_256B];
 	char tc_path[LEN_256B];
 	char config_path[LEN_256B];
 	vector<string> ts_list;
 
 
+	parse_options(argc, argv);
+	//cout << g_update_config << g_run_all << g_test_suite_number << argv[optind] << endl;
 	JsonParser *tester = new JsonParser(argv[1], argv[2], "src/testcases/testitem.json", "src/testcases/configuration.json");
+	
+	const char * dir_path = argv[optind++];
+	if (NULL == dir_path) {
+		cout <<  "Found no test suite path :( :(" << endl;
+		program_help(argv[0]);
+		exit(1);
+	}
+
 	tester->GetTestSuiteFileList(dir_path);
 	cout << "number of file: " << tester->mFileList.size() << endl;
 	for (int i = 0; i < tester->mFileList.size(); i++) {
@@ -68,11 +165,14 @@ int main(int argc, char *argv[]){
 		cout << "*\t" << i+1 << " - " << ts_list[i] << endl;
 	}
 	cout << "*****************************************" << endl;
-	cout << "Choose test suite: ";
-	int ts_index;
-	cin >> ts_index;
-	cout << ts_list[ts_index - 1] << endl;
-	snprintf(ts_path, LEN_256B, "%s/%s", dir_path, ts_list[ts_index -1].c_str());
+	if (g_test_suite_number == 0) {
+		
+		cout << "Choose test suite: ";
+		cin >> g_test_suite_number;
+		cout << ts_list[g_test_suite_number - 1] << endl;
+
+	}
+	snprintf(ts_path, LEN_256B, "%s/%s", dir_path, ts_list[g_test_suite_number -1].c_str());
 
 	tester->ApplyPaths(ts_path, tc_path, config_path);
 	tester->startParser();
