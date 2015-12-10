@@ -1,0 +1,120 @@
+[
+	{
+		"testsuit" : "ZB-MotionZBMS3",
+		"testcases" :	[
+			{	
+				"name"				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zigbee"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zigbee",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "ONOFF",
+					"data0"			: "REMOVE",
+					"data1"			: "A_ID",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "ONOFF"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "SENSOR",
+					"command"       : "TEMP"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zigbee",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "ONOFF",
+					"data0"			: "ADD",
+					"data1"			: "A_ID",
+					"data2"			: "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "ONOFF"
+				}
+			},
+
+			{
+				"name" 				: "controlonoff",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "18FE",
+					"value"         : "0"
+				}
+			},
+			{
+
+				"name" 				: "monitortrigger",
+				"description"		: "Monitor sensor status",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"			: "D_ID",
+					"time"			: "90"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zigbee",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "ONOFF",
+					"data0"			: "REMOVE",
+					"data1"			: "A_ID",
+					"data2"			: "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "ONOFF"
+				}
+			},
+
+			{
+
+				"name" 				: "monitortrigger",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"			: "D_ID",
+					"time"			: "90"
+				}
+			}
+		]
+	}
+]

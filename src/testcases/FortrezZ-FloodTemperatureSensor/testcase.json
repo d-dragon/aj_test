@@ -1,0 +1,93 @@
+{
+	"wifisetup":{
+		"testitems" : [
+			{"name" : "onboarding"}
+		]
+	},
+	
+	"listdevices": {
+		"testitems": [
+			{"name": "list_devices"}
+		]
+	},
+
+	"adddevice": {
+		"testitems": [
+			{ "name": "add_devices" },
+			{ "name": "list_devices" }
+		]
+	},
+
+	"listdevice" :{
+		"testitems": [
+			{"name": "list_devices"}
+		]
+	},
+
+	"removedevice": {
+		"testitems": [
+			{ "name": "remove_device" },
+			{ "name": "list_devices" }
+		]
+	},
+
+	"controlonoff":{
+		"testitems": [
+			{"name" : "set_binary"},
+			{"name" : "get_binary"}
+		]
+	},
+	
+	"readspec":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"readspec_takeaction":{
+		"testitems": [
+			{"name" : "read_spec"},
+			{"name" : "listen_notification"}
+		]
+	},
+
+	"writespec":{
+		"testitems": [
+			{"name" : "write_spec"}
+		]
+	},
+
+	"readsecurespec":{
+		"testitems": [
+			{"name" : "read_s_spec"}
+		]
+	},
+	"writesecurespec":{
+		"testitems": [
+			{"name" : "write_s_spec"}
+		]
+	},
+	"firmwareupdate":{
+		"testitems": [
+			{"name" : "update_firmware"}
+		]
+	},
+
+	"rules":{
+		"testitems" : [
+			{"name" : "set_rule"},
+			{"name" : "get_rule"},
+			{"name" : "rule_actions"}
+		]
+	},
+
+	"wemoupnp" : {
+		"testitems" : [
+			{"name" : "listen_notification"},
+			{"name" : "get_binary"},
+			{"name" : "set_binary"}
+
+		]
+	}
+
+}

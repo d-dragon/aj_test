@@ -5,13 +5,18 @@
 #include <string>
 #include <jansson.h>
 #include <typeinfo>
+#include <vector>
 #include "TestWorker.h"
-
+#define CONFIG_FILE "configuration.json"
+#define TEST_CASE_FILE "testcase.json"
 using namespace std;
 
 class JsonParser {
 
 	public:
+		
+		vector<string> mFileList;
+
 		JsonParser(const char *tsPath, const char *tcPath, const char *tiPath, const char *configPath);
 		~JsonParser();
 		int startParser();
@@ -26,6 +31,11 @@ class JsonParser {
 		template<class Type1> 
 		void JSONGetStuff(Type1 *input,string objectName, int index, Type1 *output);
 		static int GetDevIDInJSMsg(string *input, vector<DeviceInfo> *devList);
+		int GetTestSuiteFileList(const char *dirPath);
+		void PrintConfigurationInfo(const char *filePath);
+		int UpdateConfiguration(const char *filePath);
+		void ApplyPaths(const char *tsPath, const char *tcPath, const char *configPath);
+
 
 	private:
 		json_t *testSuitRoot;
@@ -43,7 +53,7 @@ class JsonParser {
 		int TestCaseCollector(json_t *tcRoot);
 		int TestItemProcessor(json_t *inputArg, json_t *tiObj);
 		json_t *getTestItemTemplateObj(const char *tiName);
-		int UpdateWorkerConfiguration(TestWorker *worker, const char *dfConfigPath);
+		int GetWorkerConfiguration(TestWorker *worker, const char *dfConfigPath);
 
 };
 

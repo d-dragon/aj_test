@@ -8,9 +8,13 @@
 #include "TestWorker.h"
 #include "OnboardingTest.h"
 #include "JsonParser.h"
+
 #define TIME_OUT 100
+#define DEVICE_INDEX 1
+#define ASSOCIATED_INDEX 5
 
 using namespace std;
+
 int TestWorker::signalRespFlag;
 string TestWorker::reportFile;
 string *TestWorker::mRespMsg = NULL;
@@ -124,7 +128,7 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[]){
 	
 
 			int time;
-			time = stoi(tiArg[1]);
+			time = stoi(tiArg[2]);
 
 			cout << "listen notification in: " <<  time << "s" << endl;
 			htmlResultContent.append("<tr><th>Result</th>");
@@ -278,7 +282,7 @@ int TestWorker::ParseRespondedMsg(){
 	int ret = 0;
 	LOGCXX("TestWorker::ParseRespondedMsg");
 	ret =  mTestCaseInfo.Signal.compare("list_devices");
-	if ((0 == ret) && (0 == mTestCaseInfo.Type.compare("zwave")))
+	if (0 == ret)
 	{
 		// Clear list dev iD before add it again
 		LOGCXX("TestWorker::ParseRespondedMsg condition");
@@ -323,32 +327,35 @@ void TestWorker::UpdateDevIDOfTC(string arg[]){
 		(mTestCaseInfo.Signal.compare("write_s_spec") 	== 0)
 		)
 	{
-		if(arg[1].find("ID") == std::string::npos){
+		if(arg[DEVICE_INDEX].find("ID") == std::string::npos){
 			// Keep the input from user
 			return;
 		}
+
+		//replace device id such as configured (specific device id or getting device id from its index of device list) 
 		int index;
 		if(mConfig.altDeviceId.length() > 0){
-			arg[1].assign(mConfig.altDeviceId);
+			arg[DEVICE_INDEX].assign(mConfig.altDeviceId); 
 		}else{
 			index = stoi(mConfig.deviceIndex);
 			newIDValue = mDeviceList.at(index).ID;
-			arg[1].assign(newIDValue);
+			arg[DEVICE_INDEX].assign(newIDValue);
 			LOGCXX("Update new Dev ID: "<< arg[1].c_str()); 
 		}
 		newIDValue.clear();
+
 		//in case of sensor set association with another device, update associated device id
 		if((mTestCaseInfo.Signal.compare("write_spec")	 == 0) ||
 				(mTestCaseInfo.Signal.compare("write_s_spec")	== 0)){
 
-			if(arg[5].find("ID") != string::npos){
-				if(mConfig.altAssDevId.length() > 0){
-					arg[5].assign(mConfig.altAssDevId);
+			//if A_ID is defined in test suite, it will be replaced by users  configuration. If not, kepp the defined test suite value
+			if(arg[ASSOCIATED_INDEX].find("ID") != string::npos){ 				if(mConfig.altAssDevId.length() > 0){
+					arg[ASSOCIATED_INDEX].assign(mConfig.altAssDevId);
 				}else{
 
 					index = stoi(mConfig.associationDevIndex);
 					newIDValue = mDeviceList.at(index).ID;
-					arg[5].assign(newIDValue);
+					arg[ASSOCIATED_INDEX].assign(newIDValue);
 				}
 			}
 			newIDValue.clear();

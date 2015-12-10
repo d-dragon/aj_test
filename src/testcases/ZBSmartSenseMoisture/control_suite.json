@@ -1,0 +1,62 @@
+[ 
+	{
+		"testsuit" : "SmartThings(TM) SmartSense Moisture",
+		"testcases" :	[
+			{	
+				"name"	: "listdevices",
+				"input" :{
+					"devicetype"	: "zigbee"
+				},
+				"description"		: "List all device(s) in which are handled by this controller"
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zigbee",
+					"id" 			: "D_ID",
+					"class"			: "BATTERY",
+					"command"		: "PERCENT",
+					"type"			: "",
+					"force"			: "1"
+				},
+				"description"		: "Get remained batter of this Sensor (%)"
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zigbee",
+					"id" 			: "D_ID",
+					"class"			: "SENSOR",
+					"command"		: "TEMP",
+					"type"			: "",
+					"force"			: "1"
+				},
+				"description"		: "Get value of temperature which is measured by Sensor (Fahrenheit and Celsius)"
+			},
+			{
+				"name"				: "waitingfor",
+				"input"				: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"time"			: "120"
+				},
+				"description"		: "Please try to wake up zigbee device and observe the output message which having temperature of environment, and check Moisture/Flood dectect via notify message"
+			},
+			{
+				"name" 				: "removedevice",
+				"input" 			: {
+					"devicetype" 	: "zigbee",
+					"id" 			: "D_ID"
+				},
+				"description"		: "Remove SmartThings(TM) SmartSense Moisture was added before"
+			},
+			{	
+				"name"	: "listdevices",
+				"input" :{
+					"devicetype"	: "zigbee"
+				},
+				"description"		: "Verify whether zigbee SmartThings(TM) SmartSense Moisture was removed or not?"
+			}
+		]
+	}
+]

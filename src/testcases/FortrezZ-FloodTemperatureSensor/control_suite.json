@@ -1,0 +1,395 @@
+[
+	{
+		"testsuit" : "FortrezZ-FloodTempuratureSensor",
+		"testcases" :	[
+			{	
+				"name"				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zwave"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "BATTERY",
+					"command"       : "GET",
+					"force"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "ONOFF_GROUP1"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "ONOFF_GROUP2"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "ONOFF_GROUP3"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "ONOFF_GROUP1",
+					"data1"			: "A_ID",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec_takeaction",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "ONOFF_GROUP1",
+					"time"			: "60"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "REMOVE",
+					"data0"         : "ONOFF_GROUP1",
+					"data1"         : "A_ID",
+					"data2"         : "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "ONOFF_GROUP1"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "ONOFF_GROUP2",
+					"data1"			: "A_ID",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec_takeaction",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "ONOFF_GROUP2",
+					"time"			: "60"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "REMOVE",
+					"data0"         : "ONOFF_GROUP2",
+					"data1"         : "A_ID",
+					"data2"         : "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "ONOFF_GROUP2"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"	: "zwave",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "SET",
+					"data0"			: "ONOFF_GROUP3",
+					"data1"			: "A_ID",
+					"data2"			: "1"
+				}
+			},
+			{
+				"name" 				: "readspec_takeaction",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "ONOFF_GROUP3",
+					"time"			: "60"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "REMOVE",
+					"data0"         : "ONOFF_GROUP3",
+					"data1"         : "A_ID",
+					"data2"         : "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "ASSOCIATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "ONOFF_GROUP3"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "SENSOR_MULTILEVEL",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "TEMP"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "LOW_TEMP_TRIGGER"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "LOW_TEMP_TRIGGER",
+					"data1"         : "-10",
+					"data2"         : "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "LOW_TEMP_TRIGGER"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "LOW_TEMP_TRIGGER",
+					"data1"         : "127",
+					"data2"         : "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "LOW_TEMP_TRIGGER"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "LOW_TEMP_TRIGGER",
+					"data1"         : "100",
+					"data2"         : "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "LOW_TEMP_TRIGGER"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "HIGH_TEMP_TRIGGER"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "HIGH_TEMP_TRIGGER",
+					"data1"         : "-128",
+					"data2"         : "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "HIGH_TEMP_TRIGGER"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "HIGH_TEMP_TRIGGER",
+					"data1"         : "70",
+					"data2"         : "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "HIGH_TEMP_TRIGGER"
+				}
+			},
+
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "SET",
+					"data0"         : "HIGH_TEMP_TRIGGER",
+					"data1"         : "10",
+					"data2"         : "1"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "GET",
+					"force"			: "1",
+					"type"          : "HIGH_TEMP_TRIGGER"
+				}
+			}
+		]
+	}
+]

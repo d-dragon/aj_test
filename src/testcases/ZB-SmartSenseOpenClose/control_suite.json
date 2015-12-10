@@ -1,0 +1,44 @@
+[
+	{
+		"testsuit" : "ZB-SmartSenseOpenClose",
+		"testcases" :	[
+			{	
+				"name"				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zigbee"
+				}
+			},
+
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "SENSOR",
+					"command"       : "TEMP"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "BATTERY",
+					"command"       : "PERCENT"
+				}
+			},
+
+
+			{
+				"name" 				: "monitortrigger",
+				"description"		: "Monitor sensor status (open/close)",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"			: "D_ID",
+					"time"			: "120"
+				}
+			}		
+		]
+	}
+]

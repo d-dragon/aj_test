@@ -1,0 +1,46 @@
+[ 
+	{
+		"testsuit" 					: "ZB-MotionZBMS3",
+		"testcases" 				:	[
+
+			{
+				"name" 				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zigbee"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"description"		: "Add JoinID which sensor will report to",
+				"input" 			: {
+					"devicetype"	: "zigbee",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "REPORT",
+					"data0"			: "ADD",
+					"data1"			: "01",
+					"data2"			: "1"
+				}
+			},
+			{ 
+				"name" 				: "adddevice", 
+				"input" 			: { 
+					"devicetype" 	: "zigbee",
+					"action"		: "open",
+					"time"			: "60"
+				}
+			},
+
+			{ 
+				"name" 				: "closenetwork", 
+				"input" 			: { 
+					"devicetype" 	: "zigbee",
+					"action"		: "close"
+				}
+			}
+
+			
+		]
+	}
+]

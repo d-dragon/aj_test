@@ -1,0 +1,42 @@
+[ 
+	{
+		"testsuit" : "Yale Door Lock",
+		"testcases" :	[
+			{
+				"name" 				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zigbee"
+				}
+				,
+				"description"		: "List devices which is available in the zigbee controller"
+			},
+			{
+				"name" 				: "openclosenetwork",
+				"input" 			: {
+					"devicetype"	: "zigbee",
+					"action"		: "open"
+				}
+				,
+				"description"		: "Set open network in oder to add new zigbee device to controller"
+			},
+			{
+				"name"				: "waitingfor",
+				"input"				: {
+					"devicetype"    : "zwave",
+					"id"            : "D_ID",
+					"time"			: "180"
+				},
+				"description"		: "Reset zigbee device and wait 3 minutes to add zigbee device"
+			},
+			{
+				"name" 				: "openclosenetwork",
+				"input" 			: {
+					"devicetype"	: "zigbee",
+					"action"		: "close"
+				}
+				,
+				"description"		: "Close network command to stop adding new zigbee device"
+			}
+		]
+	}
+]

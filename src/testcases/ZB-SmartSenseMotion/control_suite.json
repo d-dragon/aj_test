@@ -1,0 +1,89 @@
+[
+	{
+		"testsuit" : "ZB-SmartSenseMotion",
+		"testcases" :	[
+			{	
+				"name"				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zigbee"
+				}
+			},
+
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "SENSOR",
+					"command"       : "TEMP"
+				}
+			},
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "BATTERY",
+					"command"       : "PERCENT"
+				}
+			},
+
+
+			{
+				"name" 				: "readspec",
+				"description"		: "Get delay time of motion notifications",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "TIME"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "TIME",
+					"data0"         : "65535"
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"description"		: "Get delay time of motion notifications",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "TIME"
+				}
+			},
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "TIME",
+					"data0"         : "120"
+				}
+			},
+
+			{
+				"name" 				: "readspec_takeaction",
+				"description"		: "Get delay time of motion notifications then listen notifications for 4 mins",
+				"input" 			: {
+					"devicetype"    : "zigbee",
+					"id"            : "D_ID",
+					"class"         : "CONFIGURATION",
+					"command"       : "TIME",
+					"time"			: "240"
+				}
+			}
+		]
+	}
+]

@@ -7,7 +7,9 @@
 
 #define OK 0
 #define ERROR -1
-
+#define LEN_128B 128
+#define LEN_256B 256
+#define LEN_512B 512
 
 using namespace std;
 

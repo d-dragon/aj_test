@@ -1,0 +1,45 @@
+[ 
+	{
+		"testsuit" 					: "ZB-SmartSenseOpenClose",
+		"testcases" 				:	[
+			{
+				"name" 				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zigbee"
+				}
+			},
+
+			{ 
+				"name" 				: "adddevice", 
+				"input" 			: { 
+					"devicetype" 	: "zigbee",
+					"action"		: "open",
+					"time"			: "60"
+				}
+			},
+
+			{
+				"name" 				: "writespec",
+				"description"		: "Add JoinID which sensor will report to (within 15 mins after add sensor)",
+				"input" 			: {
+					"devicetype"	: "zigbee",
+					"id"			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "REPORT",
+					"data0"			: "ADD",
+					"data1"			: "01",
+					"data2"			: "1"
+				}
+			},
+			{ 
+				"name" 				: "closenetwork", 
+				"input" 			: { 
+					"devicetype" 	: "zigbee",
+					"action"		: "close"
+				}
+			}
+
+			
+		]
+	}
+]

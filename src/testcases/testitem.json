@@ -13,16 +13,14 @@
 	"get_binary" :[
 		{ "arg": "devicetype", "value" : "" },
 		{ "arg": "id", "value" : "" },
-		{ "arg": "epnum", "value" : "" },
-		{ "arg": "proid", "value" : "" }
+		{ "arg": "subdevID", "value" : "" }
 	],
 
 	"set_binary" :[
 		{ "arg": "devicetype", "value" : "" },
 		{ "arg": "id", "value" : "" },
 		{ "arg": "value", "value" : "" },
-		{ "arg": "epnum", "value" : "" },
-		{ "arg": "proid", "value" : "" }
+		{ "arg": "subdevID", "value" : "" }
 	],
 
 	"read_spec" :[
@@ -93,6 +91,18 @@
 		{ "arg": "newaction", "value" : "" }
 	],
 
+	"open_closenetwork" :[
+		{ "arg": "devicetype", "value" : "" },
+		{ "arg": "id", "value" : "" },
+		{ "arg": "action", "value" : "" }
+	],
+
+
+	"get_subdevs" :[
+		{ "arg": "devicetype", "value" : "" },
+		{ "arg": "id", "value" : "" },
+		{ "arg": "listtype", "value" : "" }
+	],
 	"onboarding" : [
 		{ "arg" : "ssid", "value" : ""},
 		{ "arg" : "passcode", "value" : ""},
@@ -107,6 +117,7 @@
 	],
 	"listen_notification" : [
 		{"arg" : "devicetype", "value" : ""},
+		{"arg" : "id", "value" : ""},
 		{"arg" : "time", "value" : ""}
 	]
 
