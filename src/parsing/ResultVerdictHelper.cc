@@ -15,7 +15,8 @@ ResultVerdictHelper::~ResultVerdictHelper(){
 */
 void ResultVerdictHelper::SaveInfoOfTestItem(const json_t *testInput, struct TestItemInfo *info, string matchedResponseMsg){
     enum EnumSettingPara i = MAXBUFF;
-    string command;
+    json_t *localValue;
+    string readcmd, writecmd, specClass;
     int cnt;
     // Verify input parameters
     if (NULL == info )
@@ -24,36 +25,76 @@ void ResultVerdictHelper::SaveInfoOfTestItem(const json_t *testInput, struct Tes
         return;
     }
 
+    localValue = json_object_get(testInput, KEY_CLASS);
+    if (NULL == localValue){
+        return;
+    }
+    else{
+        specClass = json_string_value(localValue);
+    }
+
+
+
     if (true == mLocalTestItemInfo[THIRD_GET].isValid) // reset value which are saved
     {
         SetInvalidAllData();
     }
 
-    if (false == mLocalTestItemInfo[FIRST_GET].isValid)
-    {
-        if (false == mLocalTestItemInfo[SECOND_SET].isValid){ // All is available
+    // Signal comparation
+
+    if (false == mLocalTestItemInfo[SECOND_SET].isValid){ // All signal info are empty
+        if (0 == info->Signal.compare(SIG_W_SPEC)) {    // Handle write_spec
+            i = SECOND_SET;
+        }
+        else if(0 == info->Signal.compare(SIG_R_SPEC)){ // Handle read_spec, 
+            SetInvalidAllData();
             i = FIRST_GET;
         }
-        else{
-            i = THIRD_GET;
+        else{ //Not handle other signal
+            SetInvalidAllData();
+            return;
         }
     }
-    else{
-        if (false == mLocalTestItemInfo[SECOND_SET].isValid){ // All is available
+    else {
+        if(0 == info->Signal.compare(SIG_R_SPEC)){// write_specs is existed, save read_specs to compare
+            i = THIRD_GET;
+        } else
+        if(0 == info->Signal.compare(SIG_W_SPEC)){// write_specs is existed, save read_specs to compare
+            SetInvalidAllData();
             i = SECOND_SET;
         }
         else{
-            i = THIRD_GET;
+            SetInvalidAllData();
+            return;
         }
     }
 
+    //Command class comparation
+    if (true == mLocalTestItemInfo[FIRST_GET].isValid)
+    {
+        if (0 != mLocalTestItemInfo[FIRST_GET].funcClass.compare(specClass)) //Clear all buffer if it does not match to previous class
+        {
+            SetInvalidAllData();
+        //    return;
+        }
+    }
+    if (true == mLocalTestItemInfo[SECOND_SET].isValid)
+    {
+        if (0 != mLocalTestItemInfo[SECOND_SET].funcClass.compare(specClass)) //Clear all buffer if it does not match to previous class
+        {
+            SetInvalidAllData();
+        //    return;
+        }
+    }
+    // Data of class comand (group, configuration type) comparation
 
-    mLocalTestItemInfo[i].s_TIinfo.Signal           = info->Signal;
-    mLocalTestItemInfo[i].s_TIinfo.Type             = info->Type;
-    mLocalTestItemInfo[i].s_TIinfo.ID               = info->ID;
-    mLocalTestItemInfo[i].s_TIinfo.StartLogIndex    = info->StartLogIndex;
-    mLocalTestItemInfo[i].s_TIinfo.EndLogIndex      = info->EndLogIndex;
-    mLocalTestItemInfo[i].s_TIinfo.MatchedLogIndex  = info->MatchedLogIndex;
+
+    // Save data into 3 struct
+
+    mLocalTestItemInfo[i].Signal                    = info->Signal;
+    mLocalTestItemInfo[i].Type                      = info->Type;
+    mLocalTestItemInfo[i].ID                        = info->ID;
+    mLocalTestItemInfo[i].funcClass                 = specClass;
     mLocalTestItemInfo[i].responseMsg               = matchedResponseMsg;
     mLocalTestItemInfo[i].isValid                   = true;
 }
@@ -229,6 +270,24 @@ int ResultVerdictHelper::ConfigurationSetGetCompare(const void* testcaseInput, c
 void ResultVerdictHelper::SetInvalidAllData(){
     for ( int cnt = 0; cnt < MAXBUFF; cnt++)
     {
+        mLocalTestItemInfo[cnt].Signal.clear();
+        mLocalTestItemInfo[cnt].Type.clear();
+        mLocalTestItemInfo[cnt].ID.clear();
+        mLocalTestItemInfo[cnt].funcClass.clear();
+        mLocalTestItemInfo[cnt].responseMsg.clear();
         mLocalTestItemInfo[cnt].isValid = false;
+    }
+}
+
+void ResultVerdictHelper::DBGPrint(){
+    for ( int i = 0; i < MAXBUFF; i++)
+    {
+        LOGCXX("ResultVerdictHelper::DBGPrint mLocalTestItemInfo["<<i<<"]" );
+        LOGCXX(mLocalTestItemInfo[i].Signal);
+        LOGCXX(mLocalTestItemInfo[i].Type);
+        LOGCXX(mLocalTestItemInfo[i].ID);
+        LOGCXX(mLocalTestItemInfo[i].funcClass);
+        LOGCXX(mLocalTestItemInfo[i].responseMsg);
+        LOGCXX(mLocalTestItemInfo[i].isValid);
     }
 }

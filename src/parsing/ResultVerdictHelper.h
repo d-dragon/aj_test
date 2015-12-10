@@ -12,9 +12,11 @@ class ResultVerdictHelper{
 
 public:
     struct LocalTestItemInfo{
-        struct TestItemInfo s_TIinfo;
+        string              Signal;
+        string              Type;
+        string              ID;
         string              responseMsg;
-        string              funClass;
+        string              funcClass;
         string              cmd;
         bool                isValid;
     };
@@ -56,6 +58,7 @@ public:
         Do a verdict
      */
     int VerdictResult();
+    void DBGPrint();
 private:
 
     // Exactly comparing 2 Json data

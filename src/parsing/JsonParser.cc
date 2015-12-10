@@ -308,6 +308,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			cout << "*************************************************\n" << endl;
 		}
 		// TO DO: test case
+		mVerdictHelper->DBGPrint();
 	 }
 	return status;
 

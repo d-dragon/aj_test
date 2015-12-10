@@ -48,7 +48,10 @@ struct TestItemInfo
 		unsigned int MatchedLogIndex;
 	};
 
-#define KEY_READSPEC_CMD 				"command"
-#define KEY_WRITESPEC_CMD 				"command"
+#define KEY_READSPEC_CMD 				"readcommand"
+#define KEY_WRITESPEC_CMD 				"writecommand"
 #define KEY_CLASS						"class"
+#define SIG_R_SPEC				"read_spec"
+#define SIG_W_SPEC				"write_spec"
+
 #endif
