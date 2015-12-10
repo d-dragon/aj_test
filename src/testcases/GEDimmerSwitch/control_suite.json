@@ -1,7 +1,6 @@
 [ 
 	{
 		"testsuit" : "GE Dimmer Switch",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
 		"testcases" :	[
 			{	
 				"name"	: "listdevices",
@@ -19,6 +18,7 @@
 					"type"			: "ONOFF_LED"
 				}
 			},
+			
 			{
 				"name" : "writespec",
 				"input" : {

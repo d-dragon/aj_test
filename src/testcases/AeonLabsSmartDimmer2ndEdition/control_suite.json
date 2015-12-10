@@ -1,68 +1,267 @@
 [ 
-	{
-		"testsuit" : "Aeon Labs Smart Dimmer 2nd Edition DSC25-ZWUS",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
-		"testcases" :	[
-			{	
-				"name"	: "listdevices",
-				"input" :{
-					"devicetype"	: "zwave"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "OVERLOAD_PROTECT"
-				}
-			},
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "OVERLOAD_PROTECT",
-					"data1"			: "0",
-					"data2"			: ""
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "OVERLOAD_PROTECT"
-				}
-			},
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "OVERLOAD_PROTECT",
-					"data1"			: "1",
-					"data2"			: ""
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "OVERLOAD_PROTECT"
-				}
-			},
+    {
+        "testsuit" : "Aeon Labs Smart Dimmer 2nd Edition DSC25-ZWUS",
+        "testcases" :   [
+            {   
+                "name"  : "listdevices",
+                "input" :{
+                    "devicetype"    : "zwave"
+                },
+                "description"       : "Get list of available devices in the controller"
+            },
+
+            {
+                "name"              : "readspec",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "REPORT_GROUP",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of REPORT_GROUP for verifying which device is available in group report"
+            },
+
+            {
+                "name"              : "writespec",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "SET",
+                    "data0"         : "REPORT_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1"
+                },
+                "description"       : "Set ASSOCIATION REPORT_GROUP, this case is our controller, those notification will be sent to controller whenever the state of smart dimmer's load , on/off status changed"
+            },
+
+            {
+                "name"              : "readspec",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "REPORT_GROUP",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of REPORT_GROUP for verifying value which we have set before"
+            },
+
+            {
+                "name"              : "readspec",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "METER_REPORT_GROUP"
+                },
+                "description"       : "Get status of METER_REPORT_GROUP for verifying which device is available in group meter report"
+            },
+
+            {
+                "name"              : "writespec",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "SET",
+                    "data0"         : "METER_REPORT_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1"
+                },
+                "description"       : "Set ASSOCIATION METER_REPORT_GROUP, this case is our controller , smart dimmer will send meter (watt/KWH) report to controller"
+            },
+
+            {
+                "name"              : "readspec",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "METER_REPORT_GROUP",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of METER_REPORT_GROUP for verifying value which we have set before"
+            },
+            
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "LOCK_CONFIGURATION",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of LOCK_CONFIGURATION (allow/not allow user changes other configurations as Current overload protection and Send notification ) for verifying value which is available"
+            },
+
+            {
+                "name" : "writespec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "SET",
+                    "data0"         : "LOCK_CONFIGURATION",
+                    "data1"         : "1",
+                    "data2"         : ""
+                },
+                "description"       : "Set value 1 to LOCK_CONFIGURATION , value 1 means not allow user changes other configuration as Current overload protection and Send notification"
+            },
+            
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "LOCK_CONFIGURATION",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of LOCK_CONFIGURATION for verifying value which we have set before"
+            },
+
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "OVERLOAD_PROTECT",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of OVERLOAD_PROTECT (Current overload protection - The load will be closed when the Current is more than 15.5A and the time is more than 2 minutes) for verifying value which is available"
+            },
+
+            {
+                "name" : "writespec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "SET",
+                    "data0"         : "OVERLOAD_PROTECT",
+                    "data1"         : "1",
+                    "data2"         : ""
+                },
+                "description"       : "Set value 1 for OVERLOAD_PROTECT, value 1 means anable Current overload protection"
+            },
+
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "OVERLOAD_PROTECT",
+                    "force"         : "1"
+                },
+                 "description"       : "Get status of OVERLOAD_PROTECT for verifying value which we have set before"
+            },
+
+            {
+                "name" : "writespec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "SET",
+                    "data0"         : "LOCK_CONFIGURATION",
+                    "data1"         : "0",
+                    "data2"         : ""
+                },
+                "description"       : "Set value 0 to LOCK_CONFIGURATION , value 0 means allow user changes other configuration as Current overload protection and Send notification"
+            },
+            
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "LOCK_CONFIGURATION",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of LOCK_CONFIGURATION for verifying value which we have set before"
+            },
+
+            {
+                "name" : "writespec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "SET",
+                    "data0"         : "OVERLOAD_PROTECT",
+                    "data1"         : "0",
+                    "data2"         : ""
+                },
+                "description"       : "Set value 0 for OVERLOAD_PROTECT, value 0 means disable Current overload protection"
+            },
+
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "OVERLOAD_PROTECT",
+                    "force"         : "1"
+                },
+                 "description"       : "Get status of OVERLOAD_PROTECT for verifying value which we have set before"
+            },
+
+            {
+                "name" : "writespec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "SET",
+                    "data0"         : "OVERLOAD_PROTECT",
+                    "data1"         : "1",
+                    "data2"         : ""
+                },
+                "description"       : "Set value 1 for OVERLOAD_PROTECT, value 0 means disable Current overload protection"
+            },
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "OVERLOAD_PROTECT",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of OVERLOAD_PROTECT for verifying value which we have set before"
+            },
+
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of NOTIFICATION ( ability to send notification to associated devices when the state of smart dimmer's load changed ) for verifying value which is available"
+            },
+
             {
                 "name" : "writespec",
                 "input" : {
@@ -73,8 +272,10 @@
                     "data0"         : "NOTIFICATION",
                     "data1"         : "0",
                     "data2"         : ""
-                }
+                },
+                "description"       : "Set value 0 for NOTIFICATION, value 0 means smart dimmer will send nothing to associated device when the state of smart dimmer's load changed"
             },
+
             {
                 "name" : "readspec",
                 "input" : {
@@ -82,9 +283,12 @@
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "type"          : "NOTIFICATION"
-                }
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of NOTIFICATION for verifying value which we have set before"
             },
+
             {
                 "name" : "writespec",
                 "input" : {
@@ -95,8 +299,11 @@
                     "data0"         : "NOTIFICATION",
                     "data1"         : "1",
                     "data2"         : ""
-                }
+                },
+                "description"       : "Set value 1 for NOTIFICATION, value 1 means smart dimmer will send hail CC command  to associated device when the state of smart dimmer's load changed"
+
             },
+
             {
                 "name" : "readspec",
                 "input" : {
@@ -104,9 +311,12 @@
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "type"          : "NOTIFICATION"
-                }
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of NOTIFICATION for verifying value which we have set before"
             },
+
             {
                 "name" : "writespec",
                 "input" : {
@@ -117,8 +327,10 @@
                     "data0"         : "NOTIFICATION",
                     "data1"         : "2",
                     "data2"         : ""
-                }
+                },
+                 "description"       : "Set value 2 for NOTIFICATION, value 2 means smart dimmer will send basic report (on/off status of smart dimmer) to associated device when the state of smart dimmer's load changed"
             },
+
             {
                 "name" : "readspec",
                 "input" : {
@@ -126,119 +338,12 @@
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "type"          : "NOTIFICATION"
-                }
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of NOTIFICATION for verifying value which we have set before"
             },
-            {
-                "name" : "writespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "LOCK_CONFIGURATION",
-                    "data1"         : "1",
-                    "data2"         : ""
-                }
-            },
-            
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "type"          : "LOCK_CONFIGURATION"
-                }
-            },
-            {
-                "name" : "writespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "LOCK_CONFIGURATION",
-                    "data1"         : "0",
-                    "data2"         : ""
-                }
-            },
-            
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "type"          : "LOCK_CONFIGURATION"
-                }
-            },
-            {
-                "name"              : "readspec",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "REPORT_GROUP"
-                }
-            },
-            {
-                "name"              : "writespec",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "SET",
-                    "data0"         : "REPORT_GROUP",
-                    "data1"         : "6E",
-                    "data2"         : "1"
-                }
-            },
-            {
-                "name"              : "readspec",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "REPORT_GROUP"
-                }
-            },
-            {
-                "name"              : "readspec",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "METER_REPORT_GROUP"
-                }
-            },
-            {
-                "name"              : "writespec",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "SET",
-                    "data0"         : "METER_REPORT_GROUP",
-                    "data1"         : "6E",
-                    "data2"         : "1"
-                }
-            },
-            {
-                "name"              : "readspec",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "METER_REPORT_GROUP"
-                }
-            },
+
             {
                 "name"              : "readspec",
                 "input"             : {
@@ -246,8 +351,10 @@
                     "id"            : "D_ID",
                     "class"         : "METER",
                     "command"       : "GET",
-                    "type"          : "ELEC"
-                }
+                    "type"          : "ELEC",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of ELEC (electrical load value for watt and KWH) for verifying value which is available"
             },
             {
                 "name"              : "controlonoff",
@@ -255,40 +362,61 @@
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "1"
-                }
+                },
+                "description"       : "Value 1 (Hex) means Smart dimmer will dim with value 1 (test turn on smart dimmer)"
+
             },
+
             {
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "0"
-                }
+                },
+                "description"       : "Turn off smart dimmer"
             },
+
             {
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "30"
-                }
+                },
+                "description"       : "Value 30 (Hex) means Smart dimmer will dim with value 48"
             },
+
             {
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "0"
-                }
+                },
+                "description"       :"Turn off smart dimmer"
             },
+
             {
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "63"
-                }
+                },
+                "description"       : "Value 63 (Hex) means Smart dimmer will dim with value 99"
             },
+
+            {
+                "name"              : "controlonoff",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "description"       :"Turn off smart dimmer"
+            },
+
             {
                 "name"              : "writespec",
                 "input"             : {
@@ -297,10 +425,12 @@
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
                     "data0"         : "REPORT_GROUP",
-                    "data1"         : "6E",
+                    "data1"         : "01",
                     "data2"         : "1"
-                }
+                },
+                "description"       : "Remove controller from REPORT_GROUP."
             },
+
             {
                 "name"              : "readspec",
                 "input"             : {
@@ -308,9 +438,12 @@
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "REPORT_GROUP"
-                }
+                    "type"          : "REPORT_GROUP",
+                    "force"         : "1"
+                },
+                "description"       : "Verify value of removed action"
             },
+
             {
                 "name"              : "writespec",
                 "input"             : {
@@ -319,10 +452,12 @@
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
                     "data0"         : "METER_REPORT_GROUP",
-                    "data1"         : "6E",
+                    "data1"         : "01",
                     "data2"         : "1"
-                }
+                },
+                "description"       : "Remove controller from METER_REPORT_GROUP."
             },
+
             {
                 "name"              : "readspec",
                 "input"             : {
@@ -330,10 +465,11 @@
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "METER_REPORT_GROUP"
-                }
-            }
-            	
-		]
-	}
+                    "type"          : "METER_REPORT_GROUP",
+                    "force"         : "1"
+                },
+                "description"       : "Verify value of removed action"
+            }                
+        ]
+    }
 ]

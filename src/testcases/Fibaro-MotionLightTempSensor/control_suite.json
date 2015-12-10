@@ -7,7 +7,8 @@
 				"name"				: "listdevices",
 				"input" 			: {
 					"devicetype"	: "zwave"
-				}
+				},
+				"description" 		: "Get list of available devices in the controller"
 			},
 
 			{
@@ -18,8 +19,10 @@
 					"class"         : "BATTERY",
 					"command"       : "GET",
 					"force"			: "1"
-				}
+				},
+				"description"		: "Get status of Battery of zwave device"
 			},
+
 			{
 				"name" 				: "readspec",
 				"input" 			: {
@@ -29,8 +32,10 @@
 					"command"       : "GET",
 					"force"			: "1",
 					"type"          : "REPORT_GROUP"
-				}
+				},
+				"description"		: "Get status of REPORT_GROUP for verifying value which is available"
 			},
+
 			{
 				"name" 				: "readspec",
 				"input" 			: {
@@ -40,7 +45,8 @@
 					"command"       : "GET",
 					"force"			: "1",
 					"type"          : "ONOFF_GROUP"
-				}
+				},
+				"description"		: "Get status of ONOFF_GROUP for verifying value which we set before"
 			},
 
 			{
@@ -52,8 +58,10 @@
 					"command"       : "GET",
 					"force"			: "1",
 					"type"          : "TAMPER_ALARM"
-				}
+				},
+				"description"		: "Get status of TAMPER_ALARM for verifying value which we set before"
 			},
+
 			{
 				"name" 				: "writespec",
 				"input" 			: {
@@ -64,7 +72,8 @@
 					"data0"         : "PIR_SENSOR",
 					"data1"         : "15",
 					"data2"         : "1"
-				}
+				},
+				"description"		: "Set value for Period of time which means the sensor will be blinded to motions, value is 15 mean after 8s"
 			},
 
 			{
@@ -76,7 +85,8 @@
 					"command"       : "GET",
 					"force"			: "1",
 					"type"          : "PIR_SENSOR"
-				}
+				},
+				"description"		: "Verify Period of time setting"
 			},
 
 			{
@@ -89,8 +99,10 @@
 					"data0"			: "REPORT_GROUP",
 					"data1"			: "01",
 					"data2"			: "1"
-				}
+				},
+				"description"		: "Set ASSOCIATION REPORT_GROUP, this case is our controller, those notification will be sent whenever a motion occur"
 			},
+
 			{
 				"name" 				: "readspec",
 				"input" 			: {
@@ -100,8 +112,10 @@
 					"command"       : "GET",
 					"force"			: "1",
 					"type"          : "REPORT_GROUP"
-				}
+				},
+				"description"		: "Get status of REPORT_GROUP for verifying value which we set before"
 			},
+
 			{
 				"name" 				: "readspec",
 				"input" 			: {
@@ -110,8 +124,10 @@
 					"class"			: "BATTERY",
 					"force"			: "1",
 					"command"		: "GET"
-				}
+				},
+				"description"		: "Get status of Battery of zwave device"
 			},
+
 			{
 				"name" 				: "writespec",
 				"input" 			: {
@@ -122,8 +138,10 @@
 					"data0"			: "ONOFF_GROUP",
 					"data1"			: "3D",
 					"data2"			: "1"
-				}
+				},
+				"description"		: "Set ASSOCIATION ONOFF_GROUP, this case is Zwave Led. The Associated device must support on/off "
 			},
+
 			{
 				"name" 				: "readspec_takeaction",
 				"input" 			: {
@@ -134,9 +152,10 @@
 					"force"			: "1",
 					"type"          : "ONOFF_GROUP",
 					"time"			: "90"
-
-				}
+				},
+				"description"		: "Wait for 90s and try to test motion notification with the associated device."
 			},
+
 			{
 				"name" 				: "writespec",
 				"input" 			: {
@@ -147,8 +166,10 @@
 					"data0"			: "ONOFF_GROUP",
 					"data1"			: "ff",
 					"data2"			: "1"
-				}
+				},
+				"description"		: "Set ASSOCIATION ONOFF_GROUP .The Associated device must support on/off "
 			},
+
 			{
 				"name" 				: "readspec",
 				"input" 			: {
@@ -158,8 +179,10 @@
 					"command"       : "GET",
 					"force"			: "1",
 					"type"          : "ONOFF_GROUP"
-				}
+				},
+				"description"		: "Get status of ONOFF_GROUP for verifying value which we set before"
 			},
+
 			{
 				"name" 				: "readspec",
 				"input" 			: {
@@ -169,7 +192,8 @@
 					"command"       : "GET",
 					"force"			: "1",
 					"type"          : "TAMPER_GROUP"
-				}
+				},
+				"description"		: "Get status of TAMPER_GROUP for verifying value which is available"
 			},
 
 			{
@@ -182,7 +206,8 @@
 					"data0"			: "TAMPER_GROUP",
 					"data1"			: "3D",
 					"data2"			: "1"
-				}
+				},
+				"description"		: "Set ASSOCIATION TAMPER_GROUP, this case is Zwave Led. Those notification will be sent whenever we move the sensor" 
 			},
 
 			{
@@ -194,8 +219,10 @@
 					"command"       : "GET",
 					"force"			: "1",
 					"type"          : "TAMPER_GROUP"
-				}
+				},
+				"description"		: "Get status of TAMPER_GROUP for verifying value which we set before"
 			},
+
 			{
 				"name" 				: "writespec",
 				"input" 			: {
@@ -206,8 +233,10 @@
 					"data0"         : "REPORT_GROUP",
 					"data1"         : "3D",
 					"data2"         : "1"
-				}
+				},
+				"description"		: "Remove associated Z-wave Led device from REPORT_GROUP."
 			},
+
 			{
 				"name" 				: "readspec",
 				"input" 			: {
@@ -217,8 +246,10 @@
 					"command"       : "GET",
 					"force"			: "1",
 					"type"          : "REPORT_GROUP"
-				}
+				},
+				"description"		: "Verify value of removed action"
 			},
+
 			{
 				"name" 				: "writespec",
 				"input" 			: {
@@ -229,8 +260,10 @@
 					"data0"         : "ONOFF_GROUP",
 					"data1"         : "3D",
 					"data2"         : "1"
-				}
+				},
+				"description"		: "Remove associated Z-wave Led device from ONOFF_GROUP."
 			},
+
 			{
 				"name" 				: "readspec",
 				"input" 			: {
@@ -240,7 +273,8 @@
 					"command"       : "GET",
 					"force"			: "1",
 					"type"          : "ONOFF_GROUP"
-				}
+				},
+				"description"		: "Verify value of removed action"
 			},
 
 			{
@@ -253,7 +287,8 @@
 					"data0"         : "TAMPER_GROUP",
 					"data1"         : "3D",
 					"data2"         : "1"
-				}
+				},
+				"description"		: "Remove associated Z-wave Led device from TAMPER_GROUP."
 			},
 
 			{
@@ -265,7 +300,8 @@
 					"command"       : "GET",
 					"force"			: "1",
 					"type"          : "TAMPER_GROUP"
-				}
+				},
+				"description"		: "Verify value of removed action"
 			},
 
 			{
@@ -277,7 +313,8 @@
 					"command"       : "GET",
 					"force"			: "1",
 					"type"          : "TEMP"
-				}
+				},
+				"description"		: "Get status of TEMP in class SENSOR_MULTILEVEL for verifying value"
 			},
 
 			{
@@ -289,9 +326,9 @@
 					"command"       : "GET",
 					"force"			: "1",
 					"type"          : "HUMI"
-				}
+				},
+				"description"		: "Get status of HUMI in class SENSOR_MULTILEVEL for verifying value"
 			}
-
 		]
 	}
 ]

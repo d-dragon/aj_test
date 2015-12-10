@@ -20,7 +20,7 @@
 					"command"       : "GET",
 					"force"			: "1"
 				},
-				"description"		: "Get status of Battery of Aoetec-DoorWindowSensor."
+				"description"		: "Get status of remain Battery of Aoetec-DoorWindowSensor (unit %)"
 			},
 
 			{

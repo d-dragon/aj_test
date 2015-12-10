@@ -1,23 +1,28 @@
 [ 
 	{
 		"testsuit" : "AeonLabsGen5MultiSensor",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
+		"serviceid" 				: "93c06771-c725-48c2-b1ff-5c313ee314e4",
 		"testcases" :	[
 			{	
 				"name"	: "listdevices",
 				"input" :{
 					"devicetype"	: "zwave"
-				}
+				},
+				"description" 		: "Get list of available devices in the controller"
 			},			
+			
 			{
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
 					"id" 			: "D_ID",
 					"class"			: "BATTERY",
-					"command"		: "GET"
-				}
+					"command"		: "GET",
+					"force"			: "1"
+				},
+				"description"		: "Get status of remained battery of AeonLabsGen6MultiSensor ( unit % )"
 			},
+
 			{
 				"name" : "readspec",
 				"input" : {
@@ -25,9 +30,12 @@
 					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "TIME"
-				}
+					"type"			: "TIME",
+					"force"			: "1"
+				},
+				"description"		: "Get status of TIME ( Multi sensor will send basic set to associated device if no motion occurs in that interval )for verifying value which is available"
 			},
+
 			{
 				"name" : "readspec",
 				"input" : {
@@ -35,9 +43,12 @@
 					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "ENABLE_MOTION"
-				}
+					"type"			: "ENABLE_MOTION",
+					"force"			: "1"
+				},
+				"description"		: "Get status of ENABLE_MOTION ( enable/disable the function of motion sensor) for verifying value which is available"
 			},
+
 			{
 				"name" : "readspec",
 				"input" : {
@@ -45,9 +56,12 @@
 					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "REPORT_SENSOR"
-				}
+					"type"			: "REPORT_SENSOR",
+					"force"			: "1"
+				},
+				"description"		: "Get status of REPORT_SENSOR ( Reports (humidity, luminance, battery, temperature) will be sent in timing inverals to our controller) for verifying value which is available"
 			},
+
 			{
 				"name" : "readspec",
 				"input" : {
@@ -55,9 +69,12 @@
 					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "TIME_AUTO_REPORT"
-				}
+					"type"			: "TIME_AUTO_REPORT",
+					"force"			: "1"
+				},
+				"description"		: "Get status of TIME_AUTO_REPORT ( The interval to send REPORT_SENSOR to timming group 1 )for verifying value which is available"
 			},
+
 			{
 				"name" : "readspec",
 				"input" : {
@@ -65,8 +82,36 @@
 					"id" 			: "D_ID",
 					"class"			: "ASSOCIATION",
 					"command"		: "GET",
-					"type"			: "ONOFF_GROUP"
-				}
+					"type"			: "ONOFF_GROUP",
+					"force"			: "1"
+				},
+				"description"		: "Get status of ONOFF_GROUP for verifying which device is available in group on/off"
+			},
+
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "SENSOR_MULTILEVEL",
+					"command"		: "GET",
+					"type"			: "TEMP",
+					"force"			: "1"
+				},
+				"description"		: "Get status of TEMP ( temperature in fahrenheit and celsius ) for verifying value which is available"
+			},
+
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "SENSOR_MULTILEVEL",
+					"command"		: "GET",
+					"type"			: "HUMI",
+					"force"			: "1"
+				},
+				"description"		: "Get status of HUMI ( humidity percentage and absolute humidity ) for verifying value which is available"
 			},
 			{
 				"name" : "readspec",
@@ -75,73 +120,66 @@
 					"id" 			: "D_ID",
 					"class"			: "SENSOR_MULTILEVEL",
 					"command"		: "GET",
-					"type"			: "TEMP"
-				}
+					"type"			: "LUMI",
+					"force"			: "1"
+				},
+				"description"		: "Get status of LUMI ( luminance index ) for verifying value which is available"
 			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "SENSOR_MULTILEVEL",
-					"command"		: "GET",
-					"type"			: "HUMI"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "SENSOR_MULTILEVEL",
-					"command"		: "GET",
-					"type"			: "LUMI"
-				}
-			},
+
 			{
 				"name" : "writespec",
 				"input" : {
 					"devicetype" 	: "zwave",
 					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
+					"class"			: "ASSOCIATION",
 					"command"		: "SET",
-					"data0"			: "ENABLE_MOTION",
-					"data1"			: "0",
+					"data0"			: "ONOFF_GROUP",
+					"data1"			: "A_ID",
 					"data2"			: "1"
-				}
+				},
+				"description"		: "Set ASSOCIATION ONOFF_GROUP, this case is Led zwave device, those notification will be sent to Led zwave devive whenever having motion occurs"
 			},
+
 			{
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
 					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
+					"class"			: "ASSOCIATION",
 					"command"		: "GET",
-					"type"			: "ENABLE_MOTION"
-				}
+					"type"			: "ONOFF_GROUP",
+					"force"			: "1"
+				},
+				"description"		: "Get status of ONOFF_GROUP which we have set before"
 			},
+
 			{
 				"name" : "writespec",
 				"input" : {
 					"devicetype" 	: "zwave",
 					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
+					"class"			: "ASSOCIATION",
 					"command"		: "SET",
-					"data0"			: "ENABLE_MOTION",
-					"data1"			: "1",
+					"data0"			: "ONOFF_GROUP",
+					"data1"			: "01",
 					"data2"			: "1"
-				}
+				},
+				"description"		: "Set ASSOCIATION ONOFF_GROUP, this case is our controller , those notification will be sent to controller whenever having motion occurs"
 			},
+
 			{
 				"name" : "readspec",
 				"input" : {
 					"devicetype" 	: "zwave",
 					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
+					"class"			: "ASSOCIATION",
 					"command"		: "GET",
-					"type"			: "ENABLE_MOTION"
-				}
+					"type"			: "ONOFF_GROUP",
+					"force"			: "1"
+				},
+				"description"		: "Get status of ONOFF_GROUP which we have set before"
 			},
+
 			{
 				"name" : "writespec",
 				"input" : {
@@ -152,7 +190,9 @@
 					"data0"			: "TIME",
 					"data1"			: "3BC4",
 					"data2"			: "1"
-				}
+				},
+				"description"       : "Set value 3BC4 for TIME (PIR time), value 3BC4 means sensor will send BASIC SET to associated devices if no motion is triggered again in 15300s"
+
 			},
 			{
 				"name" : "readspec",
@@ -161,8 +201,10 @@
 					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "TIME"
-				}
+					"type"			: "TIME",
+					"force"			: "1"
+				},
+				"description"		: "Get status of TIME for verifying value which we have set before"
 			},
 			{
 				"name" : "writespec",
@@ -174,7 +216,8 @@
 					"data0"			: "TIME",
 					"data1"			: "3BC5",
 					"data2"			: "1"
-				}
+				},
+				"description"       : "Set value 3BC5 ( 15301s ) for TIME (PIR time), this testcases expect to faile because the value is greater than maximum TIME value"
 			},
 			{
 				"name" : "readspec",
@@ -183,9 +226,12 @@
 					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "TIME"
-				}
+					"type"			: "TIME",
+					"force"			: "1"
+				},
+				"description"		: "Get status of TIME for verifying value which we have set before"
 			},
+
 			{
 				"name" : "writespec",
 				"input" : {
@@ -196,8 +242,10 @@
 					"data0"			: "TIME",
 					"data1"			: "0003",
 					"data2"			: "1"
-				}
+				},
+				"description"       : "Set value 0003 for TIME (PIR time), value 0003 means sensor will send BASIC SET to associated devices if no motion is triggered again in 3s"
 			},
+
 			{
 				"name" : "readspec",
 				"input" : {
@@ -205,9 +253,67 @@
 					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "TIME"
-				}
+					"type"			: "TIME",
+					"force"			: "1"
+				},
+				"description"		: "Get status of TIME for verifying value which we have set before"
 			},
+
+			{
+				"name" : "writespec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "ENABLE_MOTION",
+					"data1"			: "0",
+					"data2"			: "1"
+				},
+				"description"       : "Set value 0 for ENABLE_MOTION, value 0 means disable function of motion sensor"
+			},
+
+			{
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "ENABLE_MOTION",
+					"force"			: "1"
+				},
+				"description"		: "Get status of ENABLE_MOTION for verifying value which we have set before"
+			},
+
+			{
+				"name" : "writespec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "ENABLE_MOTION",
+					"data1"			: "1",
+					"data2"			: "1"
+				},
+				"description"       : "Set value 1 for ENABLE_MOTION, value 1 means enable function of motion sensor"
+			},
+
+			{
+				"name" : "readspec_takeaction",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"type"			: "ENABLE_MOTION",
+					"force"			: "1",
+					"time"			: "60"
+				},
+				 "description"		: "Wait for 60s to test motion sensor, it means while 60s if there have a motion occurs then associated Led zwave device will turn on"
+			},
+
 			{
 				"name" 				: "writespec",
 				"input" 			: {
@@ -218,8 +324,10 @@
 					"data0"			: "TIME_AUTO_REPORT",
 					"data1"			: "28DE80",
 					"data2"			: "1"
-				}
+				},
+				"description"       : "Set value 28DE80 for TIME_AUTO_REPORT, value 28DE80 means report sensor messages will be sent to our controller after 2678400s"
 			},
+
 			{
 				"name" 				: "readspec",
 				"input" 			: {
@@ -227,9 +335,39 @@
 					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "TIME_AUTO_REPORT"
-				}
+					"type"			: "TIME_AUTO_REPORT",
+					"force"			: "1"
+				},
+				"description"		: "Get status of TIME_AUTO_REPORT for verifying value which we have set before"
 			},
+
+			{
+				"name" 				: "writespec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "CONFIGURATION",
+					"command"		: "SET",
+					"data0"			: "TIME_AUTO_REPORT",
+					"data1"			: "08DE80",
+					"data2"			: "1"
+				},
+				"description"       : "Set value 08DE80 for TIME_AUTO_REPORT, value 08DE80 means report sensor messages will be sent to our controller after 581248s"
+			},
+			
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "CONFIGURATION",
+					"command"		: "GET",
+					"type"			: "TIME_AUTO_REPORT",
+					"force"			: "1"
+				},
+				"description"		: "Get status of TIME_AUTO_REPORT for verifying value which we have set before"
+			},
+
 			{
 				"name" 				: "writespec",
 				"input" 			: {
@@ -240,7 +378,8 @@
 					"data0"			: "REPORT_SENSOR",
 					"data1"			: "0",
 					"data2"			: "1"
-				}
+				},
+				"description"       : "Set value 0 for REPORT_SENSOR, value 0 means disable all reports will be sent to controller"
 			},
 			{
 				"name" 				: "readspec",
@@ -249,8 +388,10 @@
 					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "REPORT_SENSOR"
-				}
+					"type"			: "REPORT_SENSOR",
+					"force"			: "1"
+				},
+				"description"		: "Get status of REPORT_SENSOR for verifying value which we have set before"
 			},
 			{
 				"name" 				: "writespec",
@@ -262,7 +403,8 @@
 					"data0"			: "REPORT_SENSOR",
 					"data1"			: "E1",
 					"data2"			: "1"
-				}
+				},
+				"description"       : "Set value E1 for REPORT_SENSOR, value E1 means enable all reports will be sent to controller include temperature, humidity ,luminance, battery"
 			},
 			{
 				"name" 				: "readspec",
@@ -271,8 +413,10 @@
 					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "REPORT_SENSOR"
-				}
+					"type"			: "REPORT_SENSOR",
+					"force"			: "1"
+				},
+				"description"		: "Get status of REPORT_SENSOR for verifying value which we have set before"
 			},
 			{
 				"name" 				: "writespec",
@@ -284,7 +428,8 @@
 					"data0"			: "TIME_AUTO_REPORT",
 					"data1"			: "05",
 					"data2"			: "1"
-				}
+				},
+				"description"       : "Set value 05 for TIME_AUTO_REPORT, value 05 means report sensor messages will be sent to controller after 5s"
 			},
 			{
 				"name" 				: "readspec",
@@ -293,32 +438,12 @@
 					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "TIME_AUTO_REPORT"
-				}
-			},
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "ONOFF_GROUP",
-					"data1"			: "2F",
-					"data2"			: "1"
-				}
+					"type"			: "TIME_AUTO_REPORT",
+					"force"			: "1"
+				},
+				"description"		: "Get status of TIME_AUTO_REPORT for verifying value which we have set before"
 			},
 
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "ONOFF_GROUP"
-                }
-            },
 			{
                 "name" : "writespec",
                 "input" : {
@@ -327,10 +452,51 @@
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "2F",
+                    "data1"         : "A_ID",
                     "data2"         : "1"
-                }
-            }
+                },
+                "description"		: "Remove associated Z-wave Led device from ONOFF_GROUP."
+            },
+
+            {
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "GET",
+					"type"			: "ONOFF_GROUP",
+					"force"			: "1"
+				},
+				"description"		: "Verify value of removed action"
+			},
+
+			{
+                "name" : "writespec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "REMOVE",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1"
+                },
+                "description"		: "Remove controller from ONOFF_GROUP."
+            },
+
+            {
+				"name" : "readspec",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "ASSOCIATION",
+					"command"		: "GET",
+					"type"			: "ONOFF_GROUP",
+					"force"			: "1"
+				},
+				"description"		: "Verify value of removed action"
+			}
 		]
 	}
 ]

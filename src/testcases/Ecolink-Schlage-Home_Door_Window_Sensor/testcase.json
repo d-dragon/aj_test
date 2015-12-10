@@ -80,6 +80,19 @@
 			{"name" : "set_binary"}
 
 		]
-	}
+	},
 
+	"readspec_takeaction":{
+		"testitems": [
+			{"name" : "read_spec"},
+			{"name" : "listen_notification"}
+		]
+	},
+
+	"controlonoff":{
+		"testitems": [
+			{"name" : "set_binary"},
+			{"name" : "get_binary"}
+		]
+	}
 }

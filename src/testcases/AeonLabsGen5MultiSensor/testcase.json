@@ -43,6 +43,14 @@
 			{"name" : "read_spec"}
 		]
 	},
+
+	"readspec_takeaction":{
+		"testitems": [
+			{"name" : "read_spec"},
+			{"name" : "listen_notification"}
+		]
+	},
+	
 	"writespec":{
 		"testitems": [
 			{"name" : "write_spec"}

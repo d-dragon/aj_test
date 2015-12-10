@@ -1,7 +1,7 @@
 [ 
 	{
-		"testsuit" 					: "AeonLabsGen6MultiSensor",
-				"testcases" :	[
+		"testsuit" 					: "Fibaro Door Window Sensor",
+		"testcases" :	[
 			{
 				"name" : "listdevices",
 				"input" : {

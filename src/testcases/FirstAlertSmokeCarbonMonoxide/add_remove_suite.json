@@ -1,44 +1,48 @@
 [ 
 	{
-		"testsuit" : "First Alert Smoke and Carbon Monoxide",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
+		"testsuit" 					: "First Alert Smoke and Carbon Monoxide",
 		"testcases" :	[
 			{
-				"name" : "listdevices",
-				"input" : {
-					"devicetype"	: "zwave"
-				}
+				"name" 				: "listdevices",
+				"input"			    : {
+				"devicetype"		: "zwave"
+				},
+				"description" 		: "Get list of available devices in the controller"
 			},
+
           	{ 
-				"name" : "removedevice", 
-				"input" : { 
-					"devicetype" 	: "zwave",
-					"id"			: ""
-				}
-			},
-			{ 
-				"name" : "removedevice", 
-				"input" : { 
-					"devicetype" 	: "zwave",
-					"id"			: ""
-				}
+				"name" 				: "removedevice", 
+				"input" 			: { 
+				"devicetype" 		: "zwave",
+				"id"				: ""
+				},
+				"description"		: "Remove device (existed devices or new device we want to add later steps"
 			},
 
 			{ 
-				"name" : "adddevice", 
-				"input" : { 
-					"devicetype" : "zwave" 
-				}
+				"name" 				: "removedevice", 
+				"input" 			: { 
+				"devicetype" 		: "zwave",
+				"id"				: ""
+				},
+				"description"		: "Remove device (existed devices or new device we want to add later steps"
 			},
 
 			{ 
-				"name" : "adddevice", 
-				"input" : { 
-					"devicetype" : "zwave" 
-				}
+				"name" 				: "adddevice", 
+				"input" 			: { 
+				"devicetype" 		: "zwave" 
+				},
+				"description"		: "Add device where we want to test"
+			},
+
+			{ 
+				"name" 				: "adddevice", 
+				"input" 			: { 
+				"devicetype" 		: "zwave" 
+				},
+				"description"		: "Add association device, this device should support basic set (on/off) "
 			}
-
-			
 		]
 	}
 ]
