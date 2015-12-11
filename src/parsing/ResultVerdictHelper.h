@@ -18,6 +18,9 @@ public:
         string              responseMsg;
         string              funcClass;
         string              cmd;
+        string              value;
+        string              force;
+        string              attributeID;
         bool                isValid;
     };
     enum EnumSettingPara{
@@ -74,6 +77,7 @@ private:
      */
     struct LocalTestItemInfo mLocalTestItemInfo[MAXBUFF];
     void SetInvalidAllData();
+    int ComapreSavedData();
 
 };
 

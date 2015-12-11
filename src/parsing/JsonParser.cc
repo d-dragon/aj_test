@@ -301,6 +301,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 				cout << "run test item failed" << endl;
 			}
 			else{
+				LOGCXX("Device ID"<<ti_info->ID);
 				cout << "Matched message: " << worker->GetPoolEleValue(ti_info->MatchedLogIndex) << endl;
 				// TO DO: a test item
 				mVerdictHelper->SaveInfoOfTestItem(tcInputArg, ti_info, worker->GetPoolEleValue(ti_info->MatchedLogIndex));
@@ -309,6 +310,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		}
 		// TO DO: test case
 		mVerdictHelper->DBGPrint();
+		LOGCXX(mVerdictHelper->VerdictResult());
 	 }
 	return status;
 

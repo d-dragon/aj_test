@@ -7,8 +7,17 @@ ResultVerdictHelper::ResultVerdictHelper(){
 ResultVerdictHelper::~ResultVerdictHelper(){
 
 }
+
+int ResultVerdictHelper::VerdictResult(){
+    int ret = 0;
+
+
+    ComapreSavedData();
+    return ret;
+}
+
 /*
-    Function: Save test case info
+    Function: Save test case info, this function support only read_spec and write_spec
               First parameter: save infor of test item
               Second Paramter: save responded msg of that case
     Return: none
@@ -17,6 +26,8 @@ void ResultVerdictHelper::SaveInfoOfTestItem(const json_t *testInput, struct Tes
     enum EnumSettingPara i = MAXBUFF;
     json_t *localValue;
     string readcmd, writecmd, specClass;
+    string data0, data1;
+    data0 = data1 = "";
     int cnt;
     // Verify input parameters
     if (NULL == info )
@@ -89,14 +100,83 @@ void ResultVerdictHelper::SaveInfoOfTestItem(const json_t *testInput, struct Tes
     // Data of class comand (group, configuration type) comparation
 
 
-    // Save data into 3 struct
+    // Parse data from input of test cases
+    switch (i){
+        case FIRST_GET:
+        case THIRD_GET:
+        {
+
+            break;
+        }
+        case SECOND_SET: 
+        {
+            localValue = json_object_get(testInput, "data0");
+            if (NULL == localValue){
+                return;
+            }
+            else{
+                data0 = json_string_value(localValue);
+            }
+
+            localValue = json_object_get(testInput, "data1");
+            if (NULL == localValue){
+                return;
+            }
+            else{
+                data1 = json_string_value(localValue);
+            }
+            break;
+        }
+        default: 
+            break;
+    }
+
 
     mLocalTestItemInfo[i].Signal                    = info->Signal;
     mLocalTestItemInfo[i].Type                      = info->Type;
     mLocalTestItemInfo[i].ID                        = info->ID;
+    mLocalTestItemInfo[i].attributeID               = data0;
+    mLocalTestItemInfo[i].value                     = data1;
     mLocalTestItemInfo[i].funcClass                 = specClass;
     mLocalTestItemInfo[i].responseMsg               = matchedResponseMsg;
     mLocalTestItemInfo[i].isValid                   = true;
+}
+/*
+    Function: saved data in mLocalTestItemInfo
+    Type of compare: exactly
+    Return:
+        1: they are equal
+        0: they are diffrent
+        -1: undetermined/invalid/error
+ */
+int ResultVerdictHelper::ComapreSavedData(){
+    int ret = 0, arraysz, i;
+    size_t index;
+    json_t *respRoot, *localValue, *value;
+    json_error_t jserr;
+
+    i = 0;
+    respRoot = json_loads(mLocalTestItemInfo[THIRD_GET].responseMsg.c_str(), 0, &jserr);
+    if ( NULL == respRoot ){
+        return -1;
+    }
+
+    localValue = json_object_get(respRoot, "value");
+    if (NULL == localValue){
+        if ( NULL != respRoot) json_decref(respRoot);
+        return -1;
+    }
+    else{
+        arraysz =   json_array_size(localValue);
+        json_array_foreach(localValue, index, value) {
+            if (i++ < arraysz){
+                // TO DO compare array between input and value get from responde message.
+            }
+        }
+    }
+
+    if ( NULL != respRoot) json_decref(respRoot);
+    return ret;
 }
 /*
     Function: compare 2 json string input
