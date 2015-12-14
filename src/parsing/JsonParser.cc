@@ -310,7 +310,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		}
 		// TO DO: test case
 		mVerdictHelper->DBGPrint();
-		LOGCXX(mVerdictHelper->VerdictResult());
+		LOGCXX("Result is:~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<mVerdictHelper->VerdictResult()<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	 }
 	return status;
 

@@ -12,7 +12,7 @@ int ResultVerdictHelper::VerdictResult(){
     int ret = 0;
 
 
-    ComapreSavedData();
+    ret = ComapreSavedData();
     return ret;
 }
 
@@ -125,6 +125,14 @@ void ResultVerdictHelper::SaveInfoOfTestItem(const json_t *testInput, struct Tes
             else{
                 data1 = json_string_value(localValue);
             }
+            localValue = json_object_get(testInput, "writecommand");
+            if (NULL == localValue){
+                return;
+            }
+            else{
+                writecmd = json_string_value(localValue);
+            }
+            mLocalTestItemInfo[i].cmd              = writecmd;
             break;
         }
         default: 
@@ -143,38 +151,98 @@ void ResultVerdictHelper::SaveInfoOfTestItem(const json_t *testInput, struct Tes
 }
 /*
     Function: saved data in mLocalTestItemInfo
+                Support: configuration and association only
     Type of compare: exactly
     Return:
+        3: removed successful[Association]
+        2: included successful [Association]
         1: they are equal
-        0: they are diffrent
+        0: they are diffrent (failed in setting up)
         -1: undetermined/invalid/error
  */
 int ResultVerdictHelper::ComapreSavedData(){
-    int ret = 0, arraysz, i;
+    int ret = -1, arraysz, i, pos, posOfNotZero;
     size_t index;
-    json_t *respRoot, *localValue, *value;
+    json_t *respRoot, *localValue, *localNodefollow, *value;
     json_error_t jserr;
+    string respondedValue = "", temp;
+    bool isMatched = false;
 
     i = 0;
+    // Load responded msg
     respRoot = json_loads(mLocalTestItemInfo[THIRD_GET].responseMsg.c_str(), 0, &jserr);
     if ( NULL == respRoot ){
         return -1;
     }
-
+    // Get data from responded Msg
     localValue = json_object_get(respRoot, "value");
-    if (NULL == localValue){
+    localNodefollow = json_object_get(respRoot, "nodefollow");
+    if ( !localValue && !localNodefollow){
         if ( NULL != respRoot) json_decref(respRoot);
         return -1;
     }
-    else{
+    
+    if (0 == mLocalTestItemInfo[THIRD_GET].funcClass.compare(CONFIGURATION)){ //CONFIGURATION command class
         arraysz =   json_array_size(localValue);
+        // Traversal all data in data of responded msg (which is an array)
         json_array_foreach(localValue, index, value) {
             if (i++ < arraysz){
                 // TO DO compare array between input and value get from responde message.
+                LOGCXX("value:["<< i<<"] = "<<json_string_value(value));
+                respondedValue += json_string_value(value);
             }
         }
-    }
+        LOGCXX("value: "<< respondedValue);
+        pos = respondedValue.length() - mLocalTestItemInfo[SECOND_SET].value.length();
+        if (pos < 0){ // Invalid size of value input
+            LOGCXX("Input value is is not correct, value input is: "<< mLocalTestItemInfo[SECOND_SET].value);
+            return -1;
+        }
+        LOGCXX("Position found: "<< pos<< ":"<<respondedValue.substr(pos, string::npos));
+        if ( 0 != respondedValue.compare(pos, std::string::npos, mLocalTestItemInfo[SECOND_SET].value.c_str()) ){
+            return 0;
+        }
+        if ( 0 == pos){ // 2 string are the same size, so they are equal.
+            return 1;
+        }
+       
+        temp.assign(respondedValue.substr(0, pos));
+        LOGCXX("Remained string: "<< temp <<" length: " << temp.length());
+        posOfNotZero = temp.find_first_not_of('0',0);
+        if ( std::string::npos == posOfNotZero ){
+            ret = 1;
+        }
+        else
+            ret = 0;
 
+    }else if (0 == mLocalTestItemInfo[THIRD_GET].funcClass.compare(ASSOCIATION)){
+        arraysz =   json_array_size(localNodefollow);
+        // Traversal all data in data of responded msg (which is an array)
+        json_array_foreach(localNodefollow, index, value) {
+            if (i++ < arraysz){
+                if (0 == mLocalTestItemInfo[SECOND_SET].value.compare(json_string_value(value))){
+                    isMatched = true;
+                }
+            }
+        }
+        if (0 == mLocalTestItemInfo[SECOND_SET].cmd.compare("SET")){
+            if (true == isMatched) 
+                ret = 2; // Associated sucess
+            else 
+                ret = 0;
+        } else
+        if (0 == mLocalTestItemInfo[SECOND_SET].cmd.compare("REMOVE")){
+            if (false == isMatched) 
+                ret = 3; // Remove success
+            else 
+                ret = 0;
+        } else
+            return -1;
+    }else{ // Not support
+        LOGCXX("This kind of message is not supported");
+        ret = -1;
+    }
+        
     if ( NULL != respRoot) json_decref(respRoot);
     return ret;
 }
@@ -367,6 +435,8 @@ void ResultVerdictHelper::DBGPrint(){
         LOGCXX(mLocalTestItemInfo[i].Type);
         LOGCXX(mLocalTestItemInfo[i].ID);
         LOGCXX(mLocalTestItemInfo[i].funcClass);
+        LOGCXX(mLocalTestItemInfo[i].cmd);
+        LOGCXX(mLocalTestItemInfo[i].value);
         LOGCXX(mLocalTestItemInfo[i].responseMsg);
         LOGCXX(mLocalTestItemInfo[i].isValid);
     }

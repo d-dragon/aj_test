@@ -4,6 +4,9 @@
 #include <string>
 
 #define LOGCXX(msg)  (std::cout<< "DBG: "  << msg << std::endl )
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
+
 /*
 *	Session of OnBoarding
 */
@@ -53,5 +56,7 @@ struct TestItemInfo
 #define KEY_CLASS						"class"
 #define SIG_R_SPEC				"read_spec"
 #define SIG_W_SPEC				"write_spec"
+#define CONFIGURATION			"CONFIGURATION"
+#define ASSOCIATION				"ASSOCIATION"
 
 #endif
