@@ -243,6 +243,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 	size_t index;
 	json_t *tcObj;
 	json_t *tcInputArg;
+	json_t *tc_expected_output;
 	const char *tcName = NULL;
 	json_array_foreach(tcRoot, index, tcObj){
 
@@ -264,6 +265,12 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		tcInputArg = json_object_get(tcObj, "input");
 		if(!json_is_object(tcInputArg)){
 			cout << "cannot got input arg object" << endl;
+			return ERROR;
+		}
+		
+		tc_expected_output = json_object_get(tcObj, "expectedoutput");
+		if(!json_is_object(tc_expected_output)) {
+			cout << "got expected output object failed" << endl;
 			return ERROR;
 		}
 		
