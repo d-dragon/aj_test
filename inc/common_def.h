@@ -54,9 +54,23 @@ struct TestItemInfo
 #define KEY_READSPEC_CMD 				"readcommand"
 #define KEY_WRITESPEC_CMD 				"writecommand"
 #define KEY_CLASS						"class"
-#define SIG_R_SPEC				"read_spec"
-#define SIG_W_SPEC				"write_spec"
-#define CONFIGURATION			"CONFIGURATION"
-#define ASSOCIATION				"ASSOCIATION"
+#define SIG_R_SPEC						"read_spec"
+#define SIG_W_SPEC						"write_spec"
+#define CONFIGURATION					"CONFIGURATION"
+#define ASSOCIATION						"ASSOCIATION"
+/*
+        3: removed successful[Association]
+        2: included successful [Association]
+        1: they are equal
+        0: they are diffrent (failed in setting up)
+        -1: undetermined/invalid/error
+*/
+enum RetCodeEnum{
+		ERR_INVALID = -1,
+		NOT_EQUAL	= 0,
+		IS_EQUAL	= 1,
+		ASSOCIATE_OK= 2,
+		REMOVE_OK	= 3
+};
 
 #endif

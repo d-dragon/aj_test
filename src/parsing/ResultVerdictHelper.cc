@@ -8,11 +8,32 @@ ResultVerdictHelper::~ResultVerdictHelper(){
 
 }
 
-int ResultVerdictHelper::VerdictResult(){
-    int ret = 0;
-
-
-    ret = ComapreSavedData();
+int ResultVerdictHelper::VerdictResult(json_t* expectedData, json_t* refValue){
+    int ret = ERR_INVALID;
+    ret = EvaluateOnSavedData();
+    switch (ret) {
+        case ERR_INVALID:
+            LOGCXX("Invalid or undetermined error");
+        break;
+        case NOT_EQUAL:
+            LOGCXX("They are diffrent");
+        break;
+        case IS_EQUAL:
+            LOGCXX("They are the same");
+        break;
+        case ASSOCIATE_OK:
+            LOGCXX("Add associated device is completed");
+        break;
+        case REMOVE_OK:
+            LOGCXX("Remove associated dev is completed");
+        break;
+        default:
+            LOGCXX("undetermined......");
+        break;
+    }
+    LOGCXX(">>>>>>>>>>>>>>>-----------------------");
+    LOGCXX("Compare to expected output: "<<EvaluateExpectationVSSavedData(expectedData));
+    LOGCXX("----------------------->>>>>>>>>>>>>>>");
     return ret;
 }
 
@@ -44,110 +65,114 @@ void ResultVerdictHelper::SaveInfoOfTestItem(const json_t *testInput, struct Tes
         specClass = json_string_value(localValue);
     }
 
-
-
-    if (true == mLocalTestItemInfo[THIRD_GET].isValid) // reset value which are saved
-    {
-        SetInvalidAllData();
-    }
-
-    // Signal comparation
-
-    if (false == mLocalTestItemInfo[SECOND_SET].isValid){ // All signal info are empty
-        if (0 == info->Signal.compare(SIG_W_SPEC)) {    // Handle write_spec
-            i = SECOND_SET;
-        }
-        else if(0 == info->Signal.compare(SIG_R_SPEC)){ // Handle read_spec, 
-            SetInvalidAllData();
-            i = FIRST_GET;
-        }
-        else{ //Not handle other signal
-            SetInvalidAllData();
-            return;
-        }
-    }
-    else {
-        if(0 == info->Signal.compare(SIG_R_SPEC)){// write_specs is existed, save read_specs to compare
-            i = THIRD_GET;
-        } else
-        if(0 == info->Signal.compare(SIG_W_SPEC)){// write_specs is existed, save read_specs to compare
-            SetInvalidAllData();
-            i = SECOND_SET;
-        }
-        else{
-            SetInvalidAllData();
-            return;
-        }
-    }
-
-    //Command class comparation
-    if (true == mLocalTestItemInfo[FIRST_GET].isValid)
-    {
-        if (0 != mLocalTestItemInfo[FIRST_GET].funcClass.compare(specClass)) //Clear all buffer if it does not match to previous class
+    if ((0 == specClass.compare(ASSOCIATION)) || (0 == specClass.compare(CONFIGURATION))){ // ASSOCIATION or CONFIGURATION
+        if (true == mLocalTestItemInfo[THIRD_GET].isValid) // reset value which are saved
         {
             SetInvalidAllData();
-        //    return;
         }
-    }
-    if (true == mLocalTestItemInfo[SECOND_SET].isValid)
-    {
-        if (0 != mLocalTestItemInfo[SECOND_SET].funcClass.compare(specClass)) //Clear all buffer if it does not match to previous class
-        {
-            SetInvalidAllData();
-        //    return;
-        }
-    }
-    // Data of class comand (group, configuration type) comparation
 
+        // Signal comparation
 
-    // Parse data from input of test cases
-    switch (i){
-        case FIRST_GET:
-        case THIRD_GET:
-        {
-
-            break;
-        }
-        case SECOND_SET: 
-        {
-            localValue = json_object_get(testInput, "data0");
-            if (NULL == localValue){
+        if (false == mLocalTestItemInfo[SECOND_SET].isValid){ // All signal info are empty
+            if (0 == info->Signal.compare(SIG_W_SPEC)) {    // Handle write_spec
+                i = SECOND_SET;
+            }
+            else if(0 == info->Signal.compare(SIG_R_SPEC)){ // Handle read_spec,
+                SetInvalidAllData();
+                i = FIRST_GET;
+            }
+            else{ //Not handle other signal
+                SetInvalidAllData();
                 return;
             }
-            else{
-                data0 = json_string_value(localValue);
-            }
-
-            localValue = json_object_get(testInput, "data1");
-            if (NULL == localValue){
-                return;
-            }
-            else{
-                data1 = json_string_value(localValue);
-            }
-            localValue = json_object_get(testInput, "writecommand");
-            if (NULL == localValue){
-                return;
-            }
-            else{
-                writecmd = json_string_value(localValue);
-            }
-            mLocalTestItemInfo[i].cmd              = writecmd;
-            break;
         }
-        default: 
-            break;
+        else {
+            if(0 == info->Signal.compare(SIG_R_SPEC)){// write_specs is existed, save read_specs to compare
+                i = THIRD_GET;
+            } else
+            if(0 == info->Signal.compare(SIG_W_SPEC)){// write_specs is existed, save read_specs to compare
+                SetInvalidAllData();
+                i = SECOND_SET;
+            }
+            else{
+                SetInvalidAllData();
+                return;
+            }
+        }
+
+        //Command class comparation
+        if (true == mLocalTestItemInfo[FIRST_GET].isValid)
+        {
+            if (0 != mLocalTestItemInfo[FIRST_GET].funcClass.compare(specClass)) //Clear all buffer if it does not match to previous class
+            {
+                SetInvalidAllData();
+            //    return;
+            }
+        }
+        if (true == mLocalTestItemInfo[SECOND_SET].isValid)
+        {
+            if (0 != mLocalTestItemInfo[SECOND_SET].funcClass.compare(specClass)) //Clear all buffer if it does not match to previous class
+            {
+                SetInvalidAllData();
+            //    return;
+            }
+        }
+        // Data of class comand (group, configuration type) comparation
+
+
+        // Parse data from input of test cases
+        switch (i){
+            case FIRST_GET:
+            case THIRD_GET:
+            {
+
+                break;
+            }
+            case SECOND_SET:
+            {
+                localValue = json_object_get(testInput, "data0");
+                if (NULL == localValue){
+                    return;
+                }
+                else{
+                    data0 = json_string_value(localValue);
+                }
+
+                localValue = json_object_get(testInput, "data1");
+                if (NULL == localValue){
+                    return;
+                }
+                else{
+                    data1 = json_string_value(localValue);
+                }
+                localValue = json_object_get(testInput, "writecommand");
+                if (NULL == localValue){
+                    return;
+                }
+                else{
+                    writecmd = json_string_value(localValue);
+                }
+                mLocalTestItemInfo[i].cmd              = writecmd;
+                break;
+            }
+            default:
+                break;
+        }
+
+
+        mLocalTestItemInfo[i].Signal                    = info->Signal;
+        mLocalTestItemInfo[i].Type                      = info->Type;
+        mLocalTestItemInfo[i].ID                        = info->ID;
+        mLocalTestItemInfo[i].attributeID               = data0;
+        mLocalTestItemInfo[i].value                     = data1;
+        mLocalTestItemInfo[i].funcClass                 = specClass;
+        mLocalTestItemInfo[i].responseMsg               = matchedResponseMsg;
+        mLocalTestItemInfo[i].isValid                   = true;
+    }
+    else { // Different than ASSOCIATION and CONFIGURATION
+        // TODO
     }
 
-
-    mLocalTestItemInfo[i].Signal                    = info->Signal;
-    mLocalTestItemInfo[i].Type                      = info->Type;
-    mLocalTestItemInfo[i].ID                        = info->ID;
-    mLocalTestItemInfo[i].attributeID               = data0;
-    mLocalTestItemInfo[i].value                     = data1;
-    mLocalTestItemInfo[i].funcClass                 = specClass;
-    mLocalTestItemInfo[i].responseMsg               = matchedResponseMsg;
-    mLocalTestItemInfo[i].isValid                   = true;
 }
 /*
     Function: saved data in mLocalTestItemInfo
@@ -160,7 +185,7 @@ void ResultVerdictHelper::SaveInfoOfTestItem(const json_t *testInput, struct Tes
         0: they are diffrent (failed in setting up)
         -1: undetermined/invalid/error
  */
-int ResultVerdictHelper::ComapreSavedData(){
+int ResultVerdictHelper::EvaluateOnSavedData(){
     int ret = -1, arraysz, i, pos, posOfNotZero;
     size_t index;
     json_t *respRoot, *localValue, *localNodefollow, *value;
@@ -172,16 +197,16 @@ int ResultVerdictHelper::ComapreSavedData(){
     // Load responded msg
     respRoot = json_loads(mLocalTestItemInfo[THIRD_GET].responseMsg.c_str(), 0, &jserr);
     if ( NULL == respRoot ){
-        return -1;
+        return ERR_INVALID;
     }
     // Get data from responded Msg
     localValue = json_object_get(respRoot, "value");
     localNodefollow = json_object_get(respRoot, "nodefollow");
     if ( !localValue && !localNodefollow){
         if ( NULL != respRoot) json_decref(respRoot);
-        return -1;
+        return ERR_INVALID;
     }
-    
+
     if (0 == mLocalTestItemInfo[THIRD_GET].funcClass.compare(CONFIGURATION)){ //CONFIGURATION command class
         arraysz =   json_array_size(localValue);
         // Traversal all data in data of responded msg (which is an array)
@@ -196,7 +221,7 @@ int ResultVerdictHelper::ComapreSavedData(){
         pos = respondedValue.length() - mLocalTestItemInfo[SECOND_SET].value.length();
         if (pos < 0){ // Invalid size of value input
             LOGCXX("Input value is is not correct, value input is: "<< mLocalTestItemInfo[SECOND_SET].value);
-            return -1;
+            return ERR_INVALID;
         }
         LOGCXX("Position found: "<< pos<< ":"<<respondedValue.substr(pos, string::npos));
         if ( 0 != respondedValue.compare(pos, std::string::npos, mLocalTestItemInfo[SECOND_SET].value.c_str()) ){
@@ -205,7 +230,7 @@ int ResultVerdictHelper::ComapreSavedData(){
         if ( 0 == pos){ // 2 string are the same size, so they are equal.
             return 1;
         }
-       
+
         temp.assign(respondedValue.substr(0, pos));
         LOGCXX("Remained string: "<< temp <<" length: " << temp.length());
         posOfNotZero = temp.find_first_not_of('0',0);
@@ -226,23 +251,23 @@ int ResultVerdictHelper::ComapreSavedData(){
             }
         }
         if (0 == mLocalTestItemInfo[SECOND_SET].cmd.compare("SET")){
-            if (true == isMatched) 
+            if (true == isMatched)
                 ret = 2; // Associated sucess
-            else 
+            else
                 ret = 0;
         } else
         if (0 == mLocalTestItemInfo[SECOND_SET].cmd.compare("REMOVE")){
-            if (false == isMatched) 
+            if (false == isMatched)
                 ret = 3; // Remove success
-            else 
+            else
                 ret = 0;
         } else
-            return -1;
+            return ERR_INVALID;
     }else{ // Not support
         LOGCXX("This kind of message is not supported");
-        ret = -1;
+        ret = ERR_INVALID;
     }
-        
+
     if ( NULL != respRoot) json_decref(respRoot);
     return ret;
 }
@@ -259,14 +284,9 @@ int ResultVerdictHelper::Compare2JSONData(const string a, const string b){
     /*
         Local paramter
      */
-    int ret = 0;
-    int total_obj_cnt;
+    int ret = ERR_INVALID;
     json_error_t jsonErr;
-    void *iter;
-    const char *key;
-    struct DeviceInfo devInfo;
-    json_t *jsonrootA = NULL, *jsonrootB = NULL, *valueA, *valueB;
-
+    json_t *jsonrootA = NULL, *jsonrootB = NULL;
     /*
         Processing
      */
@@ -274,30 +294,15 @@ int ResultVerdictHelper::Compare2JSONData(const string a, const string b){
     if ( NULL == jsonrootA )
     {
         LOGCXX("Error while loading string A: "<< jsonErr.text << " at line: " << jsonErr.line << "ResultVerdictHelper::Compare2JSONData");
-        return -1;
+        return ERR_INVALID;
     }
-    total_obj_cnt = json_object_size(jsonrootA);
-    if ( 0 == total_obj_cnt )
-    {
-        LOGCXX("There is no JSON object inside string A");
-        return -1;
-    }
-
     jsonrootB = json_loadb(b.c_str(), b.size(), 0, &jsonErr);
     {
         LOGCXX("Error while loading string B: "<< jsonErr.text << " at line: " << jsonErr.line << "ResultVerdictHelper::Compare2JSONData");
-        return -1;
+        return ERR_INVALID;
     }
-    /*
-        Scan all key of A and compare value of each key in A then compare to corresponding value of the key in B
-     */
-    json_object_foreach(jsonrootA, key, valueA){
-        valueB = json_object_get(jsonrootB, key);
-        ret = json_equal(valueA, valueB);
-        if ( 1 != ret ){
-            return 0; // There is an element is not equal.
-        }
-    }
+
+    Compare2JSONData(jsonrootA, jsonrootB);
     /*
         Releasing
      */
@@ -307,6 +312,54 @@ int ResultVerdictHelper::Compare2JSONData(const string a, const string b){
     if (NULL != jsonrootB){
         json_decref(jsonrootB);
     }
+    return ret;
+}
+int ResultVerdictHelper::Compare2JSONData(json_t* a, const string b){
+    int ret = ERR_INVALID;
+    json_t *jsonrootB = NULL;
+    json_error_t jsonErr;
+    /*
+        Processing
+     */
+    jsonrootB = json_loadb(b.c_str(), b.size(), 0, &jsonErr);
+    if ( NULL == jsonrootB )
+    {
+        LOGCXX("Error while loading string A: "<< jsonErr.text << " at line: " << jsonErr.line << "ResultVerdictHelper::Compare2JSONData");
+        return ERR_INVALID;
+    }
+
+    Compare2JSONData(a, jsonrootB);
+    /*
+        Releasing
+     */
+    if (NULL != jsonrootB){
+        json_decref(jsonrootB);
+    }
+    return ret;
+}
+
+int ResultVerdictHelper::Compare2JSONData(json_t* a, json_t* b){
+    int ret = ERR_INVALID;
+    const char *key;
+    json_t *valueA, *valueB;
+    int total_obj_cnt;
+
+    total_obj_cnt = json_object_size(a);
+    if ( 0 == total_obj_cnt )
+    {
+        LOGCXX("There is no JSON object inside string A");
+        return ERR_INVALID;
+    }
+    /*
+        Scan all key of A and compare value of each key in A then compare to corresponding value of the key in B
+     */
+    json_object_foreach(a, key, valueA){
+        valueB = json_object_get(b, key);
+        ret = json_equal(valueA, valueB);
+        if ( 1 != ret ){
+            return 0; // There is an element is not equal.
+        }
+    };
     return ret;
 }
 /*
@@ -341,7 +394,7 @@ int ResultVerdictHelper::ValidateWriteSpecResult(const string writespecsInput, c
 
 
     //compare configuration
-    
+
 
 
     //compare association
@@ -399,9 +452,9 @@ int ResultVerdictHelper::ConfigurationSetGetCompare(const void* testcaseInput, c
          value = json_object_get(responseMsg, "value");
          switch(size){
             case 1:
-                
+
                 break;
-            case 2: 
+            case 2:
                 break;
             case 4:
 
@@ -414,7 +467,93 @@ int ResultVerdictHelper::ConfigurationSetGetCompare(const void* testcaseInput, c
 
     return ret;
 }
+/*
+    Function: Compare expectedData vs Saved Data,
+                Support: configuration and association only
+    Type of compare: exactly
+    Return:
+        1: they are equal
+        0: they are diffrent (failed in setting up)
+        -1: undetermined/invalid/error
+ */
+int ResultVerdictHelper::EvaluateExpectationVSSavedData(json_t *expectedData){
+    int ret = ERR_INVALID;
+    json_error_t jsonErr;
+    json_t *jsonRoot = NULL;
+    json_t *jsObject;
+    string nodefollow;
 
+    if ( NULL == expectedData){
+        return ERR_INVALID;
+    }
+    /*
+        Processing
+     */
+    jsonRoot = json_loadb(mLocalTestItemInfo[THIRD_GET].responseMsg.c_str(), mLocalTestItemInfo[THIRD_GET].responseMsg.size(), 0, &jsonErr);
+    if ( NULL == jsonRoot )
+    {
+        LOGCXX("Error while loading string A: "<< jsonErr.text << " at line: " << jsonErr.line << "ResultVerdictHelper::Compare2JSONData");
+        return ERR_INVALID;
+    }
+    if( 0 == mLocalTestItemInfo[THIRD_GET].funcClass.compare(ASSOCIATION)){
+        jsObject = json_object_get(expectedData,"nodefollow");
+        if (jsObject == NULL){
+            return ERR_INVALID;
+        }
+        nodefollow = json_string_value(jsObject);
+        ret = EvaluateExpectationofAssociation(nodefollow, jsonRoot);
+    }
+    else if (0 == mLocalTestItemInfo[THIRD_GET].funcClass.compare(CONFIGURATION)){
+        ret = Compare2JSONData(expectedData, jsonRoot);
+    } else{
+        // TODO other class (SENSOR_MULTILEVEL, BATTERY ...)
+    }
+    if ( NULL != jsonRoot){
+        json_decref(jsonRoot);
+        jsonRoot = NULL;
+    }
+    return ret;
+}
+/*
+    Function: Compare nodeExpected ID and respondMsg,
+                Support:  association only
+    Type of compare: exactly
+    Return:
+        1: they are the same expected (Node is not existed if REMOVE, Node is included if SET)
+        0: they are diffrent from expectation
+        -1: undetermined/invalid/error
+ */
+int ResultVerdictHelper::EvaluateExpectationofAssociation(string nodeExpected, json_t* respondMsg){
+    int ret = ERR_INVALID;
+    bool isMatched = false;
+    json_t*value, *nodefollowResp;
+    size_t index;
+
+    nodefollowResp = json_object_get(respondMsg, "nodefollow");
+    if (NULL == nodefollowResp)
+    {
+        return ERR_INVALID;
+    }
+    json_array_foreach(nodefollowResp, index, value) {
+        if (0 == nodeExpected.compare(json_string_value(value))){
+            isMatched = true;
+        }
+    }
+    if (0 == mLocalTestItemInfo[SECOND_SET].cmd.compare("SET")){
+        if (true == isMatched)
+            ret = IS_EQUAL;
+        else
+            ret = NOT_EQUAL;
+    } else
+    if (0 == mLocalTestItemInfo[SECOND_SET].cmd.compare("REMOVE")){
+        if (false == isMatched)
+            ret = IS_EQUAL;
+        else
+            ret = NOT_EQUAL;
+    } else
+        return ERR_INVALID;
+    return ret;
+}
 void ResultVerdictHelper::SetInvalidAllData(){
     for ( int cnt = 0; cnt < MAXBUFF; cnt++)
     {

@@ -30,7 +30,7 @@ JsonParser::~JsonParser(){
 		json_decref(tiRoot);
 	if ( NULL != tcTemplateRoot )
 		json_decref(tcTemplateRoot);
-	if ( NULL != testSuitRoot )	
+	if ( NULL != testSuitRoot )
 		json_decref(testSuitRoot);
 	if ( NULL != mVerdictHelper){
 		delete mVerdictHelper;
@@ -114,17 +114,17 @@ void JsonParser::JSONGetObjectValue(string *inputString, string objectName, stri
 		cout << "found no object" << endl;
 		return;
 	}
-		
+
 	retString = json_string_value(targetObj);
 	if(retString != NULL){
 		output->assign(retString);
 	}
 	json_decref(rootObj);
-	json_decref(targetObj);	
+	json_decref(targetObj);
  }
 
 void JsonParser::JSONGetObjectValue(json_t *inputObj, string objectName, string *output){
-	
+
 	json_t *targetObj;
 	const char *retString;
 
@@ -159,7 +159,7 @@ int JsonParser::startParser(){
 	size_t arrayIndex;
 	int status;
 	json_t *tsObj;
-	
+
 	testSuitRoot = json_load_file(dfTSPath, 0, &err);
 	if ((testSuitRoot == NULL) || !(json_is_array(testSuitRoot))){
 
@@ -194,14 +194,14 @@ int JsonParser::startParser(){
 		}
 
 		status = TestsuitParser(tsObj);
- 
+
 		if(status == ERROR){
 			cout << "Parsed test suit failed" << endl;
 			return status;
 		}
 		//TODO - Stop Alljoyn Client
 		worker->StopAlljoynClient();
-		
+
 	}
 
 	worker->exportStuffToFile("</body></html>");
@@ -217,13 +217,13 @@ int JsonParser::TestsuitParser(json_t *tsObj){
 	int status;
 	const char *tsName;
 	json_t *tcRoot;
-	
+
 
 	tsName = json_string_value(json_object_get(tsObj, "testsuit"));
 	cout << "run test suit: " << tsName << endl;
 
 	//TODO - check test suit validation and more action on testsuit name
-	
+
 	tcRoot = json_object_get(tsObj, "testcases");
 	if(!json_is_array(tcRoot)){
 		return ERROR;
@@ -239,7 +239,7 @@ int JsonParser::TestsuitParser(json_t *tsObj){
 
 int JsonParser::TestCaseCollector(json_t *tcRoot){
 
-	int status;
+	int status, testcaseVerdict;
 	size_t index;
 	json_t *tcObj;
 	json_t *tcInputArg;
@@ -251,7 +251,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			cout << "json format invalid" << endl;
 			return ERROR;
 		}
-		
+
 		tcName = json_string_value(json_object_get(tcObj, "name"));
 		if(tcName == NULL){
 
@@ -260,20 +260,20 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		}
 
 		//TODO - more manipulate testcase name
-		
+
 		cout << "parsing test case: " << tcName << endl;
 		tcInputArg = json_object_get(tcObj, "input");
 		if(!json_is_object(tcInputArg)){
 			cout << "cannot got input arg object" << endl;
 			return ERROR;
 		}
-		
+
 		tc_expected_output = json_object_get(tcObj, "expectedoutput");
 		if(!json_is_object(tc_expected_output)) {
 			cout << "got expected output object failed" << endl;
-			return ERROR;
+			//return ERROR;
 		}
-		
+
 		if (tcTemplateRoot == NULL){
 			tcTemplateRoot = json_load_file(dfTCPath, 0, &err);
 			if(!json_is_object(tcTemplateRoot)){
@@ -289,7 +289,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			cout << "test case template not found" << endl;
 			return ERROR;
 		}
-		
+
 		json_t *tiArray;
 		tiArray = json_object_get(tcTemplateObj, "testitems");
 		if(!json_is_array(tiArray)){
@@ -301,7 +301,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		size_t tiIndex;
 
 		json_array_foreach(tiArray, tiIndex, tiObj){
-			
+
 			TestItemInfo *ti_info;
 			status = TestItemProcessor(tcInputArg, tiObj, &ti_info);
 			if(status == ERROR){
@@ -317,7 +317,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		}
 		// TO DO: test case
 		mVerdictHelper->DBGPrint();
-		LOGCXX("Result is:~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<mVerdictHelper->VerdictResult()<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		testcaseVerdict = mVerdictHelper->VerdictResult(tc_expected_output);
 	 }
 	return status;
 
@@ -333,14 +333,14 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo 
 
 	cout << "proccessing test item: " << tiName << endl;
 	//TODO - manipulate test item name
-	
+
 	tiExObj = getTestItemTemplateObj(tiName.c_str());
 	if(tiExObj == NULL){
 		cout << "test item " << tiName << "not found in template" << endl;
 		return ERROR;
 	}
 
-	size_t index; 
+	size_t index;
 	json_t *tiArgObj;;
 	json_t *inputArgEle;
 	size_t arraySize = 0;
@@ -365,7 +365,7 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo 
 		inputArgEle = json_object_get(inputArg, inputArgName[index]);
 
 		if(json_is_string(inputArgEle)){
-			
+
 			tiArg[index].assign(json_string_value(inputArgEle));
 		}else{
 
@@ -374,7 +374,7 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo 
 
 
 		cout << "index: " << index << " " << inputArgName[index] << ": " << tiArg[index] << endl;
-	
+
 	}
 	worker->executeTestItem(tiName, arraySize, tiArg, ti_info);
 
@@ -470,7 +470,7 @@ int JsonParser::UpdateConfiguration(const char *filePath) {
 	string input_value;
 
 	json_object_foreach(config_root_obj, key, value) {
-		
+
 		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
 		cout << key << " : " << json_string_value(value) << endl;
 		cout << "New value (Press 'Enter' to keep current value): ";
@@ -497,7 +497,7 @@ int JsonParser::GetTestSuiteFileList(const char *dirPath){
 
 	DIR *dir = NULL;
 	struct dirent *dir_node = NULL;
-	
+
 	dir = opendir(dirPath);
 	if (NULL == dir) {
 		closedir(dir);
@@ -507,7 +507,7 @@ int JsonParser::GetTestSuiteFileList(const char *dirPath){
 
 	string file_name;
 	while (NULL != (dir_node = readdir(dir))) {
-	
+
 		/* just only get regular file */
 		if(dir_node->d_type == DT_REG) {
 			file_name.clear();\

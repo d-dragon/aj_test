@@ -58,14 +58,20 @@ public:
      */
     void SaveReadSpecTC(string input, string response);
     /*
+        Compare expected of test cases and saved Data.
+    */
+    int EvaluateExpectationVSSavedData(json_t *expectedData);
+    /*
         Do a verdict
      */
-    int VerdictResult();
+    int VerdictResult(json_t*, json_t* refValue =0);
     void DBGPrint();
 private:
 
     // Exactly comparing 2 Json data
     int Compare2JSONData(const string a, const string b);
+    int Compare2JSONData(json_t* a, const string b);
+    int Compare2JSONData(json_t* a, json_t* b);
     // Compare 2 values, which measurement uncertainty is probabilityVal
     int UncertaintCompare(const string a, const string b, double probabilityVal);
     // To validate write Specs Result, we have to use read_spec to get information. To verify data was setting correct or not.
@@ -77,7 +83,8 @@ private:
      */
     struct LocalTestItemInfo mLocalTestItemInfo[MAXBUFF];
     void SetInvalidAllData();
-    int ComapreSavedData();
+    int EvaluateOnSavedData();
+    int EvaluateExpectationofAssociation(string nodeExpected, json_t* respondMsg);
 
 };
 
