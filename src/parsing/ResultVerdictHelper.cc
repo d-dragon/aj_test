@@ -34,6 +34,8 @@ int ResultVerdictHelper::VerdictResult(json_t* expectedData, json_t* refValue){
     LOGCXX(">>>>>>>>>>>>>>>-----------------------");
     LOGCXX("Compare to expected output: "<<EvaluateExpectationVSSavedData(expectedData));
     LOGCXX("----------------------->>>>>>>>>>>>>>>");
+    // Clear data when verdict completely;
+    SetInvalidAllData();
     return ret;
 }
 
@@ -569,6 +571,9 @@ void ResultVerdictHelper::SetInvalidAllData(){
 void ResultVerdictHelper::DBGPrint(){
     for ( int i = 0; i < MAXBUFF; i++)
     {
+        if (!mLocalTestItemInfo[i].isValid){
+            continue;
+        }
         LOGCXX("ResultVerdictHelper::DBGPrint mLocalTestItemInfo["<<i<<"]" );
         LOGCXX(mLocalTestItemInfo[i].Signal);
         LOGCXX(mLocalTestItemInfo[i].Type);
