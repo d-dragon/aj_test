@@ -10,6 +10,7 @@
 #include "TestWorker.h"
 #include "ResultVerdictHelper.h"
 #define CONFIG_FILE "configuration.json"
+#define REFERENCE_FILE "references.json"
 #define TEST_CASE_FILE "testcase.json"
 using namespace std;
 
@@ -21,7 +22,7 @@ class JsonParser {
 
 		JsonParser(const char *tsPath, const char *tcPath, const char *tiPath, const char *configPath);
 		~JsonParser();
-		int startParser();
+		int startParser(int reference_flag);
 
 		//return string length
 		
@@ -36,27 +37,42 @@ class JsonParser {
 		int GetTestSuiteFileList(const char *dirPath);
 		void PrintConfigurationInfo(const char *filePath);
 		int UpdateConfiguration(const char *filePath);
-		void ApplyPaths(const char *tsPath, const char *tcPath, const char *configPath);
+		void ApplyPaths(const char *tsPath, const char *tcPath, const char *configPath, const char *ref_path);
 
 
 	private:
+		int mReferenceFlag;/*!< Point out the test suite run as a reference or not*/
 		json_t *testSuitRoot;
 		json_error_t err;
 		TestWorker *worker;
 		json_t *tcTemplateRoot;
 		json_t *tiRoot;
+		json_t *mRefJsonRoot;
 		ResultVerdictHelper *mVerdictHelper;
 
 		const char *dfTSPath;
 		const char *dfTCPath;
 		const char *dfTIPath;
 		const char *dfConfigPath;
+		const char *mReferencePath;
 
 		int TestsuitParser(json_t *tsObj);
 		int TestCaseCollector(json_t *tcRoot);
 		int TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo **ti_info);
 		json_t *getTestItemTemplateObj(const char *tiName);
 		int GetWorkerConfiguration(TestWorker *worker, const char *dfConfigPath);
+
+		/**
+		 * Get corresponding reference value from response message.
+		 * Then update it into references.json 
+		 */
+		int UpdateReferenceValue(TestItemInfo *ti_info, string response_msg);
+
+		/**
+		 * This function is specific for SENSOR_MULTILEVEL type which responsible for 
+		 * updating sensor value from response json object to reference json object 
+		 */
+		int ReplaceValueSensorMultilevel(json_t *resp_root, json_t *ref_root, const char *cmd_class, string sensor_type, const char *target_name);
 
 };
 

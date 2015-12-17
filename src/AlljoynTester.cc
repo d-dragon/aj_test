@@ -16,6 +16,7 @@ using namespace std;
 int g_update_config = TRUE;
 int g_run_all = FALSE;
 int g_test_suite_number = 0;
+int g_reference_enabled = FALSE;
 
 static void program_help(char *program_name) {
 	
@@ -25,6 +26,7 @@ static void program_help(char *program_name) {
 	cout << "\t-a, --all\t\tRun all test suite follow prefix number of file name." << endl;
 	cout << "\t-t, --testsuite\t\tChoose specific test suite number." << endl;
 //	cout << "\t-u, --update\t\tUpdate test suite configuration. Default use current value of configuration.json" << endl;
+	cout << "\t-r, --reference\t\tEnable run test suite as a reference" << endl;
 	cout << "\t-v, --version\t\tPrint Version." << endl;
 	cout << "\t-h, --help\t\tPrint Helper." << endl;
 }
@@ -43,13 +45,14 @@ static void parse_options(int argc, char* argv[]) {
 //			{"update",		no_argument,		0,	'u'},
 			{"all",			no_argument,		0,	'a'},
 			{"testsuite",	required_argument,	0,	't'},
+			{"reference",	no_argument,		0,	'r'},
 			{"version",		no_argument,		0,	'v'},
 			{"help",		no_argument,		0,	'h'},
 			{0,				0,					0,	0}
 
 		};
 
-		c =getopt_long(argc, argv,"uat:vh0", long_options, &option_index);
+		c =getopt_long(argc, argv,"uart:vh0", long_options, &option_index);
 		if (c == -1) {
 			break;
 		}
@@ -66,6 +69,9 @@ static void parse_options(int argc, char* argv[]) {
 				g_update_config = FALSE;
 				break;
 */
+			case 'r':
+				g_reference_enabled = TRUE;
+				break;
 			case 'h':
 				program_help(argv[0]);
 				exit(1);
@@ -101,12 +107,15 @@ int main(int argc, char *argv[]){
 	char ts_path[LEN_256B];
 	char tc_path[LEN_256B];
 	char config_path[LEN_256B];
+	char reference_path[LEN_256B];
 	vector<string> ts_list;
 
 
 	parse_options(argc, argv);
 	//cout << g_update_config << g_run_all << g_test_suite_number << argv[optind] << endl;
 	JsonParser *tester = new JsonParser(argv[1], argv[2], "src/testcases/testitem.json", "src/testcases/configuration.json");
+
+	
 	
 	const char * dir_path = argv[optind++];
 	if (NULL == dir_path) {
@@ -125,6 +134,8 @@ int main(int argc, char *argv[]){
 			/* ignore this file */
 			snprintf(tc_path, LEN_256B, "%s/%s", dir_path, tester->mFileList[i].c_str());
 
+		} else if (0 == tester->mFileList[i].compare("references.json")) {
+			snprintf(reference_path, LEN_256B, "%s/%s", dir_path, tester->mFileList[i].c_str());
 		} else {
 			ts_list.push_back(tester->mFileList[i]);
 		}
@@ -135,6 +146,7 @@ int main(int argc, char *argv[]){
 	 */
 	if (0 == found_config_flag) {
 		cout << "found no configuration.json -> create one" << endl;
+		exit(1);
 	} else{
 		cout << "found configuration file" << endl;
 		snprintf(config_path, LEN_256B, "%s/%s", dir_path, CONFIG_FILE);
@@ -174,7 +186,7 @@ int main(int argc, char *argv[]){
 	}
 	snprintf(ts_path, LEN_256B, "%s/%s", dir_path, ts_list[g_test_suite_number -1].c_str());
 
-	tester->ApplyPaths(ts_path, tc_path, config_path);
-	tester->startParser();
+	tester->ApplyPaths(ts_path, tc_path, config_path, reference_path);
+	tester->startParser(g_reference_enabled);
 	return 1;
 }

@@ -105,7 +105,10 @@ B. Description detail:
         $ ./bin/AlljoynClientApp
 	2.3 Run AlljoynTester
 		$ source ./bin/.dev_env
+		Run test suite for device testing
 		$ ./bin/AlljoynTester path_to_testsuite_dir/
+		Run test suite for getting reference 
+		$ ./bin/AlljoynTester -r path_to_reference_testsuite_dir/
 3. Limitation:
 	This guide is made for simple test function of onboarding/about, it may still contain other issue(s).
 

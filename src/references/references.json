@@ -1,0 +1,26 @@
+{
+    "BATTERY": {
+        "batterylevel": "100"
+    },
+    "SENSOR_MULTILEVEL": {
+        "TEMP": {
+            "fahrenheit": 84.900002000000001,
+            "celsius": 29.38889
+        },
+        "HUMI": {
+            "percentage": 35,
+            "absolute_humidity": 9.5199999999999996
+        },
+        "LUMI": {
+            "luminance": 5.0
+        },
+        "UV": {
+            "ultraviolet": 0
+        }
+    },
+    "METER": {
+        "unit": "kWh",
+        "time": 6,
+        "electricmeter": 0.0
+    }
+}

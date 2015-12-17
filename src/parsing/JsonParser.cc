@@ -16,6 +16,7 @@ JsonParser::JsonParser(const char *tsPath, const char *tcPath, const char *tiPat
 	tcTemplateRoot	= NULL;
 	tiRoot			= NULL;
 	worker 			= NULL;
+	mRefJsonRoot	= NULL;
 
 //	dfTSPath = tsPath;
 //	dfTCPath = tcPath;
@@ -154,12 +155,13 @@ json_t *JsonParser::JSONGetObjectFromString(string *inputString, string objectNa
 	return json_object_get(rootObj, objectName.c_str());
 }
 
-int JsonParser::startParser(){
+int JsonParser::startParser(int reference_flag){
 
 	size_t arrayIndex;
 	int status;
 	json_t *tsObj;
 
+	mReferenceFlag = reference_flag;
 	testSuitRoot = json_load_file(dfTSPath, 0, &err);
 	if ((testSuitRoot == NULL) || !(json_is_array(testSuitRoot))){
 
@@ -311,13 +313,26 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 				LOGCXX("Device ID"<<ti_info->ID);
 				cout << "Matched message: " << worker->GetPoolEleValue(ti_info->MatchedLogIndex) << endl;
 				// TO DO: a test item
-				mVerdictHelper->SaveInfoOfTestItem(tcInputArg, ti_info, worker->GetPoolEleValue(ti_info->MatchedLogIndex));
+				/* TODO - update reference value into reference.json */
+				if (1 == mReferenceFlag) {
+					//update reference value
+					LOGCXX("-----------update reference value------------");
+					string response_msg = worker->GetPoolEleValue(ti_info->MatchedLogIndex);
+					cout << "response_msg: " << response_msg << endl;
+					UpdateReferenceValue(ti_info, response_msg);
+				} else {
+
+					mVerdictHelper->SaveInfoOfTestItem(tcInputArg, ti_info, worker->GetPoolEleValue(ti_info->MatchedLogIndex));
+				}
 			}
 			cout << "*************************************************\n" << endl;
 		}
 		// TO DO: test case
-		mVerdictHelper->DBGPrint();
-		testcaseVerdict = mVerdictHelper->VerdictResult(tc_expected_output);
+		if (0 == mReferenceFlag) {
+
+			mVerdictHelper->DBGPrint();
+			testcaseVerdict = mVerdictHelper->VerdictResult(tc_expected_output);
+		}
 	 }
 	return status;
 
@@ -519,9 +534,134 @@ int JsonParser::GetTestSuiteFileList(const char *dirPath){
 	closedir(dir);
 }
 
-void JsonParser::ApplyPaths(const char *tsPath, const char *tcPath, const char *configPath) {
+void JsonParser::ApplyPaths(const char *tsPath, const char *tcPath, const char *configPath, const char *ref_path) {
 
 	dfTSPath = tsPath;
 	dfTCPath = tcPath;
 	dfConfigPath = configPath;
+	mReferencePath = ref_path;
+}
+
+int JsonParser::UpdateReferenceValue(TestItemInfo *ti_info, string response_msg) {
+
+	int status = 0;
+	json_t *command_info_obj, *response_obj;
+
+	/** 
+	 * Determine command class and type of reference value to get suitable field of value
+	 * Because getting value just done by read_spec or read_s_spec. Therefore, we just
+	 * consider these commands.
+	 */
+	if (0 == ti_info->Signal.compare("read_spec") || 0 == ti_info->Signal.compare("read_s_spec")) {
+
+		/**
+		 * Load reference.json once time at executing the first matched test item.
+		 */
+		mRefJsonRoot = json_load_file(mReferencePath, 0, &err);
+		if (NULL == mRefJsonRoot) {
+			LOGCXX("json load reference file failed");
+			return ERROR;
+		}
+		
+		const char *command_class_str, *type_str, *resp_status;
+
+		/* Get response message json object */
+		LOGCXX("type: " << ti_info->Type << " signal: " << ti_info->Signal);
+		response_obj = json_loadb(response_msg.c_str(), response_msg.length(), 0, &err);
+		if (NULL == response_obj) {
+			LOGCXX("load json response message failed");
+			json_decref(mRefJsonRoot);
+			return  ERROR;
+		}
+		resp_status = json_string_value(json_object_get(response_obj, "status"));
+		if (0 == strcmp(resp_status, "successful")) {
+
+			command_info_obj = json_object_get(response_obj, "commandinfo");
+			if (NULL == command_info_obj) {
+				LOGCXX("load commandinfo obj failed");
+				status = ERROR;
+			} else {
+				command_class_str = json_string_value(json_object_get(command_info_obj, "class"));
+				LOGCXX("class: " << command_class_str);
+
+				/* Update new value into references object based on command class */
+				if (0 == strcmp(command_class_str, "BATTERY")) {
+					status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot, command_class_str, "", "batterylevel");
+				} else if (0 == strcmp(command_class_str, "SENSOR_MULTILEVEL")) {
+					string sensor_type_str;
+					JSONGetObjectValue(command_info_obj, "data0", &sensor_type_str);
+					cout << "sensor_type_str = " << sensor_type_str << endl;
+
+					if (0 == sensor_type_str.compare("TEMP")) {
+						status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot,command_class_str, sensor_type_str, "fahrenheit");
+						if (ERROR != status) {
+							status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot, command_class_str, sensor_type_str, "celsius");
+						}
+					} else if (0 == sensor_type_str.compare("HUMI")) {
+						status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot, command_class_str, sensor_type_str, "percentage");
+						if (ERROR != status) {
+							status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot, command_class_str, sensor_type_str, "absolute_humidity");
+						}
+					} else if (0 == sensor_type_str.compare("LUMI")) {
+
+						status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot, command_class_str, sensor_type_str, "luminance");
+					} else if (0 == sensor_type_str.compare("UV")) {
+						status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot, command_class_str, sensor_type_str, "ultraviolet");
+					}
+
+				} else if (0 == strcmp(command_class_str, "METER")) {
+
+					status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot, command_class_str, "", "unit");
+					if (ERROR != status) {
+						status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot, command_class_str, "", "time");
+						if (ERROR != status) {
+							status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot, command_class_str, "", "electricmeter");
+						}
+					}
+				} else {
+					LOGCXX("command class not matched");
+					return ERROR;
+				}
+			}
+		}
+		json_decref(response_obj);
+		
+		if (ERROR != status) {
+
+			status = json_dump_file(mRefJsonRoot, mReferencePath, JSON_INDENT(4) | JSON_PRESERVE_ORDER);
+			if (0 != status) {
+				LOGCXX("dump json object to file failed");
+			} else {
+
+				LOGCXX("Update sensor reference value success");
+			}
+		}
+		json_decref(mRefJsonRoot);
+	}
+
+	return status;
+}
+
+int JsonParser::ReplaceValueSensorMultilevel(json_t *resp_root, json_t *ref_root, const char *cmd_class, string sensor_type, const char *target_name) {
+
+	int status = OK;
+	json_t *target_ref_obj, *source_resp_obj;
+
+	target_ref_obj = json_object_get(ref_root, cmd_class);
+	if (NULL == target_ref_obj) {
+		return ERROR;
+	}
+	if (0 == strcmp(cmd_class, "SENSOR_MULTILEVEL")) {
+
+		target_ref_obj = json_object_get(target_ref_obj, sensor_type.c_str());
+	}
+	source_resp_obj = json_object_get(resp_root, target_name);
+
+	if ((NULL == target_ref_obj) || (NULL == source_resp_obj)) {
+		return ERROR;
+	} else {
+		status = json_object_set(target_ref_obj, target_name, source_resp_obj);
+	}
+	return status;
+
 }
