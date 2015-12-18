@@ -2,6 +2,7 @@
 #define _COMMON_DEP_H_
 #include "alljoyn/onboarding/Onboarding.h"
 #include <string>
+#include <vector>
 
 #define LOGCXX(msg)  (std::cout<< "DBG: "  << msg << std::endl )
 #define MIN(a,b) (((a)<(b))?(a):(b))
@@ -73,4 +74,33 @@ enum RetCodeEnum{
 		REMOVE_OK	= 3
 };
 
+// Data structure to save all information of a test case.
+/*
+	Simulate Json key and array of data
+*/
+
+struct JsonFormatSimulation{
+	std::string 				key;
+	std::vector<std::string> 	value;
+};
+
+struct  TestItem{
+	std::string					name;
+	unsigned short				numOfArg;
+	JsonFormatSimulation		*testItemArg;
+	std::vector<std::string>	testItemLogPool;
+	std::string					matchedRespMsg;
+};
+
+struct TestCaseExectation{
+	JsonFormatSimulation data;
+};
+
+struct TestCase{
+	std::string  				name;
+	unsigned short				numOfTestItem;
+	TestItem 					*testItemInfo;
+	TestCaseExectation			testExpect;
+	std::string					testDesc;
+};
 #endif
