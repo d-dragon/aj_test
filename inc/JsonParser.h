@@ -1,3 +1,6 @@
+/**
+ * @file is responsible for parsing json input file.
+ */
 #ifndef _JSON_PARSER_H_
 #define _JSON_PARSER_H_
 
@@ -14,6 +17,9 @@
 #define TEST_CASE_FILE "testcase.json"
 using namespace std;
 
+/**
+ * %JsonParser is responsible for parsing json input file.
+ */
 class JsonParser {
 
 	public:
@@ -65,6 +71,11 @@ class JsonParser {
 		/**
 		 * Get corresponding reference value from response message.
 		 * Then update it into references.json 
+		 * @param ti_info Test item result information.
+		 * @param response_msg Matched test item response message.
+		 * @return 
+		 *		- #OK If update reference value successfully.
+		 *		- #ERROR Update reference value failed.
 		 */
 		int UpdateReferenceValue(TestItemInfo *ti_info, string response_msg);
 

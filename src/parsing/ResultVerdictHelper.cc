@@ -1,7 +1,9 @@
 #include "ResultVerdictHelper.h"
+#include "JsonParser.h"
 
 ResultVerdictHelper::ResultVerdictHelper(){
    SetInvalidAllData();
+   mInfoLastPosTracker = THIRD_GET + 1;
 }
 
 ResultVerdictHelper::~ResultVerdictHelper(){
@@ -171,8 +173,23 @@ void ResultVerdictHelper::SaveInfoOfTestItem(const json_t *testInput, struct Tes
         mLocalTestItemInfo[i].responseMsg               = matchedResponseMsg;
         mLocalTestItemInfo[i].isValid                   = true;
     }
-    else { // Different than ASSOCIATION and CONFIGURATION
-        // TODO
+    else if ((0 == specClass.compare(METER_CLASS)) || 
+			 (0 == specClass.compare(BATTERY_CLASS)) || 
+			 (0 == specClass.compare(SENSOR_MULTILEVEL_CLASS))){ 
+		/** Store test item information for specific zwave command class (METER, BATTERY, SENSORMULTILEVEL). 
+		 *	These type of infos initialize after  #THIRT_GET in @mLocalTestItemInfo array.
+		 *	These infos will be verdicted based on references.
+		 **/
+
+		json_t *json_response_root;
+
+		if (true == mLocalTestItemInfo[mInfoLastPosTracker].isValid) {
+
+			
+		}
+
+		
+
     }
 
 }

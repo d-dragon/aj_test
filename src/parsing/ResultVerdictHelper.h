@@ -2,6 +2,7 @@
 #define RESULTVERDICTHELPER_H_
 #include <iostream>
 #include <string>
+#include <vector>
 #include <jansson.h>
 #include "common_def.h"
 
@@ -11,6 +12,11 @@ using namespace std;
 class ResultVerdictHelper{
 
 public:
+	/* This struct store response value of sensor unit */
+	struct SensorOutputInfo {
+		string unitName;
+		double value;
+	};
     struct LocalTestItemInfo{
         string              Signal;
         string              Type;
@@ -21,6 +27,7 @@ public:
         string              value;
         string              force;
         string              attributeID;
+		vector<SensorOutputInfo>	sensorInfo; /*!< Each sensor could report few type of sensing value */
         bool                isValid;
     };
     enum EnumSettingPara{
@@ -72,6 +79,7 @@ private:
     int Compare2JSONData(const string a, const string b);
     int Compare2JSONData(json_t* a, const string b);
     int Compare2JSONData(json_t* a, json_t* b);
+	int mInfoLastPosTracker;
     // Compare 2 values, which measurement uncertainty is probabilityVal
     int UncertaintCompare(const string a, const string b, double probabilityVal);
     // To validate write Specs Result, we have to use read_spec to get information. To verify data was setting correct or not.

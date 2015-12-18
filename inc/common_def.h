@@ -58,6 +58,9 @@ struct TestItemInfo
 #define SIG_W_SPEC						"write_spec"
 #define CONFIGURATION					"CONFIGURATION"
 #define ASSOCIATION						"ASSOCIATION"
+#define METER_CLASS						"METER"
+#define	BATTERY_CLASS					"BATTERY" 
+#define SENSOR_MULTILEVEL_CLASS			"SENSOR_MULTILEVEL"
 /*
         3: removed successful[Association]
         2: included successful [Association]
