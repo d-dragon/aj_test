@@ -270,11 +270,6 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			return ERROR;
 		}
 
-		tc_expected_output = json_object_get(tcObj, "expectedoutput");
-		if(!json_is_object(tc_expected_output)) {
-			cout << "got expected output object failed" << endl;
-			//return ERROR;
-		}
 
 		if (tcTemplateRoot == NULL){
 			tcTemplateRoot = json_load_file(dfTCPath, 0, &err);
@@ -299,13 +294,45 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			return ERROR;
 		}
 
+		/* Use struct TestCase to store all neccessary info for verdicting */
 		json_t *tiObj;
 		size_t tiIndex;
+		size_t num_test_item;
 
+		num_test_item  = json_array_size(tiArray);
+		
+		LOGCXX(tcName << "have " << num_test_item << " items");
+			
+		struct TestCase test_case_info;
+		test_case_info.name.assign(tcName);
+		test_case_info.numOfTestItem = (unsigned short)num_test_item;
+		test_case_info.testItemInfo = new TestItem[num_test_item];
+		
+		const char *tc_desc = NULL;
+		tc_desc = json_string_value(json_object_get(tcObj, "description"));
+		if (NULL != tc_desc) {
+			test_case_info.testDesc.assign(tc_desc);
+		}
+		
+		tc_expected_output = json_object_get(tcObj, "expectedoutput");
+		if(!json_is_object(tc_expected_output)) {
+			cout << "got expected output object failed" << endl;
+			//return ERROR;
+		} else {
+#if 0
+			test_case_info.testExpect.numOfObject = json_object_size(tc_expected_output);
+			test_case_info.testExpect.expectedObjs = new JsonFormatSimulation[test_case_info.testExpect.numOfObject];
+			for (int i = 0; i < test_case_info.testExpect.numOfObject; i++) {
+				
+			}
+
+#endif
+		}
+		/* Test item info of test case will be filled out while parsing and processing test item */
 		json_array_foreach(tiArray, tiIndex, tiObj){
 
 			TestItemInfo *ti_info;
-			status = TestItemProcessor(tcInputArg, tiObj, &ti_info);
+			status = TestItemProcessor(tcInputArg, tiObj, &ti_info, &(test_case_info.testItemInfo[tiIndex]));
 			if(status == ERROR){
 				cout << "run test item failed" << endl;
 			}
@@ -333,12 +360,25 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			mVerdictHelper->DBGPrint();
 			testcaseVerdict = mVerdictHelper->VerdictResult(tc_expected_output);
 		}
-	 }
+		/* Debugging - Print all test case info */
+#if 0
+		cout << test_case_info.name << ": " << test_case_info.testDesc << endl << " have " << test_case_info.numOfTestItem << " items" << endl;
+		for (int i = 0; i < test_case_info.numOfTestItem; i++) {
+			cout << test_case_info.testItemInfo[i].name << ": " << test_case_info.testItemInfo[i].numOfArg << " argument" << endl;
+			for (int j = 0; j < test_case_info.testItemInfo[i].numOfArg; j++) {
+				cout << test_case_info.testItemInfo[i].testItemArg[j].key << " : " << test_case_info.testItemInfo[i].testItemArg[j].value[0] << endl;
+			}
+			cout << "response: " << test_case_info.testItemInfo[i].testItemLogPool[test_case_info.testItemInfo[i].matchedRespMsgIndex] << endl;
+		}
+#endif
+		/* Manually deallocate memory of Test case member */
+		DeallocateTestCaseInfo(test_case_info);
+	}
 	return status;
 
 }
 
-int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo **ti_info){
+int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo **ti_info, TestItem *t_test_item){
 
 	int status;
 	string tiName;
@@ -362,7 +402,7 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo 
 	string tmpContent;
 
 	arraySize = json_array_size(tiExObj);
-	string tiArg[arraySize];
+	string tiArg[(int)arraySize];
 	tmpContent.assign("<table border=\"2\" width=\"640\"><col width=\"100\"><col width=\"140\"><col width=\"400\"><tr><th>Test Item</th><td colspan=\"2\">");
 	tmpContent.append(tiName);
 
@@ -372,6 +412,11 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo 
 	worker->exportStuffToFile(tmpContent.c_str());
 	tmpContent.clear();
 	memset(tmp, 0,256);
+
+	/* Collect test item information */
+	t_test_item->name.assign(tiName);
+	t_test_item->numOfArg = (unsigned short)arraySize;
+	t_test_item->testItemArg = new JsonFormatSimulation[t_test_item->numOfArg];
 
 	const char *inputArgName[arraySize];
 	json_array_foreach(tiExObj, index, tiArgObj){
@@ -387,11 +432,15 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo 
 			tiArg[index].assign(json_string_value(json_object_get(tiArgObj, "value")));
 		}
 
+		/* Save Test Item arguments as a json simulation */
+		t_test_item->testItemArg[index].key.assign(inputArgName[index]);
+		t_test_item->testItemArg[index].value.push_back(tiArg[index]);
+		t_test_item->testItemLogPool.reserve(10);
 
 		cout << "index: " << index << " " << inputArgName[index] << ": " << tiArg[index] << endl;
 
 	}
-	worker->executeTestItem(tiName, arraySize, tiArg, ti_info);
+	worker->executeTestItem(tiName, arraySize, tiArg, ti_info, t_test_item);
 
 	for(int i = 0; i < arraySize; i++){
 
@@ -663,5 +712,14 @@ int JsonParser::ReplaceValueSensorMultilevel(json_t *resp_root, json_t *ref_root
 		status = json_object_set(target_ref_obj, target_name, source_resp_obj);
 	}
 	return status;
+
+}
+
+void JsonParser::DeallocateTestCaseInfo(TestCase test_case_info) {
+
+	for (int i = 0; i < test_case_info.numOfTestItem; i++) {
+		delete[] test_case_info.testItemInfo[i].testItemArg;
+	}
+	delete[] test_case_info.testItemInfo;
 
 }

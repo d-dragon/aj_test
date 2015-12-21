@@ -40,7 +40,7 @@ class TestWorker {
 		int startAlljoynClient(const char *serviceId);
 		void StopAlljoynClient();
 		int restartAlljoynClient();
-		int executeTestItem(string testItem, size_t numArg, string tiArg[], TestItemInfo **test_item_info);
+		int executeTestItem(string testItem, size_t numArg, string tiArg[], TestItemInfo **test_item_info, TestItem *t_test_item);
 		static void TIRespMonitor(int respFlag, const char *respMsg, const char *srcPath, const char *member);
 		static int exportStuffToFile(const char* content);
 

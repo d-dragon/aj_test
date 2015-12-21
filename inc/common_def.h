@@ -92,18 +92,19 @@ struct  TestItem{
 	unsigned short				numOfArg;
 	JsonFormatSimulation		*testItemArg;
 	std::vector<std::string>	testItemLogPool;
-	std::string					matchedRespMsg;
+	unsigned int				matchedRespMsgIndex;
 };
 
-struct TestCaseExectation{
-	JsonFormatSimulation data;
+struct TestCaseExpectation{
+	unsigned short			numOfObject;
+	JsonFormatSimulation	*expectedObjs;
 };
 
 struct TestCase{
 	std::string  				name;
 	unsigned short				numOfTestItem;
 	TestItem 					*testItemInfo;
-	TestCaseExectation			testExpect;
+	TestCaseExpectation			testExpect;
 	std::string					testDesc;
 };
 #endif

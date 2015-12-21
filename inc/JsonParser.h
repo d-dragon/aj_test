@@ -64,9 +64,10 @@ class JsonParser {
 
 		int TestsuitParser(json_t *tsObj);
 		int TestCaseCollector(json_t *tcRoot);
-		int TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo **ti_info);
+		int TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo **ti_info, TestItem *t_test_item);
 		json_t *getTestItemTemplateObj(const char *tiName);
 		int GetWorkerConfiguration(TestWorker *worker, const char *dfConfigPath);
+		void DeallocateTestCaseInfo(TestCase test_case_info);
 
 		/**
 		 * Get corresponding reference value from response message.

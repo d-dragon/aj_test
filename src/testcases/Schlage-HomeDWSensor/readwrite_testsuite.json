@@ -4,29 +4,53 @@
 		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee314e4",
 		"testcases" :	[
 
-			{ 
-				"name" : "listdevice", 
-				"input" : { 
-					"devicetype" : "zwave"
-				}
+			{	
+				"name"				: "listdevice",
+				"input" 			: {
+					"devicetype"	: "zwave"
+				},
+				"description" 		: "Get list of available devices in the controller"
 			},
+			
+
 			{ 
 				"name" : "readspec", 
 				"input" : { 
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "BATTERY",
-					"command": "GET",
+					"readcommand": "GET",
 					"force" : "1"
-				}
+				},
+				"description" 		: "Get battery status"
 			},
+
+			{
+                "name" 				: "configuration",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ENABLE_ONOFF",
+                    "data1"         : "FF",
+                    "data2"         : "1",
+                    "type"          : "ENABLE_ONOFF",
+                    "force"			: "1"
+                },
+                "description"		: "Enable basic set",
+                "expectedoutput"		: {
+					"value" 		: "FF" 
+				}
+            },
 			{ 
 				"name" : "writespec", 
 				"input" : { 
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "CONFIGURATION",
-					"command" : "SET",
+					"writecommand" : "SET",
 					"data0" : "ENABLE_ONOFF",
 					"data1" : "FF",
 					"data2" : "1"
@@ -38,7 +62,7 @@
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "CONFIGURATION",
-					"command" : "GET",
+					"readcommand" : "GET",
 					"force" : "1",
 					"type" : "ENABLE_ONOFF"
 				}
@@ -54,7 +78,7 @@
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "ASSOCIATION",
-					"command" : "SET",
+					"writecommand" : "SET",
 					"data0" : "ONOFF_GROUP",
 					"data1" : "32",
 					"data2" : "1"
@@ -66,7 +90,7 @@
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "ASSOCIATION",
-					"command" : "GET",
+					"readcommand" : "GET",
 					"type" : "ONOFF_GROUP",
 					"force" : "1",
 					"time"	: "120"
@@ -80,7 +104,7 @@
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "ASSOCIATION",
-					"command" : "REMOVE",
+					"writecommand" : "REMOVE",
 					"data0" : "ONOFF_GROUP",
 					"data1" : "32",
 					"data2" : "1"
@@ -92,7 +116,7 @@
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "ASSOCIATION",
-					"command" : "GET",
+					"readcommand" : "GET",
 					"type" : "ONOFF_GROUP",
 					"force" : "1"
 				}
@@ -104,7 +128,7 @@
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "ASSOCIATION",
-					"command" : "SET",
+					"writecommand" : "SET",
 					"data0" : "REPORT_GROUP",
 					"data1" : "32",
 					"data2" : "1"
@@ -116,7 +140,7 @@
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "ASSOCIATION",
-					"command" : "GET",
+					"readcommand" : "GET",
 					"type" : "REPORT_GROUP",
 					"force" : "1",
 					"time"	: "120"
@@ -130,7 +154,7 @@
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "ASSOCIATION",
-					"command" : "REMOVE",
+					"writecommand" : "REMOVE",
 					"data0" : "REPORT_GROUP",
 					"data1" : "32",
 					"data2" : "1"
@@ -142,7 +166,7 @@
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "ASSOCIATION",
-					"command" : "GET",
+					"readcommand" : "GET",
 					"type" : "REPORT_GROUP",
 					"force" : "1"
 				}
@@ -154,7 +178,7 @@
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "CONFIGURATION",
-					"command" : "SET",
+					"writecommand" : "SET",
 					"data0" : "ENABLE_ONOFF",
 					"data1" : "0",
 					"data2" : "1"
@@ -166,7 +190,7 @@
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "CONFIGURATION",
-					"command" : "GET",
+					"readcommand" : "GET",
 					"force" : "1",
 					"type" : "ENABLE_ONOFF"
 				}

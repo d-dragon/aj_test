@@ -94,7 +94,7 @@ void TestWorker::StopAlljoynClient(){
 	mTestItemInfo.Signal = "";
 }
 
-int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[], TestItemInfo **test_item_info){
+int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[], TestItemInfo **test_item_info, TestItem *t_test_item){
 
 	
 	QStatus status;
@@ -165,6 +165,14 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[], 
 	cout << "End Log at: " << mTestItemInfo.EndLogIndex << endl;
 	cout << "Matched Log at: " << mTestItemInfo.MatchedLogIndex << endl;
 	
+	/* Save test item response log into the struct */
+	for (int i = mTestItemInfo.StartLogIndex; i <= mTestItemInfo.EndLogIndex; i++) {
+		t_test_item->testItemLogPool.push_back(mLogPool[i]);
+		if (mTestItemInfo.MatchedLogIndex == i) {
+			t_test_item->matchedRespMsgIndex = t_test_item->testItemLogPool.size() - 1;
+		}
+	}
+
 	*test_item_info = &mTestItemInfo;
 	
 	signalRespFlag = 0;

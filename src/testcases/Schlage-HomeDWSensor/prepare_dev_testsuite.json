@@ -24,7 +24,7 @@
 					"devicetype" : "zwave", 
 					"id" : "D_ID",
 					"class" : "BATTERY",
-					"command": "GET",
+					"readcommand": "GET",
 					"force" : "1"
 				}
 			},
