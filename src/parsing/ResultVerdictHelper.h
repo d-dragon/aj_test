@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <jansson.h>
-#include "common_def.h"
+//#include "common_def.h"
 
 using namespace std;
 
@@ -36,6 +36,34 @@ public:
         THIRD_GET           = 2,
         MAXBUFF
     };
+
+    struct SignalNameStructure{
+        SignalNameEnum     val;
+        string             name;
+    };
+    struct SignalTypeStructure{
+        SignalTypeEnum     val;
+        string             name;
+    };
+    struct RWSpecsCommandClassStructure{
+        RWSpecsCmdClassEnum     val;
+        string                  name;
+    };
+    SignalTypeStructure signalTypeStr[3] = {{ZWAVE, "zwave"}, {ZIGBEE, "zigbee"}, {UPNP, "upnp"}};
+    SignalNameStructure signalNameStr[18] = \
+                    {{ADD_DEV,"add_devices"}, {LIST_DEV, "list_devices"}, \
+                    {GET_BIN, "get_binary"}, { SET_BIN, "set_binary"}, \
+                    {READ_SPEC, "read_spec"}, {WRITE_SPEC, "write_spec"}, \
+                    {READ_S_SPEC, "read_s_spec"}, {WRITE_S_SPEC, "write_s_spec"}, \
+                    {REMOVE_DEV, "remove_device"}, {RESET, "reset"}, \
+                    {UPDATE_FIRM, "update_firmware"}, {SET_RULE, "set_rule"}, \
+                    {GET_RULE, "get_rule"}, {RULE_ACT, "rule_actions"}, \
+                    {OPEN_CLOSE_NET, "open_closenetwork"}, {GET_SUBDEV, "get_subdevs"}, \
+                    {ONBOARDING, "onboarding"}, {LISTEN_NOTIFY, "listen_notification"} };
+
+    RWSpecsCommandClassStructure rwSpecsCommandClassStr[4] = {{CONFIGURATION, "CONFIGURATION"}, {ASSOCIATION, "ASSOCIATION"}, \
+                                                        {SENSORMULTILEVEL, "SENSOR_MULTILEVEL"}, {BATTERY, "BATTERY"}};
+
     /*
         Constructor
      */
@@ -94,6 +122,20 @@ private:
     void SetInvalidAllData();
     int EvaluateOnSavedData();
     int EvaluateExpectationofAssociation(string nodeExpected, json_t* respondMsg);
+    SignalTypeEnum GetSignalType(TestCase input, int index = 0);
+    SignalNameEnum GetSignalName(TestCase input, int index = 0);
+    RWSpecsCmdClassEnum GetRWSpecsClass(TestCase input, int index = 0);
+
+    /*
+        Function pointers list
+     */
+    PrivateData* (*funcPtr) (TestCase);
+    vector<FunctionCallbackStructure> funcCBlist = {
+        {ZWAVE, READ_SPEC, CONFIGURATION, funcPtr },
+        {ZWAVE, READ_SPEC, ASSOCIATION, funcPtr },
+        {ZWAVE, WRITE_SPEC, CONFIGURATION, funcPtr },
+        {ZWAVE, WRITE_SPEC, ASSOCIATION, funcPtr }
+    };
 
 };
 

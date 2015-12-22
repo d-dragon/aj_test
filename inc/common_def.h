@@ -57,8 +57,8 @@ struct TestItemInfo
 #define KEY_CLASS						"class"
 #define SIG_R_SPEC						"read_spec"
 #define SIG_W_SPEC						"write_spec"
-#define CONFIGURATION					"CONFIGURATION"
-#define ASSOCIATION						"ASSOCIATION"
+//#define CONFIGURATION					"CONFIGURATION"
+//#define ASSOCIATION						"ASSOCIATION"
 #define METER_CLASS						"METER"
 #define	BATTERY_CLASS					"BATTERY" 
 #define SENSOR_MULTILEVEL_CLASS			"SENSOR_MULTILEVEL"
@@ -121,5 +121,57 @@ struct TestCase{
 	TestCaseExpectation			testExpect;
 	TestCaseReferenceUnit		testRef;
 	std::string					testDesc;
+};
+enum SignalTypeEnum{
+    ZWAVE = 0,
+    ZIGBEE,
+    UPNP,
+    UNKNOWN
+};
+enum SignalNameEnum{
+    ADD_DEV = 0,
+    LIST_DEV,
+    GET_BIN,
+    SET_BIN,
+    READ_SPEC,
+    WRITE_SPEC,
+    READ_S_SPEC,
+    WRITE_S_SPEC,
+    REMOVE_DEV,
+    RESET,
+    UPDATE_FIRM,
+    SET_RULE,
+    GET_RULE,
+    RULE_ACT,
+    OPEN_CLOSE_NET,
+    GET_SUBDEV,
+    ONBOARDING,
+    LISTEN_NOTIFY,
+    UNSUPPORTED
+};
+enum RWSpecsCmdClassEnum{
+    CONFIGURATION = 0,
+    ASSOCIATION,
+    SENSORMULTILEVEL,
+    BATTERY,
+    RESERVED
+};
+/*Function pointers*/
+struct ConfigurationRespMesg{
+
+};
+struct AssociationRespMesg{
+
+};
+union PrivateData{
+    ConfigurationRespMesg   msgConf;
+    AssociationRespMesg     msgAssociate;
+};
+typedef PrivateData* (*myFuncDef)(TestCase);
+struct FunctionCallbackStructure{
+    SignalTypeEnum signalTyp;
+    SignalNameEnum signalName;
+    RWSpecsCmdClassEnum rwCmdClass;
+    myFuncDef   cbFunc;
 };
 #endif

@@ -1,5 +1,7 @@
+#include "common_def.h"
 #include "ResultVerdictHelper.h"
 #include "JsonParser.h"
+
 
 ResultVerdictHelper::ResultVerdictHelper(){
    SetInvalidAllData();
@@ -76,7 +78,7 @@ void ResultVerdictHelper::SaveInfoOfTestItem(const json_t *testInput, struct Tes
         specClass = json_string_value(localValue);
     }
 
-    if ((0 == specClass.compare(ASSOCIATION)) || (0 == specClass.compare(CONFIGURATION))){ // ASSOCIATION or CONFIGURATION
+    if ((0 == specClass.compare("ASSOCIATION")) || (0 == specClass.compare("CONFIGURATION"))){ // f or CONFIGURATION
         if (true == mLocalTestItemInfo[THIRD_GET].isValid) // reset value which are saved
         {
             SetInvalidAllData();
@@ -180,10 +182,10 @@ void ResultVerdictHelper::SaveInfoOfTestItem(const json_t *testInput, struct Tes
         mLocalTestItemInfo[i].responseMsg               = matchedResponseMsg;
         mLocalTestItemInfo[i].isValid                   = true;
     }
-    else if ((0 == specClass.compare(METER_CLASS)) || 
-			 (0 == specClass.compare(BATTERY_CLASS)) || 
-			 (0 == specClass.compare(SENSOR_MULTILEVEL_CLASS))){ 
-		/** Store test item information for specific zwave command class (METER, BATTERY, SENSORMULTILEVEL). 
+    else if ((0 == specClass.compare(METER_CLASS)) ||
+			 (0 == specClass.compare(BATTERY_CLASS)) ||
+			 (0 == specClass.compare(SENSOR_MULTILEVEL_CLASS))){
+		/** Store test item information for specific zwave command class (METER, BATTERY, SENSORMULTILEVEL).
 		 *	These type of infos initialize after  #THIRT_GET in @mLocalTestItemInfo array.
 		 *	These infos will be verdicted based on references.
 		 **/
@@ -192,10 +194,10 @@ void ResultVerdictHelper::SaveInfoOfTestItem(const json_t *testInput, struct Tes
 
 		if (true == mLocalTestItemInfo[mInfoLastPosTracker].isValid) {
 
-			
+
 		}
 
-		
+
 
     }
 
@@ -233,7 +235,7 @@ int ResultVerdictHelper::EvaluateOnSavedData(){
         return ERR_INVALID;
     }
 
-    if (0 == mLocalTestItemInfo[THIRD_GET].funcClass.compare(CONFIGURATION)){ //CONFIGURATION command class
+    if (0 == mLocalTestItemInfo[THIRD_GET].funcClass.compare("CONFIGURATION")){ //CONFIGURATION command class
         arraysz =   json_array_size(localValue);
         // Traversal all data in data of responded msg (which is an array)
         json_array_foreach(localValue, index, value) {
@@ -266,7 +268,7 @@ int ResultVerdictHelper::EvaluateOnSavedData(){
         else
             ret = 0;
 
-    }else if (0 == mLocalTestItemInfo[THIRD_GET].funcClass.compare(ASSOCIATION)){
+    }else if (0 == mLocalTestItemInfo[THIRD_GET].funcClass.compare("ASSOCIATION")){
         arraysz =   json_array_size(localNodefollow);
         // Traversal all data in data of responded msg (which is an array)
         json_array_foreach(localNodefollow, index, value) {
@@ -417,7 +419,7 @@ int ResultVerdictHelper::EvaluateExpectationVSSavedData(json_t *expectedData){
         LOGCXX("Error while loading string A: "<< jsonErr.text << " at line: " << jsonErr.line << "ResultVerdictHelper::Compare2JSONData");
         return ERR_INVALID;
     }
-    if( 0 == mLocalTestItemInfo[THIRD_GET].funcClass.compare(ASSOCIATION)){
+    if( 0 == mLocalTestItemInfo[THIRD_GET].funcClass.compare("ASSOCIATION")){
         jsObject = json_object_get(expectedData,"nodefollow");
         if (jsObject == NULL){
             return ERR_INVALID;
@@ -425,7 +427,7 @@ int ResultVerdictHelper::EvaluateExpectationVSSavedData(json_t *expectedData){
         nodefollow = json_string_value(jsObject);
         ret = EvaluateExpectationofAssociation(nodefollow, jsonRoot);
     }
-    else if (0 == mLocalTestItemInfo[THIRD_GET].funcClass.compare(CONFIGURATION)){
+    else if (0 == mLocalTestItemInfo[THIRD_GET].funcClass.compare("CONFIGURATION")){
         ret = Compare2JSONData(expectedData, jsonRoot);
     } else{
         // TODO other class (SENSOR_MULTILEVEL, BATTERY ...)
@@ -476,6 +478,104 @@ int ResultVerdictHelper::EvaluateExpectationofAssociation(string nodeExpected, j
         return ERR_INVALID;
     return ret;
 }
+
+/*
+    Return type of signal, index use for test item.
+    Return following value:
+        ZWAVE = 0,
+        ZIGBEE,
+        UPNP,
+        UNKNOWN
+*/
+
+SignalTypeEnum ResultVerdictHelper::GetSignalType(TestCase input, int index){
+    SignalTypeEnum ret = UNKNOWN;
+    JsonFormatSimulation *tempTIarg;
+    unsigned short numArgofTI, i, j;
+
+    // Check input value
+    if (input.numOfTestItem < index)
+    {
+        return UNKNOWN;
+    }
+
+    numArgofTI = input.testItemInfo[index].numOfArg;
+    tempTIarg = input.testItemInfo[index].testItemArg;
+
+    for (i = 0; i < numArgofTI; i++){
+        if ( 0 == tempTIarg[i].key.compare("devicetype")){
+            for (j = 0; j < sizeof(signalTypeStr)/sizeof(SignalTypeStructure); j++)
+            {
+                if (0 == tempTIarg[i].value.front().compare(signalTypeStr[i].name)){
+                    // Found a match
+                    return signalTypeStr[i].val;
+                }
+            }
+        }
+    }
+    return ret;
+}
+/*
+    Return signal name, index use for test item.
+    Return following value:
+        data of SignalTypeEnum enumeration
+        ADD_DEV = 0,
+        LIST_DEV,
+        GET_BIN,
+        SET_BIN,
+        ...
+*/
+SignalNameEnum ResultVerdictHelper::GetSignalName(TestCase input, int index){
+    SignalNameEnum ret = UNSUPPORTED;
+    unsigned short i;
+    // Check input value
+    if (input.numOfTestItem < index)
+    {
+        return UNSUPPORTED;
+    }
+    for (i = 0; i < sizeof(signalNameStr)/sizeof(SignalNameStructure); i++){
+        if (0 == signalNameStr[i].name.compare(input.testItemInfo[index].name)){
+            // Found a match
+            return signalNameStr[i].val;
+        }
+    }
+    return ret;
+}
+
+/*
+    Return command class name index use for test item.
+    Return following value:
+    CONFIGURATION = 0,
+    ASSOCIATION,
+    SENSORMULTILEVEL,
+    BATTERY
+*/
+RWSpecsCmdClassEnum ResultVerdictHelper::GetRWSpecsClass(TestCase input, int index){
+    RWSpecsCmdClassEnum ret = RESERVED;
+    JsonFormatSimulation *tempTIarg;
+    unsigned short numArgofTI, i, j;
+
+    // Check input value
+    if (input.numOfTestItem < index)
+    {
+        return RESERVED;
+    }
+    numArgofTI = input.testItemInfo[index].numOfArg;
+    tempTIarg = input.testItemInfo[index].testItemArg;
+    for (j = 0; j < numArgofTI; j++){
+        if (0 != tempTIarg[j].key.compare("class")){
+            continue;
+        }
+        for (i = 0; i < sizeof(rwSpecsCommandClassStr)/sizeof(RWSpecsCommandClassStructure); i++){
+            if (0 == rwSpecsCommandClassStr[i].name.compare(tempTIarg[j].value.front())){
+                // Found a match
+                return rwSpecsCommandClassStr[i].val;
+            }
+        }
+    }
+    return ret;
+}
+
 void ResultVerdictHelper::SetInvalidAllData(){
     for ( int cnt = 0; cnt < MAXBUFF; cnt++)
     {
