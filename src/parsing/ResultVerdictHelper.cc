@@ -41,6 +41,13 @@ int ResultVerdictHelper::VerdictResult(json_t* expectedData, json_t* refValue){
     return ret;
 }
 
+int ResultVerdictHelper::VerdictResult(TestCase test_case_t) {
+
+	int ret = ERR_INVALID;
+
+	return ret;
+}
+
 /*
     Function: Save test case info, this function support only read_spec and write_spec
               First parameter: save infor of test item

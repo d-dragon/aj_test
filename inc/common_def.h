@@ -77,14 +77,22 @@ enum RetCodeEnum{
 		REMOVE_OK	= 3
 };
 
-// Data structure to save all information of a test case.
-/*
-	Simulate Json key and array of data
-*/
+enum VerdictTypeEnum{
+	VERDICT_UNKNOWN		= -1,
+	VERDICT_EXPECTED	= 0,
+	VERDICT_REFERENCE	= 1
+};
 
+// Data structure to save all information of a test case.
+
+/**
+ * Simulate Json key and array of data. 
+ * Each type of data (string, numeric) will be stored by corresponding variable
+ */
 struct JsonFormatSimulation{
 	std::string 				key;
 	std::vector<std::string> 	value;
+	double						numValue;
 };
 
 struct  TestItem{
@@ -100,11 +108,18 @@ struct TestCaseExpectation{
 	JsonFormatSimulation	*expectedObjs;
 };
 
+struct TestCaseReferenceUnit{
+	unsigned short			numOfObject;
+	JsonFormatSimulation	*referenceUnitObjs;
+};
+
 struct TestCase{
 	std::string  				name;
+	int							verdictType;
 	unsigned short				numOfTestItem;
 	TestItem 					*testItemInfo;
 	TestCaseExpectation			testExpect;
+	TestCaseReferenceUnit		testRef;
 	std::string					testDesc;
 };
 #endif

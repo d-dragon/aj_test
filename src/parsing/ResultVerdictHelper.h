@@ -72,6 +72,7 @@ public:
         Do a verdict
      */
     int VerdictResult(json_t*, json_t* refValue =0);
+	int VerdictResult(TestCase test_case_t);
     void DBGPrint();
 private:
 

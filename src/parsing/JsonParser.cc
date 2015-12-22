@@ -246,6 +246,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 	json_t *tcObj;
 	json_t *tcInputArg;
 	json_t *tc_expected_output;
+	json_t *tc_verdict;
 	const char *tcName = NULL;
 	json_array_foreach(tcRoot, index, tcObj){
 
@@ -315,19 +316,79 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		}
 		
 		tc_expected_output = json_object_get(tcObj, "expectedoutput");
-		if(!json_is_object(tc_expected_output)) {
-			cout << "got expected output object failed" << endl;
-			//return ERROR;
-		} else {
+		if(NULL != tc_expected_output) {
+			test_case_info.verdictType = VERDICT_EXPECTED;
+			/* Getting json expected object then fill in test case expectation info */
 #if 0
 			test_case_info.testExpect.numOfObject = json_object_size(tc_expected_output);
 			test_case_info.testExpect.expectedObjs = new JsonFormatSimulation[test_case_info.testExpect.numOfObject];
 			for (int i = 0; i < test_case_info.testExpect.numOfObject; i++) {
 				
 			}
-
 #endif
 		}
+
+		/* Collect verdict information */
+		tc_verdict = json_object_get(tcObj, "verdict");
+		if (NULL != tc_verdict) {
+
+			json_t *verdict_method;
+
+			verdict_method = json_object_get(tc_verdict, "method");
+			if (NULL != verdict_method) {
+				const char *method = json_string_value(verdict_method);
+				if (0 == strcmp("reference", method)) {
+					/**
+					 * Collect reference value then fill in test case reference info.
+					 * If value is "ref", verdict will based on value in references.json,
+					 * which was updated by run reference test suite. 
+					 * Otherwise, verdict will dicectly use value in test suite.
+					 */
+					
+					json_t *verdict_value;
+					test_case_info.verdictType = VERDICT_REFERENCE;
+					verdict_value = json_object_get(tc_verdict, "value");
+					if (NULL != verdict_value) {
+						size_t value_size;
+						const char *value_name;
+						int count_obj = 0;
+						json_t *value_obj;
+						value_size = json_object_size(verdict_value);
+						test_case_info.testRef.numOfObject = value_size;
+						test_case_info.testRef.referenceUnitObjs = new JsonFormatSimulation[value_size];
+						json_object_foreach(verdict_value, value_name, value_obj) {
+							test_case_info.testRef.referenceUnitObjs[count_obj].key.assign(value_name);
+							/* Separately store value as a string or numeric */
+							if (json_is_string(value_obj)) {
+								test_case_info.testRef.referenceUnitObjs[count_obj].value.push_back(json_string_value(value_obj));
+							} else if (json_is_number(value_obj)) {
+								 json_unpack(value_obj, "F", &(test_case_info.testRef.referenceUnitObjs[count_obj].numValue));
+							}
+							count_obj++;
+						}
+
+					}
+					/* Debugging - Print all reference verdict info */
+#if 1
+					cout << "Verdict type: " << test_case_info.verdictType << " - have " << test_case_info.testRef.numOfObject << "object" << endl;
+					for (int i = 0; i < test_case_info.testRef.numOfObject; i++) {
+						if (0 < test_case_info.testRef.referenceUnitObjs[i].value.size()) {
+
+							cout << test_case_info.testRef.referenceUnitObjs[i].value[0] << endl;
+						} else {
+							cout << test_case_info.testRef.referenceUnitObjs[i].numValue << endl;
+						}
+					}
+
+#endif
+				} else if (0 == strcmp("expectation", method)){
+					/* Collect expected value then fill in test case expectation info */
+					
+				}
+
+			}
+		}
+		
 		/* Test item info of test case will be filled out while parsing and processing test item */
 		json_array_foreach(tiArray, tiIndex, tiObj){
 
@@ -719,6 +780,13 @@ void JsonParser::DeallocateTestCaseInfo(TestCase test_case_info) {
 
 	for (int i = 0; i < test_case_info.numOfTestItem; i++) {
 		delete[] test_case_info.testItemInfo[i].testItemArg;
+	}
+	if (VERDICT_REFERENCE == test_case_info.verdictType) {
+
+			delete[] test_case_info.testRef.referenceUnitObjs;
+	} else if (VERDICT_EXPECTED == test_case_info.verdictType) {
+
+			delete[] test_case_info.testExpect.expectedObjs;
 	}
 	delete[] test_case_info.testItemInfo;
 
