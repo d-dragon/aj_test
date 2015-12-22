@@ -43,13 +43,25 @@ int ResultVerdictHelper::VerdictResult(json_t* expectedData, json_t* refValue){
     return ret;
 }
 
-int ResultVerdictHelper::VerdictResult(TestCase test_case_t) {
+int ResultVerdictHelper::VerdictResult(TestCase test_case_t, const char *reference_path) {
 
-	int ret = ERR_INVALID;
+	int ret;
+	
+	if (VERDICT_REFERENCE == test_case_t.verdictType) {
+
+		for (int i = 0; i < test_case_t.numOfTestItem; i++) {
+			ValidateTestItemResult(test_case_t.testRef, test_case_t.testItemInfo[i]);
+
+		}
+	}
+	
 
 	return ret;
 }
 
+void ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, TestItem test_item_t) {
+
+}
 /*
     Function: Save test case info, this function support only read_spec and write_spec
               First parameter: save infor of test item

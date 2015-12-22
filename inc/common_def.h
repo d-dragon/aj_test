@@ -62,6 +62,10 @@ struct TestItemInfo
 #define METER_CLASS						"METER"
 #define	BATTERY_CLASS					"BATTERY" 
 #define SENSOR_MULTILEVEL_CLASS			"SENSOR_MULTILEVEL"
+
+#define VERDICT_FAILED			-1
+#define VERDICT_SUCCESS			0
+
 /*
         3: removed successful[Association]
         2: included successful [Association]
@@ -101,6 +105,7 @@ struct  TestItem{
 	JsonFormatSimulation		*testItemArg;
 	std::vector<std::string>	testItemLogPool;
 	unsigned int				matchedRespMsgIndex;
+	int							verdictResult;
 };
 
 struct TestCaseExpectation{

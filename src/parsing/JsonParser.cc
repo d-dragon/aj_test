@@ -369,7 +369,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 
 					}
 					/* Debugging - Print all reference verdict info */
-#if 1
+#if 0
 					cout << "Verdict type: " << test_case_info.verdictType << " - have " << test_case_info.testRef.numOfObject << "object" << endl;
 					for (int i = 0; i < test_case_info.testRef.numOfObject; i++) {
 						if (0 < test_case_info.testRef.referenceUnitObjs[i].value.size()) {
@@ -386,6 +386,8 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 					
 				}
 
+			} else {
+				test_case_info.verdictType = VERDICT_UNKNOWN;
 			}
 		}
 		
@@ -419,7 +421,13 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		if (0 == mReferenceFlag) {
 
 			mVerdictHelper->DBGPrint();
-			testcaseVerdict = mVerdictHelper->VerdictResult(tc_expected_output);
+			/* Implement temparary verdict reference result */
+			if (VERDICT_REFERENCE == test_case_info.verdictType) {
+				testcaseVerdict = mVerdictHelper->VerdictResult(test_case_info, mReferencePath);
+			} else if (VERDICT_EXPECTED == test_case_info.verdictType){
+
+				testcaseVerdict = mVerdictHelper->VerdictResult(tc_expected_output);
+			}
 		}
 		/* Debugging - Print all test case info */
 #if 0

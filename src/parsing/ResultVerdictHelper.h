@@ -100,7 +100,34 @@ public:
         Do a verdict
      */
     int VerdictResult(json_t*, json_t* refValue =0);
-	int VerdictResult(TestCase test_case_t);
+	
+
+	/**
+	 * Verdict result of test case.
+	 * This is the last step while run a test case. The result depend on 
+	 * defined expected output or an reference (in case of sensing).
+	 * If verdict based on reference, must be pass the path of references.json.
+	 *
+	 * @param test_case_t		Test case information after processed all test item.
+	 * @param reference_path	Path to references.json 
+	 *
+	 * @return 
+	 *		#VERDICT_SUCCESS	If verdict success.
+	 *		#VERDICT_FAILED		Verdict failed.
+	 */
+	int VerdictResult(TestCase test_case_t, const char *reference_path);
+
+	/**
+	 * Validate/verdict test item result
+	 *
+	 * @param test_ref		Reference fields info must be validated.
+	 * @param test_item_t	Struct of test item info.
+	 *
+	 * @return
+	 *		void
+	 */
+	void ValidateTestItemResult(TestCaseReferenceUnit test_ref, TestItem test_item_t);
+
     void DBGPrint();
 private:
 
