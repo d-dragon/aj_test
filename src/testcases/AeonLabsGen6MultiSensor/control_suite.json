@@ -23,8 +23,8 @@
 				"verdict"		: {
 					"method"		: "reference",
 					"value"		: {
-						"fahrenheit"	: 3.201,
-						"celsius"		: 1.000
+						"fahrenheit"	: 89.1234234,
+						"celsius"		: 30.4512 
 					}
 				}
 			},

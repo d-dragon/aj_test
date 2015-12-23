@@ -63,8 +63,7 @@ struct TestItemInfo
 #define	BATTERY_CLASS					"BATTERY" 
 #define SENSOR_MULTILEVEL_CLASS			"SENSOR_MULTILEVEL"
 
-#define VERDICT_FAILED			-1
-#define VERDICT_SUCCESS			0
+
 
 /*
         3: removed successful[Association]
@@ -85,6 +84,14 @@ enum VerdictTypeEnum{
 	VERDICT_UNKNOWN		= -1,
 	VERDICT_EXPECTED	= 0,
 	VERDICT_REFERENCE	= 1
+};
+enum VerdictReturnTypeEnum{
+
+	VERDICT_RET_INPUT_INVALID =		-4, /*!< Test item input invalid */
+	VERDICT_RET_RESP_INVALID,			/*!< Response message info invalid */
+	VERDICT_RET_UNKNOWN,				/*!< Unknown error while verdict */
+	VERDICT_RET_FAILED,					/*!< Verdict result is failed */
+	VERDICT_RET_SUCCESS					/*!< Verdict result is success */
 };
 
 // Data structure to save all information of a test case.

@@ -115,18 +115,8 @@ public:
 	 *		#VERDICT_SUCCESS	If verdict success.
 	 *		#VERDICT_FAILED		Verdict failed.
 	 */
-	int VerdictResult(TestCase test_case_t, const char *reference_path);
+	int VerdictResult(TestCase *test_case_t, const char *reference_path);
 
-	/**
-	 * Validate/verdict test item result
-	 *
-	 * @param test_ref		Reference fields info must be validated.
-	 * @param test_item_t	Struct of test item info.
-	 *
-	 * @return
-	 *		void
-	 */
-	void ValidateTestItemResult(TestCaseReferenceUnit test_ref, TestItem test_item_t);
 
     void DBGPrint();
 private:
@@ -153,6 +143,30 @@ private:
     SignalNameEnum GetSignalName(TestCase input, int index = 0);
     RWSpecsCmdClassEnum GetRWSpecsClass(TestCase input, int index = 0);
 
+	/**
+	 * Validate/verdict test item result
+	 *
+	 * @param test_ref		Reference fields info must be validated.
+	 * @param test_item_t	Struct of test item info.
+	 *
+	 * @return
+	 *		void
+	 */
+	int ValidateTestItemResult(TestCaseReferenceUnit test_ref, TestItem test_item_t, json_t *ref_root);
+
+	/**
+	 * Get test item argument value by key name from test item input argument struct.
+	 *
+	 * @param test_item_t	Test item struct.
+	 * @param key			Name of test item argument.
+	 *
+	 * @return 
+	 *		string value of argument.
+	 */
+	string* GetTIArgumentValueByKey(TestItem test_item_t, string key);
+
+
+	
     /*
         Function pointers list
      */

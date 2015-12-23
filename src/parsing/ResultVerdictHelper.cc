@@ -43,24 +43,207 @@ int ResultVerdictHelper::VerdictResult(json_t* expectedData, json_t* refValue){
     return ret;
 }
 
-int ResultVerdictHelper::VerdictResult(TestCase test_case_t, const char *reference_path) {
+int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *reference_path) {
 
-	int ret;
+	int ret = VERDICT_RET_SUCCESS;
 	
-	if (VERDICT_REFERENCE == test_case_t.verdictType) {
+	if (VERDICT_REFERENCE == test_case_t->verdictType) {
 
-		for (int i = 0; i < test_case_t.numOfTestItem; i++) {
-			ValidateTestItemResult(test_case_t.testRef, test_case_t.testItemInfo[i]);
+		int ref_verdict;
+		json_error_t err;
+		json_t *ref_root;
+
+		ref_root = json_load_file(reference_path, 0, &err);
+		if (NULL == ref_root) {
+			cout << "load references.json failed: " << err.source << " >> " << err.text << endl;
+			return VERDICT_RET_UNKNOWN;
+		}
+
+		/**
+		 * Verdict each test item in test case.
+		 * If there is any failed test item this mean tese case was failed too.
+		 */
+		for (int i = 0; i < test_case_t->numOfTestItem; i++) {
+			ref_verdict = ValidateTestItemResult(test_case_t->testRef, test_case_t->testItemInfo[i], ref_root);
+			test_case_t->testItemInfo[i].verdictResult = ref_verdict;
+			if (VERDICT_RET_SUCCESS != ref_verdict) {
+				ret = ref_verdict;
+			}
+			cout << "verdict result " << ret << endl;
 
 		}
+		json_decref(ref_root);
 	}
 	
-
 	return ret;
 }
 
-void ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, TestItem test_item_t) {
+int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, TestItem test_item_t, json_t *ref_root) {
+	int ret;
 
+	json_t *resp_root;
+	json_error_t err;
+	JsonParser parser(NULL, NULL, NULL, NULL);
+
+
+	/* Load response message as a json object */
+	string resp_msg = test_item_t.testItemLogPool[test_item_t.matchedRespMsgIndex];
+
+	resp_root = json_loads(resp_msg.c_str(), 0, &err);
+	if (NULL == resp_root) {
+		
+		cout << "load json response message failed: " << err.source << " >> " << err.text << endl;
+		return VERDICT_RET_UNKNOWN;
+	}
+
+	/* Validate response message  then verdict the test item result */
+	if ((0 == test_item_t.name.compare("read_spec")) || (0 == test_item_t.name.compare("read_s_spec")))	{
+		string *device_type, *id, *cmd_class, *command, *type;
+		device_type = GetTIArgumentValueByKey(test_item_t, "devicetype");
+		
+		if (NULL == device_type) {
+			cout << "devicetype is invalid" << endl;
+			ret = VERDICT_RET_INPUT_INVALID;
+		} else if (0 == device_type->compare("zwave")) {
+			/* Specific verdict result for zwave device */
+			string resp_device_type, resp_method, resp_id, resp_status;
+
+			parser.JSONGetObjectValue(resp_root, "type", &resp_device_type);
+			parser.JSONGetObjectValue(resp_root, "deviceid", &resp_id);
+			parser.JSONGetObjectValue(resp_root, "method", &resp_method);
+
+			id = GetTIArgumentValueByKey(test_item_t, "id");
+
+			/* Verify device type, id and method */
+			if ((0 != device_type->compare(resp_device_type)) ||
+				/*(0 != id->compare(resp_id)) ||*/
+				((0 != resp_method.compare("read_specR")) && (0 != resp_method.compare("read_s_specR")))) {
+				ret = VERDICT_RET_RESP_INVALID;
+			} else {
+
+				json_t *resp_cmd_info;
+
+				parser.JSONGetObjectValue(resp_root, "status", &resp_status);	
+				if (0 != resp_status.compare("successful")) {
+					ret = VERDICT_RET_FAILED;
+				} else {
+
+					resp_cmd_info = json_object_get(resp_root, "commandinfo");
+					if (NULL == resp_cmd_info) {
+						ret = VERDICT_RET_RESP_INVALID;
+					} else {
+
+						/* Verify command class and sensing type */
+						cmd_class = GetTIArgumentValueByKey(test_item_t, "class");
+						command = GetTIArgumentValueByKey(test_item_t, "readcommand");
+
+						if (NULL == cmd_class ||
+								NULL == command) {
+							ret = VERDICT_RET_INPUT_INVALID;
+						} else {
+							/* Verdict the test item response result */
+							string resp_class, resp_type;
+							if (0 == cmd_class->compare(SENSOR_MULTILEVEL_CLASS)) {
+							
+								type = GetTIArgumentValueByKey(test_item_t, "type");
+								
+								parser.JSONGetObjectValue(resp_cmd_info, "class", &resp_class);
+								parser.JSONGetObjectValue(resp_cmd_info, "data0", &resp_type);
+								
+								if ((0 != cmd_class->compare(resp_class)) || (0 != type->compare(resp_type))) {
+									ret = VERDICT_RET_RESP_INVALID;
+									
+								} else {
+
+									for (int i = 0; i < test_ref.numOfObject; i++) {
+										if (0 < test_ref.referenceUnitObjs[i].value.size())	{
+											/* verdict sensing result by reference in reference.json */
+											json_t *resp_sensing_value;
+											resp_sensing_value = json_object_get(resp_root, test_ref.referenceUnitObjs[i].key.c_str());
+											if (NULL == resp_sensing_value) {
+												/* TODO - Take suitable action in this case */
+												continue;
+											} else {
+												/* Get corresponding reference value to verdict */
+												json_t *json_ref_value_obj;
+												json_ref_value_obj = json_object_get(ref_root, SENSOR_MULTILEVEL_CLASS);
+												json_ref_value_obj = json_object_get(json_ref_value_obj, type->c_str());
+												json_ref_value_obj = json_object_get(json_ref_value_obj, test_ref.referenceUnitObjs[i].key.c_str());
+												
+												if (NULL != json_ref_value_obj) {
+													if (json_is_real(resp_sensing_value) && json_is_real(json_ref_value_obj)) {
+														double sensing_ref, sensing_resp, differential;
+
+														json_unpack(json_ref_value_obj, "F", &sensing_ref);
+														json_unpack(resp_sensing_value, "F", &sensing_resp);
+
+														differential = sensing_ref * 0.1;	
+														cout << "reference = " << sensing_ref << "response = " << sensing_resp << "differential = " << differential << endl;
+
+														if (((sensing_ref - differential) < sensing_resp) &&
+															((sensing_ref + differential) > sensing_resp)) {
+															ret = VERDICT_RET_SUCCESS;
+														} else {
+															ret = VERDICT_RET_FAILED;
+														}
+													}
+												}
+											}
+										} else {
+											/* Use defined reference value in test suite for verdict */
+											cout << "debug" << endl;
+											json_t *json_ref_value_obj;
+											json_ref_value_obj = json_object_get(ref_root, SENSOR_MULTILEVEL_CLASS);
+											json_ref_value_obj = json_object_get(json_ref_value_obj, type->c_str());
+											json_ref_value_obj = json_object_get(json_ref_value_obj, test_ref.referenceUnitObjs[i].key.c_str());
+
+											if (NULL != json_ref_value_obj) {
+												if (json_is_real(json_ref_value_obj)) {
+													double sensing_ref, sensing_resp, differential;
+
+													sensing_resp = test_ref.referenceUnitObjs[i].numValue;
+													json_unpack(json_ref_value_obj, "F", &sensing_ref);
+													differential = sensing_ref * 0.1;	
+													cout << "reference = " << sensing_ref << "response = " << sensing_resp << "differential = " << differential << endl;
+
+													if (((sensing_ref - differential) < sensing_resp) &&
+															((sensing_ref + differential) > sensing_resp)) {
+														ret = VERDICT_RET_SUCCESS;
+													} else {
+														ret = VERDICT_RET_FAILED;
+													}
+												}
+											}
+
+										}
+									}
+								}
+								
+
+							} else if (0 == cmd_class->compare(BATTERY_CLASS)) {
+
+							} else if (0 == cmd_class->compare(METER_CLASS)) {
+
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	json_decref(resp_root);
+
+	return ret;
+}
+string* ResultVerdictHelper::GetTIArgumentValueByKey(TestItem test_item_t, string key) {
+
+	for (int i = 0; i < test_item_t.numOfArg; i++) {
+		if (0 == test_item_t.testItemArg[i].key.compare(key)) {
+			return &(test_item_t.testItemArg[i].value[0]);
+		}
+	}
+	return NULL;
 }
 /*
     Function: Save test case info, this function support only read_spec and write_spec

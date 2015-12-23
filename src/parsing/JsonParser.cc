@@ -423,7 +423,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			mVerdictHelper->DBGPrint();
 			/* Implement temparary verdict reference result */
 			if (VERDICT_REFERENCE == test_case_info.verdictType) {
-				testcaseVerdict = mVerdictHelper->VerdictResult(test_case_info, mReferencePath);
+				testcaseVerdict = mVerdictHelper->VerdictResult(&test_case_info, "src/references/references.json");
 			} else if (VERDICT_EXPECTED == test_case_info.verdictType){
 
 				testcaseVerdict = mVerdictHelper->VerdictResult(tc_expected_output);
