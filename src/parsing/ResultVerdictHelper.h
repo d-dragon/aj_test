@@ -100,18 +100,18 @@ public:
         Do a verdict
      */
     int VerdictResult(json_t*, json_t* refValue =0);
-	
+
 
 	/**
 	 * Verdict result of test case.
-	 * This is the last step while run a test case. The result depend on 
+	 * This is the last step while run a test case. The result depend on
 	 * defined expected output or an reference (in case of sensing).
 	 * If verdict based on reference, must be pass the path of references.json.
 	 *
 	 * @param test_case_t		Test case information after processed all test item.
-	 * @param reference_path	Path to references.json 
+	 * @param reference_path	Path to references.json
 	 *
-	 * @return 
+	 * @return
 	 *		#VERDICT_SUCCESS	If verdict success.
 	 *		#VERDICT_FAILED		Verdict failed.
 	 */
@@ -170,14 +170,24 @@ private:
     /*
         Function pointers list
      */
-    PrivateData* (*funcPtr) (TestCase);
+	typedef void (ResultVerdictHelper::*myFuncDef)(TestCase, PrivateData*);
+	struct FunctionCallbackStructure{
+	    SignalTypeEnum signalTyp;
+	    SignalNameEnum signalName;
+	    RWSpecsCmdClassEnum rwCmdClass;
+	    myFuncDef   cbFunc;
+	};
+    myFuncDef funcPtr;
+	void GetMsgRespRWSpec(PrivateData*, TestCase , int index = 0);
     vector<FunctionCallbackStructure> funcCBlist = {
-        {ZWAVE, READ_SPEC, CONFIGURATION, funcPtr },
+        {ZWAVE, READ_SPEC, CONFIGURATION, funcPtr},
         {ZWAVE, READ_SPEC, ASSOCIATION, funcPtr },
         {ZWAVE, WRITE_SPEC, CONFIGURATION, funcPtr },
         {ZWAVE, WRITE_SPEC, ASSOCIATION, funcPtr }
     };
-
+	string GetValueFromJSON(string json, string obj);
+	vector<string> GetArrayValueFromJSON(string json, string obj);
+	int GetValueFromJSONInterger(string json, string obj);
 };
 
 

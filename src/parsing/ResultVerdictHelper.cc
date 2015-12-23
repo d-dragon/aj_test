@@ -15,6 +15,7 @@ ResultVerdictHelper::~ResultVerdictHelper(){
 int ResultVerdictHelper::VerdictResult(json_t* expectedData, json_t* refValue){
     int ret = ERR_INVALID;
     ret = EvaluateOnSavedData();
+
     switch (ret) {
         case ERR_INVALID:
             LOGCXX("Invalid or undetermined error");
@@ -44,9 +45,9 @@ int ResultVerdictHelper::VerdictResult(json_t* expectedData, json_t* refValue){
 }
 
 int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *reference_path) {
-
 	int ret = VERDICT_RET_SUCCESS;
-	
+    SignalTypeEnum sigtype;
+
 	if (VERDICT_REFERENCE == test_case_t->verdictType) {
 
 		int ref_verdict;
@@ -74,7 +75,30 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
 		}
 		json_decref(ref_root);
 	}
-	
+    else
+    if (VERDICT_EXPECTED == test_case_t->verdictType){
+        sigtype = GetSignalType(*test_case_t,0);
+        switch (sigtype) {
+            case ZWAVE:
+            /*
+                TODO: Evaluate test item
+            */
+
+            /*
+                TODO: Evaluate expected value vs output of test case
+            */
+
+            break;
+            case ZIGBEE:
+            break;
+            case UPNP:
+            break;
+            default:
+                LOGCXX("This type of command is not support now");
+            break;
+        }
+    }
+
 	return ret;
 }
 
@@ -91,7 +115,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 
 	resp_root = json_loads(resp_msg.c_str(), 0, &err);
 	if (NULL == resp_root) {
-		
+
 		cout << "load json response message failed: " << err.source << " >> " << err.text << endl;
 		return VERDICT_RET_UNKNOWN;
 	}
@@ -100,7 +124,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 	if ((0 == test_item_t.name.compare("read_spec")) || (0 == test_item_t.name.compare("read_s_spec")))	{
 		string *device_type, *id, *cmd_class, *command, *type;
 		device_type = GetTIArgumentValueByKey(test_item_t, "devicetype");
-		
+
 		if (NULL == device_type) {
 			cout << "devicetype is invalid" << endl;
 			ret = VERDICT_RET_INPUT_INVALID;
@@ -123,7 +147,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 
 				json_t *resp_cmd_info;
 
-				parser.JSONGetObjectValue(resp_root, "status", &resp_status);	
+				parser.JSONGetObjectValue(resp_root, "status", &resp_status);
 				if (0 != resp_status.compare("successful")) {
 					ret = VERDICT_RET_FAILED;
 				} else {
@@ -144,15 +168,15 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 							/* Verdict the test item response result */
 							string resp_class, resp_type;
 							if (0 == cmd_class->compare(SENSOR_MULTILEVEL_CLASS)) {
-							
+
 								type = GetTIArgumentValueByKey(test_item_t, "type");
-								
+
 								parser.JSONGetObjectValue(resp_cmd_info, "class", &resp_class);
 								parser.JSONGetObjectValue(resp_cmd_info, "data0", &resp_type);
-								
+
 								if ((0 != cmd_class->compare(resp_class)) || (0 != type->compare(resp_type))) {
 									ret = VERDICT_RET_RESP_INVALID;
-									
+
 								} else {
 
 									for (int i = 0; i < test_ref.numOfObject; i++) {
@@ -169,7 +193,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 												json_ref_value_obj = json_object_get(ref_root, SENSOR_MULTILEVEL_CLASS);
 												json_ref_value_obj = json_object_get(json_ref_value_obj, type->c_str());
 												json_ref_value_obj = json_object_get(json_ref_value_obj, test_ref.referenceUnitObjs[i].key.c_str());
-												
+
 												if (NULL != json_ref_value_obj) {
 													if (json_is_real(resp_sensing_value) && json_is_real(json_ref_value_obj)) {
 														double sensing_ref, sensing_resp, differential;
@@ -177,7 +201,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 														json_unpack(json_ref_value_obj, "F", &sensing_ref);
 														json_unpack(resp_sensing_value, "F", &sensing_resp);
 
-														differential = sensing_ref * 0.1;	
+														differential = sensing_ref * 0.1;
 														cout << "reference = " << sensing_ref << "response = " << sensing_resp << "differential = " << differential << endl;
 
 														if (((sensing_ref - differential) < sensing_resp) &&
@@ -203,7 +227,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 
 													sensing_resp = test_ref.referenceUnitObjs[i].numValue;
 													json_unpack(json_ref_value_obj, "F", &sensing_ref);
-													differential = sensing_ref * 0.1;	
+													differential = sensing_ref * 0.1;
 													cout << "reference = " << sensing_ref << "response = " << sensing_resp << "differential = " << differential << endl;
 
 													if (((sensing_ref - differential) < sensing_resp) &&
@@ -218,7 +242,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 										}
 									}
 								}
-								
+
 
 							} else if (0 == cmd_class->compare(BATTERY_CLASS)) {
 
@@ -799,4 +823,177 @@ void ResultVerdictHelper::DBGPrint(){
         LOGCXX(mLocalTestItemInfo[i].responseMsg);
         LOGCXX(mLocalTestItemInfo[i].isValid);
     }
+}
+/*
+    Parse data of test case to fill data of message
+*/
+void ResultVerdictHelper::GetMsgRespRWSpec(PrivateData *outData, TestCase tc, int index){
+    RWSpecsCmdClassEnum rwspecCmdClass;
+    unsigned short i;
+
+    string matchedLogData = tc.testItemInfo[index].testItemLogPool.at(tc.testItemInfo[index].matchedRespMsgIndex);
+
+    rwspecCmdClass = GetRWSpecsClass(tc);
+    switch (rwspecCmdClass) {
+        case CONFIGURATION:
+            LOGCXX("Command class CONFIGURATION");
+            outData->msgConf.type           = GetValueFromJSON(matchedLogData,"type");
+            outData->msgConf.method         = GetValueFromJSON(matchedLogData,"method");
+            outData->msgConf.devID          = GetValueFromJSON(matchedLogData,"deviceid");
+        //    outData->cmdInfo        = GetValueFromJSON(matchedLogData,"commandinfo");
+            outData->msgConf.status         = GetValueFromJSON(matchedLogData,"status");
+            if (0 == outData->msgConf.method.compare("read_specR")){
+                if (0 == outData->msgConf.status.compare("successful")){ // OK case
+                    outData->msgConf.parameter  = GetValueFromJSON(matchedLogData,"parameter");
+                    outData->msgConf.value = GetArrayValueFromJSON(matchedLogData,"value");
+                }else   // Failed case
+                {
+                    outData->msgConf.reason     = GetValueFromJSON(matchedLogData,"reason");
+                }
+            }
+        break;
+        case ASSOCIATION:
+            LOGCXX("Command class ASSOCIATION");
+            outData->msgAssociate.type           = GetValueFromJSON(matchedLogData,"type");
+            outData->msgAssociate.method         = GetValueFromJSON(matchedLogData,"method");
+            outData->msgAssociate.devID          = GetValueFromJSON(matchedLogData,"deviceid");
+        //    outData->cmdInfo        = GetValueFromJSON(matchedLogData,"commandinfo");
+            outData->msgAssociate.status         = GetValueFromJSON(matchedLogData,"status");
+            if (0 == outData->msgAssociate.method.compare("read_specR")){
+                if (0 == outData->msgAssociate.status.compare("successful")){ // OK case
+                    outData->msgAssociate.groupid           = GetValueFromJSONInterger(matchedLogData,"groupid");
+                    outData->msgAssociate.maxnode           = GetValueFromJSONInterger(matchedLogData,"maxnode");
+                    outData->msgAssociate.nodefollow        = GetArrayValueFromJSON(matchedLogData,"nodefollow");
+                }else   // Failed case
+                {
+                    outData->msgAssociate.reason        = GetValueFromJSON(matchedLogData,"reason");
+                }
+            }
+        break;
+        case SENSORMULTILEVEL:
+            LOGCXX("Command class SENSOR MULTILEVEL");
+        break;
+        case BATTERY:
+            LOGCXX("Command class BATTERY");
+
+        break;
+        default:
+            LOGCXX("Command Class is not support now: " << rwspecCmdClass);
+            return;
+        break;
+    }
+}
+
+string ResultVerdictHelper::GetValueFromJSON(string input, string object){
+    string retString = "";
+    json_t *jsonrootB = NULL, *jsVal;
+    json_error_t jsonErr;
+    /*
+        Processing
+     */
+    jsonrootB = json_loadb(input.c_str(), input.size(), 0, &jsonErr);
+    if ( NULL == jsonrootB )
+    {
+        LOGCXX("Error while loading string "<< jsonErr.text << " at line: " << jsonErr.line << "ResultVerdictHelper::GetValueFromJSON");
+        return retString;
+    }
+
+    jsVal = json_object_get(jsonrootB, object.c_str());
+    if ( NULL == jsVal){
+        json_decref(jsonrootB);
+        return retString;
+    }
+
+    if (false == json_is_string(jsVal)){
+        LOGCXX("This data is not a string");
+        json_decref(jsonrootB);
+        return retString;
+    }
+
+    retString = json_string_value(jsVal);
+
+    /*
+        Releasing
+     */
+    if (NULL != jsonrootB){
+        json_decref(jsonrootB);
+    }
+    return retString;
+}
+
+vector<string> ResultVerdictHelper::GetArrayValueFromJSON(string input, string object){
+    std::vector<string> retString;
+    json_t *jsonrootB = NULL, *jsVal, *value;
+    json_error_t jsonErr;
+    size_t arraysz, index;
+    /*
+        Processing
+     */
+    jsonrootB = json_loadb(input.c_str(), input.size(), 0, &jsonErr);
+    if ( NULL == jsonrootB )
+    {
+        LOGCXX("Error while loading string "<< jsonErr.text << " at line: " << jsonErr.line << "ResultVerdictHelper::GetArrayValueFromJSON");
+        return retString;
+    }
+
+    jsVal = json_object_get(jsonrootB, object.c_str());
+    if ( NULL == jsVal){
+        json_decref(jsonrootB);
+        return retString;
+    }
+
+    if (false == json_is_array(jsVal)){
+        LOGCXX("This data is not a array");
+        json_decref(jsonrootB);
+        return retString;
+    }
+    arraysz =   json_array_size(jsVal);
+    // Traversal all data in data of responded msg (which is an array)
+    json_array_foreach(jsVal, index, value) {
+        retString.push_back(json_string_value(value));
+    }
+    /*
+        Releasing
+     */
+    if (NULL != jsonrootB){
+        json_decref(jsonrootB);
+    }
+    return retString;
+}
+
+int ResultVerdictHelper::GetValueFromJSONInterger(string input, string key){
+    int retInt = -1;
+    json_t *jsonrootB = NULL, *jsVal;
+    json_error_t jsonErr;
+    /*
+        Processing
+     */
+    jsonrootB = json_loadb(input.c_str(), input.size(), 0, &jsonErr);
+    if ( NULL == jsonrootB )
+    {
+        LOGCXX("Error while loading string "<< jsonErr.text << " at line: " << jsonErr.line << "ResultVerdictHelper::GetValueFromJSONInterger");
+        return retInt;
+    }
+
+    jsVal = json_object_get(jsonrootB, key.c_str());
+    if ( NULL == jsVal){
+        json_decref(jsonrootB);
+        return retInt;
+    }
+
+    if (false == json_is_integer(jsVal)){
+        LOGCXX("This data is not a number");
+        json_decref(jsonrootB);
+        return retInt;
+    }
+
+    retInt = json_integer_value(jsVal);
+
+    /*
+        Releasing
+     */
+    if (NULL != jsonrootB){
+        json_decref(jsonrootB);
+    }
+    return retInt;
 }

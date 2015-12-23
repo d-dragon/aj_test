@@ -60,7 +60,7 @@ struct TestItemInfo
 //#define CONFIGURATION					"CONFIGURATION"
 //#define ASSOCIATION						"ASSOCIATION"
 #define METER_CLASS						"METER"
-#define	BATTERY_CLASS					"BATTERY" 
+#define	BATTERY_CLASS					"BATTERY"
 #define SENSOR_MULTILEVEL_CLASS			"SENSOR_MULTILEVEL"
 
 
@@ -97,7 +97,7 @@ enum VerdictReturnTypeEnum{
 // Data structure to save all information of a test case.
 
 /**
- * Simulate Json key and array of data. 
+ * Simulate Json key and array of data.
  * Each type of data (string, numeric) will be stored by corresponding variable
  */
 struct JsonFormatSimulation{
@@ -170,20 +170,30 @@ enum RWSpecsCmdClassEnum{
 };
 /*Function pointers*/
 struct ConfigurationRespMesg{
-
+	std::string type;
+	std::string method;
+	std::string devID;
+	std::string cmdInfo;
+	std::string status;
+	std::string reason;
+	std::string parameter;
+	std::vector<std::string> value;
 };
 struct AssociationRespMesg{
-
+	std::string type;
+	std::string method;
+	std::string devID;
+	std::string cmdInfo;
+	std::string status;
+	std::string reason;
+	int groupid;
+	int maxnode;
+	std::vector<std::string> nodefollow;
 };
 union PrivateData{
     ConfigurationRespMesg   msgConf;
     AssociationRespMesg     msgAssociate;
 };
-typedef PrivateData* (*myFuncDef)(TestCase);
-struct FunctionCallbackStructure{
-    SignalTypeEnum signalTyp;
-    SignalNameEnum signalName;
-    RWSpecsCmdClassEnum rwCmdClass;
-    myFuncDef   cbFunc;
-};
+
+
 #endif
