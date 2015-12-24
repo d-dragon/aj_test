@@ -47,7 +47,6 @@ int ResultVerdictHelper::VerdictResult(json_t* expectedData, json_t* refValue){
 int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *reference_path) {
 	int ret = VERDICT_RET_SUCCESS;
     SignalTypeEnum sigtype;
-
 	if (VERDICT_REFERENCE == test_case_t->verdictType) {
 
 		int ref_verdict;
@@ -77,13 +76,14 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
 	}
     else
     if (VERDICT_EXPECTED == test_case_t->verdictType){
+        LOGCXX("GetSignalType");
         sigtype = GetSignalType(*test_case_t,0);
         switch (sigtype) {
             case ZWAVE:
             /*
                 TODO: Evaluate test item
             */
-
+            EvaluationOnExpectation(*test_case_t);
             /*
                 TODO: Evaluate expected value vs output of test case
             */
@@ -836,6 +836,7 @@ void ResultVerdictHelper::GetMsgRespRWSpec(PrivateData *outData, TestCase tc, in
     rwspecCmdClass = GetRWSpecsClass(tc);
     switch (rwspecCmdClass) {
         case CONFIGURATION:
+            outData->cmdClass               = CONFIGURATION;
             LOGCXX("Command class CONFIGURATION");
             outData->msgConf.type           = GetValueFromJSON(matchedLogData,"type");
             outData->msgConf.method         = GetValueFromJSON(matchedLogData,"method");
@@ -851,8 +852,10 @@ void ResultVerdictHelper::GetMsgRespRWSpec(PrivateData *outData, TestCase tc, in
                     outData->msgConf.reason     = GetValueFromJSON(matchedLogData,"reason");
                 }
             }
+
         break;
         case ASSOCIATION:
+            outData->cmdClass               = ASSOCIATION;
             LOGCXX("Command class ASSOCIATION");
             outData->msgAssociate.type           = GetValueFromJSON(matchedLogData,"type");
             outData->msgAssociate.method         = GetValueFromJSON(matchedLogData,"method");
@@ -861,8 +864,8 @@ void ResultVerdictHelper::GetMsgRespRWSpec(PrivateData *outData, TestCase tc, in
             outData->msgAssociate.status         = GetValueFromJSON(matchedLogData,"status");
             if (0 == outData->msgAssociate.method.compare("read_specR")){
                 if (0 == outData->msgAssociate.status.compare("successful")){ // OK case
-                    outData->msgAssociate.groupid           = GetValueFromJSONInterger(matchedLogData,"groupid");
-                    outData->msgAssociate.maxnode           = GetValueFromJSONInterger(matchedLogData,"maxnode");
+                    outData->msgAssociate.groupid           = GetValueFromJSONInteger(matchedLogData,"groupid");
+                    outData->msgAssociate.maxnode           = GetValueFromJSONInteger(matchedLogData,"maxnode");
                     outData->msgAssociate.nodefollow        = GetArrayValueFromJSON(matchedLogData,"nodefollow");
                 }else   // Failed case
                 {
@@ -871,9 +874,11 @@ void ResultVerdictHelper::GetMsgRespRWSpec(PrivateData *outData, TestCase tc, in
             }
         break;
         case SENSORMULTILEVEL:
+            outData->cmdClass               = SENSORMULTILEVEL;
             LOGCXX("Command class SENSOR MULTILEVEL");
         break;
         case BATTERY:
+            outData->cmdClass               = BATTERY;
             LOGCXX("Command class BATTERY");
 
         break;
@@ -882,6 +887,79 @@ void ResultVerdictHelper::GetMsgRespRWSpec(PrivateData *outData, TestCase tc, in
             return;
         break;
     }
+}
+/*
+    Compare configuration and association only
+    Stage A: expectation
+*/
+int ResultVerdictHelper::EvaluationOnExpectation(TestCase tc){
+    int ret, i;
+    PrivateData respData;
+    JsonFormatSimulation *tempData;
+    vector<string> expectedVal, commandVal;
+
+    // Stage A: Evaluate expected and result of the test case
+    // 1. Get responded message of last command in test case
+    GetMsgRespRWSpec(&respData, tc, (tc.numOfTestItem - 1));
+    // 2. Get Expected result
+    switch (respData.cmdClass) {
+        case CONFIGURATION:
+
+            // Get Expected value from test case;
+            tempData    = NULL;
+            for ( i = 0; i< tc.testExpect.numOfObject; i++){
+                if (0 == tc.testExpect.expectedObjs[i].key.compare("value")){
+                    tempData = &tc.testExpect.expectedObjs[i];
+                    break;
+                }
+            }
+            if (NULL != tempData){
+                expectedVal = tempData->value;
+            }
+            //3. Compare.
+            if (expectedVal.size() != respData.msgConf.value.size()){
+                return VERDICT_RET_FAILED;
+            }
+            for (i = 0; i < expectedVal.size(); i++){
+                if (0 != expectedVal.at(i).compare(respData.msgConf.value.at(i))){
+                    return VERDICT_RET_FAILED;
+                }
+            }
+            ret = VERDICT_RET_SUCCESS;
+        break;
+        case ASSOCIATION:
+            commandVal = GetValueOfTestItem(tc.testItemInfo[tc.numOfTestItem - 2], "writecommand");
+            if (0 == commandVal.front().compare("REMOVE")){
+
+            }else
+            if (0 == commandVal.front().compare("SET")){
+
+            }
+        break;
+        case BATTERY:
+        break;
+        case SENSORMULTILEVEL:
+        break;
+        default:
+        break;
+    }
+
+
+
+    return VERDICT_RET_UNKNOWN;
+}
+
+vector<string> ResultVerdictHelper::GetValueOfTestItem(TestItem ti, string key){
+    std::vector<string> ret;
+    int i, size;
+    size = ti.numOfArg;
+    for (i = 0; i < size; i++){
+        if( 0 == ti.testItemArg[i].key.compare(key))
+        {
+            ret = ti.testItemArg[i].value;
+        }
+    }
+    return ret;
 }
 
 string ResultVerdictHelper::GetValueFromJSON(string input, string object){
@@ -961,7 +1039,7 @@ vector<string> ResultVerdictHelper::GetArrayValueFromJSON(string input, string o
     return retString;
 }
 
-int ResultVerdictHelper::GetValueFromJSONInterger(string input, string key){
+int ResultVerdictHelper::GetValueFromJSONInteger(string input, string key){
     int retInt = -1;
     json_t *jsonrootB = NULL, *jsVal;
     json_error_t jsonErr;
@@ -971,7 +1049,7 @@ int ResultVerdictHelper::GetValueFromJSONInterger(string input, string key){
     jsonrootB = json_loadb(input.c_str(), input.size(), 0, &jsonErr);
     if ( NULL == jsonrootB )
     {
-        LOGCXX("Error while loading string "<< jsonErr.text << " at line: " << jsonErr.line << "ResultVerdictHelper::GetValueFromJSONInterger");
+        LOGCXX("Error while loading string "<< jsonErr.text << " at line: " << jsonErr.line << "ResultVerdictHelper::GetValueFromJSONInteger");
         return retInt;
     }
 

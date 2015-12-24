@@ -160,13 +160,13 @@ private:
 	 * @param test_item_t	Test item struct.
 	 * @param key			Name of test item argument.
 	 *
-	 * @return 
+	 * @return
 	 *		string value of argument.
 	 */
 	string* GetTIArgumentValueByKey(TestItem test_item_t, string key);
 
 
-	
+
     /*
         Function pointers list
      */
@@ -179,6 +179,8 @@ private:
 	};
     myFuncDef funcPtr;
 	void GetMsgRespRWSpec(PrivateData*, TestCase , int index = 0);
+    int EvaluationOnExpectation(TestCase);
+    vector<string> GetValueOfTestItem(TestItem, string key);
     vector<FunctionCallbackStructure> funcCBlist = {
         {ZWAVE, READ_SPEC, CONFIGURATION, funcPtr},
         {ZWAVE, READ_SPEC, ASSOCIATION, funcPtr },
@@ -187,7 +189,7 @@ private:
     };
 	string GetValueFromJSON(string json, string obj);
 	vector<string> GetArrayValueFromJSON(string json, string obj);
-	int GetValueFromJSONInterger(string json, string obj);
+	int GetValueFromJSONInteger(string json, string obj);
 };
 
 

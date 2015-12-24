@@ -190,9 +190,10 @@ struct AssociationRespMesg{
 	int maxnode;
 	std::vector<std::string> nodefollow;
 };
-union PrivateData{
+struct PrivateData{
     ConfigurationRespMesg   msgConf;
     AssociationRespMesg     msgAssociate;
+    RWSpecsCmdClassEnum     cmdClass;
 };
 
 
