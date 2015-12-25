@@ -301,20 +301,20 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		size_t num_test_item;
 
 		num_test_item  = json_array_size(tiArray);
-		
+
 		LOGCXX(tcName << "have " << num_test_item << " items");
-			
+
 		struct TestCase test_case_info;
 		test_case_info.name.assign(tcName);
 		test_case_info.numOfTestItem = (unsigned short)num_test_item;
 		test_case_info.testItemInfo = new TestItem[num_test_item];
-		
+
 		const char *tc_desc = NULL;
 		tc_desc = json_string_value(json_object_get(tcObj, "description"));
 		if (NULL != tc_desc) {
 			test_case_info.testDesc.assign(tc_desc);
 		}
-		
+
 		tc_expected_output = json_object_get(tcObj, "expectedoutput");
 		if(NULL != tc_expected_output) {
 			test_case_info.verdictType = VERDICT_EXPECTED;
@@ -323,7 +323,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			test_case_info.testExpect.numOfObject = json_object_size(tc_expected_output);
 			test_case_info.testExpect.expectedObjs = new JsonFormatSimulation[test_case_info.testExpect.numOfObject];
 			for (int i = 0; i < test_case_info.testExpect.numOfObject; i++) {
-				
+
 			}
 #endif
 		}
@@ -341,10 +341,10 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 					/**
 					 * Collect reference value then fill in test case reference info.
 					 * If value is "ref", verdict will based on value in references.json,
-					 * which was updated by run reference test suite. 
+					 * which was updated by run reference test suite.
 					 * Otherwise, verdict will dicectly use value in test suite.
 					 */
-					
+
 					json_t *verdict_value;
 					test_case_info.verdictType = VERDICT_REFERENCE;
 					verdict_value = json_object_get(tc_verdict, "value");
@@ -383,19 +383,21 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 #endif
 				} else if (0 == strcmp("expectation", method)){
 					/* Collect expected value then fill in test case expectation info */
-					
+
 				}
 
 			} else {
 				test_case_info.verdictType = VERDICT_UNKNOWN;
 			}
 		}
-		
+
 		/* Test item info of test case will be filled out while parsing and processing test item */
 		json_array_foreach(tiArray, tiIndex, tiObj){
 
 			TestItemInfo *ti_info;
+            LOGCXX("Call TestItemProcessor, test_case_info.numOfTestItem= " << test_case_info.numOfTestItem);
 			status = TestItemProcessor(tcInputArg, tiObj, &ti_info, &(test_case_info.testItemInfo[tiIndex]));
+            LOGCXX("Call TestItemProcessor Finished");
 			if(status == ERROR){
 				cout << "run test item failed" << endl;
 			}
@@ -665,7 +667,7 @@ int JsonParser::UpdateReferenceValue(TestItemInfo *ti_info, string response_msg)
 	int status = 0;
 	json_t *command_info_obj, *response_obj;
 
-	/** 
+	/**
 	 * Determine command class and type of reference value to get suitable field of value
 	 * Because getting value just done by read_spec or read_s_spec. Therefore, we just
 	 * consider these commands.
@@ -680,7 +682,7 @@ int JsonParser::UpdateReferenceValue(TestItemInfo *ti_info, string response_msg)
 			LOGCXX("json load reference file failed");
 			return ERROR;
 		}
-		
+
 		const char *command_class_str, *type_str, *resp_status;
 
 		/* Get response message json object */
@@ -743,7 +745,7 @@ int JsonParser::UpdateReferenceValue(TestItemInfo *ti_info, string response_msg)
 			}
 		}
 		json_decref(response_obj);
-		
+
 		if (ERROR != status) {
 
 			status = json_dump_file(mRefJsonRoot, mReferencePath, JSON_INDENT(4) | JSON_PRESERVE_ORDER);

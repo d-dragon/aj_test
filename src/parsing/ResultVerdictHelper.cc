@@ -894,6 +894,7 @@ void ResultVerdictHelper::GetMsgRespRWSpec(PrivateData *outData, TestCase tc, in
 */
 int ResultVerdictHelper::EvaluationOnExpectation(TestCase tc){
     int ret, i;
+    bool isIncluded = false;
     PrivateData respData;
     JsonFormatSimulation *tempData;
     vector<string> expectedVal, commandVal;
@@ -928,12 +929,37 @@ int ResultVerdictHelper::EvaluationOnExpectation(TestCase tc){
             ret = VERDICT_RET_SUCCESS;
         break;
         case ASSOCIATION:
+            // Get data from Set command input
             commandVal = GetValueOfTestItem(tc.testItemInfo[tc.numOfTestItem - 2], "writecommand");
+            // Get data from expected info of test case
+            tempData    = NULL;
+            for ( i = 0; i< tc.testExpect.numOfObject; i++){
+                if (0 == tc.testExpect.expectedObjs[i].key.compare("value")){
+                    tempData = &tc.testExpect.expectedObjs[i];
+                    break;
+                }
+            }
+            if (NULL != tempData){
+                expectedVal = tempData->value;
+            }
+            //Compare expected data and respond
+            for (i = 0; i < respData.msgAssociate.nodefollow.size(); i++ ){
+                if (0 == expectedVal.front().compare(respData.msgAssociate.nodefollow.at(i))){
+                    isIncluded = true;
+                }
+            }
+            // make a verdict
             if (0 == commandVal.front().compare("REMOVE")){
-
+                if (isIncluded){
+                    return VERDICT_RET_FAILED;
+                }
+                return VERDICT_RET_SUCCESS;
             }else
             if (0 == commandVal.front().compare("SET")){
-
+                if (!isIncluded){
+                    return VERDICT_RET_FAILED;
+                }
+                return VERDICT_RET_SUCCESS;
             }
         break;
         case BATTERY:

@@ -173,7 +173,7 @@ struct ConfigurationRespMesg{
 	std::string type;
 	std::string method;
 	std::string devID;
-	std::string cmdInfo;
+	std::string cmdInfo;// Not parse this info yet
 	std::string status;
 	std::string reason;
 	std::string parameter;
@@ -183,7 +183,7 @@ struct AssociationRespMesg{
 	std::string type;
 	std::string method;
 	std::string devID;
-	std::string cmdInfo;
+	std::string cmdInfo;// Not parse this info yet
 	std::string status;
 	std::string reason;
 	int groupid;
