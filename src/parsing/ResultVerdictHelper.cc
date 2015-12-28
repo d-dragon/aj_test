@@ -48,7 +48,6 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
 	int ret = VERDICT_RET_SUCCESS;
     SignalTypeEnum sigtype;
 	if (VERDICT_REFERENCE == test_case_t->verdictType) {
-
 		int ref_verdict;
 		json_error_t err;
 		json_t *ref_root;
@@ -76,29 +75,37 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
 	}
     else
     if (VERDICT_EXPECTED == test_case_t->verdictType){
-        LOGCXX("GetSignalType");
         sigtype = GetSignalType(*test_case_t,0);
+        LOGCXX("Signal type: "<< sigtype );
         switch (sigtype) {
             case ZWAVE:
-            /*
-                TODO: Evaluate test item
-            */
-            EvaluationOnExpectation(*test_case_t);
-            /*
-                TODO: Evaluate expected value vs output of test case
-            */
-
+            LOGCXX("EvaluationOnExpectation");
+                switch (EvaluationOnExpectation(*test_case_t)) {
+                    case 	VERDICT_RET_INPUT_INVALID: /*!< Test item input invalid */
+                        std::cout<<"=======>>>>>>>>>>>>>>>>Return value VERDICT_RET_INPUT_INVALID"<<std::endl;
+                    break;
+                    case	VERDICT_RET_RESP_INVALID:			/*!< Response message info invalid */
+                        std::cout<<"=======>>>>>>>>>>>>>>>>Return value VERDICT_RET_RESP_INVALID"<<std::endl;
+                    break;
+                    case	VERDICT_RET_UNKNOWN:				/*!< Unknown error while verdict */
+                        std::cout<<"=======>>>>>>>>>>>>>>>>Return value VERDICT_RET_UNKNOWN"<<std::endl;
+                    break;
+                    case	VERDICT_RET_FAILED:					/*!< Verdict result is failed */
+                        std::cout<<"=======>>>>>>>>>>>>>>>>Return value VERDICT_RET_FAILED"<<std::endl;
+                    break;
+                    case	VERDICT_RET_SUCCESS:					/*!< Verdict result is success */
+                        std::cout<<"=======>>>>>>>>>>>>>>>>Return value VERDICT_RET_SUCCESS"<<std::endl;
+                    break;
+                }
             break;
             case ZIGBEE:
-            break;
             case UPNP:
-            break;
             default:
                 LOGCXX("This type of command is not support now");
             break;
         }
     }
-
+    LOGCXX("ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *reference_path) done!!!!!!!");
 	return ret;
 }
 
@@ -837,7 +844,6 @@ void ResultVerdictHelper::GetMsgRespRWSpec(PrivateData *outData, TestCase tc, in
     switch (rwspecCmdClass) {
         case CONFIGURATION:
             outData->cmdClass               = CONFIGURATION;
-            LOGCXX("Command class CONFIGURATION");
             outData->msgConf.type           = GetValueFromJSON(matchedLogData,"type");
             outData->msgConf.method         = GetValueFromJSON(matchedLogData,"method");
             outData->msgConf.devID          = GetValueFromJSON(matchedLogData,"deviceid");
@@ -855,8 +861,7 @@ void ResultVerdictHelper::GetMsgRespRWSpec(PrivateData *outData, TestCase tc, in
 
         break;
         case ASSOCIATION:
-            outData->cmdClass               = ASSOCIATION;
-            LOGCXX("Command class ASSOCIATION");
+            outData->cmdClass                    = ASSOCIATION;
             outData->msgAssociate.type           = GetValueFromJSON(matchedLogData,"type");
             outData->msgAssociate.method         = GetValueFromJSON(matchedLogData,"method");
             outData->msgAssociate.devID          = GetValueFromJSON(matchedLogData,"deviceid");
@@ -898,14 +903,12 @@ int ResultVerdictHelper::EvaluationOnExpectation(TestCase tc){
     PrivateData respData;
     JsonFormatSimulation *tempData;
     vector<string> expectedVal, commandVal;
-
     // Stage A: Evaluate expected and result of the test case
     // 1. Get responded message of last command in test case
     GetMsgRespRWSpec(&respData, tc, (tc.numOfTestItem - 1));
     // 2. Get Expected result
     switch (respData.cmdClass) {
         case CONFIGURATION:
-
             // Get Expected value from test case;
             tempData    = NULL;
             for ( i = 0; i< tc.testExpect.numOfObject; i++){
@@ -914,8 +917,13 @@ int ResultVerdictHelper::EvaluationOnExpectation(TestCase tc){
                     break;
                 }
             }
+            // Validate values
             if (NULL != tempData){
                 expectedVal = tempData->value;
+            }
+            if ( 0 == expectedVal.size())
+            {
+                return VERDICT_RET_INPUT_INVALID;
             }
             //3. Compare.
             if (expectedVal.size() != respData.msgConf.value.size()){
@@ -926,21 +934,31 @@ int ResultVerdictHelper::EvaluationOnExpectation(TestCase tc){
                     return VERDICT_RET_FAILED;
                 }
             }
-            ret = VERDICT_RET_SUCCESS;
+            return VERDICT_RET_SUCCESS;
         break;
         case ASSOCIATION:
             // Get data from Set command input
+            if ((tc.numOfTestItem < 2) || ( NULL == tc.testExpect.expectedObjs)){
+                return VERDICT_RET_INPUT_INVALID;
+            }
             commandVal = GetValueOfTestItem(tc.testItemInfo[tc.numOfTestItem - 2], "writecommand");
             // Get data from expected info of test case
             tempData    = NULL;
+            if (NULL == tc.testExpect.expectedObjs){
+                LOGCXX("Invalid input ResultVerdictHelper::EvaluationOnExpectation");
+                return VERDICT_RET_UNKNOWN;
+            }
             for ( i = 0; i< tc.testExpect.numOfObject; i++){
-                if (0 == tc.testExpect.expectedObjs[i].key.compare("value")){
+                if (0 == tc.testExpect.expectedObjs[i].key.compare("nodefollow")){
                     tempData = &tc.testExpect.expectedObjs[i];
                     break;
                 }
             }
             if (NULL != tempData){
                 expectedVal = tempData->value;
+            }
+            if (expectedVal.size() == 0){
+                return VERDICT_RET_INPUT_INVALID;
             }
             //Compare expected data and respond
             for (i = 0; i < respData.msgAssociate.nodefollow.size(); i++ ){
@@ -969,15 +987,13 @@ int ResultVerdictHelper::EvaluationOnExpectation(TestCase tc){
         default:
         break;
     }
-
-
-
     return VERDICT_RET_UNKNOWN;
 }
 
 vector<string> ResultVerdictHelper::GetValueOfTestItem(TestItem ti, string key){
     std::vector<string> ret;
     int i, size;
+    LOGCXX("Num of Args of Test item: "<< ti.numOfArg);
     size = ti.numOfArg;
     for (i = 0; i < size; i++){
         if( 0 == ti.testItemArg[i].key.compare(key))

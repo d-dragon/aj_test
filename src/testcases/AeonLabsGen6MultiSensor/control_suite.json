@@ -1,8 +1,8 @@
-[ 
+[
 	{
 		"testsuit" : "AeonLabsGen6MultiSensor",
 		"testcases" :	[
-			{	
+			{
 				"name"				: "listdevices",
 				"input" 			: {
 					"devicetype"	: "zwave"
@@ -24,7 +24,7 @@
 					"method"		: "reference",
 					"value"		: {
 						"fahrenheit"	: "ref",
-						"celsius"		: 30.4512 
+						"celsius"		: 30.4512
 					}
 				}
 			},
@@ -47,7 +47,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value"	: ["01", "02"]
+						"value"	: ["01"]
 					}
 				}
             },
@@ -70,7 +70,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value"	: ["0E", "10"]
+						"value"	: ["00", "0A"]
 					}
 				}
             },
@@ -93,7 +93,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"nodefollow"	: "01"
+						"nodefollow"	: ["01"]
 					}
 				}
             },
@@ -116,7 +116,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"nodefollow"	: "03"
+						"nodefollow"	: ["07"]
 					}
 				}
             },
@@ -199,7 +199,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["00"] 
+						"value" 		: ["00"]
 					}
 				}
             },
@@ -222,7 +222,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["00","0A"] 
+						"value" 		: ["00","0A"]
 					}
 				}
             },
@@ -245,7 +245,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["00","00","00","00"]	
+						"value" 		: ["00","00","00","00"]
 					}
 				}
             },
@@ -268,7 +268,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["00","00","00","F1"]		
+						"value" 		: ["00","00","00","F1"]
 					}
 				}
             },
@@ -291,7 +291,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["00"]	
+						"value" 		: ["00"]
 					}
 				}
             },
@@ -314,7 +314,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["01"]	
+						"value" 		: ["01"]
 					}
 				}
             },
@@ -338,7 +338,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["02"]	
+						"value" 		: ["02"]
 					}
 				}
             },
@@ -361,7 +361,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["03"]	
+						"value" 		: ["03"]
 					}
 				}
             },
@@ -384,7 +384,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["04"]	
+						"value" 		: ["04"]
 					}
 				}
             },
@@ -407,11 +407,11 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["05"]	
+						"value" 		: ["05"]
 					}
 				}
             },
-			
+
 			{
                 "name" 				: "configuration",
                 "input" 			: {
@@ -430,7 +430,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["00","28","DE","80"]		
+						"value" 		: ["00","28","DE","80"]
 					}
 				}
             },
@@ -453,7 +453,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["00","08","DE","80"]		
+						"value" 		: ["00","08","DE","80"]
 					}
 				}
             },
@@ -476,7 +476,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["00","00","00","05"]		
+						"value" 		: ["00","00","00","05"]
 					}
 				}
             },
@@ -499,7 +499,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["00","0A"]		
+						"value" 		: ["00","0A"]
 					}
 				}
             },
@@ -522,7 +522,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: ["0E","01"]		
+						"value" 		: ["0E","10"]
 					}
 				}
             },
@@ -545,7 +545,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"nodefollow"	: "01" 
+						"nodefollow"	: ["01"]
 					}
 				}
             },
@@ -568,7 +568,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"nodefollow"	: "07" 
+						"nodefollow"	: ["07"]
 					}
 				}
             }
