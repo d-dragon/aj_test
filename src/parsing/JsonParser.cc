@@ -169,6 +169,11 @@ int JsonParser::startParser(int reference_flag){
 		return -1;
 	}
 
+	status = mReporter.InitOutputReportDir("multigen6");
+	if (-1 == status) {
+		LOGCXX("Prepare report directory failed!");
+		return status;
+	}
 	worker = new TestWorker("com.verik.bus.VENUS_BOARD");
 
 	status = GetWorkerConfiguration(worker, dfConfigPath);

@@ -12,6 +12,8 @@
 #include "common_def.h"
 #include "TestWorker.h"
 #include "ResultVerdictHelper.h"
+#include "Reporter.h"
+
 #define CONFIG_FILE "configuration.json"
 #define REFERENCE_FILE "references.json"
 #define TEST_CASE_FILE "testcase.json"
@@ -51,6 +53,7 @@ class JsonParser {
 		json_t *testSuitRoot;
 		json_error_t err;
 		TestWorker *worker;
+		Reporter mReporter;
 		json_t *tcTemplateRoot;
 		json_t *tiRoot;
 		json_t *mRefJsonRoot;
