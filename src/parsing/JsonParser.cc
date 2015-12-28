@@ -315,19 +315,19 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			test_case_info.testDesc.assign(tc_desc);
 		}
 
+#if 0
 		tc_expected_output = json_object_get(tcObj, "expectedoutput");
 		if(NULL != tc_expected_output) {
 			test_case_info.verdictType = VERDICT_EXPECTED;
 			/* Getting json expected object then fill in test case expectation info */
-#if 0
 			test_case_info.testExpect.numOfObject = json_object_size(tc_expected_output);
 			test_case_info.testExpect.expectedObjs = new JsonFormatSimulation[test_case_info.testExpect.numOfObject];
 			for (int i = 0; i < test_case_info.testExpect.numOfObject; i++) {
 
 			}
-#endif
 		}
 
+#endif
 		/* Collect verdict information */
 		tc_verdict = json_object_get(tcObj, "verdict");
 		if (NULL != tc_verdict) {
@@ -384,6 +384,39 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 				} else if (0 == strcmp("expectation", method)){
 					/* Collect expected value then fill in test case expectation info */
 
+					json_t *verdict_value;
+					test_case_info.verdictType = VERDICT_EXPECTED;
+					verdict_value = json_object_get(tc_verdict, "value");
+					if (NULL != verdict_value) {
+						size_t value_size;
+						const char *value_name;
+						int count_obj = 0;
+						json_t *value_obj;
+						value_size = json_object_size(verdict_value);
+						test_case_info.testExpect.numOfObject = value_size;
+						test_case_info.testExpect.expectedObjs = new JsonFormatSimulation[value_size];
+						json_object_foreach(verdict_value, value_name, value_obj) {
+							test_case_info.testExpect.expectedObjs[count_obj].key.assign(value_name);
+							/* Separately store value as a string or numeric */
+							if (json_is_string(value_obj)) {
+								test_case_info.testExpect.expectedObjs[count_obj].value.push_back(json_string_value(value_obj));
+							} else if (json_is_number(value_obj)) {
+								 json_unpack(value_obj, "F", &(test_case_info.testExpect.expectedObjs[count_obj].numValue));
+							} if (json_is_array(value_obj)) {
+
+								size_t index;
+								json_t *obj;
+
+								json_array_foreach(value_obj, index, obj) {
+									 if (json_is_string(obj)) {
+										 test_case_info.testExpect.expectedObjs[count_obj].value.push_back(json_string_value(obj));
+									 }
+								}
+							}
+							count_obj++;
+						}
+
+					}
 				}
 
 			} else {
@@ -391,6 +424,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			}
 		}
 
+		cout << "verdict type: " << test_case_info.verdictType;
 		/* Test item info of test case will be filled out while parsing and processing test item */
 		json_array_foreach(tiArray, tiIndex, tiObj){
 
@@ -422,7 +456,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		// TO DO: test case
 		if (0 == mReferenceFlag) {
 
-			mVerdictHelper->DBGPrint();
+			//mVerdictHelper->DBGPrint();
 			/* Implement temparary verdict reference result */
 			if (VERDICT_REFERENCE == test_case_info.verdictType) {
 				testcaseVerdict = mVerdictHelper->VerdictResult(&test_case_info, "src/references/references.json");
@@ -788,16 +822,22 @@ int JsonParser::ReplaceValueSensorMultilevel(json_t *resp_root, json_t *ref_root
 
 void JsonParser::DeallocateTestCaseInfo(TestCase test_case_info) {
 
+	LOGCXX("deallocating test case information struct");
 	for (int i = 0; i < test_case_info.numOfTestItem; i++) {
+		LOGCXX("deallocate test item " << i << ": " << test_case_info.testItemInfo[i].name);
 		delete[] test_case_info.testItemInfo[i].testItemArg;
+		LOGCXX("ok");
 	}
 	if (VERDICT_REFERENCE == test_case_info.verdictType) {
 
 			delete[] test_case_info.testRef.referenceUnitObjs;
 	} else if (VERDICT_EXPECTED == test_case_info.verdictType) {
 
+			LOGCXX("deallocate expected struct");
 			delete[] test_case_info.testExpect.expectedObjs;
+			LOGCXX("ok");
 	}
 	delete[] test_case_info.testItemInfo;
+	LOGCXX("deallocated");
 
 }

@@ -44,6 +44,12 @@
 			{"name" : "read_spec"}
 		]
 	},
+	"association":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
 	
 	"readspec":{
 		"testitems": [

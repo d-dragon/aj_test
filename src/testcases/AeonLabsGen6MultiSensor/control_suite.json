@@ -23,7 +23,7 @@
 				"verdict"		: {
 					"method"		: "reference",
 					"value"		: {
-						"fahrenheit"	: 89.1234234,
+						"fahrenheit"	: "ref",
 						"celsius"		: 30.4512 
 					}
 				}
@@ -47,7 +47,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value"	: "01"
+						"value"	: ["01", "02"]
 					}
 				}
             },
@@ -67,8 +67,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["0E","10"] 
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value"	: ["0E", "10"]
+					}
 				}
             },
 
@@ -87,8 +90,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"nodefollow"	: "01" 
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: "01"
+					}
 				}
             },
 
@@ -107,8 +113,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"nodefollow"	: "07" 
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: "03"
+					}
 				}
             },
 
@@ -124,12 +133,12 @@
 					"force"			: "1"
 				},
 				"description"		: "Get status of HUMI ( humidity percentage and absolute humidity ) for verifying value which is available",
-				"expectedoutput"	: {
-					"class"			: "SENSOR_MULTILEVEL",
-					"command"		: "GET",
-					"data0"			: "HUMI",
-					"percentage"	: "0,100",
-					"absolute_humidity"		: "0,100"
+				"verdict"		: {
+					"method"		: "reference",
+					"value"		: {
+						"percentage"	: "0,100",
+						"absolute_humidity"		: "0,100"
+					}
 				}
 			},
 
@@ -144,11 +153,11 @@
 					"force"			: "1"
 				},
 				"description"		: "Get status of LUMI ( luminance index ) for verifying value which is available",
-				"expectedoutput"	: {
-					"class"			: "SENSOR_MULTILEVEL",
-					"command"		: "GET",
-					"data0"			: "LUMI",
-					"luminance"		: "0"
+				"verdict"		: {
+					"method"		: "reference",
+					"value"		: {
+						"luminance"		: "0"
+					}
 				}
 			},
 
@@ -163,11 +172,11 @@
 					"force"			: "1"
 				},
 				"description"		: "Get status of UV ( ultraviolet index ) for verifying value which is available",
-				"expectedoutput"	: {
-					"class"			: "SENSOR_MULTILEVEL",
-					"command"		: "GET",
-					"data0"			: "UV",
-					"ultraviolet"	: "0"
+				"verdict"		: {
+					"method"		: "reference",
+					"value"		: {
+						"ultraviolet"	: "0"
+					}
 				}
 			},
 
@@ -187,8 +196,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["00"] 
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["00"] 
+					}
 				}
             },
 
@@ -207,8 +219,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["00","0A"] 
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["00","0A"] 
+					}
 				}
             },
 
@@ -227,8 +242,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["00","00","00","00"]	
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["00","00","00","00"]	
+					}
 				}
             },
 
@@ -247,8 +265,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["00","00","00","F1"]		
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["00","00","00","F1"]		
+					}
 				}
             },
 
@@ -267,8 +288,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["00"]	
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["00"]	
+					}
 				}
             },
 
@@ -287,21 +311,14 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["01"]	
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["01"]	
+					}
 				}
             },
 
-			{
-                "name" 				: "readspec_takeaction",
-                "input" 			: {
-                    "time"			: "60"              
-          	    },
-                "description"		: "Wait for 60s to test motion sensor, it means while 60s if there have a motion occurs then associated Led zwave device will turn on",
-            	"expectedoutput"	: {
-					"alarmevent"	: "presence"
-				}
-            },
 
             {
                 "name" 				: "configuration",
@@ -318,8 +335,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["02"]	
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["02"]	
+					}
 				}
             },
 
@@ -338,8 +358,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["03"]	
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["03"]	
+					}
 				}
             },
 
@@ -358,8 +381,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["04"]	
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["04"]	
+					}
 				}
             },
 
@@ -378,8 +404,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["05"]	
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["05"]	
+					}
 				}
             },
 			
@@ -398,8 +427,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["00","28","DE","80"]		
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["00","28","DE","80"]		
+					}
 				}
             },
 
@@ -418,8 +450,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["00","08","DE","80"]		
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["00","08","DE","80"]		
+					}
 				}
             },
 
@@ -438,8 +473,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["00","00","00","05"]		
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["00","00","00","05"]		
+					}
 				}
             },
 
@@ -458,8 +496,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["00","0A"]		
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["00","0A"]		
+					}
 				}
             },
 
@@ -478,8 +519,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"value" 		: ["0E","01"]		
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: ["0E","01"]		
+					}
 				}
             },
 
@@ -498,8 +542,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"nodefollow"	: "01" 
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: "01" 
+					}
 				}
             },
 
@@ -518,8 +565,11 @@
                     "force"			: "1"
                 },
                 "description"		: "",
-                "expectedoutput"		: {
-					"nodefollow"	: "07" 
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: "07" 
+					}
 				}
             }
 		]
