@@ -105,7 +105,6 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
             break;
         }
     }
-    LOGCXX("ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *reference_path) done!!!!!!!");
 	return ret;
 }
 
@@ -897,8 +896,9 @@ void ResultVerdictHelper::GetMsgRespRWSpec(PrivateData *outData, TestCase tc, in
     Compare configuration and association only
     Stage A: expectation
 */
-int ResultVerdictHelper::EvaluationTestCase(TestCase tc){
+int ResultVerdictHelper::EvaluationTestCase(TestCase &tc){
     int ret, i, j, ret1, ret2;
+    bool isTrue = true;
     vector<string> commandVal;
     string matchedLogData;
     PrivateData respData;
@@ -914,10 +914,16 @@ int ResultVerdictHelper::EvaluationTestCase(TestCase tc){
          matchedLogData = tc.testItemInfo[i].testItemLogPool.at(tc.testItemInfo[i].matchedRespMsgIndex);
          if (0 != GetValueFromJSON(matchedLogData,"status").compare("successful"))
          {
-            return VERDICT_RET_FAILED;
+            tc.testItemInfo[i].verdictResult = VERDICT_RET_FAILED;
+            isTrue = false;
+         }else
+         {
+            tc.testItemInfo[i].verdictResult = VERDICT_RET_SUCCESS;
          }
     }
-
+    if (!isTrue){
+        return VERDICT_RET_FAILED;
+    }
     GetMsgRespRWSpec(&respData, tc, (tc.numOfTestItem - 1));
     // 2. Get Expected result and compare
     switch (respData.cmdClass) {

@@ -166,7 +166,7 @@ private:
 	string* GetTIArgumentValueByKey(TestItem test_item_t, string key);
 
 	void GetMsgRespRWSpec(PrivateData*, TestCase , int index = 0);
-    int EvaluationTestCase(TestCase);
+    int EvaluationTestCase(TestCase&);
     int ExpectationComparison(TestCaseExpectation, PrivateData, string cmdClass);
     int InOutTestCaseComparison(TestCase, PrivateData, string addOrRemove);
     vector<string> GetValueOfTestItem(TestItem, string key);

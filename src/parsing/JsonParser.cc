@@ -453,7 +453,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 					UpdateReferenceValue(ti_info, response_msg);
 				} else {
 
-					mVerdictHelper->SaveInfoOfTestItem(tcInputArg, ti_info, worker->GetPoolEleValue(ti_info->MatchedLogIndex));
+					//mVerdictHelper->SaveInfoOfTestItem(tcInputArg, ti_info, worker->GetPoolEleValue(ti_info->MatchedLogIndex));
 				}
 			}
 			cout << "*************************************************\n" << endl;
