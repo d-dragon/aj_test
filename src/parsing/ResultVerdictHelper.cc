@@ -79,8 +79,8 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
         LOGCXX("Signal type: "<< sigtype );
         switch (sigtype) {
             case ZWAVE:
-            LOGCXX("EvaluationOnExpectation");
-                switch (EvaluationOnExpectation(*test_case_t)) {
+            LOGCXX("EvaluationTestCase");
+                switch (EvaluationTestCase(*test_case_t)) {
                     case 	VERDICT_RET_INPUT_INVALID: /*!< Test item input invalid */
                         std::cout<<"=======>>>>>>>>>>>>>>>>Return value VERDICT_RET_INPUT_INVALID"<<std::endl;
                     break;
@@ -897,88 +897,29 @@ void ResultVerdictHelper::GetMsgRespRWSpec(PrivateData *outData, TestCase tc, in
     Compare configuration and association only
     Stage A: expectation
 */
-int ResultVerdictHelper::EvaluationOnExpectation(TestCase tc){
-    int ret, i;
-    bool isIncluded = false;
+int ResultVerdictHelper::EvaluationTestCase(TestCase tc){
+    int ret, i, ret1, ret2;
+    vector<string> commandVal;
     PrivateData respData;
-    JsonFormatSimulation *tempData;
-    vector<string> expectedVal, commandVal;
+
+    ret = VERDICT_RET_UNKNOWN;
     // Stage A: Evaluate expected and result of the test case
     // 1. Get responded message of last command in test case
+    if ( tc.numOfTestItem < 1 ){
+        // Test case is invalid
+        return VERDICT_RET_UNKNOWN;
+    }
     GetMsgRespRWSpec(&respData, tc, (tc.numOfTestItem - 1));
-    // 2. Get Expected result
+    // 2. Get Expected result and compare
     switch (respData.cmdClass) {
         case CONFIGURATION:
-            // Get Expected value from test case;
-            tempData    = NULL;
-            for ( i = 0; i< tc.testExpect.numOfObject; i++){
-                if (0 == tc.testExpect.expectedObjs[i].key.compare("value")){
-                    tempData = &tc.testExpect.expectedObjs[i];
-                    break;
-                }
-            }
-            // Validate values
-            if (NULL != tempData){
-                expectedVal = tempData->value;
-            }
-            if ( 0 == expectedVal.size())
-            {
-                return VERDICT_RET_INPUT_INVALID;
-            }
-            //3. Compare.
-            if (expectedVal.size() != respData.msgConf.value.size()){
-                return VERDICT_RET_FAILED;
-            }
-            for (i = 0; i < expectedVal.size(); i++){
-                if (0 != expectedVal.at(i).compare(respData.msgConf.value.at(i))){
-                    return VERDICT_RET_FAILED;
-                }
-            }
-            return VERDICT_RET_SUCCESS;
+            ret1 = ExpectationComparison(tc.testExpect, respData, "");
+            ret2 = InOutTestCaseComparison(tc, respData, "");
         break;
         case ASSOCIATION:
-            // Get data from Set command input
-            if ((tc.numOfTestItem < 2) || ( NULL == tc.testExpect.expectedObjs)){
-                return VERDICT_RET_INPUT_INVALID;
-            }
             commandVal = GetValueOfTestItem(tc.testItemInfo[tc.numOfTestItem - 2], "writecommand");
-            // Get data from expected info of test case
-            tempData    = NULL;
-            if (NULL == tc.testExpect.expectedObjs){
-                LOGCXX("Invalid input ResultVerdictHelper::EvaluationOnExpectation");
-                return VERDICT_RET_UNKNOWN;
-            }
-            for ( i = 0; i< tc.testExpect.numOfObject; i++){
-                if (0 == tc.testExpect.expectedObjs[i].key.compare("nodefollow")){
-                    tempData = &tc.testExpect.expectedObjs[i];
-                    break;
-                }
-            }
-            if (NULL != tempData){
-                expectedVal = tempData->value;
-            }
-            if (expectedVal.size() == 0){
-                return VERDICT_RET_INPUT_INVALID;
-            }
-            //Compare expected data and respond
-            for (i = 0; i < respData.msgAssociate.nodefollow.size(); i++ ){
-                if (0 == expectedVal.front().compare(respData.msgAssociate.nodefollow.at(i))){
-                    isIncluded = true;
-                }
-            }
-            // make a verdict
-            if (0 == commandVal.front().compare("REMOVE")){
-                if (isIncluded){
-                    return VERDICT_RET_FAILED;
-                }
-                return VERDICT_RET_SUCCESS;
-            }else
-            if (0 == commandVal.front().compare("SET")){
-                if (!isIncluded){
-                    return VERDICT_RET_FAILED;
-                }
-                return VERDICT_RET_SUCCESS;
-            }
+            ret1 = ExpectationComparison(tc.testExpect, respData ,commandVal.front());
+            ret2 = InOutTestCaseComparison(tc, respData, commandVal.front());
         break;
         case BATTERY:
         break;
@@ -987,7 +928,183 @@ int ResultVerdictHelper::EvaluationOnExpectation(TestCase tc){
         default:
         break;
     }
-    return VERDICT_RET_UNKNOWN;
+    if ((ret1 == VERDICT_RET_FAILED) || (ret2 == VERDICT_RET_FAILED)){
+        ret = VERDICT_RET_FAILED;
+    }else if ((ret1 == VERDICT_RET_SUCCESS) && (ret2 == VERDICT_RET_SUCCESS)){
+        ret = VERDICT_RET_SUCCESS;
+    }
+    return ret;
+}
+
+int ResultVerdictHelper::ExpectationComparison(TestCaseExpectation tcExpect, PrivateData respData, string command ){
+    int ret, i;
+    JsonFormatSimulation *tempData;
+    vector<string> expectedVal;
+    bool isIncluded = false;
+    ret = VERDICT_RET_UNKNOWN;
+    if ( 0 == command.compare("") ){ // CONFIGURATION
+        // Get Expected value from test case;
+        tempData    = NULL;
+        for ( i = 0; i< tcExpect.numOfObject; i++){
+            if (0 == tcExpect.expectedObjs[i].key.compare("value")){
+                tempData = &tcExpect.expectedObjs[i];
+                break;
+            }
+        }
+        // Validate values
+        if (NULL != tempData){
+            expectedVal = tempData->value;
+        }
+        if ( 0 == expectedVal.size())
+        {
+            return VERDICT_RET_INPUT_INVALID;
+        }
+        //3. Compare.
+        if (expectedVal.size() != respData.msgConf.value.size()){
+            return VERDICT_RET_FAILED;
+        }
+        for (i = 0; i < expectedVal.size(); i++){
+            if (0 != expectedVal.at(i).compare(respData.msgConf.value.at(i))){
+                return VERDICT_RET_FAILED;
+            }
+        }
+        return VERDICT_RET_SUCCESS;
+    }else // ASSOCIATION
+    {
+        // Get data from Set command input
+        if (( NULL == tcExpect.expectedObjs)){
+            return VERDICT_RET_INPUT_INVALID;
+        }
+
+        // Get data from expected info of test case
+        tempData = NULL;
+        if (NULL == tcExpect.expectedObjs){
+            LOGCXX("Invalid input ResultVerdictHelper::ExpectationComparison");
+            return VERDICT_RET_UNKNOWN;
+        }
+        for ( i = 0; i< tcExpect.numOfObject; i++){
+            if (0 == tcExpect.expectedObjs[i].key.compare("nodefollow")){
+                tempData = &tcExpect.expectedObjs[i];
+                break;
+            }
+        }
+        if (NULL != tempData){
+            expectedVal = tempData->value;
+        }
+        if (expectedVal.size() == 0){
+            return VERDICT_RET_INPUT_INVALID;
+        }
+        //Compare expected data and respond
+        for (i = 0; i < respData.msgAssociate.nodefollow.size(); i++ ){
+            if (0 == expectedVal.front().compare(respData.msgAssociate.nodefollow.at(i))){
+                isIncluded = true;
+            }
+        }
+        // make a verdict
+        if (0 == command.compare("REMOVE")){
+            if (isIncluded){
+                return VERDICT_RET_FAILED;
+            }
+            return VERDICT_RET_SUCCESS;
+        }else
+        if (0 == command.compare("SET")){
+            if (!isIncluded){
+                return VERDICT_RET_FAILED;
+            }
+            return VERDICT_RET_SUCCESS;
+        }
+    }
+    return ret;
+}
+
+int ResultVerdictHelper::InOutTestCaseComparison(TestCase tc, PrivateData respData, string addOrRemove){
+    int index_of_write, index_of_read, i;
+    int ret = VERDICT_RET_UNKNOWN;
+    bool isIncluded = false;
+    std::vector<string> valInput;
+    string sInput, sOutput;
+
+    index_of_write = -1;
+    if (tc.numOfTestItem < 1){
+        return VERDICT_RET_UNKNOWN;
+    }
+
+    // Found write_spec testItem
+    for (i = 0 ; i < tc.numOfTestItem ; i++){
+        if (0 == tc.testItemInfo[i].name.compare("write_spec")){
+            index_of_write = i;
+            break;
+        }
+    }
+    //read_spec must be next of write_spec
+    index_of_read = index_of_write + 1;
+    if ( index_of_read >= tc.numOfTestItem )
+    {
+        return VERDICT_RET_UNKNOWN;
+    }
+    if (0 != tc.testItemInfo[index_of_read].name.compare("read_spec")){
+        return VERDICT_RET_UNKNOWN;
+    }
+    if (index_of_write == -1){ // not found
+        return VERDICT_RET_UNKNOWN;
+    }else{ // found
+        for (i = 0; i < tc.testItemInfo[index_of_write].numOfArg; i++)
+        {
+            if (0 == tc.testItemInfo[index_of_write].testItemArg[i].key.compare("data1")){
+                // Find out the key of value
+                valInput = tc.testItemInfo[index_of_write].testItemArg[i].value;
+                break;
+            }
+        }
+        if (0 == valInput.size()){ // Not found data1
+            return VERDICT_RET_UNKNOWN;
+        }
+    }
+    if ( 0 == addOrRemove.compare("") ){ // CONFIGURATION
+        // compare input and output
+        sInput = "";
+        for (i = 0; i < valInput.size(); i++)
+        {
+            sInput += valInput.at(i);
+        }
+        sOutput = "";
+        for (i = 0; i < respData.msgConf.value.size(); i++)
+        {
+            sOutput += respData.msgConf.value.at(i);
+        }
+        if (stoi(sInput,NULL,16) == stoi(sOutput,NULL,16)){
+            return VERDICT_RET_SUCCESS;
+        }else{
+            return VERDICT_RET_FAILED;
+        }
+    }else
+    {
+        for (i = 0; i < respData.msgAssociate.nodefollow.size(); i++ ){
+            if ( 0 ==  valInput.front().compare(respData.msgAssociate.nodefollow.at(i))){
+                isIncluded = true;
+                break;
+            }
+        }
+        if (0 == addOrRemove.compare("REMOVE")){
+            if (isIncluded){
+                return VERDICT_RET_FAILED;
+            }else{
+                return VERDICT_RET_SUCCESS;
+            }
+        }
+        else
+        if (0 == addOrRemove.compare("SET")){
+            if (!isIncluded){
+                return VERDICT_RET_FAILED;
+            }else{
+                return VERDICT_RET_SUCCESS;
+            }
+        }
+        else
+        return VERDICT_RET_UNKNOWN;
+    }
+
+    return ret;
 }
 
 vector<string> ResultVerdictHelper::GetValueOfTestItem(TestItem ti, string key){

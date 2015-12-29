@@ -165,28 +165,11 @@ private:
 	 */
 	string* GetTIArgumentValueByKey(TestItem test_item_t, string key);
 
-
-
-    /*
-        Function pointers list
-     */
-	typedef void (ResultVerdictHelper::*myFuncDef)(TestCase, PrivateData*);
-	struct FunctionCallbackStructure{
-	    SignalTypeEnum signalTyp;
-	    SignalNameEnum signalName;
-	    RWSpecsCmdClassEnum rwCmdClass;
-	    myFuncDef   cbFunc;
-	};
-    myFuncDef funcPtr;
 	void GetMsgRespRWSpec(PrivateData*, TestCase , int index = 0);
-    int EvaluationOnExpectation(TestCase);
+    int EvaluationTestCase(TestCase);
+    int ExpectationComparison(TestCaseExpectation, PrivateData, string cmdClass);
+    int InOutTestCaseComparison(TestCase, PrivateData, string addOrRemove);
     vector<string> GetValueOfTestItem(TestItem, string key);
-    vector<FunctionCallbackStructure> funcCBlist = {
-        {ZWAVE, READ_SPEC, CONFIGURATION, funcPtr},
-        {ZWAVE, READ_SPEC, ASSOCIATION, funcPtr },
-        {ZWAVE, WRITE_SPEC, CONFIGURATION, funcPtr },
-        {ZWAVE, WRITE_SPEC, ASSOCIATION, funcPtr }
-    };
 	string GetValueFromJSON(string json, string obj);
 	vector<string> GetArrayValueFromJSON(string json, string obj);
 	int GetValueFromJSONInteger(string json, string obj);
