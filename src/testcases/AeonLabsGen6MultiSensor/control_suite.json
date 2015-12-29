@@ -1,6 +1,6 @@
 [
 	{
-		"testsuit" : "AeonLabsGen6MultiSensor",
+		"testsuite" : "control",
 		"testcases" :	[
 			{
 				"name"				: "listdevices",
@@ -572,6 +572,33 @@
 					}
 				}
             }
+		]
+	},
+	{
+		"testsuite": "configurationgroup",
+		"testcases": [
+			{
+				"name"			: "OnOfGroup_Association",
+				"input"			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "07",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"			: "1"
+				},
+                "description"		: "",
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["07"]
+					}
+				}
+			}
 		]
 	}
 ]

@@ -160,6 +160,8 @@ int JsonParser::startParser(int reference_flag){
 	size_t arrayIndex;
 	int status;
 	json_t *tsObj;
+	json_t *ts_name_obj;
+	const char *test_suite_name;
 
 	mReferenceFlag = reference_flag;
 	testSuitRoot = json_load_file(dfTSPath, 0, &err);
@@ -169,11 +171,7 @@ int JsonParser::startParser(int reference_flag){
 		return -1;
 	}
 
-	status = mReporter.InitOutputReportDir("multigen6");
-	if (-1 == status) {
-		LOGCXX("Prepare report directory failed!");
-		return status;
-	}
+
 	worker = new TestWorker("com.verik.bus.VENUS_BOARD");
 
 	status = GetWorkerConfiguration(worker, dfConfigPath);
@@ -182,36 +180,67 @@ int JsonParser::startParser(int reference_flag){
 		delete worker;
 		return status;
 	}
+	status = mReporter.InitOutputReportDir(worker->mConfig.deviceName.c_str());
+	if (RET_ERR == status) {
+		LOGCXX("Prepare report output dir failed");
+		return -1;
+	}
 
+	//FIXME-need move this block code to suitable position for starting Alljoyn Client
+	status = worker->startAlljoynClient(worker->mConfig.serviceId.c_str());
+	if(status == ERROR){
+		worker->StopAlljoynClient();
+		return status;
+	}
 	worker->exportStuffToFile("<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
+	mReporter.WriteContentToReport(REPORT_TYPE_FULL, "<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
+		
+	/* Collect test suite info */
 	json_array_foreach(testSuitRoot, arrayIndex, tsObj){
 
 		if(!json_is_object(tsObj)){
 
-			cout << "test suit format invalid" << endl;
+			cout << "test suite format invalid" << endl;
 			json_decref(testSuitRoot);
 			return -1;
 		}
+		
 
-		//FIXME-need move this block code to suitable position for starting Alljoyn Client
-		status = worker->startAlljoynClient(worker->mConfig.serviceId.c_str());
-		if(status == ERROR){
-			worker->StopAlljoynClient();
-			return status;
+		const char *ts_name;
+
+		ts_name = json_string_value(json_object_get(tsObj, "testsuite"));
+		/* Prepare test suite report output */
+		if (NULL == ts_name) {
+			cout << "test suite format is invalid (have no test suite name)" << endl;
+			return -1;
 		}
+		mTestSuiteList.push_back(ts_name);
+	}
+	
+	/* Parsing test suite */
+	json_array_foreach(testSuitRoot, arrayIndex, tsObj){
 
+		if(!json_is_object(tsObj)){
+
+			cout << "test suite format invalid" << endl;
+			json_decref(testSuitRoot);
+			return -1;
+		}
+		
 		status = TestsuitParser(tsObj);
+
 
 		if(status == ERROR){
 			cout << "Parsed test suit failed" << endl;
 			return status;
 		}
-		//TODO - Stop Alljoyn Client
-		worker->StopAlljoynClient();
 
 	}
 
+	//TODO - Stop Alljoyn Client
+	worker->StopAlljoynClient();
 	worker->exportStuffToFile("</body></html>");
+	mReporter.WriteContentToReport(REPORT_TYPE_FULL, "</body></html>");
 
 	cout << "JsonParser exit" << endl;
 	delete worker;
@@ -222,13 +251,23 @@ int JsonParser::startParser(int reference_flag){
 int JsonParser::TestsuitParser(json_t *tsObj){
 
 	int status;
-	const char *tsName;
+	const char *ts_name;
 	json_t *tcRoot;
 
 
-	tsName = json_string_value(json_object_get(tsObj, "testsuit"));
-	cout << "run test suit: " << tsName << endl;
+	ts_name = json_string_value(json_object_get(tsObj, "testsuite"));
+	/* Prepare test suite report output */
+	if (NULL == ts_name) {
+		cout << "test suite format is invalid (have no test suite name)" << endl;
+		return -1;
+	}
+	status = mReporter.CreateTestSuiteReport(ts_name);
+	if (RET_ERR == status) {
+		LOGCXX("Prepare test suite report failed");
+		return status;
+	}
 
+	cout << "run test suit: " << ts_name << endl;
 	//TODO - check test suit validation and more action on testsuit name
 
 	tcRoot = json_object_get(tsObj, "testcases");
@@ -237,7 +276,7 @@ int JsonParser::TestsuitParser(json_t *tsObj){
 	}
 	status = TestCaseCollector(tcRoot);
 	if(status == ERROR){
-		cout << "parse testcase in " << tsName << "failed" << endl;
+		cout << "parse testcase in " << ts_name << "failed" << endl;
 		return status;
 	}
 	return status;
@@ -599,6 +638,7 @@ int JsonParser::GetWorkerConfiguration(TestWorker *worker, const char *dfConfigP
 		return ERROR;
 	}
 
+	JSONGetObjectValue(configRootObj, "devicename", &(worker->mConfig.deviceName));
 	JSONGetObjectValue(configRootObj, "serviceid", &(worker->mConfig.serviceId));
 	JSONGetObjectValue(configRootObj, "deviceindex", &(worker->mConfig.deviceIndex));
 	JSONGetObjectValue(configRootObj, "altdeviceid", &(worker->mConfig.altDeviceId));

@@ -19,6 +19,7 @@ class TestWorker {
 	public:
 
 		struct InputConfiguration{
+			string deviceName;
 			string serviceId;
 			string deviceIndex;
 			string altDeviceId;

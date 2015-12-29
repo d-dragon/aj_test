@@ -27,6 +27,7 @@ class JsonParser {
 	public:
 		
 		vector<string> mFileList;
+		vector<string> mTestSuiteList;
 
 		JsonParser(const char *tsPath, const char *tcPath, const char *tiPath, const char *configPath);
 		~JsonParser();
