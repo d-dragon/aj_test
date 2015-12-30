@@ -15,6 +15,7 @@ enum ReportStatusE{
 
 const char * const FULL_REPORT_NAME = "Full_Report.html";
 const char * const SUMMARY_REPORT_NAME = "Summary.cvs";
+const int MAX_CONTENT_BUFF = 1024;
 
 using namespace std;
 class Reporter {
@@ -23,15 +24,16 @@ class Reporter {
 
 		Reporter();
 		~Reporter();
-		int InitOutputReportDir(const char *rDeviceName);
-		int CreateTestSuiteReport(const char *rTestSuiteName);
-		int WriteContentToReport(int rReportType, string rContent);
+		int InitOutputReportDir(const char *pdeviceName);
+		int CreateTestSuiteReport(const char *ptestSuiteName);
+		void CloseTestSuiteReport();
+		int WriteContentToReport(int reportType, const char *pcontent, ...);
 
 	private:
 
-		fstream mFullReport;
-		fstream mCvsReport;
-		fstream mTestSuiteReport;
+		fstream aFullReport;
+		fstream aCvsReport;
+		fstream aTestSuiteReport;
 		char mReportDirPath[256];
-		int CreateReportFile(int rReportType, const char *rFilePath);
+		int CreateReportFile(int reportType, const char *pfilePath);
 };

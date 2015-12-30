@@ -180,7 +180,7 @@ int JsonParser::startParser(int reference_flag){
 		delete worker;
 		return status;
 	}
-	status = mReporter.InitOutputReportDir(worker->mConfig.deviceName.c_str());
+	status = aReporter.InitOutputReportDir(worker->mConfig.deviceName.c_str());
 	if (RET_ERR == status) {
 		LOGCXX("Prepare report output dir failed");
 		return -1;
@@ -193,7 +193,7 @@ int JsonParser::startParser(int reference_flag){
 		return status;
 	}
 	worker->exportStuffToFile("<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
-	mReporter.WriteContentToReport(REPORT_TYPE_FULL, "<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
+	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
 		
 	/* Collect test suite info */
 	json_array_foreach(testSuitRoot, arrayIndex, tsObj){
@@ -216,8 +216,11 @@ int JsonParser::startParser(int reference_flag){
 		}
 		mTestSuiteList.push_back(ts_name);
 	}
+
+	/* TODO - Add more user choice for running test suite */
 	
 	/* Parsing test suite */
+	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<h1>%s</h1><hr><br>", worker->mConfig.deviceName.c_str());
 	json_array_foreach(testSuitRoot, arrayIndex, tsObj){
 
 		if(!json_is_object(tsObj)){
@@ -226,9 +229,13 @@ int JsonParser::startParser(int reference_flag){
 			json_decref(testSuitRoot);
 			return -1;
 		}
+		/* Export test suite information to report */
+		const char *html_content;
+		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<h2>Test Suite: %s</h2>", mTestSuiteList[arrayIndex].c_str());
 		
 		status = TestsuitParser(tsObj);
 
+		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<hr><br>");
 
 		if(status == ERROR){
 			cout << "Parsed test suit failed" << endl;
@@ -240,7 +247,7 @@ int JsonParser::startParser(int reference_flag){
 	//TODO - Stop Alljoyn Client
 	worker->StopAlljoynClient();
 	worker->exportStuffToFile("</body></html>");
-	mReporter.WriteContentToReport(REPORT_TYPE_FULL, "</body></html>");
+	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "</body></html>");
 
 	cout << "JsonParser exit" << endl;
 	delete worker;
@@ -261,7 +268,7 @@ int JsonParser::TestsuitParser(json_t *tsObj){
 		cout << "test suite format is invalid (have no test suite name)" << endl;
 		return -1;
 	}
-	status = mReporter.CreateTestSuiteReport(ts_name);
+	status = aReporter.CreateTestSuiteReport(ts_name);
 	if (RET_ERR == status) {
 		LOGCXX("Prepare test suite report failed");
 		return status;
@@ -279,13 +286,14 @@ int JsonParser::TestsuitParser(json_t *tsObj){
 		cout << "parse testcase in " << ts_name << "failed" << endl;
 		return status;
 	}
+	aReporter.CloseTestSuiteReport();
 	return status;
 
 }
 
 int JsonParser::TestCaseCollector(json_t *tcRoot){
 
-	int status, testcaseVerdict;
+	int status;
 	size_t index;
 	json_t *tcObj;
 	json_t *tcInputArg;
@@ -463,10 +471,11 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 					}
 				}
 
-			} else {
-				test_case_info.verdictType = VERDICT_UNKNOWN;
 			}
+		} else {
+			test_case_info.verdictType = VERDICT_UNKNOWN;
 		}
+
 
 		cout << "verdict type: " << test_case_info.verdictType;
 		/* Test item info of test case will be filled out while parsing and processing test item */
@@ -497,19 +506,20 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			}
 			cout << "*************************************************\n" << endl;
 		}
-		// TO DO: test case
 		if (0 == mReferenceFlag) {
 
 			//mVerdictHelper->DBGPrint();
 			/* Implement temparary verdict reference result */
 			if (VERDICT_REFERENCE == test_case_info.verdictType) {
                 LOGCXX("VerdictResult VERDICT_REFERENCE");
-				testcaseVerdict = mVerdictHelper->VerdictResult(&test_case_info, "src/references/references.json");
+				test_case_info.verdictResult = mVerdictHelper->VerdictResult(&test_case_info, "src/references/references.json");
 			} else if (VERDICT_EXPECTED == test_case_info.verdictType){
                 LOGCXX("VerdictResult VERDICT_EXPECTED");
-				testcaseVerdict = mVerdictHelper->VerdictResult(&test_case_info,"");
+				test_case_info.verdictResult = mVerdictHelper->VerdictResult(&test_case_info,"");
 			}
 		}
+		/* TODO - Export test case info to report */
+		ReportTestCaseInfo(test_case_info);
 		/* Debugging - Print all test case info */
 #if 0
 		cout << test_case_info.name << ": " << test_case_info.testDesc << endl << " have " << test_case_info.numOfTestItem << " items" << endl;
@@ -866,6 +876,49 @@ int JsonParser::ReplaceValueSensorMultilevel(json_t *resp_root, json_t *ref_root
 
 }
 
+void JsonParser::ReportTestCaseInfo(TestCase testCaseInfo) {
+
+	/* Test case name and description */
+	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>Test case: %s</p>", testCaseInfo.name.c_str());
+	aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<p>Test case: %s</p>", testCaseInfo.name.c_str());
+
+	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>Description: %s</p>", testCaseInfo.testDesc.c_str());
+	aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<p>Description: %s</p>", testCaseInfo.testDesc.c_str());
+
+	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>Number test item of test case: %d</p>", testCaseInfo.numOfTestItem);
+	aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<p>Number test item of test case: %d</p>", testCaseInfo.numOfTestItem);
+
+	for (int i = 0; i < testCaseInfo.numOfTestItem; i++) {
+		/* Print test item info */
+
+		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<table border=\"2\" width=\"640\"><col width=\"100\"><col width=\"140\"><col width=\"400\"><tr><th>Test Item</th><td colspan=\"2\">%s</td></tr><tr><th rowspan=\"%d\">Input</th></tr>",testCaseInfo.testItemInfo[i].name.c_str(), testCaseInfo.testItemInfo[i].numOfArg+1);
+
+
+		for(int j = 0; j < testCaseInfo.testItemInfo->numOfArg; j++){
+
+			aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><td>%s</td><td>%s</td></tr>",testCaseInfo.testItemInfo[i].testItemArg[j].key.c_str(), testCaseInfo.testItemInfo[i].testItemArg[j].value.at(0).c_str());
+		}
+
+		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><th>Result</th><td colspan=\"2\">%d</td></tr>", testCaseInfo.testItemInfo[i].verdictResult);
+		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><th>Response Message</th><td colspan=\"2\">%s</td></tr>", testCaseInfo.testItemInfo[i].testItemLogPool[testCaseInfo.testItemInfo[i].matchedRespMsgIndex].c_str());
+		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><th>Log Pool</th><td colspan=\"2\">");
+		for (int k = 0; k < testCaseInfo.testItemInfo[i].testItemLogPool.size(); k++) {
+
+			aReporter.WriteContentToReport(REPORT_TYPE_FULL, "%s<br>", testCaseInfo.testItemInfo[i].testItemLogPool[k].c_str());
+
+		}
+		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "</td></tr></table><br>");
+
+	}
+	/* Print test case result verdict and log poll */
+
+	if (VERDICT_UNKNOWN != testCaseInfo.verdictType) {
+
+		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>Test case result verdict: %d</p>", testCaseInfo.verdictResult);
+	}
+	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>*********************************************************</p>");
+	//aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>Test case log poll: ", testCaseInfo.verdictResult);
+}
 void JsonParser::DeallocateTestCaseInfo(TestCase test_case_info) {
 
 	LOGCXX("deallocating test case information struct");

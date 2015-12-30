@@ -54,7 +54,7 @@ class JsonParser {
 		json_t *testSuitRoot;
 		json_error_t err;
 		TestWorker *worker;
-		Reporter mReporter;
+		Reporter aReporter;
 		json_t *tcTemplateRoot;
 		json_t *tiRoot;
 		json_t *mRefJsonRoot;
@@ -71,6 +71,13 @@ class JsonParser {
 		int TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo **ti_info, TestItem *t_test_item);
 		json_t *getTestItemTemplateObj(const char *tiName);
 		int GetWorkerConfiguration(TestWorker *worker, const char *dfConfigPath);
+
+		/**
+		 * Export test case info and result to html, cvs, test suite report.
+		 * @param testCaseInfo struct store all test case info.
+		 * @return void
+		 */
+		void ReportTestCaseInfo(TestCase testCaseInfo);
 		void DeallocateTestCaseInfo(TestCase test_case_info);
 
 		/**

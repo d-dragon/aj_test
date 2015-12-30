@@ -133,6 +133,7 @@ struct TestCase{
 	TestCaseExpectation			testExpect;
 	TestCaseReferenceUnit		testRef;
 	std::string					testDesc;
+	int							verdictResult;
 };
 enum SignalTypeEnum{
     ZWAVE = 0,

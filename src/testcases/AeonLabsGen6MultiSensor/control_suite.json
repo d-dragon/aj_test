@@ -1,13 +1,13 @@
 [
 	{
-		"testsuite" : "control",
+		"testsuite" : "Get sensing value",
 		"testcases" :	[
 			{
 				"name"				: "listdevices",
+				"description" 		: "Get list of available devices in the controller",
 				"input" 			: {
 					"devicetype"	: "zwave"
-				},
-				"description" 		: "Get list of available devices in the controller"
+				}
 			},
 			{
 				"name" 				: "readspec",
@@ -29,8 +29,72 @@
 				}
 			},
 
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "SENSOR_MULTILEVEL",
+					"readcommand"		: "GET",
+					"type"			: "HUMI",
+					"force"			: "1"
+				},
+				"description"		: "Get status of HUMI ( humidity percentage and absolute humidity ) for verifying value which is available",
+				"verdict"		: {
+					"method"		: "reference",
+					"value"		: {
+						"percentage"	: "0,100",
+						"absolute_humidity"		: "0,100"
+					}
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "SENSOR_MULTILEVEL",
+					"readcommand"		: "GET",
+					"type"			: "LUMI",
+					"force"			: "1"
+				},
+				"description"		: "Get status of LUMI ( luminance index ) for verifying value which is available",
+				"verdict"		: {
+					"method"		: "reference",
+					"value"		: {
+						"luminance"		: "0"
+					}
+				}
+			},
+
+			{
+				"name" 				: "readspec",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "SENSOR_MULTILEVEL",
+					"readcommand"		: "GET",
+					"type"			: "UV",
+					"force"			: "1"
+				},
+				"description"		: "Get status of UV ( ultraviolet index ) for verifying value which is available",
+				"verdict"		: {
+					"method"		: "reference",
+					"value"		: {
+						"ultraviolet"	: "0"
+					}
+				}
+			}
+		]
+	},
+	{
+		"testsuite" : "Lock, time configuration",
+		"testcases" : [
+
             {
                 "name" 				: "configuration",
+                "description"		: "Set lock configuration to 01",
                 "input" 			: {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -43,7 +107,6 @@
                     "type"          : "LOCK_CONFIGURATION",
                     "force"			: "1"
                 },
-                "description"		: "Set lock configuration",
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
@@ -54,6 +117,7 @@
 
             {
                 "name" 				: "configuration",
+                "description"		: "",
                 "input" 			: {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -66,15 +130,19 @@
                     "type"          : "TIME",
                     "force"			: "1"
                 },
-                "description"		: "",
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
 						"value"	: ["00", "0A"]
 					}
 				}
-            },
+            }
+		]
+	},
 
+	{
+		"testsuite" : "Association with another device",
+		"testcases" : [
             {
                 "name" 				: "association",
                 "input" 			: {
@@ -119,68 +187,13 @@
 						"nodefollow"	: ["07"]
 					}
 				}
-            },
+			}
+		]
+	},
 
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "SENSOR_MULTILEVEL",
-					"command"		: "GET",
-					"type"			: "HUMI",
-					"force"			: "1"
-				},
-				"description"		: "Get status of HUMI ( humidity percentage and absolute humidity ) for verifying value which is available",
-				"verdict"		: {
-					"method"		: "reference",
-					"value"		: {
-						"percentage"	: "0,100",
-						"absolute_humidity"		: "0,100"
-					}
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "SENSOR_MULTILEVEL",
-					"command"		: "GET",
-					"type"			: "LUMI",
-					"force"			: "1"
-				},
-				"description"		: "Get status of LUMI ( luminance index ) for verifying value which is available",
-				"verdict"		: {
-					"method"		: "reference",
-					"value"		: {
-						"luminance"		: "0"
-					}
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "SENSOR_MULTILEVEL",
-					"command"		: "GET",
-					"type"			: "UV",
-					"force"			: "1"
-				},
-				"description"		: "Get status of UV ( ultraviolet index ) for verifying value which is available",
-				"verdict"		: {
-					"method"		: "reference",
-					"value"		: {
-						"ultraviolet"	: "0"
-					}
-				}
-			},
-
-
+	{
+		"testsuite" : "Lock , time, motion configuration",
+		"testcases" : [
             {
                 "name" 				: "configuration",
                 "input" 			: {
@@ -410,8 +423,12 @@
 						"value" 		: ["05"]
 					}
 				}
-            },
-
+            }
+		]
+	},
+	{
+		"testsuite" : "Time auto report Configuration",
+		"testcases" : [
 			{
                 "name" 				: "configuration",
                 "input" 			: {
@@ -479,8 +496,12 @@
 						"value" 		: ["00","00","00","05"]
 					}
 				}
-            },
-
+            }
+		]
+	},
+	{
+		"testsuite" : "Time configuration",
+		"testcases" : [
 			{
                 "name" 				: "configuration",
                 "input" 			: {
@@ -525,8 +546,12 @@
 						"value" 		: ["0E","10"]
 					}
 				}
-            },
-
+            }
+		]
+	},
+	{
+		"testsuite" : "Remove association information",
+		"testcases" : [
 			{
                 "name" 				: "association",
                 "input" 			: {
@@ -572,33 +597,6 @@
 					}
 				}
             }
-		]
-	},
-	{
-		"testsuite": "configurationgroup",
-		"testcases": [
-			{
-				"name"			: "OnOfGroup_Association",
-				"input"			: {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "writecommand"	: "REMOVE",
-                    "readcommand"   : "GET",
-                    "data0"         : "ONOFF_GROUP",
-                    "data1"         : "07",
-                    "data2"         : "1",
-                    "type"          : "ONOFF_GROUP",
-                    "force"			: "1"
-				},
-                "description"		: "",
-				"verdict"		: {
-					"method"		: "expectation",
-					"value"		: {
-						"nodefollow"	: ["07"]
-					}
-				}
-			}
 		]
 	}
 ]

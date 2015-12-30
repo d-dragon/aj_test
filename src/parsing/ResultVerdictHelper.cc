@@ -109,7 +109,7 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
 }
 
 int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, TestItem test_item_t, json_t *ref_root) {
-	int ret;
+	int ret = VERDICT_RET_SUCCESS;
 
 	json_t *resp_root;
 	json_error_t err;

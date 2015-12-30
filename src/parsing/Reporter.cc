@@ -2,6 +2,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdarg.h>
 #include "Reporter.h"
 
 
@@ -10,10 +11,10 @@ Reporter::Reporter(){
 };
 
 Reporter::~Reporter(){
-	mFullReport.close();
-	mCvsReport.close();
+	aFullReport.close();
+	aCvsReport.close();
 };
-int Reporter::InitOutputReportDir(const char *rDeviceName) {
+int Reporter::InitOutputReportDir(const char *pdeviceName) {
 
 	int status = 0;
 
@@ -27,7 +28,7 @@ int Reporter::InitOutputReportDir(const char *rDeviceName) {
 	time_info = localtime(&raw_time);
 
 	snprintf(time_buff, 128, "%d-%d-%d_%d:%d:%d", time_info->tm_mon, time_info->tm_mday, (time_info->tm_year - 100 + 2000), time_info->tm_hour, time_info->tm_min, time_info->tm_sec);
-	snprintf(mReportDirPath, 256, "output/%s_%s", time_buff, rDeviceName);
+	snprintf(mReportDirPath, 256, "output/%s_%s", time_buff, pdeviceName);
 
 	if (-1 == mkdir(mReportDirPath, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) {
 		status = RET_ERR;
@@ -51,36 +52,36 @@ int Reporter::InitOutputReportDir(const char *rDeviceName) {
 	return status;
 };
 
-int Reporter::CreateReportFile(int rReportType, const char *rFilePath) {
+int Reporter::CreateReportFile(int reportType, const char *pfilePath) {
 	
 	int status = RET_OK;
 	
-	if (NULL == rFilePath) {
+	if (NULL == pfilePath) {
 		cout << "File name is null"	<< endl;
 		return -1;
 	}
 
-	switch(rReportType) {
+	switch(reportType) {
 		case REPORT_TYPE_FULL:
-		mFullReport.open(rFilePath, fstream::out | fstream::app);
-		if(!mFullReport.is_open()){
-			cout << "can not open file " << rFilePath <<  endl;
+		aFullReport.open(pfilePath, fstream::out | fstream::app);
+		if(!aFullReport.is_open()){
+			cout << "can not open file " << pfilePath <<  endl;
 			status = RET_ERR;
 		}
 		break;
 
 		case REPORT_TYPE_SUMMARY:
-		mCvsReport.open(rFilePath, fstream::out | fstream::app);
-		if(!mCvsReport.is_open()){
-			cout << "can not open file " << rFilePath <<  endl;
+		aCvsReport.open(pfilePath, fstream::out | fstream::app);
+		if(!aCvsReport.is_open()){
+			cout << "can not open file " << pfilePath <<  endl;
 			status = RET_ERR;
 		}
 		break;
 
 		case REPORT_TYPE_TEST_SUITE:
-		mTestSuiteReport.open(rFilePath, fstream::out | fstream::app);
-		if(!mTestSuiteReport.is_open()){
-			cout << "can not open file " << rFilePath <<  endl;
+		aTestSuiteReport.open(pfilePath, fstream::out | fstream::app);
+		if(!aTestSuiteReport.is_open()){
+			cout << "can not open file " << pfilePath <<  endl;
 			status = RET_ERR;
 		}
 		break;
@@ -93,12 +94,12 @@ int Reporter::CreateReportFile(int rReportType, const char *rFilePath) {
 	return status;
 }
 
-int Reporter::CreateTestSuiteReport(const char *rTestSuiteName) {
+int Reporter::CreateTestSuiteReport(const char *ptestSuiteName) {
 
 	int status = RET_OK;
 	char ts_report_path[256];
 	
-	snprintf(ts_report_path, 256, "%s/%s.html", mReportDirPath, rTestSuiteName);
+	snprintf(ts_report_path, 256, "%s/%s.html", mReportDirPath, ptestSuiteName);
 
 	status = CreateReportFile(REPORT_TYPE_TEST_SUITE, ts_report_path);
 	if (RET_ERR == status) {
@@ -107,21 +108,28 @@ int Reporter::CreateTestSuiteReport(const char *rTestSuiteName) {
 	return status;
 }
 
-int Reporter::WriteContentToReport(int rReportType, string rContent) {
+
+int Reporter::WriteContentToReport(int reportType, const char *pcontent, ...) {
 	int status = RET_OK;
+	char content_buff[MAX_CONTENT_BUFF];
 	
-	switch (rReportType) {
+	va_list args;
+	va_start(args, pcontent);
+	vsnprintf(content_buff, MAX_CONTENT_BUFF, pcontent, args);
+	va_end(args);
+
+	switch (reportType) {
 		case REPORT_TYPE_FULL:
-			mFullReport << rContent; 
-			mFullReport << std::flush; /*!<Force write data to file*/
+			aFullReport << content_buff; 
+			aFullReport << std::flush; /*!<Force write data to file*/
 			break;
 		case REPORT_TYPE_SUMMARY:
-			mCvsReport << rContent;
-			mCvsReport << std::flush; /*!<Force write data to file*/
+			aCvsReport << content_buff;
+			aCvsReport << std::flush; /*!<Force write data to file*/
 			break;
 		case REPORT_TYPE_TEST_SUITE:
-			mTestSuiteReport << rContent;
-			mTestSuiteReport << std::flush;
+			aTestSuiteReport << content_buff;
+			aTestSuiteReport << std::flush;
 			break;
 		default:
 			status = RET_ERR;
@@ -129,4 +137,7 @@ int Reporter::WriteContentToReport(int rReportType, string rContent) {
 	}
 
 	return status;
+}
+void Reporter::CloseTestSuiteReport() {
+	aTestSuiteReport.close();
 }
