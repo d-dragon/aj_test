@@ -3,6 +3,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdarg.h>
+#include <string.h>
 #include "Reporter.h"
 
 
@@ -23,17 +24,23 @@ int Reporter::InitOutputReportDir(const char *pdeviceName) {
 	char time_buff[128];
 	char full_report_path[256];
 	char cvs_report_path[256];
+	char test_suites_path[256];
 
 	time(&raw_time);
 	time_info = localtime(&raw_time);
 
 	snprintf(time_buff, 128, "%d-%d-%d_%d:%d:%d", time_info->tm_mon, time_info->tm_mday, (time_info->tm_year - 100 + 2000), time_info->tm_hour, time_info->tm_min, time_info->tm_sec);
 	snprintf(mReportDirPath, 256, "output/%s_%s", time_buff, pdeviceName);
+	snprintf(test_suites_path, 256, "%s/testsuites", mReportDirPath);
 
 	if (-1 == mkdir(mReportDirPath, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) {
 		status = RET_ERR;
 	} else {
 
+		if (-1 == mkdir(test_suites_path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) {
+			rmdir(mReportDirPath);
+			return RET_ERR;
+		}
 		snprintf(full_report_path, 256, "%s/%s", mReportDirPath, FULL_REPORT_NAME);
 		snprintf(cvs_report_path, 256, "%s/%s", mReportDirPath, SUMMARY_REPORT_NAME);
 		
@@ -99,7 +106,7 @@ int Reporter::CreateTestSuiteReport(const char *ptestSuiteName) {
 	int status = RET_OK;
 	char ts_report_path[256];
 	
-	snprintf(ts_report_path, 256, "%s/%s.html", mReportDirPath, ptestSuiteName);
+	snprintf(ts_report_path, 256, "%s/testsuites/%s.html", mReportDirPath, ptestSuiteName);
 
 	status = CreateReportFile(REPORT_TYPE_TEST_SUITE, ts_report_path);
 	if (RET_ERR == status) {

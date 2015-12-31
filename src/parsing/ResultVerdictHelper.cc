@@ -1249,3 +1249,15 @@ int ResultVerdictHelper::GetValueFromJSONInteger(string input, string key){
     }
     return retInt;
 }
+const char* ResultVerdictHelper::GetVerdictStringByCode(int verdictCode) {
+
+	unsigned int size = sizeof(gverdictResult)/sizeof(CodeString);
+	LOGCXX("size of gverdictResult: "<< size);
+
+	for (int i = 0; i < size; i++) {
+		if (verdictCode == gverdictResult[i].Code) {
+			return gverdictResult[i].String;
+		}
+	}
+	return NULL;
+}

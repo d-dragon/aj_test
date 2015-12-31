@@ -1,0 +1,36 @@
+[ 
+	{
+		"testsuit" : "AeonLabsGen6MultiSensor",
+		"testcases" :	[
+			{	
+				"name"				: "listdevices",
+				"input" 			: {
+					"devicetype"	: "zwave"
+				},
+				"description" 		: "Get list of available devices in the controller"
+			},
+			
+
+			{
+                "name" 				: "configuration",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "TIME_AUTO_REPORT",
+                    "data1"         : "0A",
+                    "data2"         : "1",
+                    "type"          : "TIME_AUTO_REPORT",
+                    "force"			: "1"
+                },
+                "description"		: "",
+                "expectedoutput"		: {
+					"value" 		: ["00","00","00","05"]		
+				}
+            }
+
+		]
+	}
+]

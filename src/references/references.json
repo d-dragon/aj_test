@@ -4,15 +4,15 @@
     },
     "SENSOR_MULTILEVEL": {
         "TEMP": {
-            "fahrenheit": 84.900002000000001,
+            "fahrenheit": 89.900002000000001,
             "celsius": 29.38889
         },
         "HUMI": {
-            "percentage": 35,
-            "absolute_humidity": 9.5199999999999996
+            "percentage": 30,
+            "absolute_humidity": 7.5199999999999996
         },
         "LUMI": {
-            "luminance": 5.0
+            "luminance": 195.0
         },
         "UV": {
             "ultraviolet": 0

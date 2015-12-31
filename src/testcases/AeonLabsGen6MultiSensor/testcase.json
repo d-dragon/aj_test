@@ -38,6 +38,36 @@
 		]
 	},
 
+	"lock_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"time_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"report_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"motion_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"time_auto_report_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
 	"configuration":{
 		"testitems": [
 			{"name" : "write_spec"},
@@ -51,6 +81,43 @@
 		]
 	},
 	
+	"basic_set_association":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"remove_association":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"get_battery":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"get_temperature":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"get_humidity":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"get_luminance":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"get_ultraviolet":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
 	"readspec":{
 		"testitems": [
 			{"name" : "read_spec"}

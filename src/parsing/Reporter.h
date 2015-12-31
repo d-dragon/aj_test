@@ -14,7 +14,7 @@ enum ReportStatusE{
 };
 
 const char * const FULL_REPORT_NAME = "Full_Report.html";
-const char * const SUMMARY_REPORT_NAME = "Summary.cvs";
+const char * const SUMMARY_REPORT_NAME = "Summary.csv";
 const int MAX_CONTENT_BUFF = 1024;
 
 using namespace std;

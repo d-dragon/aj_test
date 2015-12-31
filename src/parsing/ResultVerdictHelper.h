@@ -116,6 +116,7 @@ public:
 	 *		#VERDICT_FAILED		Verdict failed.
 	 */
 	int VerdictResult(TestCase *test_case_t, const char *reference_path);
+	const char *GetVerdictStringByCode(int verdictCode);
 
 
     void DBGPrint();

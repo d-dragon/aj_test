@@ -94,6 +94,19 @@ enum VerdictReturnTypeEnum{
 	VERDICT_RET_SUCCESS					/*!< Verdict result is success */
 };
 
+typedef struct codestring {
+	int Code;
+	const char String[128];
+} CodeString;
+
+const CodeString gverdictResult[] {
+	{VERDICT_RET_INPUT_INVALID, "Input message invalid"},
+	{VERDICT_RET_RESP_INVALID, "Response message invalid"},
+	{VERDICT_RET_UNKNOWN, "Unknown"},
+	{VERDICT_RET_FAILED, "Failed"},
+	{VERDICT_RET_SUCCESS, "Success"}
+};
+
 // Data structure to save all information of a test case.
 
 /**

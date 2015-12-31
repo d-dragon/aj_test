@@ -194,6 +194,7 @@ int JsonParser::startParser(int reference_flag){
 	}
 	worker->exportStuffToFile("<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
 	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
+	aReporter.WriteContentToReport(REPORT_TYPE_SUMMARY, "Test suite,Test case,Test Item,Result\n");
 		
 	/* Collect test suite info */
 	json_array_foreach(testSuitRoot, arrayIndex, tsObj){
@@ -268,6 +269,7 @@ int JsonParser::TestsuitParser(json_t *tsObj){
 		cout << "test suite format is invalid (have no test suite name)" << endl;
 		return -1;
 	}
+	aReporter.WriteContentToReport(REPORT_TYPE_SUMMARY, "%s,,,\n", ts_name);
 	status = aReporter.CreateTestSuiteReport(ts_name);
 	if (RET_ERR == status) {
 		LOGCXX("Prepare test suite report failed");
@@ -887,6 +889,14 @@ void JsonParser::ReportTestCaseInfo(TestCase testCaseInfo) {
 
 	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>Number test item of test case: %d</p>", testCaseInfo.numOfTestItem);
 	aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<p>Number test item of test case: %d</p>", testCaseInfo.numOfTestItem);
+	
+	if (VERDICT_UNKNOWN != testCaseInfo.verdictType) {
+
+		aReporter.WriteContentToReport(REPORT_TYPE_SUMMARY, ",%s,,%s\n", testCaseInfo.name.c_str(),mVerdictHelper->GetVerdictStringByCode(testCaseInfo.verdictResult));
+	} else {
+
+		aReporter.WriteContentToReport(REPORT_TYPE_SUMMARY, ",%s,,\n", testCaseInfo.name.c_str());
+	}
 
 	for (int i = 0; i < testCaseInfo.numOfTestItem; i++) {
 		/* Print test item info */
@@ -909,12 +919,16 @@ void JsonParser::ReportTestCaseInfo(TestCase testCaseInfo) {
 		}
 		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "</td></tr></table><br>");
 
+		aReporter.WriteContentToReport(REPORT_TYPE_SUMMARY, ",,%s,%s\n", testCaseInfo.testItemInfo[i].name.c_str(), mVerdictHelper->GetVerdictStringByCode(testCaseInfo.testItemInfo[i].verdictResult));
+
 	}
 	/* Print test case result verdict and log poll */
 
 	if (VERDICT_UNKNOWN != testCaseInfo.verdictType) {
 
 		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>Test case result verdict: %d</p>", testCaseInfo.verdictResult);
+	} else {
+
 	}
 	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>*********************************************************</p>");
 	//aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>Test case log poll: ", testCaseInfo.verdictResult);
