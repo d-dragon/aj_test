@@ -848,10 +848,10 @@ void ResultVerdictHelper::GetMsgRespRWSpec(PrivateData *outData, TestCase tc, in
             outData->msgConf.devID          = GetValueFromJSON(matchedLogData,"deviceid");
         //    outData->cmdInfo        = GetValueFromJSON(matchedLogData,"commandinfo");
             outData->msgConf.status         = GetValueFromJSON(matchedLogData,"status");
-            if (0 == outData->msgConf.method.compare("read_specR")){
+            if ((0 == outData->msgConf.method.compare("read_specR")) || (0 == outData->msgConf.method.compare("read_s_specR")) ){
                 if (0 == outData->msgConf.status.compare("successful")){ // OK case
                     outData->msgConf.parameter  = GetValueFromJSON(matchedLogData,"parameter");
-                    outData->msgConf.value = GetArrayValueFromJSON(matchedLogData,"value");
+                    outData->msgConf.value = GetValueFromJSONInteger(matchedLogData,"value");
                 }else   // Failed case
                 {
                     outData->msgConf.reason     = GetValueFromJSON(matchedLogData,"reason");
@@ -955,6 +955,7 @@ int ResultVerdictHelper::ExpectationComparison(TestCaseExpectation tcExpect, Pri
     int ret, i;
     JsonFormatSimulation *tempData;
     vector<string> expectedVal;
+    int expectedNumVal = -1;
     bool isIncluded = false;
     ret = VERDICT_RET_UNKNOWN;
     if ( 0 == command.compare("") ){ // CONFIGURATION
@@ -962,28 +963,21 @@ int ResultVerdictHelper::ExpectationComparison(TestCaseExpectation tcExpect, Pri
         tempData    = NULL;
         for ( i = 0; i< tcExpect.numOfObject; i++){
             if (0 == tcExpect.expectedObjs[i].key.compare("value")){
-                tempData = &tcExpect.expectedObjs[i];
+                if (tcExpect.expectedObjs[i].value.size() != 0 ){
+                    tempData = &tcExpect.expectedObjs[i];
+                }else
+                {
+                    expectedNumVal = (int)tcExpect.expectedObjs[i].numValue;
+                }
                 break;
             }
         }
-        // Validate values
-        if (NULL != tempData){
-            expectedVal = tempData->value;
-        }
-        if ( 0 == expectedVal.size())
-        {
-            return VERDICT_RET_INPUT_INVALID;
-        }
-        //3. Compare.
-        if (expectedVal.size() != respData.msgConf.value.size()){
+        if (expectedNumVal != respData.msgConf.value){
             return VERDICT_RET_FAILED;
         }
-        for (i = 0; i < expectedVal.size(); i++){
-            if (0 != expectedVal.at(i).compare(respData.msgConf.value.at(i))){
-                return VERDICT_RET_FAILED;
-            }
+        else{
+            return VERDICT_RET_SUCCESS;
         }
-        return VERDICT_RET_SUCCESS;
     }else // ASSOCIATION
     {
         // Get data from Set command input
@@ -1033,11 +1027,11 @@ int ResultVerdictHelper::ExpectationComparison(TestCaseExpectation tcExpect, Pri
 }
 
 int ResultVerdictHelper::InOutTestCaseComparison(TestCase tc, PrivateData respData, string addOrRemove){
-    int index_of_write, index_of_read, i;
+    int index_of_write, index_of_read, i, inputVal;
     int ret = VERDICT_RET_UNKNOWN;
-    bool isIncluded = false;
+    bool isIncluded = false, isSecureRWSpec = false;
     std::vector<string> valInput;
-    string sInput, sOutput;
+    string sInput;
 
     index_of_write = -1;
     if (tc.numOfTestItem < 1){
@@ -1050,6 +1044,11 @@ int ResultVerdictHelper::InOutTestCaseComparison(TestCase tc, PrivateData respDa
             index_of_write = i;
             break;
         }
+        if (0 == tc.testItemInfo[i].name.compare("write_s_spec")){
+            isSecureRWSpec = true;
+            index_of_write = i;
+            break;
+        }
     }
     //read_spec must be next of write_spec
     index_of_read = index_of_write + 1;
@@ -1057,7 +1056,11 @@ int ResultVerdictHelper::InOutTestCaseComparison(TestCase tc, PrivateData respDa
     {
         return VERDICT_RET_UNKNOWN;
     }
-    if (0 != tc.testItemInfo[index_of_read].name.compare("read_spec")){
+    if (isSecureRWSpec){
+        if (0 != tc.testItemInfo[index_of_read].name.compare("read_s_spec")){
+            return VERDICT_RET_UNKNOWN;
+        }
+    }else if (0 != tc.testItemInfo[index_of_read].name.compare("read_spec")){
         return VERDICT_RET_UNKNOWN;
     }
     if (index_of_write == -1){ // not found
@@ -1082,12 +1085,12 @@ int ResultVerdictHelper::InOutTestCaseComparison(TestCase tc, PrivateData respDa
         {
             sInput += valInput.at(i);
         }
-        sOutput = "";
-        for (i = 0; i < respData.msgConf.value.size(); i++)
-        {
-            sOutput += respData.msgConf.value.at(i);
+        if (string::npos != sInput.find("0x")){
+            inputVal = stoi(sInput,NULL,16);
+        }else{
+            inputVal = stoi(sInput,NULL,10);
         }
-        if (stoi(sInput,NULL,16) == stoi(sOutput,NULL,16)){
+        if (inputVal == respData.msgConf.value){
             return VERDICT_RET_SUCCESS;
         }else{
             return VERDICT_RET_FAILED;
