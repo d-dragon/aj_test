@@ -191,7 +191,7 @@ struct ConfigurationRespMesg{
 	std::string status;
 	std::string reason;
 	std::string parameter;
-	std::vector<std::string> value;
+	int value;
 };
 struct AssociationRespMesg{
 	std::string type;
