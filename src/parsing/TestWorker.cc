@@ -103,8 +103,6 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[], 
 	signalRespFlag = 0;
 	static unsigned int last_log_index = 0;
 	
-	cout << "execute test item: " << testItem << endl;
-
 	mTestItemInfo.Signal.clear();
 	mTestItemInfo.Type.clear();
 	
@@ -114,10 +112,6 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[], 
 	mTestItemInfo.Type.assign(tiArg[0]);
 	mTestItemInfo.StartLogIndex = last_log_index;
 
-	for(size_t i = 0; i < numArg; i++){
-
-		cout << "argument " << i << ": " << tiArg[i] << endl;
-	}
 
 	if(!testItem.compare("onboarding")){
 
@@ -140,9 +134,7 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[], 
 			time = stoi(tiArg[2]);
 
 			cout << "listen notification in: " <<  time << "s" << endl;
-			htmlResultContent.append("<tr><th>Result</th>");
 			sleep(time);
-			htmlResultContent.append("</tr></table><br>");
 	}else{
 		if ( numArg > 1 ){
 			UpdateDevIDOfTC(tiArg);
@@ -150,7 +142,6 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[], 
 
 		ajClient->SendRequestSignal(testItem.c_str(), numArg, tiArg);
 
-		cout << "call ResponseAnalyst" << endl;
 		ResponseAnalyst();
 		ParseRespondedMsg();
 
@@ -161,9 +152,9 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[], 
 	last_log_index = (unsigned int)mLogPool.size();
 	mTestItemInfo.EndLogIndex = last_log_index - 1;
 	
-	cout << "Start log at: " << mTestItemInfo.StartLogIndex << endl;
-	cout << "End Log at: " << mTestItemInfo.EndLogIndex << endl;
-	cout << "Matched Log at: " << mTestItemInfo.MatchedLogIndex << endl;
+	cout << "Start log index at: " << mTestItemInfo.StartLogIndex << endl;
+	cout << "End log index at: " << mTestItemInfo.EndLogIndex << endl;
+	cout << "Matched log index at: " << mTestItemInfo.MatchedLogIndex << endl;
 	
 	/* Save test item response log into the struct */
 	for (int i = mTestItemInfo.StartLogIndex; i <= mTestItemInfo.EndLogIndex; i++) {
@@ -209,15 +200,11 @@ void TestWorker::ResponseAnalyst(){
 			JsonParser parser(NULL, NULL, NULL, NULL);
 
 			parser.JSONGetObjectValue(&respmsg.message,"status", &status);
-			htmlResultContent.append("<tr><th>Result</th><td colspan=\"2\">");
 			if(status.length() > 0){
 
-				cout << "status " << status << endl;
-				htmlResultContent.append(status.c_str());
 				if(status.compare("failed") == 0){
 					parser.JSONGetObjectValue(&respmsg.message, "reason", &reason);
 					if(reason.length() > 0){
-						htmlResultContent.append(" | Reason: ");
 						htmlResultContent.append(reason.c_str());
 					}
 				}
@@ -307,15 +294,14 @@ void TestWorker::generateReportFileName(){
 int TestWorker::ParseRespondedMsg(){
 	// TODO: make a structure of signal name 
 	int ret = 0;
-	LOGCXX("TestWorker::ParseRespondedMsg");
 	ret =  mTestItemInfo.Signal.compare("list_devices");
 	if (0 == ret)
 	{
 		// Clear list dev iD before add it again
-		LOGCXX("TestWorker::ParseRespondedMsg condition");
 		mDeviceList.clear();
 		if (respmsg.message.length() > 0){
 			GetDevIDFromList();	
+			LOGCXX("Got device ID list");
 		}
 	}
 
@@ -329,7 +315,6 @@ int TestWorker::ParseRespondedMsg(){
 				if wrong index: the first device will be fill instead.
 	*/
 void TestWorker::UpdateDevIDOfTC(string arg[]){
-	LOGCXX("TestWorker::UpdateDevIDOfTC: "<< mTestItemInfo.Signal.c_str());
 	char *cstring, *saveptr;
 	int cnt = 0;
 	int pos;
@@ -454,7 +439,7 @@ void TestWorker::GetDevIDFromList(){
 	}
 #endif
 	JsonParser::GetDevIDInJSMsg(&respmsg.message, &mDeviceList);
-	LOGCXX("number of devices "<< mDeviceList.size());
+	LOGCXX("Number of devices: "<< mDeviceList.size());
 
 }
 	/*

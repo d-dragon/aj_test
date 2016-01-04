@@ -137,7 +137,7 @@ void JsonParser::JSONGetObjectValue(json_t *inputObj, string objectName, string 
 	}
 	retString = json_string_value(targetObj);
 	if(retString != NULL){
-		cout << objectName.c_str() << " : " << retString << endl;
+//		cout << objectName.c_str() << " : " << retString << endl;
 		output->assign(retString);
 	}
 	json_decref(inputObj);
@@ -167,7 +167,7 @@ int JsonParser::startParser(int reference_flag){
 	testSuitRoot = json_load_file(dfTSPath, 0, &err);
 	if ((testSuitRoot == NULL) || !(json_is_array(testSuitRoot))){
 
-		cout << err.text << " at line " << err.line << endl;
+		LOGCXX(err.text << " at line " << err.line << endl);
 		return -1;
 	}
 
@@ -192,7 +192,6 @@ int JsonParser::startParser(int reference_flag){
 		worker->StopAlljoynClient();
 		return status;
 	}
-	worker->exportStuffToFile("<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
 	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
 	aReporter.WriteContentToReport(REPORT_TYPE_SUMMARY, "Test suite,Test case,Test Item,Result\n");
 		
@@ -201,7 +200,7 @@ int JsonParser::startParser(int reference_flag){
 
 		if(!json_is_object(tsObj)){
 
-			cout << "test suite format invalid" << endl;
+			LOGCXX("test suite format invalid" << endl);
 			json_decref(testSuitRoot);
 			return -1;
 		}
@@ -232,6 +231,7 @@ int JsonParser::startParser(int reference_flag){
 		}
 		/* Export test suite information to report */
 		const char *html_content;
+	aReporter.WriteContentToReport(REPORT_TYPE_SUMMARY, "Test suite,Test case,Test Item,Result\n");
 		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<h2>Test Suite: %s</h2>", mTestSuiteList[arrayIndex].c_str());
 		
 		status = TestsuitParser(tsObj);
@@ -247,7 +247,6 @@ int JsonParser::startParser(int reference_flag){
 
 	//TODO - Stop Alljoyn Client
 	worker->StopAlljoynClient();
-	worker->exportStuffToFile("</body></html>");
 	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "</body></html>");
 
 	cout << "JsonParser exit" << endl;
@@ -275,8 +274,12 @@ int JsonParser::TestsuitParser(json_t *tsObj){
 		LOGCXX("Prepare test suite report failed");
 		return status;
 	}
+	aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<!DOCTYPE html><html><head><style>table,th,td{border:2px solid black;border-collapse:collapse;}th,td{padding: 5px;text-align: left;}</style></head><body>");
+	aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<h2>Test Suite: %s</h2>", ts_name);
 
-	cout << "run test suit: " << ts_name << endl;
+	LOGCXX("******************************************************************************************");
+	LOGCXX("****************** Test suite: " << ts_name);
+	LOGCXX("******************************************************************************************" << endl);
 	//TODO - check test suit validation and more action on testsuit name
 
 	tcRoot = json_object_get(tsObj, "testcases");
@@ -288,6 +291,8 @@ int JsonParser::TestsuitParser(json_t *tsObj){
 		cout << "parse testcase in " << ts_name << "failed" << endl;
 		return status;
 	}
+	aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<hr><br>");
+	aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "</body></html>");
 	aReporter.CloseTestSuiteReport();
 	return status;
 
@@ -318,7 +323,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 
 		//TODO - more manipulate testcase name
 
-		cout << "parsing test case: " << tcName << endl;
+		LOGCXX("--------------------------------------Test case: " << tcName << "-------------------------------------" << endl);
 		tcInputArg = json_object_get(tcObj, "input");
 		if(!json_is_object(tcInputArg)){
 			cout << "cannot got input arg object" << endl;
@@ -356,7 +361,6 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 
 		num_test_item  = json_array_size(tiArray);
 
-		LOGCXX(tcName << "have " << num_test_item << " items");
 
 		struct TestCase test_case_info;
 		test_case_info.name.assign(tcName);
@@ -367,8 +371,10 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		tc_desc = json_string_value(json_object_get(tcObj, "description"));
 		if (NULL != tc_desc) {
 			test_case_info.testDesc.assign(tc_desc);
+			LOGCXX("Description: " << tc_desc);
 		}
 
+		LOGCXX("Number test item: " << num_test_item);
 #if 0
 		tc_expected_output = json_object_get(tcObj, "expectedoutput");
 		if(NULL != tc_expected_output) {
@@ -479,49 +485,44 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		}
 
 
-		cout << "verdict type: " << test_case_info.verdictType;
 		/* Test item info of test case will be filled out while parsing and processing test item */
 		json_array_foreach(tiArray, tiIndex, tiObj){
 
 			TestItemInfo *ti_info;
-            LOGCXX("Call TestItemProcessor, test_case_info.numOfTestItem= " << test_case_info.numOfTestItem);
 			status = TestItemProcessor(tcInputArg, tiObj, &ti_info, &(test_case_info.testItemInfo[tiIndex]));
-            LOGCXX("Call TestItemProcessor Finished");
 			if(status == ERROR){
 				cout << "run test item failed" << endl;
 			}
 			else{
-				LOGCXX("Device ID"<<ti_info->ID);
-				cout << "Matched message: " << worker->GetPoolEleValue(ti_info->MatchedLogIndex) << endl;
-				// TO DO: a test item
 				/* TODO - update reference value into reference.json */
 				if (1 == mReferenceFlag) {
 					//update reference value
 					LOGCXX("-----------update reference value------------");
 					string response_msg = worker->GetPoolEleValue(ti_info->MatchedLogIndex);
-					cout << "response_msg: " << response_msg << endl;
 					UpdateReferenceValue(ti_info, response_msg);
 				} else {
 
 					//mVerdictHelper->SaveInfoOfTestItem(tcInputArg, ti_info, worker->GetPoolEleValue(ti_info->MatchedLogIndex));
 				}
 			}
-			cout << "*************************************************\n" << endl;
+            LOGCXX("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl);
+			sleep(5);
 		}
 		if (0 == mReferenceFlag) {
 
 			//mVerdictHelper->DBGPrint();
 			/* Implement temparary verdict reference result */
 			if (VERDICT_REFERENCE == test_case_info.verdictType) {
-                LOGCXX("VerdictResult VERDICT_REFERENCE");
+                LOGCXX("Verdict type: REFERENCE");
 				test_case_info.verdictResult = mVerdictHelper->VerdictResult(&test_case_info, "src/references/references.json");
 			} else if (VERDICT_EXPECTED == test_case_info.verdictType){
-                LOGCXX("VerdictResult VERDICT_EXPECTED");
+                LOGCXX("Verdict type: EXPECTED");
 				test_case_info.verdictResult = mVerdictHelper->VerdictResult(&test_case_info,"");
 			}
+			/* TODO - Export test case info to report */
+			ReportTestCaseInfo(test_case_info);
 		}
-		/* TODO - Export test case info to report */
-		ReportTestCaseInfo(test_case_info);
+		LOGCXX("-------------------------------------------------------------------------------------------------------" << endl << endl);
 		/* Debugging - Print all test case info */
 #if 0
 		cout << test_case_info.name << ": " << test_case_info.testDesc << endl << " have " << test_case_info.numOfTestItem << " items" << endl;
@@ -548,7 +549,7 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo 
 
 	tiName.assign(json_string_value(json_object_get(tiObj, "name")));
 
-	cout << "proccessing test item: " << tiName << endl;
+	LOGCXX("+++++++++++++++++++Test item: " << tiName << "++++++++++++++++++++++");
 	//TODO - manipulate test item name
 
 	tiExObj = getTestItemTemplateObj(tiName.c_str());
@@ -564,14 +565,13 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo 
 	string tmpContent;
 
 	arraySize = json_array_size(tiExObj);
-	string tiArg[(int)arraySize];
+	string tiArg[arraySize];
 	tmpContent.assign("<table border=\"2\" width=\"640\"><col width=\"100\"><col width=\"140\"><col width=\"400\"><tr><th>Test Item</th><td colspan=\"2\">");
 	tmpContent.append(tiName);
 
 	char tmp[256];
 	sprintf(tmp, "</td></tr><tr><th rowspan=\"%d\">Input</th></tr>", arraySize+1);
 	tmpContent.append(tmp);
-	worker->exportStuffToFile(tmpContent.c_str());
 	tmpContent.clear();
 	memset(tmp, 0,256);
 
@@ -599,7 +599,7 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo 
 		t_test_item->testItemArg[index].value.push_back(tiArg[index]);
 		t_test_item->testItemLogPool.reserve(10);
 
-		cout << "index: " << index << " " << inputArgName[index] << ": " << tiArg[index] << endl;
+		LOGCXX("\t" << inputArgName[index] << ": " << tiArg[index]);
 
 	}
 	worker->executeTestItem(tiName, arraySize, tiArg, ti_info, t_test_item);
@@ -612,9 +612,6 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo 
 		//	tmpContent.append("\n");
 	}
 
-	worker->exportStuffToFile(tmpContent.c_str());
-	worker->exportStuffToFile(worker->htmlResultContent.c_str());
-	sleep(5);
 }
 json_t* JsonParser::getTestItemTemplateObj(const char *tiName){
 
@@ -902,31 +899,39 @@ void JsonParser::ReportTestCaseInfo(TestCase testCaseInfo) {
 		/* Print test item info */
 
 		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<table border=\"2\" width=\"640\"><col width=\"100\"><col width=\"140\"><col width=\"400\"><tr><th>Test Item</th><td colspan=\"2\">%s</td></tr><tr><th rowspan=\"%d\">Input</th></tr>",testCaseInfo.testItemInfo[i].name.c_str(), testCaseInfo.testItemInfo[i].numOfArg+1);
+		aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<table border=\"2\" width=\"640\"><col width=\"100\"><col width=\"140\"><col width=\"400\"><tr><th>Test Item</th><td colspan=\"2\">%s</td></tr><tr><th rowspan=\"%d\">Input</th></tr>",testCaseInfo.testItemInfo[i].name.c_str(), testCaseInfo.testItemInfo[i].numOfArg+1);
 
 
 		for(int j = 0; j < testCaseInfo.testItemInfo->numOfArg; j++){
 
 			aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><td>%s</td><td>%s</td></tr>",testCaseInfo.testItemInfo[i].testItemArg[j].key.c_str(), testCaseInfo.testItemInfo[i].testItemArg[j].value.at(0).c_str());
+			aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<tr><td>%s</td><td>%s</td></tr>",testCaseInfo.testItemInfo[i].testItemArg[j].key.c_str(), testCaseInfo.testItemInfo[i].testItemArg[j].value.at(0).c_str());
 		}
 
-		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><th>Result</th><td colspan=\"2\">%d</td></tr>", testCaseInfo.testItemInfo[i].verdictResult);
+		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><th>Result</th><td colspan=\"2\">%d</td></tr>", mVerdictHelper->GetVerdictStringByCode(testCaseInfo.testItemInfo[i].verdictResult));
+		aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<tr><th>Result</th><td colspan=\"2\">%d</td></tr>", mVerdictHelper->GetVerdictStringByCode(testCaseInfo.testItemInfo[i].verdictResult));
 		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><th>Response Message</th><td colspan=\"2\">%s</td></tr>", testCaseInfo.testItemInfo[i].testItemLogPool[testCaseInfo.testItemInfo[i].matchedRespMsgIndex].c_str());
+		aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<tr><th>Response Message</th><td colspan=\"2\">%s</td></tr>", testCaseInfo.testItemInfo[i].testItemLogPool[testCaseInfo.testItemInfo[i].matchedRespMsgIndex].c_str());
 		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><th>Log Pool</th><td colspan=\"2\">");
+		aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<tr><th>Log Pool</th><td colspan=\"2\">");
 		for (int k = 0; k < testCaseInfo.testItemInfo[i].testItemLogPool.size(); k++) {
 
 			aReporter.WriteContentToReport(REPORT_TYPE_FULL, "%s<br>", testCaseInfo.testItemInfo[i].testItemLogPool[k].c_str());
+			aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "%s<br>", testCaseInfo.testItemInfo[i].testItemLogPool[k].c_str());
 
 		}
 		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "</td></tr></table><br>");
+		aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "</td></tr></table><br>");
 
 		aReporter.WriteContentToReport(REPORT_TYPE_SUMMARY, ",,%s,%s\n", testCaseInfo.testItemInfo[i].name.c_str(), mVerdictHelper->GetVerdictStringByCode(testCaseInfo.testItemInfo[i].verdictResult));
 
 	}
-	/* Print test case result verdict and log poll */
+	/* Print test case result verdict */
 
 	if (VERDICT_UNKNOWN != testCaseInfo.verdictType) {
 
-		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>Test case result verdict: %d</p>", testCaseInfo.verdictResult);
+		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>Test case result verdict: %s</p>", mVerdictHelper->GetVerdictStringByCode(testCaseInfo.verdictResult));
+		aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<p>Test case result verdict: %s</p>", mVerdictHelper->GetVerdictStringByCode(testCaseInfo.verdictResult));
 	} else {
 
 	}
@@ -935,22 +940,16 @@ void JsonParser::ReportTestCaseInfo(TestCase testCaseInfo) {
 }
 void JsonParser::DeallocateTestCaseInfo(TestCase test_case_info) {
 
-	LOGCXX("deallocating test case information struct");
 	for (int i = 0; i < test_case_info.numOfTestItem; i++) {
-		LOGCXX("deallocate test item " << i << ": " << test_case_info.testItemInfo[i].name);
 		delete[] test_case_info.testItemInfo[i].testItemArg;
-		LOGCXX("ok");
 	}
 	if (VERDICT_REFERENCE == test_case_info.verdictType) {
 
 			delete[] test_case_info.testRef.referenceUnitObjs;
 	} else if (VERDICT_EXPECTED == test_case_info.verdictType) {
 
-			LOGCXX("deallocate expected struct");
 			delete[] test_case_info.testExpect.expectedObjs;
-			LOGCXX("ok");
 	}
 	delete[] test_case_info.testItemInfo;
-	LOGCXX("deallocated");
 
 }

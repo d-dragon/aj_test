@@ -5,6 +5,7 @@
 #include <getopt.h>
 #include "JsonParser.h"
 #include "TestWorker.h"
+#include "common_def.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -100,6 +101,13 @@ static void parse_options(int argc, char* argv[]) {
 	}
 */
 }
+#if 0
+void InitLogStream() {
+	gLogFileStream.open("console.txt");
+	gFileBuf = gLogFileStream.rdbuf();
+	gConsoleBuf = cout.rdbuf();
+}
+#endif
 int main(int argc, char *argv[]){
 
 	int found_config_flag = 0;
@@ -181,7 +189,8 @@ int main(int argc, char *argv[]){
 		
 		cout << "Choose test suite: ";
 		cin >> g_test_suite_number;
-		cout << ts_list[g_test_suite_number - 1] << endl;
+		LOGCXX("------------------------------------------------------------");
+		cout << "Parsing " << ts_list[g_test_suite_number - 1] << endl;
 
 	}
 	snprintf(ts_path, LEN_256B, "%s/%s", dir_path, ts_list[g_test_suite_number -1].c_str());

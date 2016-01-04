@@ -68,7 +68,7 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
 			if (VERDICT_RET_SUCCESS != ref_verdict) {
 				ret = ref_verdict;
 			}
-			cout << "verdict result " << ret << endl;
+			LOGCXX("Test item " << test_case_t->testItemInfo[i].name << ": " << GetVerdictStringByCode(ret) << endl);
 
 		}
 		json_decref(ref_root);
@@ -105,6 +105,7 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
             break;
         }
     }
+	LOGCXX("Test case " << test_case_t->name << ": " << GetVerdictStringByCode(ret));
 	return ret;
 }
 
@@ -132,8 +133,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 		device_type = GetTIArgumentValueByKey(test_item_t, "devicetype");
 
 		if (NULL == device_type) {
-			cout << "devicetype is invalid" << endl;
-			ret = VERDICT_RET_INPUT_INVALID;
+			ret = VERDICT_RET_UNKNOWN;
 		} else if (0 == device_type->compare("zwave")) {
 			/* Specific verdict result for zwave device */
 			string resp_device_type, resp_method, resp_id, resp_status;
@@ -169,7 +169,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 
 						if (NULL == cmd_class ||
 								NULL == command) {
-							ret = VERDICT_RET_INPUT_INVALID;
+							ret = VERDICT_RET_UNKNOWN;
 						} else {
 							/* Verdict the test item response result */
 							string resp_class, resp_type;
@@ -1252,8 +1252,6 @@ int ResultVerdictHelper::GetValueFromJSONInteger(string input, string key){
 const char* ResultVerdictHelper::GetVerdictStringByCode(int verdictCode) {
 
 	unsigned int size = sizeof(gverdictResult)/sizeof(CodeString);
-	LOGCXX("size of gverdictResult: "<< size);
-
 	for (int i = 0; i < size; i++) {
 		if (verdictCode == gverdictResult[i].Code) {
 			return gverdictResult[i].String;

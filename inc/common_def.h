@@ -1,12 +1,26 @@
 #ifndef _COMMON_DEP_H_
 #define _COMMON_DEP_H_
 #include "alljoyn/onboarding/Onboarding.h"
+#include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 
-#define LOGCXX(msg)  (std::cout<< "DBG: "  << msg << std::endl )
+//#define LOGCXX(msg)  (std::cout<<  msg << std::endl )
+#define LOGCXX(msg)  do {std::streambuf *gFileBuf, *gConsoleBuf;\
+std::ofstream gLogFileStream;\
+	gLogFileStream.open("console.txt");\
+	gFileBuf = gLogFileStream.rdbuf();\
+	gConsoleBuf = std::cout.rdbuf();\
+	std::cout.rdbuf(gFileBuf);\
+							std::cout << msg << std::endl;\
+							std::cout.rdbuf(gConsoleBuf);\
+							std::cout << msg << std::endl;\
+							gLogFileStream.close();\
+							} while(0)
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
+
 
 /*
 *	Session of OnBoarding
