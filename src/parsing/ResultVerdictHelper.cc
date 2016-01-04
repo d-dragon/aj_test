@@ -848,7 +848,7 @@ void ResultVerdictHelper::GetMsgRespRWSpec(PrivateData *outData, TestCase tc, in
             outData->msgConf.devID          = GetValueFromJSON(matchedLogData,"deviceid");
         //    outData->cmdInfo        = GetValueFromJSON(matchedLogData,"commandinfo");
             outData->msgConf.status         = GetValueFromJSON(matchedLogData,"status");
-            if (0 == outData->msgConf.method.compare("read_specR")){
+            if ((0 == outData->msgConf.method.compare("read_specR")) || (0 == outData->msgConf.method.compare("read_s_specR")) ){
                 if (0 == outData->msgConf.status.compare("successful")){ // OK case
                     outData->msgConf.parameter  = GetValueFromJSON(matchedLogData,"parameter");
                     outData->msgConf.value = GetValueFromJSONInteger(matchedLogData,"value");
@@ -1029,7 +1029,7 @@ int ResultVerdictHelper::ExpectationComparison(TestCaseExpectation tcExpect, Pri
 int ResultVerdictHelper::InOutTestCaseComparison(TestCase tc, PrivateData respData, string addOrRemove){
     int index_of_write, index_of_read, i, inputVal;
     int ret = VERDICT_RET_UNKNOWN;
-    bool isIncluded = false;
+    bool isIncluded = false, isSecureRWSpec = false;
     std::vector<string> valInput;
     string sInput;
 
@@ -1044,6 +1044,11 @@ int ResultVerdictHelper::InOutTestCaseComparison(TestCase tc, PrivateData respDa
             index_of_write = i;
             break;
         }
+        if (0 == tc.testItemInfo[i].name.compare("write_s_spec")){
+            isSecureRWSpec = true;
+            index_of_write = i;
+            break;
+        }
     }
     //read_spec must be next of write_spec
     index_of_read = index_of_write + 1;
@@ -1051,7 +1056,11 @@ int ResultVerdictHelper::InOutTestCaseComparison(TestCase tc, PrivateData respDa
     {
         return VERDICT_RET_UNKNOWN;
     }
-    if (0 != tc.testItemInfo[index_of_read].name.compare("read_spec")){
+    if (isSecureRWSpec){
+        if (0 != tc.testItemInfo[index_of_read].name.compare("read_s_spec")){
+            return VERDICT_RET_UNKNOWN;
+        }
+    }else if (0 != tc.testItemInfo[index_of_read].name.compare("read_spec")){
         return VERDICT_RET_UNKNOWN;
     }
     if (index_of_write == -1){ // not found
