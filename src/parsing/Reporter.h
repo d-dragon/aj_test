@@ -28,12 +28,12 @@ class Reporter {
 		int CreateTestSuiteReport(const char *ptestSuiteName);
 		void CloseTestSuiteReport();
 		int WriteContentToReport(int reportType, const char *pcontent, ...);
+		char mReportDirPath[256];
 
 	private:
 
 		fstream aFullReport;
 		fstream aCvsReport;
 		fstream aTestSuiteReport;
-		char mReportDirPath[256];
 		int CreateReportFile(int reportType, const char *pfilePath);
 };

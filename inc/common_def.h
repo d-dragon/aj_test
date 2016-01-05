@@ -9,7 +9,7 @@
 //#define LOGCXX(msg)  (std::cout<<  msg << std::endl )
 #define LOGCXX(msg)  do {std::streambuf *gFileBuf, *gConsoleBuf;\
 std::ofstream gLogFileStream;\
-	gLogFileStream.open("console.txt");\
+	gLogFileStream.open("ConsoleLog.txt", std::fstream::out | std::fstream::app);\
 	gFileBuf = gLogFileStream.rdbuf();\
 	gConsoleBuf = std::cout.rdbuf();\
 	std::cout.rdbuf(gFileBuf);\

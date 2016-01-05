@@ -5,6 +5,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include "Reporter.h"
+#include "common_def.h"
 
 
 

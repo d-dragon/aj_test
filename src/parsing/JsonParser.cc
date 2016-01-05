@@ -167,7 +167,7 @@ int JsonParser::startParser(int reference_flag){
 	testSuitRoot = json_load_file(dfTSPath, 0, &err);
 	if ((testSuitRoot == NULL) || !(json_is_array(testSuitRoot))){
 
-		LOGCXX(err.text << " at line " << err.line << endl);
+		//LOGCXX(err.text << " at line " << err.line << endl);
 		return -1;
 	}
 
@@ -182,7 +182,7 @@ int JsonParser::startParser(int reference_flag){
 	}
 	status = aReporter.InitOutputReportDir(worker->mConfig.deviceName.c_str());
 	if (RET_ERR == status) {
-		LOGCXX("Prepare report output dir failed");
+		//LOGCXX("Prepare report output dir failed");
 		return -1;
 	}
 

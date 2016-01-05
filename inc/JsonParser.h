@@ -1,5 +1,5 @@
 /**
- * @file is responsible for parsing json input file.
+  @file is responsible for parsing json input file.
  */
 #ifndef _JSON_PARSER_H_
 #define _JSON_PARSER_H_
@@ -28,6 +28,7 @@ class JsonParser {
 		
 		vector<string> mFileList;
 		vector<string> mTestSuiteList;
+		Reporter aReporter;
 
 		JsonParser(const char *tsPath, const char *tcPath, const char *tiPath, const char *configPath);
 		~JsonParser();
@@ -54,7 +55,6 @@ class JsonParser {
 		json_t *testSuitRoot;
 		json_error_t err;
 		TestWorker *worker;
-		Reporter aReporter;
 		json_t *tcTemplateRoot;
 		json_t *tiRoot;
 		json_t *mRefJsonRoot;
