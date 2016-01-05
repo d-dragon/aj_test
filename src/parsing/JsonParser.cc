@@ -516,7 +516,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 				test_case_info.verdictResult = mVerdictHelper->VerdictResult(&test_case_info, "src/references/references.json");
 			} else if (VERDICT_EXPECTED == test_case_info.verdictType){
                 LOGCXX("Verdict type: EXPECTED");
-				test_case_info.verdictResult = mVerdictHelper->VerdictResult(&test_case_info,"");
+				mVerdictHelper->VerdictResult(&test_case_info,"");
 			}
 			/* TODO - Export test case info to report */
 			ReportTestCaseInfo(test_case_info);

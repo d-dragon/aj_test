@@ -47,6 +47,7 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
             case ZWAVE:
                 LOGCXX("EvaluationTestCase");
                 test_case_t->verdictResult = EvaluationTestCase(*test_case_t);
+                ret                        = test_case_t->verdictResult;
                 switch (test_case_t->verdictResult) {
                     case 	VERDICT_RET_INPUT_INVALID: /*!< Test item input invalid */
                         std::cout<<"=======>>>>>>>>>>>>>>>>Return value VERDICT_RET_INPUT_INVALID"<<std::endl;
@@ -409,7 +410,7 @@ int ResultVerdictHelper::EvaluationTestCase(TestCase &tc){
     int ret, i, j, ret1, ret2;
     bool isTrue = true;
     vector<string> commandVal;
-    string matchedLogData;
+    string matchedLogData, respStatus;
     PrivateData respData;
 
     ret = VERDICT_RET_UNKNOWN;
@@ -421,7 +422,9 @@ int ResultVerdictHelper::EvaluationTestCase(TestCase &tc){
     }
     for (i = 0; i < tc.numOfTestItem; i++){
          matchedLogData = tc.testItemInfo[i].testItemLogPool.at(tc.testItemInfo[i].matchedRespMsgIndex);
-         if (0 != GetValueFromJSON(matchedLogData,"status").compare("successful"))
+         respStatus     = GetValueFromJSON(matchedLogData,"status");
+         LOGCXX("Responde status of test case ;"<< respStatus);
+         if (0 != respStatus.compare("successful"))
          {
             tc.testItemInfo[i].verdictResult = VERDICT_RET_FAILED;
             isTrue = false;

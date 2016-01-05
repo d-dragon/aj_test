@@ -14,6 +14,7 @@
 	"adddevice": {
 		"testitems": [
 			{ "name": "open_closenetwork" },
+			{"name" : "listen_notification"},
 			{ "name": "list_devices" }
 		]
 	},
@@ -28,6 +29,12 @@
 		"testitems": [
 			{ "name": "remove_device" },
 			{ "name": "list_devices" }
+		]
+	},
+
+	"closenetwork" :{
+		"testitems": [
+			{"name": "open_closenetwork"}
 		]
 	},
 
