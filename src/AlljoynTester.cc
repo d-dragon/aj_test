@@ -20,21 +20,26 @@ int g_run_all = FALSE;
 int g_test_suite_number = 0;
 int g_reference_enabled = FALSE;
 JsonParser *tester; 
-static void SignalHander(int signum) {
+
+void MoveConsoleLogToOutputDir() {
 
 	char cmd_buf[256];
+
+	snprintf(cmd_buf, 256, "mv ConsoleLog.txt %s/", tester->aReporter.mReportDirPath);
+	system(cmd_buf);
+}
+static void SignalHander(int signum) {
+
 	switch (signum) {
 		case SIGINT:
 			LOGCXX("------catched interupt signal-----------");
-			snprintf(cmd_buf, 256, "mv ConsoleLog.txt %s/", tester->aReporter.mReportDirPath);
-			system(cmd_buf);
-			abort();
+			MoveConsoleLogToOutputDir();
+			exit(1);
 			break;
 		case SIGSEGV:
 			LOGCXX("------catched SIGSEGV signal-----------");
-			snprintf(cmd_buf, 256, "mv ConsoleLog.txt %s/", tester->aReporter.mReportDirPath);
-			system(cmd_buf);
-			abort();
+			MoveConsoleLogToOutputDir();
+			exit(1);
 			break;
 		defaut:
 			break;
@@ -255,5 +260,6 @@ int main(int argc, char *argv[]){
 
 	tester->ApplyPaths(ts_path, tc_path, config_path, reference_path);
 	tester->startParser(g_reference_enabled);
+	MoveConsoleLogToOutputDir();
 	return 1;
 }

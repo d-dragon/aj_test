@@ -231,7 +231,6 @@ int JsonParser::startParser(int reference_flag){
 		}
 		/* Export test suite information to report */
 		const char *html_content;
-	aReporter.WriteContentToReport(REPORT_TYPE_SUMMARY, "Test suite,Test case,Test Item,Result\n");
 		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<h2>Test Suite: %s</h2>", mTestSuiteList[arrayIndex].c_str());
 		
 		status = TestsuitParser(tsObj);
@@ -902,7 +901,7 @@ void JsonParser::ReportTestCaseInfo(TestCase testCaseInfo) {
 		aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<table border=\"2\" width=\"640\"><col width=\"100\"><col width=\"140\"><col width=\"400\"><tr><th>Test Item</th><td colspan=\"2\">%s</td></tr><tr><th rowspan=\"%d\">Input</th></tr>",testCaseInfo.testItemInfo[i].name.c_str(), testCaseInfo.testItemInfo[i].numOfArg+1);
 
 
-		for(int j = 0; j < testCaseInfo.testItemInfo->numOfArg; j++){
+		for(int j = 0; j < testCaseInfo.testItemInfo[i].numOfArg; j++){
 
 			aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><td>%s</td><td>%s</td></tr>",testCaseInfo.testItemInfo[i].testItemArg[j].key.c_str(), testCaseInfo.testItemInfo[i].testItemArg[j].value.at(0).c_str());
 			aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<tr><td>%s</td><td>%s</td></tr>",testCaseInfo.testItemInfo[i].testItemArg[j].key.c_str(), testCaseInfo.testItemInfo[i].testItemArg[j].value.at(0).c_str());

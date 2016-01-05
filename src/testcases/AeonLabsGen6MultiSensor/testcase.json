@@ -13,7 +13,7 @@
 
 	"adddevice": {
 		"testitems": [
-			{ "name": "add_devices" },
+			{ "name": "open_closenetwork" },
 			{ "name": "list_devices" }
 		]
 	},

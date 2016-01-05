@@ -1,7 +1,6 @@
 [ 
 	{
-		"testsuit" 					: "AeonLabsGen6MultiSensor",
-		"serviceid" 				: "93c06771-c725-48c2-b1ff-5c313ee312cc",
+		"testsuite" 					: "remove_add_device",
 		"testcases" 				:	[
 			{
 				"name" 				: "listdevices",
@@ -10,17 +9,18 @@
 				}
 			},
           	{ 
-				"name" 				: "removedevice", 
+				"name" 				: "adddevice", 
 				"input" 			: { 
 					"devicetype" 	: "zwave",
-					"id"			: ""
+					"id"			: "",
+					"action"		: "open"
 				}
 			},
 			{ 
 				"name" 				: "removedevice", 
 				"input" 			: { 
 					"devicetype" 	: "zwave",
-					"id"			: ""
+					"id"			: "14"
 				}
 			},
 
