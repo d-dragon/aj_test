@@ -45,8 +45,9 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
         LOGCXX("Signal type: "<< sigtype );
         switch (sigtype) {
             case ZWAVE:
-            LOGCXX("EvaluationTestCase");
-                switch (EvaluationTestCase(*test_case_t)) {
+                LOGCXX("EvaluationTestCase");
+                test_case_t->verdictResult = EvaluationTestCase(*test_case_t);
+                switch (test_case_t->verdictResult) {
                     case 	VERDICT_RET_INPUT_INVALID: /*!< Test item input invalid */
                         std::cout<<"=======>>>>>>>>>>>>>>>>Return value VERDICT_RET_INPUT_INVALID"<<std::endl;
                     break;
