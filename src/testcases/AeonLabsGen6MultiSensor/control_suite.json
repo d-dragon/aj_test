@@ -430,7 +430,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"value" 		: 05
+						"value" 		: 5
 					}
 				}
             }
