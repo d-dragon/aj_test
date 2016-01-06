@@ -908,8 +908,8 @@ void JsonParser::ReportTestCaseInfo(TestCase testCaseInfo) {
 			aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<tr><td>%s</td><td>%s</td></tr>",testCaseInfo.testItemInfo[i].testItemArg[j].key.c_str(), testCaseInfo.testItemInfo[i].testItemArg[j].value.at(0).c_str());
 		}
 
-		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><th>Result</th><td colspan=\"2\">%d</td></tr>", mVerdictHelper->GetVerdictStringByCode(testCaseInfo.testItemInfo[i].verdictResult));
-		aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<tr><th>Result</th><td colspan=\"2\">%d</td></tr>", mVerdictHelper->GetVerdictStringByCode(testCaseInfo.testItemInfo[i].verdictResult));
+		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><th>Result</th><td colspan=\"2\">%s</td></tr>", mVerdictHelper->GetVerdictStringByCode(testCaseInfo.testItemInfo[i].verdictResult));
+		aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<tr><th>Result</th><td colspan=\"2\">%s</td></tr>", mVerdictHelper->GetVerdictStringByCode(testCaseInfo.testItemInfo[i].verdictResult));
 		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><th>Response Message</th><td colspan=\"2\">%s</td></tr>", testCaseInfo.testItemInfo[i].testItemLogPool[testCaseInfo.testItemInfo[i].matchedRespMsgIndex].c_str());
 		aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<tr><th>Response Message</th><td colspan=\"2\">%s</td></tr>", testCaseInfo.testItemInfo[i].testItemLogPool[testCaseInfo.testItemInfo[i].matchedRespMsgIndex].c_str());
 		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<tr><th>Log Pool</th><td colspan=\"2\">");
