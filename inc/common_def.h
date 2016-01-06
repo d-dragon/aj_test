@@ -7,21 +7,18 @@
 #include <vector>
 
 //#define LOGCXX(msg)  (std::cout<<  msg << std::endl )
-#define LOGCXX(msg)  do {std::streambuf *gFileBuf, *gConsoleBuf;\
-std::ofstream gLogFileStream;\
-	gLogFileStream.open("ConsoleLog.txt", std::fstream::out | std::fstream::app);\
-	gFileBuf = gLogFileStream.rdbuf();\
-	gConsoleBuf = std::cout.rdbuf();\
-	std::cout.rdbuf(gFileBuf);\
+#define LOGCXX(msg)  do {	std::cout.rdbuf(gFileBuf);\
 							std::cout << msg << std::endl;\
+							std::cout << std::flush;\
 							std::cout.rdbuf(gConsoleBuf);\
 							std::cout << msg << std::endl;\
-							gLogFileStream.close();\
 							} while(0)
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
 
+extern std::streambuf *gFileBuf, *gConsoleBuf;
+extern std::ofstream gLogFileStream;
 /*
 *	Session of OnBoarding
 */

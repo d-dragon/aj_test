@@ -48,7 +48,7 @@ ROOT_DIR			= $(shell pwd)
 #
 # Target: alljoynclient and onboarding
 #	
-all: directories common_libs OnboardingTestApp AlljoynClientApp AlljoynTester
+all: directories common_libs AlljoynClientApp AlljoynTester
 
 AlljoynTester: $(AJCLIENT_OBJECTS) $(ONBOARDING_OBJECTS) $(PARSINGMODULE_OBJS)
 	@echo "**********Build Alljoyn Tester Application**********"

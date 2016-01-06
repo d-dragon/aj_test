@@ -21,6 +21,9 @@ int g_test_suite_number = 0;
 int g_reference_enabled = FALSE;
 JsonParser *tester; 
 
+streambuf *gFileBuf, *gConsoleBuf;
+ofstream gLogFileStream;
+
 void MoveConsoleLogToOutputDir() {
 
 	char cmd_buf[256];
@@ -186,6 +189,9 @@ int main(int argc, char *argv[]){
 	//cout << g_update_config << g_run_all << g_test_suite_number << argv[optind] << endl;
 	tester = new JsonParser(argv[1], argv[2], "src/testcases/testitem.json", "src/testcases/configuration.json");
 
+	gLogFileStream.open("ConsoleLog.txt", std::fstream::out | std::fstream::app);
+	gFileBuf = gLogFileStream.rdbuf();
+	gConsoleBuf = std::cout.rdbuf();
 	
 	
 	const char * dir_path = argv[optind++];
@@ -261,5 +267,6 @@ int main(int argc, char *argv[]){
 	tester->ApplyPaths(ts_path, tc_path, config_path, reference_path);
 	tester->startParser(g_reference_enabled);
 	MoveConsoleLogToOutputDir();
+	gLogFileStream.close();
 	return 1;
 }
