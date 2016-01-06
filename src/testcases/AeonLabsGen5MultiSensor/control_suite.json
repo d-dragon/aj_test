@@ -1,335 +1,466 @@
-[ 
+[
 	{
-		"testsuit" : "AeonLabsGen5MultiSensor",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
+		"testsuite" : "Get sensing values",
 		"testcases" :	[
-			{	
-				"name"	: "listdevices",
-				"input" :{
+			{
+				"name"				: "listdevices",
+				"description" 		: "Get list of available devices in the controller",
+				"input" 			: {
 					"devicetype"	: "zwave"
 				}
-			},			
+			},
+            
 			{
-				"name" : "readspec",
+				"name" : "get_battery",
+				"description" 		: "Get Battery level",
 				"input" : {
 					"devicetype" 	: "zwave",
 					"id" 			: "D_ID",
 					"class"			: "BATTERY",
-					"command"		: "GET"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "TIME"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "ENABLE_MOTION"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "REPORT_SENSOR"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "TIME_AUTO_REPORT"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "GET",
-					"type"			: "ONOFF_GROUP"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "SENSOR_MULTILEVEL",
-					"command"		: "GET",
-					"type"			: "TEMP"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "SENSOR_MULTILEVEL",
-					"command"		: "GET",
-					"type"			: "HUMI"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "SENSOR_MULTILEVEL",
-					"command"		: "GET",
-					"type"			: "LUMI"
-				}
-			},
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "ENABLE_MOTION",
-					"data1"			: "0",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "ENABLE_MOTION"
-				}
-			},
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "ENABLE_MOTION",
-					"data1"			: "1",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "ENABLE_MOTION"
-				}
-			},
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "TIME",
-					"data1"			: "3BC4",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "TIME"
-				}
-			},
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "TIME",
-					"data1"			: "3BC5",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "TIME"
-				}
-			},
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "TIME",
-					"data1"			: "0003",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "TIME"
-				}
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "TIME_AUTO_REPORT",
-					"data1"			: "28DE80",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "TIME_AUTO_REPORT"
-				}
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "REPORT_SENSOR",
-					"data1"			: "0",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "REPORT_SENSOR"
-				}
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "REPORT_SENSOR",
-					"data1"			: "E1",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "REPORT_SENSOR"
-				}
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "TIME_AUTO_REPORT",
-					"data1"			: "05",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "TIME_AUTO_REPORT"
-				}
-			},
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "ONOFF_GROUP",
-					"data1"			: "2F",
-					"data2"			: "1"
+					"readcommand"	: "GET"
 				}
 			},
 
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "ONOFF_GROUP"
-                }
-            },
 			{
-                "name" : "writespec",
-                "input" : {
+				"name" 				: "get_temperature",
+				"description"		: "Get status of TEMP ( temperature in fahrenheit and celsius ) for verifying value which is available",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "SENSOR_MULTILEVEL",
+					"readcommand"	: "GET",
+					"type"			: "TEMP",
+					"force"			: "1"
+				},
+				"verdict"		: {
+					"method"		: "reference",
+					"value"		: {
+						"fahrenheit"	: "ref",
+						"celsius"		: "ref"
+					}
+				}
+			},
+
+			{
+				"name" 				: "get_humidity",
+				"description"		: "Get status of HUMI ( humidity percentage and absolute humidity ) for verifying value which is available",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "SENSOR_MULTILEVEL",
+					"readcommand"	: "GET",
+					"type"			: "HUMI",
+					"force"			: "1"
+				},
+				"verdict"		: {
+					"method"		: "reference",
+					"value"		: {
+						"percentage"		: "ref",
+						"absolute_humidity"	: "ref"
+					}
+				}
+			},
+
+			{
+				"name" 				: "get_luminance",
+				"description"		: "Get status of LUMI ( luminance index ) for verifying value which is available",
+				"input" 			: {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "SENSOR_MULTILEVEL",
+					"readcommand"	: "GET",
+					"type"			: "LUMI",
+					"force"			: "1"
+				},
+				"verdict"		: {
+					"method"	: "reference",
+					"value"		: {
+						"luminance"	: "ref"
+					}
+				}
+			}
+		]
+	},
+
+	{
+		"testsuite" : "Association with another device",
+		"testcases" : [
+            {
+                "name" 				: "basic_set_association",
+                "description"		: "Association with our controller (ceres)",
+                "input" 			: {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "command"       : "REMOVE",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "2F",
-                    "data2"         : "1"
-                }
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["01"]
+					}
+				}
+            },
+
+            {
+                "name" 				: "basic_set_association",
+                "description"		: "Association with Led zwave",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "11",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["11"]
+					}
+				}
+			}
+		]
+	},
+
+	{
+		"testsuite" : "Enable motion configuration",
+		"testcases" : [
+
+            {
+                "name" 				: "motion_configuration",
+                "description"		: "Set ENABLE_MOTION is 0, value 0 mean to disable motion sensor",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ENABLE_MOTION",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "ENABLE_MOTION",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value"	:     0
+					}
+				}
+            },
+
+            {
+                "name" 				: "motion_configuration",
+                "description"		: "Set ENABLE_MOTION is 1, value 1 mean to enable motion sensor",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ENABLE_MOTION",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "ENABLE_MOTION",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value"	:     1
+					}
+				}
+            }
+		]
+	},
+
+	{
+		"testsuite" : "Physical testing with time delay configuration",
+		"testcases" : [
+
+            {
+                "name" 				: "physical_test",
+                "description"		: "Set TIME is 10, value 10 mean interval associated device to keep state On before sending it Off command. Then wait for 30s to test motion sensor, if having a motion accurs then zwave LED will turn on",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "TIME",
+                    "data1"         : "10",
+                    "data2"         : "1",
+                    "type"          : "TIME",
+                    "force"			: "1",
+                    "time"			: "30"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value"	:     10
+					}
+				}
+            }
+		]
+	},
+
+	{
+		"testsuite" : "Report sensor configuration",
+		"testcases" : [
+            {
+                "name" 				: "report_configuration",
+                "description"		: "Set REPORT_SENSOR is 0 , value 0 mean disable all of reports that need to send automatically in timing intervals to our controller",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "REPORT_SENSOR",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "REPORT_SENSOR",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value"	:     0
+					}
+				}
+            },
+
+            {
+                "name" 				: "report_configuration",
+                "description"		: "Set REPORT_SENSOR is 225 , value 225 (hex : E1) mean enable all of reports that need to send automatically in timing intervals to our controller",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "REPORT_SENSOR",
+                    "data1"         : "225",
+                    "data2"         : "1",
+                    "type"          : "REPORT_SENSOR",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value"	:     225
+					}
+				}
+            }
+		]
+	},
+
+	{
+		"testsuite" : "Time auto report Configuration",
+		"testcases" : [
+			{
+                "name" 				: "time_auto_report_configuration",
+                "description"		: "Set TIME_AUTO_REPORT is 2678400 , value 2678400 mean device will send out reports to our controller after 2678400s",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "TIME_AUTO_REPORT",
+                    "data1"         : "2678400",
+                    "data2"         : "1",
+                    "type"          : "TIME_AUTO_REPORT",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: 2678400
+					}
+				}
+            },
+
+			{
+                "name" 				: "time_auto_report_configuration",
+                "description"		: "Set TIME_AUTO_REPORT is 581248 , value 581248 mean device will send out reports to our controller after 581248s",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "TIME_AUTO_REPORT",
+                    "data1"         : "581248",
+                    "data2"         : "1",
+                    "type"          : "TIME_AUTO_REPORT",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: 581248
+					}
+				}
+            },
+
+			{
+                "name" 				: "time_auto_report_configuration",
+                "description"		: "Set TIME_AUTO_REPORT is 05 , value 05 mean device will send out reports to our controller after 5s",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "TIME_AUTO_REPORT",
+                    "data1"         : "05",
+                    "data2"         : "1",
+                    "type"          : "TIME_AUTO_REPORT",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: 5
+					}
+				}
+            }
+		]
+	},
+
+	{
+		"testsuite" : "Time delay configuration",
+		"testcases" : [
+			{
+                "name" 				: "time_configuration",
+                "description"		: "Set TIME is 1, value 1 mean interval associated device to keep state On before sending it Off command.",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "TIME",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "TIME",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: 1
+					}
+				}
+            },
+
+			{
+                "name" 				: "time_configuration",
+                "description"		: "Set TIME is 15300, value 15300 mean interval associated device to keep state On before sending it Off command.",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "TIME",
+                    "data1"         : "15300",
+                    "data2"         : "1",
+                    "type"          : "TIME",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: 15300
+					}
+				}
+            },
+
+            {
+                "name" 				: "time_configuration",
+                "description"		: "Set TIME is 10, value 10 mean interval associated device to keep state On before sending it Off command.",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "TIME",
+                    "data1"         : "10",
+                    "data2"         : "1",
+                    "type"          : "TIME",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value" 		: 10
+					}
+				}
+            }
+		]
+	},
+
+	{
+		"testsuite" : "Remove association information",
+		"testcases" : [
+			{
+                "name" 				: "remove_association",
+                "description"		: "Remove our controller out of ONOFF_GROUP",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["01"]
+					}
+				}
+            },
+
+            {
+                "name" 				: "remove_association",
+                "description"		: "Remove zwave LED out of ONOFF_GROUP",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "11",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["11"]
+					}
+				}
             }
 		]
 	}

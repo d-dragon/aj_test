@@ -1,44 +1,34 @@
 [ 
 	{
-		"testsuit" : "AeonLabsGen5MultiSensor",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
-		"testcases" :	[
+		"testsuite" 				: "AeonLabsGen5MultiSensor",
+		"serviceid" 				: "93c06771-c725-48c2-b1ff-5c313ee314e4",
+		"testcases" 				:	[
 			{
-				"name" : "listdevices",
-				"input" : {
+				"name" 				: "listdevices",
+				"description"		: "",
+				"input" 			: {
 					"devicetype"	: "zwave"
 				}
 			},
-          	{ 
-				"name" : "removedevice", 
-				"input" : { 
+
+			{ 
+				"name" 				: "adddevice", 
+				"description"		: "To add device into device list , we need to press button on device until see received message with notifytype is newdevice.",
+				"input" 			: { 
 					"devicetype" 	: "zwave",
-					"id"			: ""
+					"action"		: "open",
+					"time"			: "30"
 				}
 			},
+
 			{ 
-				"name" : "removedevice", 
-				"input" : { 
+				"name" 				: "closenetwork",
+				"description"		: "", 
+				"input" 			: { 
 					"devicetype" 	: "zwave",
-					"id"			: ""
+					"action"		: "close"
 				}
-			},
-
-			{ 
-				"name" : "adddevice", 
-				"input" : { 
-					"devicetype" : "zwave" 
-				}
-			},
-
-			{ 
-				"name" : "adddevice", 
-				"input" : { 
-					"devicetype" : "zwave" 
-				}
-			}
-
-			
+			}		
 		]
 	}
 ]
