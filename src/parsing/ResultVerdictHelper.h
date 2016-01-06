@@ -72,36 +72,6 @@ public:
         Destructor
      */
     ~ResultVerdictHelper();
-    /*
-        Save info of current test case
-     */
-    void SaveInfoOfTestItem(const json_t *testInput, struct TestItemInfo *info, string matchedResponseMsg);
-    /*
-        Get addtional verdict information.
-     */
-    void GetAddtionalVerdictCondition(string condition);
-    /*
-        Save reference value
-     */
-    void SaveReferenceTC(string input, string response);
-    /*
-        Save write_specs Message: includes response and precondition
-     */
-    void SaveWriteSpecTC(string input, string response);
-    /*
-        Save read_spec test case info
-     */
-    void SaveReadSpecTC(string input, string response);
-    /*
-        Compare expected of test cases and saved Data.
-    */
-    int EvaluateExpectationVSSavedData(json_t *expectedData);
-    /*
-        Do a verdict
-     */
-    int VerdictResult(json_t*, json_t* refValue =0);
-
-
 	/**
 	 * Verdict result of test case.
 	 * This is the last step while run a test case. The result depend on
@@ -117,29 +87,11 @@ public:
 	 */
 	int VerdictResult(TestCase *test_case_t, const char *reference_path);
 	const char *GetVerdictStringByCode(int verdictCode);
-
-
-    void DBGPrint();
 private:
-
-    // Exactly comparing 2 Json data
-    int Compare2JSONData(const string a, const string b);
-    int Compare2JSONData(json_t* a, const string b);
-    int Compare2JSONData(json_t* a, json_t* b);
-	int mInfoLastPosTracker;
-    // Compare 2 values, which measurement uncertainty is probabilityVal
-    int UncertaintCompare(const string a, const string b, double probabilityVal);
-    // To validate write Specs Result, we have to use read_spec to get information. To verify data was setting correct or not.
-    int ValidateWriteSpecResult(const string writespecsInput, const string readspecsOutput);
-    int AssociationSetGetCompare(const string testcaseInput, const json_t * nodefollowJSON);
-    int ConfigurationSetGetCompare(const void* testcaseInput, const json_t * nodefollowJSON);
     /*
     Private members
      */
-    struct LocalTestItemInfo mLocalTestItemInfo[MAXBUFF];
-    void SetInvalidAllData();
     int EvaluateOnSavedData();
-    int EvaluateExpectationofAssociation(string nodeExpected, json_t* respondMsg);
     SignalTypeEnum GetSignalType(TestCase input, int index = 0);
     SignalNameEnum GetSignalName(TestCase input, int index = 0);
     RWSpecsCmdClassEnum GetRWSpecsClass(TestCase input, int index = 0);

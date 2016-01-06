@@ -1,7 +1,6 @@
 [ 
 	{
-		"testsuit" 					: "AeonLabsGen6MultiSensor",
-		"serviceid" 				: "93c06771-c725-48c2-b1ff-5c313ee312cc",
+		"testsuite" 					: "remove_add_device",
 		"testcases" 				:	[
 			{
 				"name" 				: "listdevices",
@@ -10,31 +9,18 @@
 				}
 			},
           	{ 
-				"name" 				: "removedevice", 
-				"input" 			: { 
-					"devicetype" 	: "zwave",
-					"id"			: ""
-				}
-			},
-			{ 
-				"name" 				: "removedevice", 
-				"input" 			: { 
-					"devicetype" 	: "zwave",
-					"id"			: ""
-				}
-			},
-
-			{ 
 				"name" 				: "adddevice", 
 				"input" 			: { 
-					"devicetype" 	: "zwave" 
+					"devicetype" 	: "zwave",
+					"action"		: "open",
+					"time"			: "60"
 				}
 			},
-
 			{ 
-				"name" 				: "adddevice", 
+				"name" 				: "closenetwork", 
 				"input" 			: { 
-					"devicetype" 	: "zwave" 
+					"devicetype" 	: "zwave",
+					"action"		: "close"
 				}
 			}
 

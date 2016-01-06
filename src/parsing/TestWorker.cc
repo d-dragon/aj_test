@@ -56,7 +56,7 @@ int TestWorker::startAlljoynClient(const char *serviceId){
 	ajClient = new	AlljoynClient();
 
 	ajClient->SetRefTargetDeviceID(serviceId);
-	cout << "connect to service provider: " << serviceId << endl;
+	LOGCXX("connect to service provider: " << serviceId);
 	status = ajClient->InitAlljoynClient(serviceInterface.c_str());
 	if(ER_OK != status){
 
@@ -133,7 +133,7 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[], 
 			int time;
 			time = stoi(tiArg[2]);
 
-			cout << "listen notification in: " <<  time << "s" << endl;
+			LOGCXX("listen notification in: " <<  time << "s");
 			sleep(time);
 	}else{
 		if ( numArg > 1 ){
@@ -152,9 +152,9 @@ int TestWorker::executeTestItem(string testItem, size_t numArg, string tiArg[], 
 	last_log_index = (unsigned int)mLogPool.size();
 	mTestItemInfo.EndLogIndex = last_log_index - 1;
 	
-	cout << "Start log index at: " << mTestItemInfo.StartLogIndex << endl;
-	cout << "End log index at: " << mTestItemInfo.EndLogIndex << endl;
-	cout << "Matched log index at: " << mTestItemInfo.MatchedLogIndex << endl;
+	LOGCXX("Start log index at: " << mTestItemInfo.StartLogIndex);
+	LOGCXX("End log index at: " << mTestItemInfo.EndLogIndex);
+	LOGCXX("Matched log index at: " << mTestItemInfo.MatchedLogIndex);
 	
 	/* Save test item response log into the struct */
 	for (int i = mTestItemInfo.StartLogIndex; i <= mTestItemInfo.EndLogIndex; i++) {
@@ -181,7 +181,7 @@ void TestWorker::ResponseAnalyst(){
 		usleep(100000);
 		timeout++;
 		if(timeout == 300){
-			cout << "Test item execution timeout!!!" << endl;
+			LOGCXX("Test item execution timeout!!!");
 			//TODO - need implement action for this case
 			htmlResultContent.append("<tr><th>Result</th><td colspan=\"2\">");
 			htmlResultContent.append("Test item execution timeout!!!");
@@ -235,7 +235,7 @@ void TestWorker::TIRespMonitor(int respFlag, const char *respMsg, const char *sr
 	string tmpStr;
 	tmpStr.assign(respMsg);
 	mLogPool.push_back(tmpStr);
-	cout << "Message: " << respMsg << endl; 
+	LOGCXX("Message: " << respMsg); 
 	// TO DO
 	if (0 != mTestItemInfo.Signal.compare(member))
 	{
@@ -265,7 +265,7 @@ int TestWorker::exportStuffToFile(const char* content){
 	fstream outFile;
 	outFile.open(reportFile.c_str(), fstream::out | fstream::app);
 	if(!outFile.is_open()){
-		cout << "can not open file" << endl;
+		LOGCXX("can not open file");
 		return -1;
 	}
 

@@ -3,6 +3,7 @@
 #include <string>
 #include <string.h>
 #include <getopt.h>
+#include <signal.h>
 #include "JsonParser.h"
 #include "TestWorker.h"
 #include "common_def.h"
@@ -18,7 +19,71 @@ int g_update_config = TRUE;
 int g_run_all = FALSE;
 int g_test_suite_number = 0;
 int g_reference_enabled = FALSE;
+JsonParser *tester; 
 
+streambuf *gFileBuf, *gConsoleBuf;
+ofstream gLogFileStream;
+
+void MoveConsoleLogToOutputDir() {
+
+	char cmd_buf[256];
+
+	snprintf(cmd_buf, 256, "mv ConsoleLog.txt %s/", tester->aReporter.mReportDirPath);
+	system(cmd_buf);
+}
+static void SignalHander(int signum) {
+
+	switch (signum) {
+		case SIGINT:
+			LOGCXX("------catched interupt signal-----------");
+			MoveConsoleLogToOutputDir();
+			exit(1);
+			break;
+		case SIGSEGV:
+			LOGCXX("------catched SIGSEGV signal-----------");
+			MoveConsoleLogToOutputDir();
+			exit(1);
+			break;
+		defaut:
+			break;
+	}
+
+}
+void SetSignalHandler(void) {
+	struct sigaction act, old_act;
+	act.sa_flags = (SA_NOCLDSTOP | SA_NOCLDWAIT | SA_RESTART | SA_SIGINFO);
+	act.sa_handler = SignalHander;
+
+	if (sigaction(SIGSEGV, &act, &old_act)) {
+		cout << "sigaction failed... errno: " << errno << endl;
+	} else {
+		if (old_act.sa_handler == SIG_IGN) {
+
+			cout << "oldact RTMIN: SIGIGN" << endl;
+		}
+		if (old_act.sa_handler == SIG_DFL) {
+
+			cout << "oldact RTMIN: SIGDFL" << endl;
+		}
+	}
+	if (sigaction(SIGINT, &act, &old_act)) {
+
+		cout << "sigaction failed... errno: " << errno;
+	} else {
+		if (old_act.sa_handler == SIG_IGN) {
+
+			cout << "oldact RTMIN: SIGIGN" << endl;
+		}
+		if (old_act.sa_handler == SIG_DFL) {
+
+			cout << "oldact RTMIN: SIGDFL" << endl;
+		}
+	}
+
+
+
+
+}
 static void program_help(char *program_name) {
 	
 	cout << PROGRAM_NAME << " - Version " << VERSION << endl;
@@ -119,10 +184,14 @@ int main(int argc, char *argv[]){
 	vector<string> ts_list;
 
 
+	SetSignalHandler();
 	parse_options(argc, argv);
 	//cout << g_update_config << g_run_all << g_test_suite_number << argv[optind] << endl;
-	JsonParser *tester = new JsonParser(argv[1], argv[2], "src/testcases/testitem.json", "src/testcases/configuration.json");
+	tester = new JsonParser(argv[1], argv[2], "src/testcases/testitem.json", "src/testcases/configuration.json");
 
+	gLogFileStream.open("ConsoleLog.txt", std::fstream::out | std::fstream::app);
+	gFileBuf = gLogFileStream.rdbuf();
+	gConsoleBuf = std::cout.rdbuf();
 	
 	
 	const char * dir_path = argv[optind++];
@@ -197,5 +266,7 @@ int main(int argc, char *argv[]){
 
 	tester->ApplyPaths(ts_path, tc_path, config_path, reference_path);
 	tester->startParser(g_reference_enabled);
+	MoveConsoleLogToOutputDir();
+	gLogFileStream.close();
 	return 1;
 }
