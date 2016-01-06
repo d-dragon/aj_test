@@ -90,7 +90,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 	resp_root = json_loads(resp_msg.c_str(), 0, &err);
 	if (NULL == resp_root) {
 
-		cout << "load json response message failed: " << err.source << " >> " << err.text << endl;
+		LOGCXX("load json response message failed: " << err.source << " >> " << err.text);
 		return VERDICT_RET_UNKNOWN;
 	}
 
@@ -175,7 +175,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 														json_unpack(resp_sensing_value, "F", &sensing_resp);
 
 														differential = sensing_ref * 0.1;
-														cout << "reference = " << sensing_ref << "response = " << sensing_resp << "differential = " << differential << endl;
+														LOGCXX("reference = " << sensing_ref << " | response = " << sensing_resp << " | differential = " << differential );
 
 														if (((sensing_ref - differential) < sensing_resp) &&
 															((sensing_ref + differential) > sensing_resp)) {
@@ -188,7 +188,6 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 											}
 										} else {
 											/* Use defined reference value in test suite for verdict */
-											cout << "debug" << endl;
 											json_t *json_ref_value_obj;
 											json_ref_value_obj = json_object_get(ref_root, SENSOR_MULTILEVEL_CLASS);
 											json_ref_value_obj = json_object_get(json_ref_value_obj, type->c_str());
@@ -201,7 +200,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 													sensing_resp = test_ref.referenceUnitObjs[i].numValue;
 													json_unpack(json_ref_value_obj, "F", &sensing_ref);
 													differential = sensing_ref * 0.1;
-													cout << "reference = " << sensing_ref << "response = " << sensing_resp << "differential = " << differential << endl;
+													LOGCXX("reference = " << sensing_ref << " | response = " << sensing_resp << " | differential = " << differential );
 
 													if (((sensing_ref - differential) < sensing_resp) &&
 															((sensing_ref + differential) > sensing_resp)) {

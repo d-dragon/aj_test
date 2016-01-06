@@ -106,13 +106,13 @@ void JsonParser::JSONGetObjectValue(string *inputString, string objectName, stri
 
 	rootObj = json_loads(inputString->c_str(), 0, &err);
 	if(!json_is_object(rootObj)){
-		cout << "json format invalid" << endl;
+		LOGCXX("json format invalid");
 		return;
 	}
 
 	targetObj = json_object_get(rootObj, objectName.c_str());
 	if (targetObj == NULL){
-		cout << "found no object" << endl;
+		LOGCXX("found no object");
 		return;
 	}
 
@@ -132,12 +132,12 @@ void JsonParser::JSONGetObjectValue(json_t *inputObj, string objectName, string 
 	targetObj = json_object_get(inputObj, objectName.c_str());
 	inputObj = json_incref(inputObj);
 	if(targetObj == NULL){
-		cout << "found no required object" << endl;
+		LOGCXX("found no required object");
 		return;
 	}
 	retString = json_string_value(targetObj);
 	if(retString != NULL){
-//		cout << objectName.c_str() << " : " << retString << endl;
+//		LOGCXX(objectName.c_str() << " : " << retString);
 		output->assign(retString);
 	}
 	json_decref(inputObj);
@@ -148,7 +148,7 @@ json_t *JsonParser::JSONGetObjectFromString(string *inputString, string objectNa
 
 	rootObj = json_loads(inputString->c_str(), 0, &err);
 	if(!json_is_object(rootObj)){
-		cout << err.text << "at line " << err.line << endl;
+		LOGCXX(err.text << "at line " << err.line);
 		return NULL;
 	}
 
@@ -176,7 +176,7 @@ int JsonParser::startParser(int reference_flag){
 
 	status = GetWorkerConfiguration(worker, dfConfigPath);
 	if(status == ERROR){
-		cout << "read program configuration at " << dfConfigPath << " failed!!" << endl;
+		LOGCXX("read program configuration at " << dfConfigPath << " failed!!");
 		delete worker;
 		return status;
 	}
@@ -211,7 +211,7 @@ int JsonParser::startParser(int reference_flag){
 		ts_name = json_string_value(json_object_get(tsObj, "testsuite"));
 		/* Prepare test suite report output */
 		if (NULL == ts_name) {
-			cout << "test suite format is invalid (have no test suite name)" << endl;
+			LOGCXX("test suite format is invalid (have no test suite name)");
 			return -1;
 		}
 		mTestSuiteList.push_back(ts_name);
@@ -225,7 +225,7 @@ int JsonParser::startParser(int reference_flag){
 
 		if(!json_is_object(tsObj)){
 
-			cout << "test suite format invalid" << endl;
+			LOGCXX("test suite format invalid");
 			json_decref(testSuitRoot);
 			return -1;
 		}
@@ -238,7 +238,7 @@ int JsonParser::startParser(int reference_flag){
 		aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<hr><br>");
 
 		if(status == ERROR){
-			cout << "Parsed test suit failed" << endl;
+			LOGCXX("Parsed test suit failed");
 			return status;
 		}
 
@@ -248,7 +248,7 @@ int JsonParser::startParser(int reference_flag){
 	worker->StopAlljoynClient();
 	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "</body></html>");
 
-	cout << "JsonParser exit" << endl;
+	LOGCXX("JsonParser exit");
 	delete worker;
 	return status;
 }
@@ -264,7 +264,7 @@ int JsonParser::TestsuitParser(json_t *tsObj){
 	ts_name = json_string_value(json_object_get(tsObj, "testsuite"));
 	/* Prepare test suite report output */
 	if (NULL == ts_name) {
-		cout << "test suite format is invalid (have no test suite name)" << endl;
+		LOGCXX("test suite format is invalid (have no test suite name)");
 		return -1;
 	}
 	aReporter.WriteContentToReport(REPORT_TYPE_SUMMARY, "%s,,,\n", ts_name);
@@ -287,7 +287,7 @@ int JsonParser::TestsuitParser(json_t *tsObj){
 	}
 	status = TestCaseCollector(tcRoot);
 	if(status == ERROR){
-		cout << "parse testcase in " << ts_name << "failed" << endl;
+		LOGCXX("parse testcase in " << ts_name << "failed");
 		return status;
 	}
 	aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<hr><br>");
@@ -309,14 +309,14 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 	json_array_foreach(tcRoot, index, tcObj){
 
 		if(!json_is_object(tcObj)){
-			cout << "json format invalid" << endl;
+			LOGCXX("json format invalid");
 			return ERROR;
 		}
 
 		tcName = json_string_value(json_object_get(tcObj, "name"));
 		if(tcName == NULL){
 
-			cout << "got test case name failed" << endl;
+			LOGCXX("got test case name failed");
 			return ERROR;
 		}
 
@@ -325,7 +325,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		LOGCXX("--------------------------------------Test case: " << tcName << "-------------------------------------" << endl);
 		tcInputArg = json_object_get(tcObj, "input");
 		if(!json_is_object(tcInputArg)){
-			cout << "cannot got input arg object" << endl;
+			LOGCXX("cannot got input arg object");
 			return ERROR;
 		}
 
@@ -333,7 +333,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		if (tcTemplateRoot == NULL){
 			tcTemplateRoot = json_load_file(dfTCPath, 0, &err);
 			if(!json_is_object(tcTemplateRoot)){
-				cout << "error while load test case template" << err.text << err.line << endl;
+				LOGCXX("error while load test case template" << err.text << err.line);
 				json_decref(tcTemplateRoot);
 				return ERROR;
 			}
@@ -342,14 +342,14 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		tcTemplateObj = json_object_get(tcTemplateRoot, tcName);
 		if(!json_is_object(tcTemplateObj)){
 
-			cout << "test case template not found" << endl;
+			LOGCXX("test case template not found");
 			return ERROR;
 		}
 
 		json_t *tiArray;
 		tiArray = json_object_get(tcTemplateObj, "testitems");
 		if(!json_is_array(tiArray)){
-			cout << "got test item in test case failed" << endl;
+			LOGCXX("got test item in test case failed");
 			return ERROR;
 		}
 
@@ -429,13 +429,13 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 					}
 					/* Debugging - Print all reference verdict info */
 #if 0
-					cout << "Verdict type: " << test_case_info.verdictType << " - have " << test_case_info.testRef.numOfObject << "object" << endl;
+					LOGCXX("Verdict type: " << test_case_info.verdictType << " - have " << test_case_info.testRef.numOfObject << "object");
 					for (int i = 0; i < test_case_info.testRef.numOfObject; i++) {
 						if (0 < test_case_info.testRef.referenceUnitObjs[i].value.size()) {
 
-							cout << test_case_info.testRef.referenceUnitObjs[i].value[0] << endl;
+							LOGCXX(test_case_info.testRef.referenceUnitObjs[i].value[0]);
 						} else {
-							cout << test_case_info.testRef.referenceUnitObjs[i].numValue << endl;
+							LOGCXX(test_case_info.testRef.referenceUnitObjs[i].numValue);
 						}
 					}
 
@@ -490,7 +490,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			TestItemInfo *ti_info;
 			status = TestItemProcessor(tcInputArg, tiObj, &ti_info, &(test_case_info.testItemInfo[tiIndex]));
 			if(status == ERROR){
-				cout << "run test item failed" << endl;
+				LOGCXX("run test item failed");
 			}
 			else{
 				/* TODO - update reference value into reference.json */
@@ -524,13 +524,13 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 		LOGCXX("-------------------------------------------------------------------------------------------------------" << endl << endl);
 		/* Debugging - Print all test case info */
 #if 0
-		cout << test_case_info.name << ": " << test_case_info.testDesc << endl << " have " << test_case_info.numOfTestItem << " items" << endl;
+		LOGCXX(test_case_info.name << ": " << test_case_info.testDesc << endl << " have " << test_case_info.numOfTestItem << " items");
 		for (int i = 0; i < test_case_info.numOfTestItem; i++) {
-			cout << test_case_info.testItemInfo[i].name << ": " << test_case_info.testItemInfo[i].numOfArg << " argument" << endl;
+			LOGCXX(test_case_info.testItemInfo[i].name << ": " << test_case_info.testItemInfo[i].numOfArg << " argument");
 			for (int j = 0; j < test_case_info.testItemInfo[i].numOfArg; j++) {
-				cout << test_case_info.testItemInfo[i].testItemArg[j].key << " : " << test_case_info.testItemInfo[i].testItemArg[j].value[0] << endl;
+				LOGCXX(test_case_info.testItemInfo[i].testItemArg[j].key << " : " << test_case_info.testItemInfo[i].testItemArg[j].value[0]);
 			}
-			cout << "response: " << test_case_info.testItemInfo[i].testItemLogPool[test_case_info.testItemInfo[i].matchedRespMsgIndex] << endl;
+			LOGCXX("response: " << test_case_info.testItemInfo[i].testItemLogPool[test_case_info.testItemInfo[i].matchedRespMsgIndex]);
 		}
 #endif
 		/* Manually deallocate memory of Test case member */
@@ -553,7 +553,7 @@ int JsonParser::TestItemProcessor(json_t *inputArg, json_t *tiObj, TestItemInfo 
 
 	tiExObj = getTestItemTemplateObj(tiName.c_str());
 	if(tiExObj == NULL){
-		cout << "test item " << tiName << "not found in template" << endl;
+		LOGCXX("test item " << tiName << "not found in template");
 		return ERROR;
 	}
 
@@ -620,7 +620,7 @@ json_t* JsonParser::getTestItemTemplateObj(const char *tiName){
 
 		tiRoot = json_load_file(dfTIPath, 0, &err);
 		if(!tiRoot){
-			cout << "load test item json file failed :: err: " << err.text << err.line << endl;
+			LOGCXX("load test item json file failed :: err: " << err.text << err.line);
 			 return NULL;
 		}
 	}
@@ -628,7 +628,7 @@ json_t* JsonParser::getTestItemTemplateObj(const char *tiName){
 	tiObj = json_object_get(tiRoot, tiName);
 	if(!json_is_array(tiObj)){
 
-		cout << "test item json format invalid" << endl;
+		LOGCXX("test item json format invalid");
 		return NULL;
 	}
 	return tiObj;
@@ -642,7 +642,7 @@ int JsonParser::GetWorkerConfiguration(TestWorker *worker, const char *dfConfigP
 
 	configRootObj = json_load_file(dfConfigPath, 0 , &err);
 	if(configRootObj == NULL || !json_is_object(configRootObj)){
-		cout << "load configuration file failed!!!" << err.text << err.line << endl;
+		LOGCXX("load configuration file failed!!!" << err.text << err.line);
 		return ERROR;
 	}
 
@@ -664,18 +664,18 @@ void JsonParser::PrintConfigurationInfo(const char *filePath) {
 
 	configRootObj = json_load_file(filePath, 0 , &err);
 	if(configRootObj == NULL || !json_is_object(configRootObj)){
-		cout << "load configuration file failed!!!" << err.text << err.line << endl;
+		LOGCXX("load configuration file failed!!!" << err.text << err.line);
 	}
 
 	const char *key;
 	json_t *value;
 
-	cout << "********************Configuration*******************" << endl;
+	LOGCXX("********************Configuration*******************");
 	json_object_foreach(configRootObj, key, value) {
 
-		cout << "*\t" << key << " : " << json_string_value(value) << endl;
+		LOGCXX("*\t" << key << " : " << json_string_value(value));
 	}
-	cout << "****************************************************" << endl;
+	LOGCXX("****************************************************");
 	json_decref(configRootObj);
 }
 
@@ -686,6 +686,7 @@ int JsonParser::UpdateConfiguration(const char *filePath) {
 	config_root_obj = json_load_file(filePath, 0 , &err);
 	if (NULL == config_root_obj || !json_is_object(config_root_obj)) {
 		cout << "load configuration file failed!!!" << err.text << err.line << endl;
+
 		return ERROR;
 	}
 	const char *key;
@@ -696,7 +697,7 @@ int JsonParser::UpdateConfiguration(const char *filePath) {
 
 		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
 		cout << key << " : " << json_string_value(value) << endl;
-		cout << "New value (Press 'Enter' to keep current value): ";
+		cout << "New value (Press 'Enter' to keep current value): " << endl;
 		getline(cin, input_value);
 		if (!input_value.empty()) {
 			json_string_set(value, input_value.c_str());
@@ -724,7 +725,7 @@ int JsonParser::GetTestSuiteFileList(const char *dirPath){
 	dir = opendir(dirPath);
 	if (NULL == dir) {
 		closedir(dir);
-		cout << dirPath << "not found" << endl;
+		LOGCXX(dirPath << "not found");
 		return ERROR;
 	}
 
@@ -798,7 +799,7 @@ int JsonParser::UpdateReferenceValue(TestItemInfo *ti_info, string response_msg)
 				} else if (0 == strcmp(command_class_str, "SENSOR_MULTILEVEL")) {
 					string sensor_type_str;
 					JSONGetObjectValue(command_info_obj, "data0", &sensor_type_str);
-					cout << "sensor_type_str = " << sensor_type_str << endl;
+					LOGCXX("sensor_type_str = " << sensor_type_str);
 
 					if (0 == sensor_type_str.compare("TEMP")) {
 						status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot,command_class_str, sensor_type_str, "fahrenheit");
@@ -934,7 +935,8 @@ void JsonParser::ReportTestCaseInfo(TestCase testCaseInfo) {
 	} else {
 
 	}
-	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>*********************************************************</p>");
+	aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>************************************************************************</p>");
+	aReporter.WriteContentToReport(REPORT_TYPE_TEST_SUITE, "<p>************************************************************************</p>");
 	//aReporter.WriteContentToReport(REPORT_TYPE_FULL, "<p>Test case log poll: ", testCaseInfo.verdictResult);
 }
 void JsonParser::DeallocateTestCaseInfo(TestCase test_case_info) {
