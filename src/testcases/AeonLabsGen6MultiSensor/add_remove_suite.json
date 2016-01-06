@@ -12,29 +12,15 @@
 				"name" 				: "adddevice", 
 				"input" 			: { 
 					"devicetype" 	: "zwave",
-					"id"			: "",
-					"action"		: "open"
+					"action"		: "open",
+					"time"			: "60"
 				}
 			},
 			{ 
-				"name" 				: "removedevice", 
+				"name" 				: "closenetwork", 
 				"input" 			: { 
 					"devicetype" 	: "zwave",
-					"id"			: "14"
-				}
-			},
-
-			{ 
-				"name" 				: "adddevice", 
-				"input" 			: { 
-					"devicetype" 	: "zwave" 
-				}
-			},
-
-			{ 
-				"name" 				: "adddevice", 
-				"input" 			: { 
-					"devicetype" 	: "zwave" 
+					"action"		: "close"
 				}
 			}
 
