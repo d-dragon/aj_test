@@ -7,8 +7,10 @@
 				"description" 		: "Get list of available devices in the controller",
 				"input" 			: {
 					"devicetype"	: "zwave"
-				}
+				},
+				"description" 		: "Get list of available devices in the controller"
 			},
+
 			{
 				"name" : "get_battery",
 				"description" 		: "Get Battery level",
@@ -19,6 +21,7 @@
 					"readcommand"		: "GET"
 				}
 			},
+
 			{
 				"name" 				: "get_temperature",
 				"description"		: "Get status of TEMP ( temperature in fahrenheit and celsius ) for verifying value which is available",

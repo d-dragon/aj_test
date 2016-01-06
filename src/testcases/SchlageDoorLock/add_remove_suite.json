@@ -1,44 +1,48 @@
 [ 
 	{
 		"testsuit" : "SCHLAGE Door Lock",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
 		"testcases" :	[
 			{
-				"name" 				: "listdevices",
-				"input" 			: {
+				"name" : "listdevices",
+				"input" : {
 					"devicetype"	: "zwave"
-				}
+				},
+				"description" 		: "Get list of available devices in the controller"
 			},
+
           	{ 
-				"name" 				: "removedevice", 
-				"input" 			: { 
+				"name" : "removedevice", 
+				"input" : { 
 					"devicetype" 	: "zwave",
 					"id"			: ""
-				}
+				},
+				"description"		: "Remove device (existed devices or new device we want to add later steps"
 			},
-			{ 
-				"name" 				: "removedevice", 
-				"input" 			: { 
-					"devicetype" 	: "zwave",
-					"id"			: ""
-				}
-			},
-
-			{ 
-				"name" 				: "adddevice", 
-				"input" 			: { 
-					"devicetype" 	: "zwave" 
-				}
-			},
-
-			{ 
-				"name" 				: "adddevice", 
-				"input" 			: { 
-					"devicetype" 	: "zwave" 
-				}
-			}
-
 			
+			{ 
+				"name" : "removedevice", 
+				"input" : { 
+					"devicetype" 	: "zwave",
+					"id"			: ""
+				},
+				"description"		: "Remove device (existed devices or new device we want to add later steps"
+			},
+
+			{ 
+				"name" : "adddevice", 
+				"input" : { 
+					"devicetype" : "zwave" 
+				},
+				"description"		: "Add device which we want to test"
+			},
+
+			{ 
+				"name" : "adddevice", 
+				"input" : { 
+					"devicetype" : "zwave" 
+				},
+				"description"		: "Add association device"
+			}
 		]
 	}
 ]

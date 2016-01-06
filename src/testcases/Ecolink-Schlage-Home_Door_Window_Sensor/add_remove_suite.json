@@ -1,6 +1,6 @@
 [ 
 	{
-		"testsuit" 					: "Fibaro-MotionLightTempSensor",
+		"testsuit" 					: "EcoLink/Schlage Home Door Window Sensor",
 		"testcases" :	[
 			{
 				"name" : "listdevices",

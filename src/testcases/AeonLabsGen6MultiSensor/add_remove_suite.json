@@ -3,11 +3,13 @@
 		"testsuite" 					: "remove_add_device",
 		"testcases" 				:	[
 			{
-				"name" 				: "listdevices",
-				"input" 			: {
+				"name" : "listdevices",
+				"input" : {
 					"devicetype"	: "zwave"
-				}
+				},
+				"description" 		: "Get list of available devices in the controller"
 			},
+
           	{ 
 				"name" 				: "adddevice", 
 				"input" 			: { 
@@ -16,6 +18,7 @@
 					"time"			: "60"
 				}
 			},
+			
 			{ 
 				"name" 				: "closenetwork", 
 				"input" 			: { 
@@ -23,8 +26,6 @@
 					"action"		: "close"
 				}
 			}
-
-			
 		]
 	}
 ]

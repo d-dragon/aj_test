@@ -1,6 +1,6 @@
 [ 
 	{
-		"testsuit" : "EcoLink/Schlage Home Motion Sensor",
+		"testsuit" : "EcoLink/Schlage Home Door Window Sensor",
 		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee314e4",
 		"testcases" :	[
 			{	
@@ -20,7 +20,7 @@
                     "command"       : "GET",
 					"force"			: "1"
                 },
-                "description"		: "Get status of remained battery of EcoLink/Schlage Home Motion Sensor ( unit % )"
+                "description"		: "Get status of remained battery of EcoLink/Schlage Home Door Window Sensor ( unit % )"
             },
 
 			{
@@ -47,7 +47,7 @@
 					"data1"			: "01",
 					"data2"			: "1"
 				},
-				"description"		: "Set ASSOCIATION REPORT_GROUP, this case is our controller, EcoLink/Schlage Home Motion Sensor will send notification to controller whenever having motion occurs"
+				"description"		: "Set ASSOCIATION REPORT_GROUP, this case is our controller, EcoLink/Schlage Home Door Window Sensor will send notification to controller whenever having door-window open/close action occurs"
 			},
 
             {
@@ -73,7 +73,7 @@
 					"force"			: "1",
 					"type"			: "ENABLE_ONOFF"
 				},
-				 "description"		: "Get status of ENABLE_ONOFF (allow/not allow EcoLink/Schlage Home Motion Sensor send basic set message to turn off associated device) for verifying value which is available"
+				 "description"		: "Get status of ENABLE_ONOFF (allow/not allow EcoLink/Schlage Home Door Window Sensor send basic set message to turn off associated device) for verifying value which is available"
 			},
 
 			{
@@ -127,7 +127,7 @@
 					"data1"			: "A_ID",
 					"data2"			: "1"
 				},
-				"description"		: "Set ASSOCIATION ONOFF_GROUP, this case is Led zwave device, EcoLink/Schlage Home Motion Sensor will send basic set message  (on/off) to Led zwave device when having motion occurs "
+				"description"		: "Set ASSOCIATION ONOFF_GROUP, this case is Led zwave device, EcoLink/Schlage Home Door Window Sensor will send basic set message  (on/off) to Led zwave device when having door-window on/off action occurs "
 			},
 
             {
@@ -141,7 +141,7 @@
                     "type"          : "ONOFF_GROUP",
                     "time"			: "60"
                 },
-                "description"		: "Wait for 60s to test motion sensor, it means while 60s if there have any motion occurs then the associated Led zwave device will turn on"
+                "description"		: "Wait for 60s to test door-window open/close action sensor, it means while 60s if there have any open/close action occurs then the associated Led zwave device will turn on"
             },
 
 			{
@@ -182,7 +182,7 @@
                     "type"          : "ONOFF_GROUP",
                     "time"			: "60"
                 },
-                "description"		: "Wait for 60s to test motion sensor, it means while 60s if there have any motion occurs then the associated Led zwave device will turn on but can not turn off"
+                "description"		: "Wait for 60s to test door-window open/close action sensor, it means while 60s if there have any open/close action occurs then the associated Led zwave device will turn on but can not turn off"
             },
 
             {

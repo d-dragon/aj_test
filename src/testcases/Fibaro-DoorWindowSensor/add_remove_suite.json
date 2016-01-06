@@ -1,6 +1,6 @@
 [ 
 	{
-		"testsuit" 					: "Fibaro-MotionLightTempSensor",
+		"testsuit" 					: "Fibaro Door Window Sensor",
 		"testcases" :	[
 			{
 				"name" : "listdevices",

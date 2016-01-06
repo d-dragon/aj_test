@@ -1,14 +1,15 @@
 [ 
 	{
 		"testsuit" : "Aeon Labs Gen 5 Siren Indoor",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
 		"testcases" :	[
 			{	
 				"name"	: "listdevices",
 				"input" :{
 					"devicetype"	: "zwave"
-				}
+				},
+                "description"       : "Get list of available devices in the controller"
 			},
+            
             {
                 "name" : "readspec",
                 "input" : {
@@ -16,9 +17,12 @@
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "REPORT_GROUP"
-                }
+                    "type"          : "REPORT_GROUP",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of REPORT_GROUP for verifying which device is available in group report"
             },
+
             {
                 "name" : "writespec",
                 "input" : {
@@ -27,10 +31,53 @@
                     "class"         : "ASSOCIATION",
                     "command"       : "SET",
                     "data0"         : "REPORT_GROUP",
-                    "data1"         : "59",
+                    "data1"         : "01",
                     "data2"         : "1"
-                }
+                },
+                "description"       : "Set ASSOCIATION REPORT_GROUP, this case is our controller , those notification will be sent to controller whenever having alarm event or change siren"
             },
+
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "command"       : "GET",
+                    "type"          : "REPORT_GROUP",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of ONOFF_GROUP for verifying value which we have set before"
+            },
+
+            {
+                "name" : "writespec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "SET",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "02",
+                    "data2"         : "1"
+                },
+                "description"       : "Set value 02 for NOTIFICATION, value 02 means Aeon Labs Gen 5 Siren Indoor will send basic set report (on/off status) to associated device when state of siren changed or having alarm"
+            },
+
+            {
+                "name" : "readspec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of NOTIFICATION for verifying value which we have set before"
+
+            },
+
 			{
 				"name" : "readspec",
 				"input" : {
@@ -38,9 +85,12 @@
 					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "SOUND_VOLUME"
-				}
+					"type"			: "SOUND_VOLUME",
+                    "force"         : "1"
+				},
+                "description"       : "Get status of SOUND_VOLUME ( siren sound and volume levels) for verifying value which is available"
 			},
+
 			{
 				"name"              : "writespec",
 				"input"             : {
@@ -51,16 +101,20 @@
 					"data0"			: "SOUND_VOLUME",
 					"data1"			: "0101",
 					"data2"			: "1"
-				}
+				},
+                "description"       : "Set value 0101 for SOUND_VOLUME, value 0101 means we will set siren sound mode 1 and volume level 1"
 			},
+
             {
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "0"
-                }
+                },
+                "description"       : "Turn off alarm function of Aeon Labs Gen 5 Siren Indoor"
             },
+
 			{
 				"name"              : "readspec",
 				"input"             : {
@@ -68,9 +122,12 @@
 					"id" 			: "D_ID",
 					"class"			: "CONFIGURATION",
 					"command"		: "GET",
-					"type"			: "SOUND_VOLUME"
-				}
+					"type"			: "SOUND_VOLUME",
+                    "force"         : "1"
+				},
+                "description"       : "Get status of SOUND_VOLUME for verifying value which we have set before"
 			},
+
             {
                 "name"              : "writespec",
                 "input"             : {
@@ -81,7 +138,8 @@
                     "data0"         : "SOUND_VOLUME",
                     "data1"         : "0202",
                     "data2"         : "1"
-                }
+                },
+                "description"       : "Set value 0202 for SOUND_VOLUME, value 0202 means we will set siren sound mode 2 and volume level 2"
             },
             {
                 "name"              : "controlonoff",
@@ -89,7 +147,8 @@
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "0"
-                }
+                },
+                "description"       : "Turn off alarm function of Aeon Labs Gen 5 Siren Indoor"
             },
             {
                 "name"              : "readspec",
@@ -98,9 +157,12 @@
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "type"          : "SOUND_VOLUME"
-                }
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of SOUND_VOLUME for verifying value which we have set before"
             },
+
             {
                 "name"              : "writespec",
                 "input"             : {
@@ -111,16 +173,20 @@
                     "data0"         : "SOUND_VOLUME",
                     "data1"         : "0303",
                     "data2"         : "1"
-                }
+                },
+                "description"       : "Set value 0303 for SOUND_VOLUME, value 0303 means we will set siren sound mode 3 and volume level 3"
             },
+
             {
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "0"
-                }
+                },
+                "description"       : "Turn off alarm function of Aeon Labs Gen 5 Siren Indoor"
             },
+
             {
                 "name"              : "readspec",
                 "input"             : {
@@ -128,8 +194,10 @@
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "type"          : "SOUND_VOLUME"
-                }
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of SOUND_VOLUME for verifying value which we have set before"
             },
 
 			{
@@ -142,16 +210,20 @@
 					"data0"			: "SOUND_VOLUME",
 					"data1"			: "0400",
 					"data2"			: "1"
-				}
+				},
+                "description"       : "Set value 0400 for SOUND_VOLUME, value 0400 means we will set siren sound mode 4 and not change volume level"
 			},
+
             {
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "0"
-                }
+                },
+                "description"       : "Turn off alarm function of Aeon Labs Gen 5 Siren Indoor"
             },
+
             {
                 "name"              : "readspec",
                 "input"             : {
@@ -159,9 +231,77 @@
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "type"          : "SOUND_VOLUME"
-                }
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of SOUND_VOLUME for verifying value which we have set before"
             },
+
+            {
+                "name" : "writespec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "SET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "0500",
+                    "data2"         : "1"
+                },
+                "description"       : "Set value 0500 for SOUND_VOLUME, value 0500 means we will set siren sound mode 5 and not change volume level"
+            },
+
+            {
+                "name"              : "controlonoff",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "description"       : "Turn off alarm function of Aeon Labs Gen 5 Siren Indoor"
+            },
+
+            {
+                "name"              : "readspec",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of SOUND_VOLUME for verifying value which we have set before"
+            },
+
+            {
+                "name" : "writespec",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "SET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "0606",
+                    "data2"         : "1"
+                },
+                "description"       : "Set value 0606 for SOUND_VOLUME, this test case expect to fail because the setting value is invalid"
+            },
+
+            {
+                "name"              : "readspec",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "command"       : "GET",
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of SOUND_VOLUME for verifying value which we have set before"
+            },
+
+
             {
                 "name" : "writespec",
                 "input" : {
@@ -172,7 +312,8 @@
                     "data0"         : "NOTIFICATION",
                     "data1"         : "01",
                     "data2"         : "1"
-                }
+                },
+                 "description"       : "Set value 01 for NOTIFICATION, value 01 means Aeon Labs Gen 5 Siren Indoor will send hail CC command to associated device when state of siren changed or having alarm"
             },
             {
                 "name" : "readspec",
@@ -181,31 +322,12 @@
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "type"          : "NOTIFICATION"
-                }
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of NOTIFICATION for verifying value which we have set before"
             },
-            {
-                "name" : "writespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "NOTIFICATION",
-                    "data1"         : "02",
-                    "data2"         : "1"
-                }
-            },
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "type"          : "NOTIFICATION"
-                }
-            },
+            
             {
                 "name" : "writespec",
                 "input" : {
@@ -216,7 +338,8 @@
                     "data0"         : "NOTIFICATION",
                     "data1"         : "00",
                     "data2"         : "1"
-                }
+                },
+                "description"       : "Set value 00 for NOTIFICATION, value 00 means Aeon Labs Gen 5 Siren Indoor will send nothing to associated device when state of siren changed or having alarm"
             },
             {
                 "name" : "readspec",
@@ -225,37 +348,33 @@
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "command"       : "GET",
-                    "type"          : "NOTIFICATION"
-                }
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "description"       : "Get status of NOTIFICATION for verifying value which we have set before"
             },
              
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "REPORT_GROUP"
-                }
-
-            },
             {
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "1"
-                }
+                },
+                "description"       : "Turn on alarm function of Aeon Labs Gen 5 Siren Indoor"
             },
+
             {
                 "name"              : "controlonoff",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "0"
-                }
+                },
+                "description"       : "Turn off alarm function of Aeon Labs Gen 5 Siren Indoor"
             },
+
+
             {
                 "name" : "writespec",
                 "input" : {
@@ -264,10 +383,12 @@
                     "class"         : "ASSOCIATION",
                     "command"       : "REMOVE",
                     "data0"         : "REPORT_GROUP",
-                    "data1"         : "59",
+                    "data1"         : "01",
                     "data2"         : "1"
-                }
+                },
+                "description"       : "Remove controller from ONOFF_GROUP"
             },
+
             {
                 "name" : "readspec",
                 "input" : {
@@ -275,8 +396,10 @@
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "command"       : "GET",
-                    "type"          : "REPORT_GROUP"
-                }
+                    "type"          : "REPORT_GROUP",
+                    "force"         : "1"
+                },
+                "description"       : "Verify value of Remove action"
             }
 		]
 	}

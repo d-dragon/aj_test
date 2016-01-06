@@ -1,6 +1,6 @@
 [ 
 	{
-		"testsuit" 					: "Fibaro-MotionLightTempSensor",
+		"testsuit" 					: "EcoLink Tilt Sensor",
 		"testcases" :	[
 			{
 				"name" : "listdevices",
