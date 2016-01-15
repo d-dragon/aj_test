@@ -1,20 +1,27 @@
 [ 
 	{
 		"testsuite" 				: "AeonLabsGen5MultiSensor",
-		"serviceid" 				: "93c06771-c725-48c2-b1ff-5c313ee314e4",
 		"testcases" 				:	[
 			{
 				"name" 				: "listdevices",
-				"description"		: "",
+				"description" 		: "Get list of available devices in the controller",
 				"input" 			: {
 					"devicetype"	: "zwave"
-				},
-				"description" 		: "Get list of available devices in the controller"
+				}
+			},
+
+			{ 
+				"name" 				: "removedevice", 
+				"description"		: "Remove device in the first button pressing",
+				"input" 			: { 
+					"devicetype" 	: "zwave",
+					"id"			: ""
+				}
 			},
 
 			{ 
 				"name" 				: "adddevice", 
-				"description"		: "To add device into device list , we need to press button on device until see received message with notifytype is newdevice.",
+				"description"		: "Open network Add device in the second button pressing",
 				"input" 			: { 
 					"devicetype" 	: "zwave",
 					"action"		: "open",
@@ -24,7 +31,7 @@
 
 			{ 
 				"name" 				: "closenetwork",
-				"description"		: "", 
+				"description"		: "Close network", 
 				"input" 			: { 
 					"devicetype" 	: "zwave",
 					"action"		: "close"

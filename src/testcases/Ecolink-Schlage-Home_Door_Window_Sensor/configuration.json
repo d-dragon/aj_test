@@ -1,7 +1,7 @@
 {
-    "devicename": "AeotecDoorWindowSensor",
+    "devicename": "EcolinkSchlageHomeDoorWindownSensor",
     "serviceid": "93c06771-c725-48c2-b1ff-5c313ee312cc",
-    "deviceindex": "7",
+    "deviceindex": "8",
     "altdeviceid": "",
     "devicetype": "zwave",
     "associationdevidx": "4",

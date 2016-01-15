@@ -1,0 +1,24 @@
+[ 
+	{
+		"testsuite" : "onboarding",
+		"testcases" :	[ 
+			{
+				"name" : "wifisetup",
+				"input" : {
+					"ssid": "VEriK2",
+					"passcode": "564572694b73797374656d733130",
+					"auth": "WPA2_AUTO",
+					"getVersion": "on",
+					"getState": "off",
+					"getLastErr": "on",
+					"getScanInfo": "on",
+					"configAndConnectWifi": "on",
+					"offBoard": "off" 
+
+				}
+
+			}
+
+		]
+	}
+]

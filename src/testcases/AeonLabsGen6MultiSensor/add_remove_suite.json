@@ -1,31 +1,43 @@
 [ 
 	{
-		"testsuite" 					: "remove_add_device",
+		"testsuite" 				: "AeonLabsGen6MultiSensor",
 		"testcases" 				:	[
 			{
-				"name" : "listdevices",
-				"input" : {
+				"name" 				: "listdevices",
+				"description" 		: "Get list of available devices in the controller",
+				"input" 			: {
 					"devicetype"	: "zwave"
-				},
-				"description" 		: "Get list of available devices in the controller"
+				}
 			},
 
-          	{ 
+			{ 
+				"name" 				: "removedevice", 
+				"description"		: "Remove device in the first button pressing",
+				"input" 			: { 
+					"devicetype" 	: "zwave",
+					"id"			: ""
+				}
+			},
+
+			{ 
 				"name" 				: "adddevice", 
+				"description"		: "Open network Add device in the second button pressing",
 				"input" 			: { 
 					"devicetype" 	: "zwave",
 					"action"		: "open",
-					"time"			: "60"
+					"time"			: "30"
 				}
 			},
-			
+
 			{ 
-				"name" 				: "closenetwork", 
+				"name" 				: "closenetwork",
+				"description"		: "Close network", 
 				"input" 			: { 
 					"devicetype" 	: "zwave",
 					"action"		: "close"
 				}
-			}
+			}		
 		]
 	}
+
 ]

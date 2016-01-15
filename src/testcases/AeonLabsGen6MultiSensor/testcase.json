@@ -38,6 +38,12 @@
 		]
 	},
 
+	"physical_test" :{
+		"testitems": [
+			{"name": "listen_notification"}
+		]
+	},
+
 	"controlonoff":{
 		"testitems": [
 			{"name" : "set_binary"},

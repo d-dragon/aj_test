@@ -422,7 +422,7 @@ int ResultVerdictHelper::EvaluationTestCase(TestCase &tc){
     for (i = 0; i < tc.numOfTestItem; i++){
          matchedLogData = tc.testItemInfo[i].testItemLogPool.at(tc.testItemInfo[i].matchedRespMsgIndex);
          respStatus     = GetValueFromJSON(matchedLogData,"status");
-         LOGCXX("Responde status of test case ;"<< respStatus);
+         LOGCXX("Response status of test case ;"<< respStatus);
          if (0 != respStatus.compare("successful"))
          {
             tc.testItemInfo[i].verdictResult = VERDICT_RET_FAILED;

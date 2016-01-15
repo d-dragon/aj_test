@@ -1,8 +1,9 @@
 {
-	"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
-	"deviceindex" : "0",
-	"altdeviceid" : "",
-	"devicetype" : "zwave",
-	"associationdevidx" : "1",
-	"altassdevid" : ""
+    "devicename": "FirstAlertSmokeCarbonMonoxide",
+    "serviceid": "93c06771-c725-48c2-b1ff-5c313ee312cc",
+    "deviceindex": "6",
+    "altdeviceid": "",
+    "devicetype": "zwave",
+    "associationdevidx": "4",
+    "altassdevid": ""
 }

@@ -188,10 +188,9 @@
 	{
 		"testsuite" : "Physical testing with time delay configuration",
 		"testcases" : [
-
             {
-                "name" 				: "physical_test",
-                "description"		: "Set TIME is 10, value 10 mean interval associated device to keep state On before sending it Off command. Then wait for 30s to test motion sensor, if having a motion accurs then zwave LED will turn on",
+                "name" 				: "time_configuration",
+                "description"		: "Set TIME is 10, value 10 mean interval associated device to keep state On before sending it Off command",
                 "input" 			: {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -202,8 +201,7 @@
                     "data1"         : "10",
                     "data2"         : "1",
                     "type"          : "TIME",
-                    "force"			: "1",
-                    "time"			: "30"
+                    "force"			: "1"
                 },
 				"verdict"		: {
 					"method"		: "expectation",
@@ -211,6 +209,16 @@
 						"value"	:     10
 					}
 				}
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test motion sensor, if having a motion accurs then zwave LED will turn on",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
             }
 		]
 	},

@@ -1,406 +1,554 @@
-[ 
-	{
-		"testsuit" : "Aeon Labs Gen 5 Siren Indoor",
-		"testcases" :	[
-			{	
-				"name"	: "listdevices",
-				"input" :{
-					"devicetype"	: "zwave"
-				},
-                "description"       : "Get list of available devices in the controller"
-			},
-            
+[
+    {
+        "testsuite" : "Get sensing values",
+        "testcases" :   [
             {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "REPORT_GROUP",
-                    "force"         : "1"
-                },
-                "description"       : "Get status of REPORT_GROUP for verifying which device is available in group report"
-            },
+                "name"              : "listdevices",
+                "description"       : "Get list of available devices in the controller",
+                "input"             : {
+                    "devicetype"    : "zwave"
+                }
+            }
+        ]
+    },
 
+    {
+        "testsuite" : "Association with another device",
+        "testcases" : [
             {
-                "name" : "writespec",
-                "input" : {
+                "name"              : "basic_set_association",
+                "description"       : "Association with our controller (ceres)",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "command"       : "SET",
-                    "data0"         : "REPORT_GROUP",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
                     "data1"         : "01",
-                    "data2"         : "1"
-                },
-                "description"       : "Set ASSOCIATION REPORT_GROUP, this case is our controller , those notification will be sent to controller whenever having alarm event or change siren"
-            },
-
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "REPORT_GROUP",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
                     "force"         : "1"
                 },
-                "description"       : "Get status of ONOFF_GROUP for verifying value which we have set before"
-            },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["01"]
+                    }
+                }
+            }
+        ]
+    },
 
-            {
-                "name" : "writespec",
-                "input" : {
+    {
+        "testsuite" : "Notification sending configuration",
+        "testcases" : [
+             {
+                "name"              : "noti_send_configuration",
+                "description"       : "Set NOTIFICATION is 0, value 0 means disable sending notification to our controller whwen the state of Siren changed",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
-                    "command"       : "SET",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
+
+            {
+                "name"              : "noti_send_configuration",
+                "description"       : "Set NOTIFICATION is 1, value 1 means enable sending hail CC notification to our controller whwen the state of Siren changed",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1
+                    }
+                }
+            },
+
+            {
+                "name"              : "noti_send_configuration",
+                "description"       : "Set NOTIFICATION is 2, value 2 means enable sending basic CC report notification to our controller whwen the state of Siren changed",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
                     "data0"         : "NOTIFICATION",
                     "data1"         : "02",
-                    "data2"         : "1"
-                },
-                "description"       : "Set value 02 for NOTIFICATION, value 02 means Aeon Labs Gen 5 Siren Indoor will send basic set report (on/off status) to associated device when state of siren changed or having alarm"
-            },
-
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
+                    "data2"         : "1",
                     "type"          : "NOTIFICATION",
                     "force"         : "1"
                 },
-                "description"       : "Get status of NOTIFICATION for verifying value which we have set before"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     2
+                    }
+                }
+            }
+        ]
+    },
 
-            },
-
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "SOUND_VOLUME",
-                    "force"         : "1"
-				},
-                "description"       : "Get status of SOUND_VOLUME ( siren sound and volume levels) for verifying value which is available"
-			},
-
-			{
-				"name"              : "writespec",
-				"input"             : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "SOUND_VOLUME",
-					"data1"			: "0101",
-					"data2"			: "1"
-				},
-                "description"       : "Set value 0101 for SOUND_VOLUME, value 0101 means we will set siren sound mode 1 and volume level 1"
-			},
-
-            {
-                "name"              : "controlonoff",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "value"         : "0"
-                },
-                "description"       : "Turn off alarm function of Aeon Labs Gen 5 Siren Indoor"
-            },
-
-			{
-				"name"              : "readspec",
-				"input"             : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "SOUND_VOLUME",
-                    "force"         : "1"
-				},
-                "description"       : "Get status of SOUND_VOLUME for verifying value which we have set before"
-			},
-
-            {
-                "name"              : "writespec",
+    {
+        "testsuite" : "Sound Volume configuration",
+        "testcases" : [
+             {
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 257, value 257 (HEX : 101) means Siren sound 1 and volume level 1 are selected",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
-                    "command"       : "SET",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
                     "data0"         : "SOUND_VOLUME",
-                    "data1"         : "0202",
-                    "data2"         : "1"
-                },
-                "description"       : "Set value 0202 for SOUND_VOLUME, value 0202 means we will set siren sound mode 2 and volume level 2"
-            },
-            {
-                "name"              : "controlonoff",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "value"         : "0"
-                },
-                "description"       : "Turn off alarm function of Aeon Labs Gen 5 Siren Indoor"
-            },
-            {
-                "name"              : "readspec",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
+                    "data1"         : "257",
+                    "data2"         : "1",
                     "type"          : "SOUND_VOLUME",
                     "force"         : "1"
                 },
-                "description"       : "Get status of SOUND_VOLUME for verifying value which we have set before"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     257
+                    }
+                }
             },
 
             {
-                "name"              : "writespec",
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 258, value 258 (HEX : 102) means Siren sound 1 and volume level 2 are selected",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
-                    "command"       : "SET",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
                     "data0"         : "SOUND_VOLUME",
-                    "data1"         : "0303",
-                    "data2"         : "1"
-                },
-                "description"       : "Set value 0303 for SOUND_VOLUME, value 0303 means we will set siren sound mode 3 and volume level 3"
-            },
-
-            {
-                "name"              : "controlonoff",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "value"         : "0"
-                },
-                "description"       : "Turn off alarm function of Aeon Labs Gen 5 Siren Indoor"
-            },
-
-            {
-                "name"              : "readspec",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
+                    "data1"         : "258",
+                    "data2"         : "1",
                     "type"          : "SOUND_VOLUME",
                     "force"         : "1"
                 },
-                "description"       : "Get status of SOUND_VOLUME for verifying value which we have set before"
-            },
-
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "SOUND_VOLUME",
-					"data1"			: "0400",
-					"data2"			: "1"
-				},
-                "description"       : "Set value 0400 for SOUND_VOLUME, value 0400 means we will set siren sound mode 4 and not change volume level"
-			},
-
-            {
-                "name"              : "controlonoff",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "value"         : "0"
-                },
-                "description"       : "Turn off alarm function of Aeon Labs Gen 5 Siren Indoor"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     258
+                    }
+                }
             },
 
             {
-                "name"              : "readspec",
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 259, value 259 (HEX : 103) means Siren sound 1 and volume level 3 are selected",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "type"          : "SOUND_VOLUME",
-                    "force"         : "1"
-                },
-                "description"       : "Get status of SOUND_VOLUME for verifying value which we have set before"
-            },
-
-            {
-                "name" : "writespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
                     "data0"         : "SOUND_VOLUME",
-                    "data1"         : "0500",
-                    "data2"         : "1"
-                },
-                "description"       : "Set value 0500 for SOUND_VOLUME, value 0500 means we will set siren sound mode 5 and not change volume level"
-            },
-
-            {
-                "name"              : "controlonoff",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "value"         : "0"
-                },
-                "description"       : "Turn off alarm function of Aeon Labs Gen 5 Siren Indoor"
-            },
-
-            {
-                "name"              : "readspec",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
+                    "data1"         : "259",
+                    "data2"         : "1",
                     "type"          : "SOUND_VOLUME",
                     "force"         : "1"
                 },
-                "description"       : "Get status of SOUND_VOLUME for verifying value which we have set before"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     259
+                    }
+                }
             },
 
             {
-                "name" : "writespec",
-                "input" : {
+                "name"              : "sound_volume_configuration",
+                "description"       : "(This test case expect to false) Set SOUND_VOLUME is 256, value 256 (HEX : 100) means Siren sound 1 is selected and do not change the current volume level",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
-                    "command"       : "SET",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
                     "data0"         : "SOUND_VOLUME",
-                    "data1"         : "0606",
-                    "data2"         : "1"
+                    "data1"         : "256",
+                    "data2"         : "1",
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
                 },
-                "description"       : "Set value 0606 for SOUND_VOLUME, this test case expect to fail because the setting value is invalid"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     259
+                    }
+                }
             },
 
             {
-                "name"              : "readspec",
+                "name"              : "sound_volume_configuration",
+                "description"       : "(This test case expect to false) Set SOUND_VOLUME is 0, value 0 (HEX : 0) means do not change current sound Siren and volume level",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
-                    "command"       : "GET",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "0",
+                    "data2"         : "1",
                     "type"          : "SOUND_VOLUME",
                     "force"         : "1"
                 },
-                "description"       : "Get status of SOUND_VOLUME for verifying value which we have set before"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     259
+                    }
+                }
             },
 
+            {
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 513, value 513 (HEX : 201) means Siren sound 2 and volume level 1 are selected",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "513",
+                    "data2"         : "1",
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     513
+                    }
+                }
+            },
 
             {
-                "name" : "writespec",
-                "input" : {
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 514, value 514 (HEX : 202) means Siren sound 2 and volume level 2 are selected",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "NOTIFICATION",
-                    "data1"         : "01",
-                    "data2"         : "1"
-                },
-                 "description"       : "Set value 01 for NOTIFICATION, value 01 means Aeon Labs Gen 5 Siren Indoor will send hail CC command to associated device when state of siren changed or having alarm"
-            },
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "type"          : "NOTIFICATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "514",
+                    "data2"         : "1",
+                    "type"          : "SOUND_VOLUME",
                     "force"         : "1"
                 },
-                "description"       : "Get status of NOTIFICATION for verifying value which we have set before"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     514
+                    }
+                }
             },
-            
+
             {
-                "name" : "writespec",
-                "input" : {
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 515, value 515 (HEX : 203) means Siren sound 2 and volume level 3 are selected",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "NOTIFICATION",
-                    "data1"         : "00",
-                    "data2"         : "1"
-                },
-                "description"       : "Set value 00 for NOTIFICATION, value 00 means Aeon Labs Gen 5 Siren Indoor will send nothing to associated device when state of siren changed or having alarm"
-            },
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "type"          : "NOTIFICATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "515",
+                    "data2"         : "1",
+                    "type"          : "SOUND_VOLUME",
                     "force"         : "1"
                 },
-                "description"       : "Get status of NOTIFICATION for verifying value which we have set before"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     515
+                    }
+                }
             },
-             
+
+            {
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 769, value 769 (HEX : 301) means Siren sound 3 and volume level 1 are selected",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "769",
+                    "data2"         : "1",
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     769
+                    }
+                }
+            },
+
+            {
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 770, value 770 (HEX : 302) means Siren sound 3 and volume level 2 are selected",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "770",
+                    "data2"         : "1",
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     770
+                    }
+                }
+            },
+
+            {
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 771, value 771 (HEX : 303) means Siren sound 3 and volume level 3 are selected",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "771",
+                    "data2"         : "1",
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     771
+                    }
+                }
+            },
+
+            {
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 1025, value 1025 (HEX : 401) means Siren sound 4 and volume level 1 are selected",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "1025",
+                    "data2"         : "1",
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1025
+                    }
+                }
+            },
+
+            {
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 1026, value 1026 (HEX : 402) means Siren sound 4 and volume level 2 are selected",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "1026",
+                    "data2"         : "1",
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1026
+                    }
+                }
+            },
+
+            {
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 1281, value 1281 (HEX : 501) means Siren sound 5 and volume level 1 are selected",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "1281",
+                    "data2"         : "1",
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1281
+                    }
+                }
+            },
+
+            {
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 1282, value 1282 (HEX : 502) means Siren sound 5 and volume level 2 are selected",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "1282",
+                    "data2"         : "1",
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1282
+                    }
+                }
+            },
+
+            {
+                "name"              : "sound_volume_configuration",
+                "description"       : "Set SOUND_VOLUME is 1283, value 1283 (HEX : 503) means Siren sound 5 and volume level 3 are selected",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SOUND_VOLUME",
+                    "data1"         : "1283",
+                    "data2"         : "1",
+                    "type"          : "SOUND_VOLUME",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1283
+                    }
+                }
+            }
+        ]
+    },
+
+    {
+        "testsuite" : "Switch On-Off device",
+        "testcases" : [
             {
                 "name"              : "controlonoff",
+                "description"       : "Turn on device",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "1"
                 },
-                "description"       : "Turn on alarm function of Aeon Labs Gen 5 Siren Indoor"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  1
+                    }
+                }
             },
 
             {
                 "name"              : "controlonoff",
+                "description"       : "Turn off device",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "0"
                 },
-                "description"       : "Turn off alarm function of Aeon Labs Gen 5 Siren Indoor"
-            },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
+            }
+        ]
+    },
 
-
+    {
+        "testsuite" : "Remove association information",
+        "testcases" : [
             {
-                "name" : "writespec",
-                "input" : {
+                "name"              : "remove_association",
+                "description"       : "Remove our controller out of ONOFF_GROUP",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "command"       : "REMOVE",
-                    "data0"         : "REPORT_GROUP",
+                    "writecommand"  : "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
                     "data1"         : "01",
-                    "data2"         : "1"
-                },
-                "description"       : "Remove controller from ONOFF_GROUP"
-            },
-
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "REPORT_GROUP",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
                     "force"         : "1"
                 },
-                "description"       : "Verify value of Remove action"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["01"]
+                    }
+                }
             }
-		]
-	}
+        ]
+    }
 ]

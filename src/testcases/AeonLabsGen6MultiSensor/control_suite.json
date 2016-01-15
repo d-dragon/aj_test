@@ -158,7 +158,7 @@
 		"testcases" : [
             {
                 "name" 				: "basic_set_association",
-                "description"		: "",
+                "description"		: "Association with our controller (ceres)",
                 "input" 			: {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -181,7 +181,7 @@
 
             {
                 "name" 				: "basic_set_association",
-                "description"		: "",
+                "description"		: "Association with Led zwave device",
                 "input" 			: {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -204,6 +204,45 @@
 		]
 	},
 
+    {
+        "testsuite" : "Physical testing with time delay configuration",
+        "testcases" : [
+
+            {
+                "name"              : "time_configuration",
+                "description"       : "Set TIME is 10, value 10 mean interval associated device to keep state On before sending it Off command",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "TIME",
+                    "data1"         : "10",
+                    "data2"         : "1",
+                    "type"          : "TIME",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     10
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test motion sensor, if having a motion accurs then zwave LED will turn on",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            }
+        ]
+    },
+    
 	{
 		"testsuite" : "Lock-Time-Motion configuration",
 		"testcases" : [

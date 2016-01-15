@@ -1,10 +1,10 @@
 [
 	{
-		"testsuit" : "Fibaro-MotionLightTempSensor",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee314e4",
+		"testsuite" : "Get sensing value",
 		"testcases" :	[
-			{	
+			{
 				"name"				: "listdevices",
+				"description" 		: "Get list of available devices in the controller",
 				"input" 			: {
 					"devicetype"	: "zwave"
 				},
@@ -12,323 +12,273 @@
 			},
 
 			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "BATTERY",
-					"command"       : "GET",
-					"force"			: "1"
-				},
-				"description"		: "Get status of Battery of zwave device"
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "REPORT_GROUP"
-				},
-				"description"		: "Get status of REPORT_GROUP for verifying value which is available"
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "ONOFF_GROUP"
-				},
-				"description"		: "Get status of ONOFF_GROUP for verifying value which we set before"
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "TAMPER_ALARM"
-				},
-				"description"		: "Get status of TAMPER_ALARM for verifying value which we set before"
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "PIR_SENSOR",
-					"data1"         : "15",
-					"data2"         : "1"
-				},
-				"description"		: "Set value for Period of time which means the sensor will be blinded to motions, value is 15 mean after 8s"
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "PIR_SENSOR"
-				},
-				"description"		: "Verify Period of time setting"
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "REPORT_GROUP",
-					"data1"			: "01",
-					"data2"			: "1"
-				},
-				"description"		: "Set ASSOCIATION REPORT_GROUP, this case is our controller, those notification will be sent whenever a motion occur"
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "REPORT_GROUP"
-				},
-				"description"		: "Get status of REPORT_GROUP for verifying value which we set before"
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
+				"name" : "get_battery",
+				"description" 		: "Get Battery level",
+				"input" : {
 					"devicetype" 	: "zwave",
 					"id" 			: "D_ID",
 					"class"			: "BATTERY",
-					"force"			: "1",
-					"command"		: "GET"
-				},
-				"description"		: "Get status of Battery of zwave device"
+					"readcommand"		: "GET"
+				}
 			},
 
 			{
-				"name" 				: "writespec",
+				"name" 				: "get_temperature",
+				"description"		: "Get status of TEMP ( temperature in fahrenheit and celsius ) for verifying value which is available",
 				"input" 			: {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "ONOFF_GROUP",
-					"data1"			: "3D",
-					"data2"			: "1"
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "SENSOR_MULTILEVEL",
+					"readcommand"	: "GET",
+					"type"			: "TEMP",
+					"force"			: "1"
 				},
-				"description"		: "Set ASSOCIATION ONOFF_GROUP, this case is Zwave Led. The Associated device must support on/off "
+				"verdict"		: {
+					"method"		: "reference",
+					"value"		: {
+						"fahrenheit"	: "ref",
+						"celsius"		: "ref"
+					}
+				}
+			},
+
+            {
+                "name"              : "get_luminance",
+                "description"       : "Get status of LUMI ( luminance index ) for verifying value which is available",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "SENSOR_MULTILEVEL",
+                    "readcommand"   : "GET",
+                    "type"          : "LUMI",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "reference",
+                    "value"     : {
+                        "luminance"     : "ref"
+                    }
+                }
+            }
+		]
+	},
+
+	{
+		"testsuite" : "Association with another device",
+		"testcases" : [
+            {
+                "name" 				: "basic_set_association",
+                "description"		: "Association with our controller (ceres)",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "REPORT_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "REPORT_GROUP",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["01"]
+					}
+				}
+            },
+
+            {
+                "name" 				: "basic_set_association",
+                "description"		: "Association with Led zwave device",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "32",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["32"]
+					}
+				}
 			},
 
 			{
-				"name" 				: "readspec_takeaction",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "ONOFF_GROUP",
-					"time"			: "90"
-				},
-				"description"		: "Wait for 90s and try to test motion notification with the associated device."
-			},
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test motion sensor, if having a motion accurs then zwave LED will turn on",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
 
 			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "ONOFF_GROUP",
-					"data1"			: "ff",
-					"data2"			: "1"
-				},
-				"description"		: "Set ASSOCIATION ONOFF_GROUP .The Associated device must support on/off "
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "ONOFF_GROUP"
-				},
-				"description"		: "Get status of ONOFF_GROUP for verifying value which we set before"
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "TAMPER_GROUP"
-				},
-				"description"		: "Get status of TAMPER_GROUP for verifying value which is available"
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "TAMPER_GROUP",
-					"data1"			: "3D",
-					"data2"			: "1"
-				},
-				"description"		: "Set ASSOCIATION TAMPER_GROUP, this case is Zwave Led. Those notification will be sent whenever we move the sensor" 
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "TAMPER_GROUP"
-				},
-				"description"		: "Get status of TAMPER_GROUP for verifying value which we set before"
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "REMOVE",
-					"data0"         : "REPORT_GROUP",
-					"data1"         : "3D",
-					"data2"         : "1"
-				},
-				"description"		: "Remove associated Z-wave Led device from REPORT_GROUP."
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "REPORT_GROUP"
-				},
-				"description"		: "Verify value of removed action"
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "REMOVE",
-					"data0"         : "ONOFF_GROUP",
-					"data1"         : "3D",
-					"data2"         : "1"
-				},
-				"description"		: "Remove associated Z-wave Led device from ONOFF_GROUP."
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "ONOFF_GROUP"
-				},
-				"description"		: "Verify value of removed action"
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "REMOVE",
-					"data0"         : "TAMPER_GROUP",
-					"data1"         : "3D",
-					"data2"         : "1"
-				},
-				"description"		: "Remove associated Z-wave Led device from TAMPER_GROUP."
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "TAMPER_GROUP"
-				},
-				"description"		: "Verify value of removed action"
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "SENSOR_MULTILEVEL",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "TEMP"
-				},
-				"description"		: "Get status of TEMP in class SENSOR_MULTILEVEL for verifying value"
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "SENSOR_MULTILEVEL",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "HUMI"
-				},
-				"description"		: "Get status of HUMI in class SENSOR_MULTILEVEL for verifying value"
+                "name" 				: "basic_set_association",
+                "description"		: "Association with our controller (ceres), add ceres into TAMPER_GROUP",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "TAMPER_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "TAMPER_GROUP",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["01"]
+					}
+				}
 			}
+		]
+	},
+   
+	{
+        "testsuite" : "PIR configuration",
+        "testcases" : [
+             {
+                "name"              : "pir_configuration",
+                "description"       : "Set value 65535 to PIR_SENSOR, it means after 65535s sensor will able to detect motion",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "PIR_SENSOR",
+                    "data1"         : "65535",
+                    "data2"         : "1",
+                    "type"          : "PIR_SENSOR",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     65535
+                    }
+                }
+            },
+
+            {
+                "name"              : "pir_configuration",
+                "description"       : "Set value 15 to PIR_SENSOR, it means after 15s sensor will able to detect motion",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "PIR_SENSOR",
+                    "data1"         : "15",
+                    "data2"         : "1",
+                    "type"          : "PIR_SENSOR",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     15
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test pir time which set up before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            }
+        ]
+    },
+
+	{
+		"testsuite" : "Remove association information",
+		"testcases" : [
+			{
+                "name" 				: "remove_association",
+                "description"		: "Remove controller (ceres) out of REPORT_GROUP",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "REPORT_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "REPORT_GROUP",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["01"]
+					}
+				}
+            },
+
+            {
+                "name" 				: "remove_association",
+                "description"		: "Remove Led zwave device out of ONOFF_GROUP",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "32",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["32"]
+					}
+				}
+            },
+
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove controller (ceres) out of TAMPER_GROUP",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "TAMPER_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "TAMPER_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["01"]
+                    }
+                }
+            }
 		]
 	}
 ]

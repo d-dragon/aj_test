@@ -13,8 +13,15 @@
 
 	"adddevice": {
 		"testitems": [
-			{ "name": "add_devices" },
+			{ "name": "open_closenetwork" },
+			{ "name": "listen_notification" },
 			{ "name": "list_devices" }
+		]
+	},
+
+	"closenetwork": {
+		"testitems": [
+			{ "name": "open_closenetwork" }
 		]
 	},
 
@@ -24,8 +31,15 @@
 		]
 	},
 
+	"physical_test":{
+		"testitems": [
+			{"name" : "listen_notification"}
+		]
+	},
+
 	"removedevice": {
 		"testitems": [
+
 			{ "name": "remove_device" },
 			{ "name": "list_devices" }
 		]
@@ -37,12 +51,115 @@
 			{"name" : "get_binary"}
 		]
 	},
+
+	"lock_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"time_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"report_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+
+	"motion_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+
+	"physical_test":{
+		"testitems": [
+			{"name" : "listen_notification"}
+		]
+	},
+
+	"basic_set_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"time_auto_report_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"association":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
 	
+	"basic_set_association":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+
+	"remove_association":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"get_battery":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"get_temperature":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"get_humidity":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"get_luminance":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"get_ultraviolet":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
 	"readspec":{
 		"testitems": [
 			{"name" : "read_spec"}
 		]
 	},
+
+	"readspec_takeaction":{
+		"testitems": [
+			{"name" : "read_spec"},
+			{"name" : "listen_notification"}
+		]
+	},
+	
 	"writespec":{
 		"testitems": [
 			{"name" : "write_spec"}
@@ -82,17 +199,17 @@
 		]
 	},
 
-	"readspec_takeaction":{
+	"noti_send_configuration":{
 		"testitems": [
-			{"name" : "read_spec"},
-			{"name" : "listen_notification"}
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
 		]
 	},
 
-	"controlonoff":{
+	"sound_volume_configuration":{
 		"testitems": [
-			{"name" : "set_binary"},
-			{"name" : "get_binary"}
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
 		]
 	}
 }

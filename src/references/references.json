@@ -1,18 +1,18 @@
 {
     "BATTERY": {
-        "batterylevel": "100"
+        "batterylevel": 100
     },
     "SENSOR_MULTILEVEL": {
         "TEMP": {
-            "fahrenheit": 89.900002000000001,
+            "fahrenheit": 84.900002000000001,
             "celsius": 29.38889
         },
         "HUMI": {
-            "percentage": 30,
-            "absolute_humidity": 7.5199999999999996
+            "percentage": 39,
+            "absolute_humidity": 10.608000000000001
         },
         "LUMI": {
-            "luminance": 195.0
+            "luminance": 23.0
         },
         "UV": {
             "ultraviolet": 0

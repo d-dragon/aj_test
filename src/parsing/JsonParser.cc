@@ -84,7 +84,6 @@ int JsonParser::GetDevIDInJSMsg(string *input, vector<DeviceInfo> *devList){
                 devInfo.EndPoint_num	= json_string_value(object);
 				devList->push_back(devInfo);
 			}
-
 		}
 
     }

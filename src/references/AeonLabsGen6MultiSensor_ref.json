@@ -1,6 +1,6 @@
 [ 
 	{
-		"testsuit" : "AeonLabsGen6MultiSensor_ref",
+		"testsuite" : "AeonLabsGen6MultiSensor_ref",
 		"testcases" :	[
 			{	
 				"name"				: "listdevices",

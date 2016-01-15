@@ -1,24 +1,154 @@
 {
+	"wifisetup":{
+		"testitems" : [
+			{"name" : "onboarding"}
+		]
+	},
+	
 	"listdevices": {
 		"testitems": [
 			{"name": "list_devices"}
 		]
 	},
 
+	"elect_getting": {
+		"testitems": [
+			{"name": "read_spec"}
+		]
+	},
+
+
 	"adddevice": {
 		"testitems": [
-			{ "name": "add_devices" },
+			{ "name": "open_closenetwork" },
+			{ "name": "listen_notification" },
 			{ "name": "list_devices" }
+		]
+	},
+
+	"closenetwork": {
+		"testitems": [
+			{ "name": "open_closenetwork" }
+		]
+	},
+
+	"listdevice" :{
+		"testitems": [
+			{"name": "list_devices"}
 		]
 	},
 
 	"removedevice": {
 		"testitems": [
+
 			{ "name": "remove_device" },
 			{ "name": "list_devices" }
 		]
 	},
+
+	"controlonoff":{
+		"testitems": [
+			{"name" : "set_binary"},
+			{"name" : "get_binary"}
+		]
+	},
+
+	"binary_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+
+	"set_report_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
 	
+	"determinative_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"report_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+
+	"motion_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+
+	"physical_test":{
+		"testitems": [
+			{"name" : "listen_notification"}
+		]
+	},
+	"time_auto_report_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"association":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	
+	"basic_set_association":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+
+	"remove_association":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"get_battery":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"get_temperature":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"get_humidity":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"get_luminance":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"get_ultraviolet":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
 	"readspec":{
 		"testitems": [
 			{"name" : "read_spec"}
@@ -31,17 +161,57 @@
 			{"name" : "listen_notification"}
 		]
 	},
-
+	
 	"writespec":{
 		"testitems": [
 			{"name" : "write_spec"}
 		]
 	},
 
-	"controlonoff":{
+	"readsecurespec":{
 		"testitems": [
-			{"name" : "set_binary"},
-			{"name" : "get_binary"}
+			{"name" : "read_s_spec"}
+		]
+	},
+	"writesecurespec":{
+		"testitems": [
+			{"name" : "write_s_spec"}
+		]
+	},
+	"firmwareupdate":{
+		"testitems": [
+			{"name" : "update_firmware"}
+		]
+	},
+
+	"rules":{
+		"testitems" : [
+			{"name" : "set_rule"},
+			{"name" : "get_rule"},
+			{"name" : "rule_actions"}
+		]
+	},
+
+	"wemoupnp" : {
+		"testitems" : [
+			{"name" : "listen_notification"},
+			{"name" : "get_binary"},
+			{"name" : "set_binary"}
+
+		]
+	},
+
+	"noti_send_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+
+	"sound_volume_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
 		]
 	}
 }

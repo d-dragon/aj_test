@@ -1,160 +1,153 @@
-[ 
+[
 	{
-		"testsuit" : "First Alert Smoke and Carbon Monoxide",
+		"testsuite" : "Get sensing values",
 		"testcases" :	[
-			{	
-				"name"				: "listdevices",
-				"input" 			:{
-					"devicetype"	: "zwave"
-				},
-				"description"       : "Get list of available devices in the controller"
-			},	
-
 			{
-				"name" 				: "readspec",
+				"name"				: "listdevices",
+				"description" 		: "Get list of available devices in the controller",
 				"input" 			: {
+					"devicetype"	: "zwave"
+				}
+			},
+            
+			{
+				"name" : "get_battery",
+				"description" 		: "Get Battery level",
+				"input" : {
 					"devicetype" 	: "zwave",
 					"id" 			: "D_ID",
 					"class"			: "BATTERY",
-					"command"		: "GET",
-					"force"			: "1"	
-				},
-				"description"			: "Get status of remain battery of First Alert Smoke and Carbon Monoxide (unit %)"
+					"readcommand"	: "GET"
+				}
+			}
+		]
+	},
 
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "GET",
-					"type"			: "REPORT_GROUP",
-					"force"			: "1"	
-				},
-				"description"       : "Get status of REPORT_GROUP for verifying which device is available in group report"
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "REPORT_GROUP",
-					"data1"			: "01",
-					"data2"			: "1"
-				},
-				"description"       : "Set ASSOCIATION REPORT_GROUP, this case is our controller,First Alert Smoke and Carbon Monoxide will send notification to controller whenever having smoke/co detected event occurs"
-			},
-
+	{
+		"testsuite" : "Association with another device",
+		"testcases" : [
             {
-                "name" 				: "readspec",
+                "name" 				: "basic_set_association",
+                "description"		: "Association with our controller (ceres)",
                 "input" 			: {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "REPORT_GROUP",
-					"force"			: "1"	
-                },
-                "description"       : "Get status of REPORT_GROUP for verifying value which we have set before"
-            },
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "BEEPER",
-					"force"			: "1"	
-				},
-				"description"		: "Get status of BEEPER (allow First Alert Smoke and Carbon Monoxide to send double alarm message to controller) for verifying value which is available"
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "BEEPER",
-					"data1"			: "1",
-					"data2"			: "1"
-				},
-				"description"       : "Set value 1 to BEEPER , value 1 means allow First Alert Smoke and Carbon Monoxide to send double alarm message to controller when it detected smoke/co"
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "BEEPER",
-					"force"			: "1"	
-				},
-				"description"		: "Get status of BEEPER for verifying value which we have set before"
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "BEEPER",
-					"data1"			: "0",
-					"data2"			: "1"
-				},
-				"description"       : "Set value 0 to BEEPER , value 0 means First Alert Smoke and Carbon Monoxide just to send one alarm message to controller when it detected smoke/co"
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "BEEPER"
-				},
-				"description"		: "Get status of BEEPER for verifying value which we have set before"
-			},
-			
-            {
-                "name" 				: "writespec",
-                "input" 			: {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "REMOVE",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
                     "data0"         : "REPORT_GROUP",
                     "data1"         : "01",
-                    "data2"         : "1"
+                    "data2"         : "1",
+                    "type"          : "REPORT_GROUP",
+                    "force"			: "1"
                 },
-                "description"       : "Remove controller from REPORT_GROUP."
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["01"]
+					}
+				}
+            }
+		]
+	},
+
+	{
+		"testsuite" : "Alarm message configuration",
+		"testcases" : [
+
+            {
+                "name" 				: "alarm_configuration",
+                "description"		: "Set value 1 to BEEPER , value 1 means allow First Alert Smoke and Carbon Monoxide to send double alarm message to controller when it detected smoke/co",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "BEEPER",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "BEEPER",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value"	:     1
+					}
+				}
             },
 
             {
-                "name" 				: "readspec",
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test alarm sending value which have set before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
+
+            {
+                "name" 				: "alarm_configuration",
+                "description"		: "Set value 1 to BEEPER , value 1 means allow First Alert Smoke and Carbon Monoxide to send double alarm message to controller when it detected smoke/co",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "BEEPER",
+                    "data1"         : "00",
+                    "data2"         : "1",
+                    "type"          : "BEEPER",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"value"	:     0
+					}
+				}
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test alarm sending value which have set before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            }
+		]
+	},
+    
+	{
+		"testsuite" : "Remove association information",
+		"testcases" : [
+			{
+                "name" 				: "remove_association",
+                "description"		: "Remove our controller out of REPORT_GROUP",
                 "input" 			: {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "command"       : "GET",
+                    "writecommand"	: "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "REPORT_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1",
                     "type"          : "REPORT_GROUP",
-					"force"			: "1"	
+                    "force"			: "1"
                 },
-                "description"       : "Verify value of removed action"
-            }			
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["01"]
+					}
+				}
+            }
 		]
 	}
 ]

@@ -33,6 +33,7 @@
 
 	"removedevice": {
 		"testitems": [
+
 			{ "name": "remove_device" },
 			{ "name": "list_devices" }
 		]
@@ -73,8 +74,6 @@
 
 	"physical_test":{
 		"testitems": [
-			{"name" : "write_spec"},
-			{"name" : "read_spec"},
 			{"name" : "listen_notification"}
 		]
 	},
