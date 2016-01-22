@@ -1,259 +1,311 @@
-[ 
-	{
-		"testsuit" : "EverSpring Flood Detector",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
-		"testcases" :	[
-			{	
-				"name"	: "listdevices",
-				"input" :{
-					"devicetype"	: "zwave"
-				},
-				"description"		: "Get list of available devices in the controller"
-			},	
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "REPORT_GROUP",
-					"data1"			: "01",
-					"data2"			: "1"
-				},
-				"description"		: "Set ASSOCIATION REPORT_GROUP, this case is our controller, those notification will be sent whenever having flood occur"
-			},
+[
+    {
+        "testsuite" : "Get sensing values",
+        "testcases" :   [
             {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "REPORT_GROUP",
-					"force"			: "1"
+                "name"              : "listdevices",
+                "description"       : "Get list of available devices in the controller",
+                "input"             : {
+                    "devicetype"    : "zwave"
+                }
+            },
 
-                },
-				"description"		: "Get status of REPORT_GROUP for verifying value which we set before"
-            },
-			{
-                "name" : "writespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "SET",
-                    "data0"         : "ONOFF_GROUP",
-                    "data1"         : "A_ID 1",
-                    "data2"         : "1"
-                },
-				"description"		: "Set ASSOCIATION ONOFF_GROUP, associated device must be dimmable, on/off "
-            },
             {
-                "name" : "readspec",
+                "name" : "get_battery",
+                "description"       : "Get Battery level , Please make device wakeup",
                 "input" : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "ONOFF_GROUP",
-					"force"			: "1"
-                },
-				"description"		: "Get status of ONOFF_GROUP setting, to verify again"
-            },
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "BATTERY",
-					"command"		: "GET",
-					"force"			: "1"
-				},
-				"description"		: "Get status of Battery of zwave device"
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "SET_DIMMER",
-					"force"			: "1"
-				},
-				"description"		: "Get the current value of DIMMER "
-			},
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "SET_DIMMER",
-					"data1"			: "0",
-					"data2"			: "1"
-				},
-				"description"		: "Set value to control dimmable associated device, value is 0 mean off"
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "SET_DIMMER",
-					"force"			: "1"
-				},
-				"description"		: "Verify dimmer setting"
-			},
-			{
-				"name"				: "waitingfor",
-				"input"				: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"time"			: "30"
-				},
-				"description"		: "Wait 30s and try to test flood notification and the associated dimmer device."
-			},
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "SET_DIMMER",
-					"data1"			: "30",
-					"data2"			: "1"
-				},
-				"description"		: "Set value to control dimmable associated device, value is 30 mean medium lighting scale"
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "SET_DIMMER",
-					"force"			: "1"
-				},
-				"description"		: "Verify dimmer setting"
-			},
-			{
-				"name"				: "waitingfor",
-				"input"				: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"time"			: "30"
-				},
-				"description"		: "Wait 30s and try to test flood notification and the associated dimmer device."
-			},
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "SET_DIMMER",
-					"data1"			: "63",
-					"data2"			: "1"
-				},
-				"description"		: "Set value to control dimmable associated device, value is 63 mean maximum lighting scale"
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "SET_DIMMER",
-					"force"			: "1"
-				},
-				"description"		: "Verify dimmer setting"
-			},
-			{
-				"name"				: "waitingfor",
-				"input"				: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"time"			: "30"
-				},
-				"description"		: "Wait 30s and try to test flood notification and the associated dimmer device."
-			},
+                    "class"         : "BATTERY",
+                    "readcommand"   : "GET",
+                    "force"         : "1"
+                }
+            }
+        ]
+    },
+
+    {
+        "testsuite" : "Association with another device",
+        "testcases" : [
             {
-                "name" : "writespec",
-                "input" : {
+                "name"              : "basic_set_association",
+                "description"       : "Association with our controller (ceres)",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "command"       : "REMOVE",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
                     "data0"         : "REPORT_GROUP",
                     "data1"         : "01",
-                    "data2"         : "1"
-                },
-				"description"		: "Remove notification from controller"
-            },
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
+                    "data2"         : "1",
                     "type"          : "REPORT_GROUP",
-					"force"			: "1"
+                    "force"         : "1"
                 },
-				"description"		: "Verify value of removed action"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["01"]
+                    }
+                }
             },
-			{
-				"name"				: "waitingfor",
-				"input"				: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"time"			: "10"
-				},
-				"description"		: "Wait 10 and try to test flood notification."
-			},
+
             {
-                "name" : "writespec",
-                "input" : {
+                "name"              : "basic_set_association",
+                "description"       : "Association with Led zwave device",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "command"       : "REMOVE",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "A_ID 1",
-                    "data2"         : "1"
+                    "data1"         : "57",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"         : "1"
                 },
-				"description"		: "Remove associated dimmer device"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["57"]
+                    }
+                }
             },
+
             {
-                "name" : "readspec",
-                "input" : {
+                "name"              : "basic_set_association",
+                "description"       : "Association with smart dimmer device",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "command"       : "GET",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "59",
+                    "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
-					"force"			: "1"
+                    "force"         : "1"
                 },
-				"description"		: "Verify removed associated dimmer action"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["59"]
+                    }
+                }
             },
+
             {
-				"name"				: "waitingfor",
-				"input"				: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"time"			: "10"
-				},
-				"description"		: "Wait 10 and try to test flood associated dimmer device."
-			}		
-		]
-	}
+                "name"              : "dimmer_configuration",
+                "description"       : "Set value 40 (Hex) for SET_DIMMER, value 30 means mean associated device will dim with value 64",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SET_DIMMER",
+                    "data1"         : "40",
+                    "data2"         : "1",
+                    "type"          : "SET_DIMMER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     40
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test association with Led zwave device and alarm (flood detected) report to controller",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            }
+        ]
+    },
+
+    {
+        "testsuite" : "Dimmer configuration",
+        "testcases" : [
+            {
+                "name"              : "dimmer_configuration",
+                "description"       : "Set value 30 (Hex) for SET_DIMMER, value 30 means mean associated device will dim with value 48",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SET_DIMMER",
+                    "data1"         : "30",
+                    "data2"         : "1",
+                    "type"          : "SET_DIMMER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     30
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test dimmer value",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
+
+            {
+                "name"              : "dimmer_configuration",
+                "description"       : "Set value 63 (Hex) for SET_DIMMER, value 63 means mean associated device will dim with value 99",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SET_DIMMER",
+                    "data1"         : "63",
+                    "data2"         : "1",
+                    "type"          : "SET_DIMMER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     63
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test dimmer value",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
+           
+            {
+                "name"              : "basic_set_configuration",
+                "description"       : "Set value 0 (Hex) for SET_DIMMER, value 0 means turn off associated device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SET_DIMMER",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "SET_DIMMER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test dimmer value",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            }
+        ]
+    },
+
+    {
+        "testsuite" : "Remove association information",
+        "testcases" : [
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove our controller out of REPORT_GROUP",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "REPORT_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "REPORT_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["01"]
+                    }
+                }
+            },
+
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove our Led zwave out of ONOFF_GROUP",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "57",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["57"]
+                    }
+                }
+            },
+
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove smart dimmer out of ONOFF_GROUP",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "59",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["59"]
+                    }
+                }
+            }
+        ]
+    }
 ]

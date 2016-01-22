@@ -1,242 +1,312 @@
-[ 
-	{
-		"testsuit" : "Fibaro Door Window Sensor",
-		"testcases" :	[
-			{ 
-				"name" 					: "listdevice", 
-				"input" 				: { 
-					"devicetype" 		: "zwave"
-				},
-				"description"       : "Get list of available devices in the controller"
-			},
+[
+    {
+        "testsuite" : "Get sensing values",
+        "testcases" :   [
+            {
+                "name"              : "listdevices",
+                "description"       : "Get list of available devices in the controller",
+                "input"             : {
+                    "devicetype"    : "zwave"
+                }
+            },
 
-			{ 
-				"name" 					: "readspec", 
-				"input" 				: { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "BATTERY",
-					"command"			: "GET",
-					"force" 			: "1"
-				},
-				"description"			: "Get status of remain battery of Fibaro Door Window Sensor (unit %)"
-			},
+            {
+                "name" : "get_battery",
+                "description"       : "Get Battery level , Please make device wakeup",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "BATTERY",
+                    "readcommand"   : "GET",
+                    "force"         : "1"
+                }
+            }
+        ]
+    },
 
-			{ 
-				"name" 					: "readspec", 
-				"input" 				: { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "ASSOCIATION",
-					"command" 			: "GET",
-					"type" 				: "REPORT_GROUP",
-					"force" 			: "1"
-				},
-				"description"       : "Get status of REPORT_GROUP for verifying value which device is available in group report"
-			},
+    {
+        "testsuite" : "Association with another device",
+        "testcases" : [
+            {
+                "name"              : "basic_set_association",
+                "description"       : "Association with our controller (ceres)",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "REPORT_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "REPORT_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["01"]
+                    }
+                }
+            },
 
-			{ 
-				"name" 					: "writespec", 
-				"input" 				: { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "ASSOCIATION",
-					"command" 			: "SET",
-					"data0" 			: "REPORT_GROUP",
-					"data1" 			: "01",
-					"data2" 			: "1"
-				},
-				"description"       : "Set ASSOCIATION REPORT_GROUP, this case is our controller, Fibaro Door Window Sensor will send notification to controller whenever the state on/off status changed or Once the TMP button (below device) is released,"
-			},
+            {
+                "name"              : "basic_set_association",
+                "description"       : "Association with Led zwave device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "6B",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["6B"]
+                    }
+                }
+            },
 
-			{ 
-				"name" 					: "readspec", 
-				"input" 				: { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "ASSOCIATION",
-					"command" 			: "GET",
-					"type" 				: "REPORT_GROUP",
-					"force" 			: "1"
-				},
-				"description"       : "Get status of REPORT_GROUP for verifying value which we have set before"
-			},
+            {
+                "name"              : "basic_set_association",
+                "description"       : "Association with smart dimmer device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "6F",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["6F"]
+                    }
+                }
+            },
 
-			{ 
-				"name" 					: "readspec", 
-				"input" 				: { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "ASSOCIATION",
-					"command" 			: "GET",
-					"type" 				: "ONOFF_GROUP",
-					"force" 			: "1"
-				},
-				"description"       : "Get status of ONOFF_GROUP for verifying value which device is available in group on/off"
-			},
+            {
+                "name"              : "dimmer_configuration",
+                "description"       : "Set value 40 (Hex) for SET_DIMMER, value 40 means mean associated device will dim with value 64",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SET_DIMMER",
+                    "data1"         : "40",
+                    "data2"         : "1",
+                    "type"          : "SET_DIMMER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     40
+                    }
+                }
+            },
 
-			{ 
-				"name" 					: "writespec", 
-				"input" 				: { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "ASSOCIATION",
-					"command" 			: "SET",
-					"data0" 			: "ONOFF_GROUP",
-					"data1" 			: "A_ID",
-					"data2" 			: "1"
-				},
-				"description"       : "Set ASSOCIATION REPORT_GROUP, this case is associated Led zwave device, Fibaro Door Window Sensor will send basic set (on/off) to associated led device whenever having open/close action occurs,"
-			},
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test association with Led zwave device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            }
+        ]
+    },
 
-			{ 
-				"name" 					: "readspec_takeaction", 
-				"input" 				: { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "ASSOCIATION",
-					"command" 			: "GET",
-					"type" 				: "ONOFF_GROUP",
-					"force" 			: "1",
-					"time"				: "60"
-				},
-				"description"		: "Wait for 60s to test door open/close action, it means while 60s if there have a door open/close action occurs then associated Led zwave device will turn on"
-			},
+    {
+        "testsuite" : "Dimmer configuration",
+        "testcases" : [
+            {
+                "name"              : "dimmer_configuration",
+                "description"       : "Set value 30 (Hex) for SET_DIMMER, value 30 means mean associated device will dim with value 48",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SET_DIMMER",
+                    "data1"         : "30",
+                    "data2"         : "1",
+                    "type"          : "SET_DIMMER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     30
+                    }
+                }
+            },
 
-			{ 
-				"name" 					: "writespec", 
-				"input"			    	: { 
-					"devicetype"	    : "zwave", 
-					"id" 				: "D_ID",
-					"class"			    : "CONFIGURATION",
-					"command" 			: "SET",
-					"data0" 			: "SET_DIMMER",
-					"data1" 			: "30",
-					"data2" 			: "1"
-				},
-				"description"       : "Set value 30 for SET_DIMMER, Value 30 (Hex) means Fibaro Door Window Sensor will dim with value 48"
-			},
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test dimmer value",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
 
-			{ 
-				"name" 					: "readspec", 
-				"input"				    : { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "CONFIGURATION",
-					"command" 			: "GET",
-					"force" 			: "1",
-					"type" 				: "SET_DIMMER"
-				},
-				"description"       : 	"Get status of SET_DIMMER for verifying value which we have set before"
-			},
+            {
+                "name"              : "dimmer_configuration",
+                "description"       : "Set value 63 (Hex) for SET_DIMMER, value 63 means mean associated device will dim with value 99",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SET_DIMMER",
+                    "data1"         : "63",
+                    "data2"         : "1",
+                    "type"          : "SET_DIMMER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     63
+                    }
+                }
+            },
 
-			{ 
-				"name" 					: "writespec", 
-				"input"			    	: { 
-					"devicetype"	    : "zwave", 
-					"id" 				: "D_ID",
-					"class"			    : "CONFIGURATION",
-					"command" 			: "SET",
-					"data0" 			: "SET_DIMMER",
-					"data1" 			: "63",
-					"data2" 			: "1"
-				},
-				"description"       : "Set value 63 for SET_DIMMER, Value 63 (Hex) means Fibaro Door Window Sensor will dim with value 99"
-			},
+            
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test dimmer value",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
 
-			{ 
-				"name" 					: "readspec", 
-				"input"				    : { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "CONFIGURATION",
-					"command" 			: "GET",
-					"force" 			: "1",
-					"type" 				: "SET_DIMMER"
-				},
-				"description"       : 	"Get status of SET_DIMMER for verifying value which we have set before"
-			},
+            {
+                "name"              : "basic_set_configuration",
+                "description"       : "Set value 00 (Hex) for SET_DIMMER, value 00 means not dim associated device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "SET_DIMMER",
+                    "data1"         : "00",
+                    "data2"         : "1",
+                    "type"          : "SET_DIMMER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
 
-				{ 
-				"name" 					: "writespec", 
-				"input"			    	: { 
-					"devicetype"	    : "zwave", 
-					"id" 				: "D_ID",
-					"class"			    : "CONFIGURATION",
-					"command" 			: "SET",
-					"data0" 			: "SET_DIMMER",
-					"data1" 			: "00",
-					"data2" 			: "1"
-				},
-				"description"       : "Set value 00 for SET_DIMMER, Value 00 (Hex) means Fibaro Door Window Sensor will dim with value 00"
-			},
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test dimmer value",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            }
+        ]
+    },
 
-			{ 
-				"name" 					: "readspec", 
-				"input"				    : { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "CONFIGURATION",
-					"command" 			: "GET",
-					"force" 			: "1",
-					"type" 				: "SET_DIMMER"
-				},
-				"description"       : 	"Get status of SET_DIMMER for verifying value which we have set before"
-			},
+    {
+        "testsuite" : "Remove association information",
+        "testcases" : [
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove our controller out of REPORT_GROUP",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "REPORT_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "REPORT_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["01"]
+                    }
+                }
+            },
 
-			{ 
-				"name" 					: "writespec", 
-				"input" 				: { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "ASSOCIATION",
-					"command" 			: "REMOVE",
-					"data0" 			: "ONOFF_GROUP",
-					"data1" 			: "A_ID",
-					"data2" 			: "1"
-				},
-				"description"       : "Remove associated Led zwave from ONOFF_GROUP"
-			},
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove Led zwave out of ONOFF_GROUP",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "6B",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["6B"]
+                    }
+                }
+            },
 
-			{ 
-				"name" 					: "readspec", 
-				"input" 				: { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "ASSOCIATION",
-					"command" 			: "GET",
-					"type" 				: "ONOFF_GROUP",
-					"force" 			: "1"
-				},
-				"description"       : "Verify value of removed action"
-			},
-
-			{ 
-				"name" 					: "writespec", 
-				"input" 				: { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "ASSOCIATION",
-					"command" 			: "REMOVE",
-					"data0" 			: "REPORT_GROUP",
-					"data1" 			: "01",
-					"data2" 			: "1"
-				},
-				"description"       : "Remove controller from REPORT_GROUP"
-			},
-
-			{ 
-				"name" 					: "readspec", 
-				"input" 				: { 
-					"devicetype" 		: "zwave", 
-					"id" 				: "D_ID",
-					"class" 			: "ASSOCIATION",
-					"command" 			: "GET",
-					"type" 				: "REPORT_GROUP",
-					"force" 			: "1"
-				},
-				"description"       : "Verify value of removed action"
-			}
-		]
-	}
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove smart dimmer out of ONOFF_GROUP",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "6F",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["6F"]
+                    }
+                }
+            }
+        ]
+    }
 ]

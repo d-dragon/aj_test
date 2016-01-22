@@ -11,6 +11,13 @@
 		]
 	},
 
+	"elect_getting": {
+		"testitems": [
+			{"name": "read_spec"}
+		]
+	},
+
+
 	"adddevice": {
 		"testitems": [
 			{ "name": "open_closenetwork" },
@@ -46,26 +53,34 @@
 		]
 	},
 
-	"beeper_configuration":{
-		"testitems": [
-			{"name" : "write_spec"},
-			{"name" : "read_spec"}
-		]
-	},
-	"vacation_configuration":{
-		"testitems": [
-			{"name" : "write_spec"},
-			{"name" : "read_spec"}
-		]
-	},
-	"lock_leave_configuration":{
+	"lock_configuration":{
 		"testitems": [
 			{"name" : "write_spec"},
 			{"name" : "read_spec"}
 		]
 	},
 
-	"user_code_configuration":{
+	"overload_protect":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	
+	"time_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+	"report_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+
+	"motion_configuration":{
 		"testitems": [
 			{"name" : "write_spec"},
 			{"name" : "read_spec"}
@@ -77,7 +92,7 @@
 			{"name" : "listen_notification"}
 		]
 	},
-	"auto_lock_configuration":{
+	"time_auto_report_configuration":{
 		"testitems": [
 			{"name" : "write_spec"},
 			{"name" : "read_spec"}
@@ -89,14 +104,14 @@
 			{"name" : "read_spec"}
 		]
 	},
-	"door_lock_configuration":{
+	"association":{
 		"testitems": [
 			{"name" : "write_spec"},
 			{"name" : "read_spec"}
 		]
 	},
 	
-	"lenth_configuration":{
+	"basic_set_association":{
 		"testitems": [
 			{"name" : "write_spec"},
 			{"name" : "read_spec"}
@@ -182,6 +197,21 @@
 			{"name" : "listen_notification"},
 			{"name" : "get_binary"},
 			{"name" : "set_binary"}
+
+		]
+	},
+
+	"noti_send_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+
+	"sound_volume_configuration":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
 		]
 	}
 }

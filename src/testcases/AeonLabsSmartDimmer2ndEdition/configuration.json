@@ -1,9 +1,9 @@
 {
     "devicename": "AeonLabsSmartDimmer2ndEdition",
     "serviceid": "93c06771-c725-48c2-b1ff-5c313ee312cc",
-    "deviceindex": "0",
+    "deviceindex": "3",
     "altdeviceid": "",
     "devicetype": "zwave",
-    "associationdevidx": "0",
+    "associationdevidx": "1",
     "altassdevid": ""
 }

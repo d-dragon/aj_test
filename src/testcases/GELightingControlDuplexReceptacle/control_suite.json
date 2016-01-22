@@ -1,98 +1,102 @@
-[ 
-	{
-		"testsuit" : "GE Lighting Control Duplex Receptacle",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
-		"testcases" :	[
-			{	
-				"name"				: "listdevices",
-				"input" 			: {
-					"devicetype"	: "zwave"
-				}
-			},
+[
+    {
+        "testsuite" : "Get sensing values",
+        "testcases" :   [
             {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "type"          : "ONOFF_LED"
-                }
-            },
-            {
-                "name" : "writespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "ONOFF_LED",
-                    "data1"         : "0",
-                    "data2"         : ""
-                }
-            },
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "type"          : "ONOFF_LED"
-                }
-            },
-            {
-                "name" : "writespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "ONOFF_LED",
-                    "data1"         : "1",
-                    "data2"         : ""
-                }
-            },
-            {
-                "name" : "readspec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "type"          : "ONOFF_LED"
-                }
-            },
-			{
-                "name" 				: "controlonoff",
-                "input" 			: {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "value"         : "1",
-                    "epnum"         : "",
-                    "proid"         : ""
-                }
-            },
-            {
-                "name"              : "controlonoff",
+                "name"              : "listdevices",
+                "description"       : "Get list of available devices in the controller",
                 "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "value"         : "0",
-                    "epnum"         : "",
-                    "proid"         : ""
-                }
-            },
-            {
-                "name"              : "controlonoff",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "value"         : "1",
-                    "epnum"         : "",
-                    "proid"         : ""
+                    "devicetype"    : "zwave"
                 }
             }
-		]
-	}
+        ]
+    },
+
+    {
+        "testsuite" : "Switch all on-off configuration",
+        "testcases" : [
+            {
+                "name"              : "switch_on_off",
+                "description"       : "Set ONOFF_LED is 00, value 00 means turn on device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_LED",
+                    "data1"         : "00",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_LED",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :   0
+                    }
+                }
+            },
+
+            {
+                "name"              : "switch_on_off",
+                "description"       : "Set ONOFF_LED is 01, value 01 means turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_LED",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_LED",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :   1
+                    }
+                }
+            },
+        ]
+    },
+
+     {
+        "testsuite" : "Control on-off device",
+        "testcases" : [
+            {
+                "name"              : "controlonoff",
+                "description"       : "Value 1 (Hex) means turn on device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "01"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  1
+                    }
+                }
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "00"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
+            }
+        ]
+    }
 ]

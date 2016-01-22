@@ -8,16 +8,6 @@
 				"input" 			: {
 					"devicetype"	: "zwave"
 				}
-				
-			},
-
-			{ 
-				"name" 				: "removedevice", 
-				"description"		: "Remove device in the first button pressing",
-				"input" 			: { 
-					"devicetype" 	: "zwave",
-					"id"			: ""
-				}
 			},
 
 			{ 
@@ -40,4 +30,5 @@
 			}		
 		]
 	}
+
 ]

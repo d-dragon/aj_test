@@ -1,100 +1,134 @@
-[ 
+[
+    {
+        "testsuite" : "Get sensing values",
+        "testcases" :   [
+            {
+                "name"              : "listdevices",
+                "description"       : "Get list of available devices in the controller",
+                "input"             : {
+                    "devicetype"    : "zwave"
+                }
+            }
+        ]
+    },
+
+    {
+        "testsuite" : "Switch all on-off configuration",
+        "testcases" : [
+            {
+                "name"              : "switch_on_off",
+                "description"       : "Set ONOFF_LED is 00, value 00 means turn on device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_LED",
+                    "data1"         : "00",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_LED",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" : 	0
+                    }
+                }
+            },
+
+            {
+                "name"              : "switch_on_off",
+                "description"       : "Set ONOFF_LED is 01, value 01 means turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_LED",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_LED",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" : 	1
+                    }
+                }
+            },
+        ]
+    },
+
 	{
-		"testsuit" : "GE Dimmer Switch",
-		"testcases" :	[
-			{	
-				"name"	: "listdevices",
-				"input" :{
-					"devicetype"	: "zwave"
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "ONOFF_LED"
-				}
-			},
-			
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "ONOFF_LED",
-					"data1"			: "0",
-					"data2"			: ""
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "ONOFF_LED"
-				}
-			},
-			{
-				"name" : "writespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "ONOFF_LED",
-					"data1"			: "1",
-					"data2"			: ""
-				}
-			},
-			{
-				"name" : "readspec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "ONOFF_LED"
-				}
-			},
+        "testsuite" : "Switch multi level",
+        "testcases" : [
             {
                 "name"              : "controlonoff",
+                "description"       : "Value 1 (Hex) means device will dim with value 1",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  1
+                    }
                 }
             },
+
             {
                 "name"              : "controlonoff",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "value"         : "0"
-                }
-            },
-            {
-                "name"              : "controlonoff",
+                "description"       : "Value 30 (Hex) means device will dim with value 48",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "30"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  30
+                    }
                 }
             },
+
             {
                 "name"              : "controlonoff",
+                "description"       : "Value 63 (Hex) means device will dim with value 99",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "value"         : "63"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  63
+                    }
                 }
-            }		
-		]
-	}
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "00"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
+            }
+        ]
+    }
 ]

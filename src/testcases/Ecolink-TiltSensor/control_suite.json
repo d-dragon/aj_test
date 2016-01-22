@@ -17,7 +17,8 @@
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "BATTERY",
-                    "readcommand"   : "GET"
+                    "readcommand"   : "GET",
+                    "force"         : "1"
                 }
             }
         ]
@@ -59,7 +60,7 @@
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "32",
+                    "data1"         : "57",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"         : "1"
@@ -67,62 +68,62 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "nodefollow"    : ["32"]
+                        "nodefollow"    : ["57"]
                     }
                 }
-            }
-        ]
-    },
+            },
 
-    {
-        "testsuite" : "Basic set configuration",
-        "testcases" : [
             {
                 "name"              : "basic_set_configuration",
-                "description"       : "Set value FF for BASIC_SET, value FF means allow to send basic set message to turn off associated device when garage door close/open",
+                "description"       : "Set value FF for ENABLE_ONOFF, value FF means allow to send basic set message to turn off associated device when garage door close/open",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
-                    "data0"         : "BASIC_SET",
+                    "data0"         : "ENABLE_ONOFF",
                     "data1"         : "255",
                     "data2"         : "1",
-                    "type"          : "BASIC_SET",
+                    "type"          : "ENABLE_ONOFF",
                     "force"         : "1"
                 },
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "value" :     "255"
+                        "value" :     255
                     }
                 }
             },
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 30s to test BASIC_SET, if having a motion occurs then the Led zwave will be turned on",
+                "description"       : "Wait for 30s to test ENABLE_ONOFF, if the door close down then the Led zwave will be turned on. Beside that, we also test alarm (motion) which will send to controller",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "time"          : "30"
                 }
-            },
+            }
+        ]
+    },
 
+    {
+        "testsuite" : "Enable on-of (basic set) configuration",
+        "testcases" : [
             {
                 "name"              : "basic_set_configuration",
-                "description"       : "SSet value 00 for BASIC_SET, value FF means not allow to send basic set message to turn off associated device when garage door close/open",
+                "description"       : "Set value 0 for ENABLE_ONOFF, value 0 means not allow to send basic set message to turn off associated device when garage door close/open",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
-                    "data0"         : "BASIC_SET",
-                    "data1"         : "00",
+                    "data0"         : "ENABLE_ONOFF",
+                    "data1"         : "0",
                     "data2"         : "1",
-                    "type"          : "BASIC_SET",
+                    "type"          : "ENABLE_ONOFF",
                     "force"         : "1"
                 },
                 "verdict"       : {
@@ -141,19 +142,52 @@
                     "id"            : "D_ID",
                     "time"          : "30"
                 }
+            },
+
+            {
+                "name"              : "basic_set_configuration",
+                "description"       : "Set value FF for ENABLE_ONOFF, value FF means allow to send basic set message to turn off associated device when garage door close/open",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ENABLE_ONOFF",
+                    "data1"         : "255",
+                    "data2"         : "1",
+                    "type"          : "ENABLE_ONOFF",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     255
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test ENABLE_ONOFF, if having a motion occurs then the Led zwave will be turned on",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
             }
         ]
     },
 
     {
-        "testsuite" : "Switch On-Off device",
+        "testsuite" : "Switch On-Off associated device",
         "testcases" : [
             {
                 "name"              : "controlonoff",
                 "description"       : "Turn off device",
                 "input"             : {
                     "devicetype"    : "zwave",
-                    "id"            : "32",
+                    "id"            : "57",
                     "value"         : "0"
                 },
                 "verdict"       : {
@@ -194,7 +228,7 @@
 
             {
                 "name"              : "remove_association",
-                "description"       : "Remove our controller out of ONOFF_GROUP",
+                "description"       : "Remove led zwave out of ONOFF_GROUP",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -202,7 +236,7 @@
                     "writecommand"  : "REMOVE",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "32",
+                    "data1"         : "57",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"         : "1"
@@ -210,10 +244,12 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "nodefollow"    : ["32"]
+                        "nodefollow"    : ["57"]
                     }
                 }
             }
         ]
     }
+
+
 ]

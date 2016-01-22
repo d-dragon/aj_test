@@ -1,12 +1,12 @@
 [
     {
-        "testsuite" : "Get sensing values",
+        "testsuite" : "Test get sensing values",
         "testcases" :   [
             {
                 "name"              : "listdevices",
                 "description"       : "Get list of available devices in the controller",
                 "input"             : {
-                    "devicetype"    : "zwave"
+                    "devicetype"    : "zwave" 
                 }
             },
 
@@ -34,7 +34,7 @@
     },
 
     {
-        "testsuite" : "Association with another device",
+        "testsuite" : "Test association with another device",
         "testcases" : [
             {
                 "name"              : "basic_set_association",
@@ -61,10 +61,99 @@
         ]
     },
 
+    {
+        "testsuite" : "Test lock configuration",
+        "testcases" : [
+            {
+                "name"              : "lock_configuration",
+                "description"       : "Set LOCK_CONFIGURATION is 1, value 1 means enable lock notification",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "LOCK_CONFIGURATION",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "LOCK_CONFIGURATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1
+                    }
+                }
+            },
+
+             {
+                "name"              : "noti_send_configuration",
+                "description"       : "This test case use to test lock configuration, expectation is failed",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1
+                    }
+                }
+            }
+        ]
+    },
 
     {
-        "testsuite" : "Overload Protection configuration",
+        "testsuite" : "Test overload protection configuration",
         "testcases" : [
+            {
+                "name"              : "lock_configuration",
+                "description"       : "Set LOCK_CONFIGURATION is 0, value 0 means disable lock notification",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "LOCK_CONFIGURATION",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "LOCK_CONFIGURATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Value 30 (Hex) means Smart dimmer will dim with value 48",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "30"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  30
+                    }
+                }
+            },
+
             {
                 "name"              : "overload_protect",
                 "description"       : "Set value 0 for OVERLOAD_PROTECT, value 0 means disable Current overload protection",
@@ -75,7 +164,7 @@
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
                     "data0"         : "OVERLOAD_PROTECT",
-                    "data1"         : "00",
+                    "data1"         : "0",
                     "data2"         : "1",
                     "type"          : "OVERLOAD_PROTECT",
                     "force"         : "1"
@@ -99,120 +188,17 @@
             },
 
             {
-                "name"              : "overload_protect",
-                "description"       : "Set value 1 for OVERLOAD_PROTECT, value 1 means enable Current overload protection",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "OVERLOAD_PROTECT",
-                    "data1"         : "01",
-                    "data2"         : "1",
-                    "type"          : "OVERLOAD_PROTECT",
-                    "force"         : "1"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :     1
-                    }
-                }
-            }
-        ]
-    },
-
-
-     {
-        "testsuite" : "Notification sending configuration",
-        "testcases" : [
-             {
-                "name"              : "noti_send_configuration",
-                "description"       : "Set NOTIFICATION is 0, value 0 means disable sending notification to our controller whwen the state of Siren changed",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "NOTIFICATION",
-                    "data1"         : "00",
-                    "data2"         : "1",
-                    "type"          : "NOTIFICATION",
-                    "force"         : "1"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :     0
-                    }
-                }
-            },
-
-            {
-                "name"              : "noti_send_configuration",
-                "description"       : "Set NOTIFICATION is 1, value 1 means enable sending hail CC notification to our controller whwen the state of Siren changed",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "NOTIFICATION",
-                    "data1"         : "01",
-                    "data2"         : "1",
-                    "type"          : "NOTIFICATION",
-                    "force"         : "1"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :     1
-                    }
-                }
-            },
-
-            {
-                "name"              : "noti_send_configuration",
-                "description"       : "Set NOTIFICATION is 2, value 2 means enable sending basic CC report notification to our controller whwen the state of Siren changed",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "NOTIFICATION",
-                    "data1"         : "02",
-                    "data2"         : "1",
-                    "type"          : "NOTIFICATION",
-                    "force"         : "1"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :     2
-                    }
-                }
-            }
-        ]
-    },
-
-    {
-        "testsuite" : "Switch On-Off and dim device",
-        "testcases" : [
-            {
                 "name"              : "controlonoff",
-                "description"       : "Value 1 (Hex) means Smart dimmer will dim with value 1 (test turn on smart dimmer)",
+                "description"       : "Turn off device",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "value"         : "1"
+                    "value"         : "0"
                 },
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "value" :  1
+                        "value" :  0
                     }
                 }
             },
@@ -234,6 +220,123 @@
             },
 
             {
+                "name"              : "overload_protect",
+                "description"       : "Set value 1 for OVERLOAD_PROTECT, value 1 means enable Current overload protection",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "OVERLOAD_PROTECT",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "OVERLOAD_PROTECT",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 130s to test overload protection, The load will be closed when the Current is more than 15.5A and the time is more than 2 minutes. ",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "130"
+                }
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
+            }
+        ]
+    },
+
+
+    {
+        "testsuite" : "Test notification sending and Switch multi level configuration",
+        "testcases" : [
+             {
+                "name"              : "noti_send_configuration",
+                "description"       : "Set NOTIFICATION is 0, value 0 means disable sending notification to our controller whwen the state of Siren changed",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Value 30 (Hex) means Smart dimmer will dim with value 48",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "30"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  30
+                    }
+                }
+            },
+
+            {
+                "name"              : "noti_send_configuration",
+                "description"       : "Set NOTIFICATION is 1, value 1 means enable sending hail CC notification to our controller whwen the state of Siren changed",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1
+                    }
+                }
+            },
+
+            {
                 "name"              : "controlonoff",
                 "description"       : "Value 63 (Hex) means Smart dimmer will dim with value 99",
                 "input"             : {
@@ -250,12 +353,35 @@
             },
 
             {
+                "name"              : "noti_send_configuration",
+                "description"       : "Set NOTIFICATION is 2, value 2 means enable sending basic CC report notification to our controller whwen the state of Siren changed",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "2",
+                    "data2"         : "1",
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     2
+                    }
+                }
+            },
+
+            {
                 "name"              : "controlonoff",
                 "description"       : "Turn off device",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "value"         : "00"
+                    "value"         : "0"
                 },
                 "verdict"       : {
                     "method"        : "expectation",
@@ -267,12 +393,12 @@
         ]
     },
 
-     {
+    {
         "testsuite" : "Remove association information",
         "testcases" : [
             {
                 "name"              : "remove_association",
-                "description"       : "Remove our controller out of REPORT_GROUP",
+                "description"       : "Remove led zwave out of REPORT_GROUP",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",

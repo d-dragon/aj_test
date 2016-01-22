@@ -1,518 +1,502 @@
-[ 
+[
 	{
-		"testsuit" : "FIBARO flood sensor",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
+		"testsuite" : "Get sensing value",
 		"testcases" :	[
-			{	
-				"name"	: "listdevices",
-				"input" :{
+			{
+				"name"				: "listdevices",
+				"description" 		: "Get list of available devices in the controller",
+				"input" 			: {
 					"devicetype"	: "zwave"
 				},
-				"description"		: "List all devices in which are handled by this controller"
+				"description" 		: "Get list of available devices in the controller"
 			},
+
 			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "DELAY_ALARM",
-					"force"			: "1"
-				},
-				"description"		: "Get current delayed time in sensor"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "DELAY_ALARM",
-					"data1"         : "0",
-					"data2"         : "1"
-				},
-				"description"		: "Set DELAY_ALARM to 0s, it turn on/off immediately when flood occur"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "DELAY_ALARM",
-					"force"			: "1"
-				},
-				"description"		: "Get current delayed time in sensor to confirm our setting"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "GET",
-					"type"			: "ONOFF_GROUP",
-					"force"			: "1"
-				},
-				"description"		: "Get current zwave device ASSOCIATION with FIBARO flood sensor"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "ONOFF_GROUP",
-					"data1"			: "79",
-					"data2"			: "1"
-				},
-				"description"		: "Set ASSOCIATION FIBARO flood sensor with an ONFF zwave device (bulb, switch, lamp plugin...)"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "GET",
-					"type"			: "ONOFF_GROUP",
-					"force"			: "1"
-				}
-				,
-				"description"		: "Get current zwave device ASSOCIATION with FIBARO flood sensor"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "GET",
-					"type"			: "TAMPER_ALARM",
-					"force"			: "1"
-				},
-				"description"		: "Get currently TAMPER_ALARM setting"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "TAMPER_ALARM",
-					"data1"			: "7C",
-					"data2"			: "1"
-				},
-				"description"		: "Set associated device for getting TAMPER_ALARM information"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "GET",
-					"type"			: "TAMPER_ALARM",
-					"force"			: "1"
-				},
-				"description"		: "Verify TAMPER_ALARM setting"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "GET",
-					"type"			: "REPORT_GROUP",
-					"force"			: "1"
-				},
-				"description"		: "Get current setting of REPORT_GROUP status"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "REPORT_GROUP",
-					"data1"			: "7D",
-					"data2"			: "1"
-				},
-				"description"		: "Set associated device for getting REPORT information"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "GET",
-					"type"			: "REPORT_GROUP",
-					"force"			: "1"
-				},
-				"description"		: "Get current setting of REPORT_GROUP status, verify setting"
-			},
-			{
-				"name" : "readspec",
+				"name" : "get_battery",
+				"description" 		: "Get Battery level",
 				"input" : {
 					"devicetype" 	: "zwave",
 					"id" 			: "D_ID",
 					"class"			: "BATTERY",
-					"command"		: "GET",
-					"force"			: "1"
-				},
-				"description"		: "Get current BATTERY level of this FIBARO sensor"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "ALARM_BOARDCAST",
-					"force"			: "1"
-				},
-				"description"		: "Get current setting of ALARM_BOARDCAST configuration"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "ALARM_BOARDCAST",
-					"data1"         : "0",
-					"data2"         : "1"
-				},
-				"description"		: "Disable ALARM_BOARDCAST configuration"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "ALARM_BOARDCAST",
-					"force"			: "1"
-				},
-				"description"		: "Verify value of ALARM_BOARDCAST which you set before"
-			},
-			{
-				"name"				: "waitingfor",
-				"input"				: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"time"			: "30"
-				},
-				"description"		: "Wait 30s and try to trigger flood alarm and observe the associated ONFF zwave device"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "ALARM_BOARDCAST",
-					"data1"         : "1",
-					"data2"         : "1"
-				},
-				"description"		: "Configure ALARM_BOARDCAST: Broadcast active, tamper broadcast inactive"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "ALARM_BOARDCAST",
-					"force"			: "1"
-				},
-				"description"		: "Verify value of ALARM_BOARDCAST which you set before"
-			},
-			{
-				"name"				: "waitingfor",
-				"input"				: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"time"			: "30"
-				},
-				"description"		: "Wait 30s and try to trigger flood alarm and observe all associated ONFF zwave devices"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "ALARM_BOARDCAST",
-					"data1"         : "2",
-					"data2"         : "1"
-				},
-				"description"		: "Configure ALARM_BOARDCAST: Broadcast inactive, tamper broadcast active"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "ALARM_BOARDCAST",
-					"force"			: "1"
-				},
-				"description"		: "Verify value of ALARM_BOARDCAST which you set before"
-			},
-			{
-				"name"				: "waitingfor",
-				"input"				: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"time"			: "30"
-				},
-				"description"		: "Wait 30s and try to trigger flood alarm and observe the associated ONFF zwave device"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "ALARM_BOARDCAST",
-					"data1"         : "3",
-					"data2"         : "1"
-				},
-				"description"		: "Configure ALARM_BOARDCAST: Broadcast active, tamper broadcast active"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "ALARM_BOARDCAST",
-					"force"			: "1"
-				},
-				"description"		: "Verify value of ALARM_BOARDCAST which you set before"
-			},
-			{
-				"name"				: "waitingfor",
-				"input"				: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"time"			: "30"
-				},
-				"description"		: "Wait 30s and try to trigger flood alarm and observe the associated ONFF zwave device, all are active"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "DISABLE",
-					"force"			: "1"
-				},
-				"description"		: "Get current configuration of REPORT when flood is dectected/cancelled"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "DISABLE",
-					"data1"         : "0",
-					"data2"         : "1"
-				},
-				"description"		: "Set this configuration to report only to controller, do not turn on/off zwave devices"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "DISABLE",
-					"force"			: "1"
-				},
-				"description"		: "Get current configuration disable status to verify your setup"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "DISABLE",
-					"data1"         : "FF",
-					"data2"         : "1"
-				},
-				"description"		: "Set this configuration to report by turn on/off  zwave devices and report to controller"
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "DISABLE",
-					"force"			: "1"
-				},
-				"description"		: "Get current configuration disable status to verify your setup"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "DELAY_ALARM",
-					"data1"         : "0E10",
-					"data2"         : "1"
-				},
-				"description"		: "Set duration on/off up to 3600 seconds."
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "DELAY_ALARM",
-					"force"			: "1"
-				},
-				"description"		: "Verify the delayed time is 3600 seconds? or not"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "DELAY_ALARM",
-					"data1"         : "5",
-					"data2"         : "1"
-				},
-				"description"		: "Set delayed time on/off to 5 seconds."
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"type"			: "DELAY_ALARM",
-					"force"			: "1"
-				},
-				"description"		: "Verify the delayed time report is 5 seconds?"
-			},
-			{
-				"name"				: "waitingfor",
-				"input"				: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"time"			: "30"
-				},
-				"description"		: "Wait 30s and try to trigger flood alarm and observe the associated ONFF zwave device, all are active"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "REMOVE",
-					"data0"         : "ONOFF_GROUP",
-					"data1"         : "79",
-					"data2"         : "1"
-				},
-				"description"		: "Remove device has been associated before"
-			},
-			{
-                "name"              : "readspec",
-                "input"             : {
+					"readcommand"	: "GET",
+                    "force"         : "1"
+				}
+			}
+		]
+	},
+
+	{
+		"testsuite" : "Association with another device",
+		"testcases" : [
+            {
+                "name" 				: "basic_set_association",
+                "description"		: "Association with our controller (ceres)",
+                "input" 			: {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "command"       : "GET",
-                    "type"          : "ONOFF_GROUP",
-                    "force"			: "1"
-                },
-                "description"		: "Verify that the associated device was removed or not?"
-            },
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "REMOVE",
-					"data0"         : "REPORT_GROUP",
-					"data1"         : "7C",
-					"data2"         : "1"
-				},
-				"description"		: "Remove device has been associated before"
-			},
-			{
-                "name"              : "readspec",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "ASSOCIATION",
-                    "command"       : "GET",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "REPORT_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1",
                     "type"          : "REPORT_GROUP",
                     "force"			: "1"
                 },
-                "description"		: "Verify that the associated device was removed or not?"
+				"verdict"		: { 
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["01"]
+					}
+				}
             },
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "REMOVE",
-					"data0"         : "TAMPER_GROUP",
-					"data1"         : "7D",
-					"data2"         : "1"
-				},
-				"description"		: "Remove device has been associated before"
+
+            {
+                "name" 				: "basic_set_association",
+                "description"		: "Association with Led zwave device",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "6B",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["6B"]
+					}
+				}
 			},
+
 			{
-                "name"              : "readspec",
+                "name" 				: "basic_set_association",
+                "description"		: "Association with our controller (ceres), add ceres into TAMPER_GROUP",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "TAMPER_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "TAMPER_GROUP",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["01"]
+					}
+				}
+			},
+
+            {
+                "name"              : "broadcast_configuration",
+                "description"       : "Set value 3 to ALARM_BOARDCAST, it means Broadcast active, tamper broadcast active",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ALARM_BOARDCAST",
+                    "data1"         : "3",
+                    "data2"         : "1",
+                    "type"          : "ALARM_BOARDCAST",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     3
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test association",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            }
+		]
+	},
+   
+	{
+        "testsuite" : "Alarm broadcast configuration",
+        "testcases" : [
+             {
+                "name"              : "alarm_type_configuration",
+                "description"       : "Set value 255 to DISABLE, it means basic set command message will be sent to controller",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "DISABLE",
+                    "data1"         : "255",
+                    "data2"         : "1",
+                    "type"          : "DISABLE",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     255
+                    }
+                }
+            },
+
+            {
+                "name"              : "broadcast_configuration",
+                "description"       : "Set value 0 to ALARM_BOARDCAST, it means Broadcast inactive, tamper broadcast inactive",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ALARM_BOARDCAST",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "ALARM_BOARDCAST",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for test ALARM_BOARDCAST value which set up before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            },
+
+            {
+                "name"              : "broadcast_configuration",
+                "description"       : "Set value 1 to ALARM_BOARDCAST, it means Broadcast active, tamper broadcast inactive",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ALARM_BOARDCAST",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "ALARM_BOARDCAST",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s test ALARM_BOARDCAST value which set up before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            },
+
+            {
+                "name"              : "broadcast_configuration",
+                "description"       : "Set value 2 to ALARM_BOARDCAST, it means Broadcast inactive, tamper broadcast active",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ALARM_BOARDCAST",
+                    "data1"         : "2",
+                    "data2"         : "1",
+                    "type"          : "ALARM_BOARDCAST",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     2
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60stest ALARM_BOARDCAST value which set up before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            },
+
+             {
+                "name"              : "broadcast_configuration",
+                "description"       : "Set value 3 to ALARM_BOARDCAST, it means Broadcast active, tamper broadcast active",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ALARM_BOARDCAST",
+                    "data1"         : "3",
+                    "data2"         : "1",
+                    "type"          : "ALARM_BOARDCAST",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     3
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test ALARM_BOARDCAST value which set up before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            }
+        ]
+    },
+
+    {
+        "testsuite" : "Delay flood alarm configuration",
+        "testcases" : [
+             {
+                "name"              : "delay_configuration",
+                "description"       : "Set value 255 to DISABLE, it means basic set report message will be sent to controller",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "DELAY_ALARM",
+                    "data1"         : "3600",
+                    "data2"         : "1",
+                    "type"          : "DELAY_ALARM",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     3600
+                    }
+                }
+            },
+
+            {
+                "name"              : "delay_configuration",
+                "description"       : "Set value 0 to DISABLE, it means alarm water report message will be sent to controller",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "DELAY_ALARM",
+                    "data1"         : "5",
+                    "data2"         : "1",
+                    "type"          : "DELAY_ALARM",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     5
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test DELAY_ALARM value which set up before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            }
+        ]
+    },
+
+    {
+        "testsuite" : "Alarm type configuration",
+        "testcases" : [
+             {
+                "name"              : "alarm_type_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "DISABLE",
+                    "data1"         : "3600",
+                    "data2"         : "0",
+                    "type"          : "DISABLE",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test DISABLE value which set up before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            }
+
+            {
+                "name"              : "alarm_type_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "DISABLE",
+                    "data1"         : "255",
+                    "data2"         : "1",
+                    "type"          : "DISABLE",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     255
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test DISABLE value which set up before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            }
+        ]
+    },
+
+
+
+
+	{
+		"testsuite" : "Remove association information",
+		"testcases" : [
+			{
+                "name" 				: "remove_association",
+                "description"		: "Remove controller (ceres) out of REPORT_GROUP",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "REPORT_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "REPORT_GROUP",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["01"]
+					}
+				}
+            },
+
+            {
+                "name" 				: "remove_association",
+                "description"		: "Remove Led zwave device out of ONOFF_GROUP",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "6B",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["6B"]
+					}
+				}
+            },
+
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove controller (ceres) out of TAMPER_GROUP",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "command"       : "GET",
+                    "writecommand"  : "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "TAMPER_GROUP",
+                    "data1"         : "01",
+                    "data2"         : "1",
                     "type"          : "TAMPER_GROUP",
-                    "force"			: "1"
+                    "force"         : "1"
                 },
-                "description"		: "Verify that the associated device was removed or not?"
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["01"]
+                    }
+                }
             }
 		]
 	}

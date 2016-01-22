@@ -1,6 +1,6 @@
 [
     {
-        "testsuite" : "Get sensing values",
+        "testsuite" : "Test get sensing values",
         "testcases" :   [
             {
                 "name"              : "listdevices",
@@ -13,7 +13,7 @@
     },
 
     {
-        "testsuite" : "Association with another device",
+        "testsuite" : "Test association with another device",
         "testcases" : [
             {
                 "name"              : "basic_set_association",
@@ -24,10 +24,10 @@
                     "class"         : "ASSOCIATION",
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
-                    "data0"         : "ONOFF_GROUP",
+                    "data0"         : "REPORT_GROUP",
                     "data1"         : "01",
                     "data2"         : "1",
-                    "type"          : "ONOFF_GROUP",
+                    "type"          : "REPORT_GROUP",
                     "force"         : "1"
                 },
                 "verdict"       : {
@@ -41,11 +41,11 @@
     },
 
     {
-        "testsuite" : "Notification sending configuration",
+        "testsuite" : "Test notification sending and Sound Volume  configuration",
         "testcases" : [
              {
                 "name"              : "noti_send_configuration",
-                "description"       : "Set NOTIFICATION is 0, value 0 means disable sending notification to our controller whwen the state of Siren changed",
+                "description"       : "Set NOTIFICATION is 0, value 0 means disable notification sending to our controller when the state of Siren changed",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -67,57 +67,6 @@
             },
 
             {
-                "name"              : "noti_send_configuration",
-                "description"       : "Set NOTIFICATION is 1, value 1 means enable sending hail CC notification to our controller whwen the state of Siren changed",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "NOTIFICATION",
-                    "data1"         : "01",
-                    "data2"         : "1",
-                    "type"          : "NOTIFICATION",
-                    "force"         : "1"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :     1
-                    }
-                }
-            },
-
-            {
-                "name"              : "noti_send_configuration",
-                "description"       : "Set NOTIFICATION is 2, value 2 means enable sending basic CC report notification to our controller whwen the state of Siren changed",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "NOTIFICATION",
-                    "data1"         : "02",
-                    "data2"         : "1",
-                    "type"          : "NOTIFICATION",
-                    "force"         : "1"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :     2
-                    }
-                }
-            }
-        ]
-    },
-
-    {
-        "testsuite" : "Sound Volume configuration",
-        "testcases" : [
-             {
                 "name"              : "sound_volume_configuration",
                 "description"       : "Set SOUND_VOLUME is 257, value 257 (HEX : 101) means Siren sound 1 and volume level 1 are selected",
                 "input"             : {
@@ -136,6 +85,29 @@
                     "method"        : "expectation",
                     "value"     : {
                         "value" :     257
+                    }
+                }
+            },
+
+            {
+                "name"              : "noti_send_configuration",
+                "description"       : "Set NOTIFICATION is 1, value 1 means enable hail CC notification sending to our controller when the state of Siren changed",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1
                     }
                 }
             },
@@ -164,6 +136,45 @@
             },
 
             {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
+            },
+
+            {
+                "name"              : "noti_send_configuration",
+                "description"       : "Set NOTIFICATION is 2, value 2 means enable basic CC report notification sending to our controller whwen the state of Siren changed",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "2",
+                    "data2"         : "1",
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     2
+                    }
+                }
+            },
+
+            {
                 "name"              : "sound_volume_configuration",
                 "description"       : "Set SOUND_VOLUME is 259, value 259 (HEX : 103) means Siren sound 1 and volume level 3 are selected",
                 "input"             : {
@@ -185,49 +196,19 @@
                     }
                 }
             },
-
+            
             {
-                "name"              : "sound_volume_configuration",
-                "description"       : "(This test case expect to false) Set SOUND_VOLUME is 256, value 256 (HEX : 100) means Siren sound 1 is selected and do not change the current volume level",
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "SOUND_VOLUME",
-                    "data1"         : "256",
-                    "data2"         : "1",
-                    "type"          : "SOUND_VOLUME",
-                    "force"         : "1"
+                    "value"         : "0"
                 },
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "value" :     259
-                    }
-                }
-            },
-
-            {
-                "name"              : "sound_volume_configuration",
-                "description"       : "(This test case expect to false) Set SOUND_VOLUME is 0, value 0 (HEX : 0) means do not change current sound Siren and volume level",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "SOUND_VOLUME",
-                    "data1"         : "0",
-                    "data2"         : "1",
-                    "type"          : "SOUND_VOLUME",
-                    "force"         : "1"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :     259
+                        "value" :  0
                     }
                 }
             },
@@ -256,6 +237,22 @@
             },
 
             {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
+            },
+
+            {
                 "name"              : "sound_volume_configuration",
                 "description"       : "Set SOUND_VOLUME is 514, value 514 (HEX : 202) means Siren sound 2 and volume level 2 are selected",
                 "input"             : {
@@ -274,6 +271,22 @@
                     "method"        : "expectation",
                     "value"     : {
                         "value" :     514
+                    }
+                }
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
                     }
                 }
             },
@@ -302,6 +315,22 @@
             },
 
             {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
+            },
+
+            {
                 "name"              : "sound_volume_configuration",
                 "description"       : "Set SOUND_VOLUME is 769, value 769 (HEX : 301) means Siren sound 3 and volume level 1 are selected",
                 "input"             : {
@@ -320,6 +349,22 @@
                     "method"        : "expectation",
                     "value"     : {
                         "value" :     769
+                    }
+                }
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
                     }
                 }
             },
@@ -348,6 +393,22 @@
             },
 
             {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
+            },
+
+            {
                 "name"              : "sound_volume_configuration",
                 "description"       : "Set SOUND_VOLUME is 771, value 771 (HEX : 303) means Siren sound 3 and volume level 3 are selected",
                 "input"             : {
@@ -366,6 +427,22 @@
                     "method"        : "expectation",
                     "value"     : {
                         "value" :     771
+                    }
+                }
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
                     }
                 }
             },
@@ -394,6 +471,22 @@
             },
 
             {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
+            },
+
+            {
                 "name"              : "sound_volume_configuration",
                 "description"       : "Set SOUND_VOLUME is 1026, value 1026 (HEX : 402) means Siren sound 4 and volume level 2 are selected",
                 "input"             : {
@@ -412,6 +505,22 @@
                     "method"        : "expectation",
                     "value"     : {
                         "value" :     1026
+                    }
+                }
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
                     }
                 }
             },
@@ -440,6 +549,22 @@
             },
 
             {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
+            },
+
+            {
                 "name"              : "sound_volume_configuration",
                 "description"       : "Set SOUND_VOLUME is 1282, value 1282 (HEX : 502) means Siren sound 5 and volume level 2 are selected",
                 "input"             : {
@@ -458,6 +583,22 @@
                     "method"        : "expectation",
                     "value"     : {
                         "value" :     1282
+                    }
+                }
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
                     }
                 }
             },
@@ -483,12 +624,28 @@
                         "value" :     1283
                     }
                 }
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
             }
         ]
     },
 
     {
-        "testsuite" : "Switch On-Off device",
+        "testsuite" : "Test switch On-Off device",
         "testcases" : [
             {
                 "name"              : "controlonoff",
@@ -525,7 +682,7 @@
     },
 
     {
-        "testsuite" : "Remove association information",
+        "testsuite" : "Test remove association information",
         "testcases" : [
             {
                 "name"              : "remove_association",
@@ -536,10 +693,10 @@
                     "class"         : "ASSOCIATION",
                     "writecommand"  : "REMOVE",
                     "readcommand"   : "GET",
-                    "data0"         : "ONOFF_GROUP",
+                    "data0"         : "REPORT_GROUP",
                     "data1"         : "01",
                     "data2"         : "1",
-                    "type"          : "ONOFF_GROUP",
+                    "type"          : "REPORT_GROUP",
                     "force"         : "1"
                 },
                 "verdict"       : {

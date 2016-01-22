@@ -1,44 +1,51 @@
-[ 
-	{
-		"testsuit" : "GE Lighting Control Outdoor",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
-		"testcases" :	[
-			{	
-				"name"				: "listdevices",
-				"input" 			: {
-					"devicetype"	: "zwave"
-				}
-			},
-			{
-                "name" 				: "controlonoff",
-                "input" 			: {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "value"         : "1",
-                    "epnum"         : "",
-                    "proid"         : ""
-                }
-            },
+[
+    {
+        "testsuite" : "Get sensing values",
+        "testcases" :   [
             {
-                "name"              : "controlonoff",
+                "name"              : "listdevices",
+                "description"       : "Get list of available devices in the controller",
                 "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "value"         : "0",
-                    "epnum"         : "",
-                    "proid"         : ""
-                }
-            },
-            {
-                "name"              : "controlonoff",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "value"         : "1",
-                    "epnum"         : "",
-                    "proid"         : ""
+                    "devicetype"    : "zwave"
                 }
             }
-		]
-	}
+        ]
+    },
+
+    {
+        "testsuite" : "Control on-off device",
+        "testcases" : [
+            {
+                "name"              : "controlonoff",
+                "description"       : "Value 1 (Hex) means turn on device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "01"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  1
+                    }
+                }
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "00"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
+            }
+        ]
+    }
 ]

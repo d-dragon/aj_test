@@ -2,29 +2,11 @@
 	{
 		"testsuite" 				: "FirstAlertSmokeCarbonMonoxide",
 		"testcases" 				:	[
-			{ 
-				"name" 				: "closenetwork",
-				"description"		: "Close network", 
-				"input" 			: { 
-					"devicetype" 	: "zwave",
-					"action"		: "close"
-				}
-			},
-					
 			{
 				"name" 				: "listdevices",
 				"description" 		: "Get list of available devices in the controller",
 				"input" 			: {
 					"devicetype"	: "zwave"
-				}
-			},
-
-			{ 
-				"name" 				: "removedevice", 
-				"description"		: "Remove device in the first button pressing",
-				"input" 			: { 
-					"devicetype" 	: "zwave",
-					"id"			: ""
 				}
 			},
 
@@ -48,4 +30,5 @@
 			}		
 		]
 	}
+
 ]

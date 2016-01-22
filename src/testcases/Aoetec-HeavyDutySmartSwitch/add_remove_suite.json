@@ -1,6 +1,6 @@
 [ 
 	{
-		"testsuite" 				: "EcolinkSchlageHomeDoorWindownSensor",
+		"testsuite" 				: "Aeotec-HeavyDutySmartSwitch",
 		"testcases" 				:	[
 			{
 				"name" 				: "listdevices",

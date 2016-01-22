@@ -1,31 +1,60 @@
 [
     {
-        "testsuite" : "Get sensing values",
+        "testsuite" : "Test get sensing values",
         "testcases" :   [
             {
                 "name"              : "listdevices",
                 "description"       : "Get list of available devices in the controller",
                 "input"             : {
-                    "devicetype"    : "zwave"
+                    "devicetype"    : "zwave" 
                 }
             },
 
             {
-                "name" : "get_battery",
-                "description"       : "Get Battery level , Please make device wakeup",
-                "input" : {
+                "name"              : "elect_getting",
+                "description"       : "Get status of ELEC (electrical load value for watt and KWH) for verifying value which is available",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "class"         : "BATTERY",
+                    "class"         : "METER",
                     "readcommand"   : "GET",
+                    "type"          : "ELEC",
                     "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "reference",
+                    "value"     : {
+                           "unit": "ref",
+                           "time": "ref",
+                           "electricmeter": "ref"
+                    }
+                }
+            },
+
+            {
+                "name"              : "get_temperature",
+                "description"       : "Get status of TEMP ( temperature in fahrenheit and celsius ) for verifying value which is available",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "SENSOR_MULTILEVEL",
+                    "readcommand"   : "GET",
+                    "type"          : "TEMP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "reference",
+                    "value"     : {
+                        "fahrenheit"    : "ref",
+                        "celsius"       : "ref"
+                    }
                 }
             }
         ]
     },
 
     {
-        "testsuite" : "Association with another device",
+        "testsuite" : "Test association with another device",
         "testcases" : [
             {
                 "name"              : "basic_set_association",
@@ -52,17 +81,40 @@
 
             {
                 "name"              : "basic_set_association",
-                "description"       : "Association with Led zwave device",
+                "description"       : "Association with smart dimmer zwave device",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
-                    "data0"         : "REPORT_GROUP",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "6F",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["6F"]
+                    }
+                }
+            },
+
+            {
+                "name"              : "basic_set_association",
+                "description"       : "Association with smart Led zwave device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
                     "data1"         : "6B",
                     "data2"         : "1",
-                    "type"          : "REPORT_GROUP",
+                    "type"          : "ONOFF_GROUP",
                     "force"         : "1"
                 },
                 "verdict"       : {
@@ -74,77 +126,54 @@
             },
 
             {
-                "name"              : "determinative_configuration",
-                "description"       : "Set value 0x111 for DETERMINES, value 0x111 means this case we enable basic set, sensor binary and battery report sending",
+                "name"              : "lock_configuration",
+                "description"       : "Set LOCK_CONFIGURATION is 0, value 0 means disable lock notification",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
-                    "data0"         : "DETERMINES",
-                    "data1"         : "0x111",
+                    "data0"         : "LOCK_CONFIGURATION",
+                    "data1"         : "0",
                     "data2"         : "1",
-                    "type"          : "DETERMINES",
+                    "type"          : "LOCK_CONFIGURATION",
                     "force"         : "1"
                 },
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "value" :     273             
+                        "value" :     0
                     }
                 }
             },
 
             {
-                "name"              : "binary_configuration",
-                "description"       : "Set value 1 for BINARY_REPORT, value 1 means enable binary report sending to our controller",
+                "name"              : "noti_send_configuration",
+                "description"       : "Set NOTIFICATION is 2, value 2 means enable sending basic CC report notification to our controller whwen the state of Siren changed",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
-                    "data0"         : "BINARY_REPORT",
-                    "data1"         : "1",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "2",
                     "data2"         : "1",
-                    "type"          : "BINARY_REPORT",
+                    "type"          : "NOTIFICATION",
                     "force"         : "1"
                 },
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "value" :     1
-                    }
-                }
-            },
-
-            {
-                "name"              : "set_report_configuration",
-                "description"       : "Set value 1 for SET_REPORT, value 1 means enable binary report sending to associated device",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "SET_REPORT",
-                    "data1"         : "1",
-                    "data2"         : "1",
-                    "type"          : "SET_REPORT",
-                    "force"         : "1"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :     1
+                        "value" :     2
                     }
                 }
             },
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 60s to test association",
+                "description"       : "Wait 60s to test association",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -155,44 +184,21 @@
     },
 
     {
-        "testsuite" : "Binary report configuration",
+        "testsuite" : "Test lock configuration",
         "testcases" : [
             {
-                "name"              : "determinative_configuration",
-                "description"       : "Set value 0x010 for DETERMINES, value 0x010 means this case we enable binary report sending",
+                "name"              : "lock_configuration",
+                "description"       : "Set LOCK_CONFIGURATION is 1, value 1 means enable lock notification",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
-                    "data0"         : "DETERMINES",
-                    "data1"         : "0x010",
-                    "data2"         : "1",
-                    "type"          : "DETERMINES",
-                    "force"         : "1"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :     16
-                    }
-                }
-            },
-
-            {
-                "name"              : "binary_configuration",
-                "description"       : "Set value 1 for BINARY_REPORT, value 1 means enable binary report sending to our controller",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "BINARY_REPORT",
+                    "data0"         : "LOCK_CONFIGURATION",
                     "data1"         : "1",
                     "data2"         : "1",
-                    "type"          : "BINARY_REPORT",
+                    "type"          : "LOCK_CONFIGURATION",
                     "force"         : "1"
                 },
                 "verdict"       : {
@@ -203,29 +209,86 @@
                 }
             },
 
-            {
-                "name"              : "physical_test",
-                "description"       : "Wait for 30s to test BINARY_REPORT value which have set before",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "time"          : "30"
-                }
-            },
-
-            {
-                "name"              : "binary_configuration",
-                "description"       : "Set value 0 for BINARY_REPORT, value 0 means disable binary report sending to our controller",
+             {
+                "name"              : "noti_send_configuration",
+                "description"       : "This test case use to test lock configuration, expectation is failed",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
-                    "data0"         : "BINARY_REPORT",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1
+                    }
+                }
+            }
+        ]
+    },
+
+    {
+        "testsuite" : "Test overload protection configuration",
+        "testcases" : [
+            {
+                "name"              : "lock_configuration",
+                "description"       : "Set LOCK_CONFIGURATION is 0, value 0 means disable lock notification",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "LOCK_CONFIGURATION",
                     "data1"         : "0",
                     "data2"         : "1",
-                    "type"          : "BINARY_REPORT",
+                    "type"          : "LOCK_CONFIGURATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Value 30 (Hex) means Smart dimmer will dim with value 48",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "30"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  30
+                    }
+                }
+            },
+
+            {
+                "name"              : "overload_protect",
+                "description"       : "Set value 0 for OVERLOAD_PROTECT, value 0 means disable Current overload protection",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "OVERLOAD_PROTECT",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "OVERLOAD_PROTECT",
                     "force"         : "1"
                 },
                 "verdict"       : {
@@ -238,55 +301,59 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 30s to test BINARY_REPORT value which have set before",
+                "description"       : "Wait for 60s to test overload protection, The load wont be closed when the Current is more than 15.5A and the time is more than 2 minutes. ",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "time"          : "30"
+                    "time"          : "60"
                 }
-            }
-        ]
-    },
+            },
 
-    {
-        "testsuite" : "Set report configuration",
-        "testcases" : [
             {
-                "name"              : "determinative_configuration",
-                "description"       : "Set value 0x100 for DETERMINES, value 0x100 means this case we enable basic set sending",
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "DETERMINES",
-                    "data1"         : "0x100",
-                    "data2"         : "1",
-                    "type"          : "DETERMINES",
-                    "force"         : "1"
+                    "value"         : "0"
                 },
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "value" :     256
+                        "value" :  0
                     }
                 }
             },
 
             {
-                "name"              : "set_report_configuration",
-                "description"       : "Set value 1 for SET_REPORT, value 1 means enable set report sending to associated device",
+                "name"              : "controlonoff",
+                "description"       : "Value 30 (Hex) means Smart dimmer will dim with value 48",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "30"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  30
+                    }
+                }
+            },
+
+            {
+                "name"              : "overload_protect",
+                "description"       : "Set value 1 for OVERLOAD_PROTECT, value 1 means enable Current overload protection",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
-                    "data0"         : "SET_REPORT",
+                    "data0"         : "OVERLOAD_PROTECT",
                     "data1"         : "1",
                     "data2"         : "1",
-                    "type"          : "SET_REPORT",
+                    "type"          : "OVERLOAD_PROTECT",
                     "force"         : "1"
                 },
                 "verdict"       : {
@@ -299,27 +366,49 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 30s to test SET_REPORT value which have set before",
+                "description"       : "Wait for 60s to test overload protection, The load will be closed when the Current is more than 39.5A and the time is more than 5 seconds. ",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "time"          : "30"
+                    "time"          : "60"
                 }
             },
 
             {
-                "name"              : "set_report_configuration",
-                "description"       : "Set value 0 for SET_REPORT, value 0 means disable binary report sending to associated device",
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
+            }
+        ]
+    },
+
+
+    {
+        "testsuite" : "Test notification sending and Switch multi level configuration",
+        "testcases" : [
+             {
+                "name"              : "noti_send_configuration",
+                "description"       : "Set NOTIFICATION is 0, value 0 means disable sending notification to our controller whwen the the load changed",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
-                    "data0"         : "SET_REPORT",
+                    "data0"         : "NOTIFICATION",
                     "data1"         : "0",
                     "data2"         : "1",
-                    "type"          : "SET_REPORT",
+                    "type"          : "NOTIFICATION",
                     "force"         : "1"
                 },
                 "verdict"       : {
@@ -331,33 +420,34 @@
             },
 
             {
-                "name"              : "physical_test",
-                "description"       : "Wait for 30s to test SET_REPORT value which have set before",
+                "name"              : "controlonoff",
+                "description"       : "Value 30 (Hex) means Smart dimmer will dim with value 48 and obverse notification send to controller",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "time"          : "30"
+                    "value"         : "30"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  30
+                    }
                 }
-            }
-        ]
-    },
+            },
 
-    {
-        "testsuite" : "Determinative configuration",
-        "testcases" : [
             {
-                "name"              : "determinative_configuration",
-                "description"       : "Set value 0x001 for DETERMINES, value 0x001 means this case we enable battery report sending",
+                "name"              : "noti_send_configuration",
+                "description"       : "Set NOTIFICATION is 1, value 1 means enable sending hail CC notification to our controller whwen the load changed",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
-                    "data0"         : "DETERMINES",
-                    "data1"         : "0x001",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "1",
                     "data2"         : "1",
-                    "type"          : "DETERMINES",
+                    "type"          : "NOTIFICATION",
                     "force"         : "1"
                 },
                 "verdict"       : {
@@ -369,221 +459,68 @@
             },
 
             {
-                "name"              : "physical_test",
-                "description"       : "Wait for 30s to test DETERMINES value which have set before",
+                "name"              : "controlonoff",
+                "description"       : "Value 63 (Hex) means Smart dimmer will dim with value 99 and obverse notification send to controller",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "time"          : "30"
-                }
-            },
-
-            {
-                "name"              : "determinative_configuration",
-                "description"       : "Set value 0x000 for DETERMINES, value 0x000 means send nothing",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "DETERMINES",
-                    "data1"         : "0x000",
-                    "data2"         : "1",
-                    "type"          : "DETERMINES",
-                    "force"         : "1"
+                    "value"         : "63"
                 },
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "value" :     0                  
-                          }
-                }
-            },
-
-            {
-                "name"              : "physical_test",
-                "description"       : "Wait for 30s to test DETERMINES value which have set before",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "time"          : "30"
-                }
-            },
-
-            {
-                "name"              : "determinative_configuration",
-                "description"       : "Set value 0x010 for DETERMINES, value 0x010 means this case we enable binary report sending",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "DETERMINES",
-                    "data1"         : "0x010",
-                    "data2"         : "1",
-                    "type"          : "DETERMINES",
-                    "force"         : "1"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :     16
+                        "value" :  63
                     }
                 }
             },
 
             {
-                "name"              : "physical_test",
-                "description"       : "Wait for 30s to test DETERMINES value which have set before",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "time"          : "30"
-                }
-            },
-
-            {
-                "name"              : "determinative_configuration",
-                "description"       : "Set value 0x011 for DETERMINES, value 0x011 means this case we enable sensor binary and battery report sending",
+                "name"              : "noti_send_configuration",
+                "description"       : "Set NOTIFICATION is 2, value 2 means enable sending basic CC report notification to our controller whwen the load changed",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
-                    "data0"         : "DETERMINES",
-                    "data1"         : "0x011",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "2",
                     "data2"         : "1",
-                    "type"          : "DETERMINES",
+                    "type"          : "NOTIFICATION",
                     "force"         : "1"
                 },
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "value" :     17                
-                   }
-                }
-            },
-
-            {
-                "name"              : "physical_test",
-                "description"       : "Wait for 30s to test DETERMINES value which have set before",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "time"          : "30"
-                }
-            },
-
-            {
-                "name"              : "determinative_configuration",
-                "description"       : "Set value 0x100 for DETERMINES, value 0x100 means this case we enable basic set sending",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "DETERMINES",
-                    "data1"         : "0x100",
-                    "data2"         : "1",
-                    "type"          : "DETERMINES",
-                    "force"         : "1"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :     256
+                        "value" :     2
                     }
                 }
             },
 
             {
-                "name"              : "physical_test",
-                "description"       : "Wait for 30s to test DETERMINES value which have set before",
+                "name"              : "controlonoff",
+                "description"       : "Turn off device and obverse notification send to controller",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "time"          : "30"
-                }
-            },
-
-            {
-                "name"              : "determinative_configuration",
-                "description"       : "Set value 0x110 for DETERMINES, value 0x110 means this case we enable basic set, sensor binary sending",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "DETERMINES",
-                    "data1"         : "0x110",
-                    "data2"         : "1",
-                    "type"          : "DETERMINES",
-                    "force"         : "1"
+                    "value"         : "0"
                 },
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "value" :     272                
+                        "value" :  0
                     }
-                }
-            },
-
-            {
-                "name"              : "physical_test",
-                "description"       : "Wait for 30s to test DETERMINES value which have set before",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "time"          : "30"
-                }
-            },
-
-            {
-                "name"              : "determinative_configuration",
-                "description"       : "Set value 0x111 for DETERMINES, value 0x111 means this case we enable basic set, sensor binary and battery report sending",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "writecommand"  : "SET",
-                    "readcommand"   : "GET",
-                    "data0"         : "DETERMINES",
-                    "data1"         : "0x111",
-                    "data2"         : "1",
-                    "type"          : "DETERMINES",
-                    "force"         : "1"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :     273               
-                    }
-                }
-            },
-
-            {
-                "name"              : "physical_test",
-                "description"       : "Wait for 30s to test DETERMINES value which have set before",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "time"          : "30"
                 }
             }
-         ]
-    },  
+        ]
+    },
 
     {
         "testsuite" : "Remove association information",
         "testcases" : [
             {
                 "name"              : "remove_association",
-                "description"       : "Remove our controller out of REPORT_GROUP",
+                "description"       : "Remove controller (ceres) of REPORT_GROUP",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -613,16 +550,39 @@
                     "class"         : "ASSOCIATION",
                     "writecommand"  : "REMOVE",
                     "readcommand"   : "GET",
-                    "data0"         : "REPORT_GROUP",
+                    "data0"         : "ONOFF_GROUP",
                     "data1"         : "6B",
                     "data2"         : "1",
-                    "type"          : "REPORT_GROUP",
+                    "type"          : "ONOFF_GROUP",
                     "force"         : "1"
                 },
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
                         "nodefollow"    : ["6B"]
+                    }
+                }
+            },
+
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove dimmer device zwave out of ONOFF_GROUP",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "6F",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["6F"]
                     }
                 }
             }

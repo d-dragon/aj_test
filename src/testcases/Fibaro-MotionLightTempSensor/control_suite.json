@@ -18,7 +18,8 @@
 					"devicetype" 	: "zwave",
 					"id" 			: "D_ID",
 					"class"			: "BATTERY",
-					"readcommand"		: "GET"
+					"readcommand"	: "GET",
+                    "force"         : "1"
 				}
 			},
 
@@ -99,7 +100,7 @@
                     "writecommand"	: "SET",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "32",
+                    "data1"         : "6B",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"			: "1"
@@ -107,18 +108,31 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"nodefollow"	: ["32"]
+						"nodefollow"	: ["6B"]
 					}
 				}
 			},
 
-			{
-                "name"              : "physical_test",
-                "description"       : "Wait for 30s to test motion sensor, if having a motion accurs then zwave LED will turn on",
+            {
+                "name"              : "pir_configuration",
+                "description"       : "Set value 10 to PIR_SENSOR, it means after 10s sensor will able to detect motion",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "time"          : "30"
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "PIR_SENSOR",
+                    "data1"         : "10",
+                    "data2"         : "1",
+                    "type"          : "PIR_SENSOR",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     10
+                    }
                 }
             },
 
@@ -143,7 +157,17 @@
 						"nodefollow"	: ["01"]
 					}
 				}
-			}
+			},
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test motion sensor, if having a motion accurs then zwave LED will turn on",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            }
 		]
 	},
    
@@ -198,11 +222,11 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 30s to test pir time which set up before",
+                "description"       : "Wait for 60s to test PIR time which set up before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "time"          : "30"
+                    "time"          : "60"
                 }
             }
         ]
@@ -244,7 +268,7 @@
                     "writecommand"	: "REMOVE",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "32",
+                    "data1"         : "6B",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"			: "1"
@@ -252,7 +276,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"nodefollow"	: ["32"]
+						"nodefollow"	: ["6B"]
 					}
 				}
             },

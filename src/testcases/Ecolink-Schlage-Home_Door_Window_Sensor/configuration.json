@@ -1,9 +1,9 @@
 {
     "devicename": "EcolinkSchlageHomeDoorWindownSensor",
     "serviceid": "93c06771-c725-48c2-b1ff-5c313ee312cc",
-    "deviceindex": "8",
+    "deviceindex": "7",
     "altdeviceid": "",
     "devicetype": "zwave",
-    "associationdevidx": "4",
+    "associationdevidx": "1",
     "altassdevid": ""
 }

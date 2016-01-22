@@ -17,7 +17,8 @@
 					"devicetype" 	: "zwave",
 					"id" 			: "D_ID",
 					"class"			: "BATTERY",
-					"readcommand"	: "GET"
+					"readcommand"	: "GET",
+                    "force"         : "1"
 				}
 			}
 		]
@@ -47,16 +48,48 @@
 						"nodefollow"	: ["01"]
 					}
 				}
+            },
+
+            {
+                "name"              : "beeper_configuration",
+                "description"       : "Set value 0 to BEEPER , value 0 means allow First Alert Smoke and Carbon Monoxide to send one alarm message to controller when it detected smoke/co",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "BEEPER",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "BEEPER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test alarm sending to controller everytime smoke/CO detected",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
             }
 		]
 	},
 
 	{
-		"testsuite" : "Alarm message configuration",
+		"testsuite" : "Beeper configuration",
 		"testcases" : [
-
             {
-                "name" 				: "alarm_configuration",
+                "name" 				: "beeper_configuration",
                 "description"		: "Set value 1 to BEEPER , value 1 means allow First Alert Smoke and Carbon Monoxide to send double alarm message to controller when it detected smoke/co",
                 "input" 			: {
                     "devicetype"    : "zwave",
@@ -65,7 +98,7 @@
                     "writecommand"	: "SET",
                     "readcommand"   : "GET",
                     "data0"         : "BEEPER",
-                    "data1"         : "01",
+                    "data1"         : "1",
                     "data2"         : "1",
                     "type"          : "BEEPER",
                     "force"			: "1"
@@ -80,7 +113,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 30s to test alarm sending value which have set before",
+                "description"       : "Wait for 30s to test beeper value",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -89,8 +122,8 @@
             },
 
             {
-                "name" 				: "alarm_configuration",
-                "description"		: "Set value 1 to BEEPER , value 1 means allow First Alert Smoke and Carbon Monoxide to send double alarm message to controller when it detected smoke/co",
+                "name" 				: "beeper_configuration",
+                "description"		: "Set value 0 to BEEPER , value 0 means allow First Alert Smoke and Carbon Monoxide to send one alarm message to controller when it detected smoke/co",
                 "input" 			: {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -98,7 +131,7 @@
                     "writecommand"	: "SET",
                     "readcommand"   : "GET",
                     "data0"         : "BEEPER",
-                    "data1"         : "00",
+                    "data1"         : "0",
                     "data2"         : "1",
                     "type"          : "BEEPER",
                     "force"			: "1"
@@ -113,7 +146,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 30s to test alarm sending value which have set before",
+                "description"       : "Wait for 30s to test beeper value",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",

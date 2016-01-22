@@ -50,7 +50,7 @@
 		]
 	},
 	
-	"alarm_configuration":{
+	"beeper_configuration":{
 		"testitems": [
 			{"name" : "write_spec"},
 			{"name" : "read_spec"}

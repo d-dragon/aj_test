@@ -1,9 +1,9 @@
 {
     "devicename": "FibaroMotionLightTempSensor",
     "serviceid": "93c06771-c725-48c2-b1ff-5c313ee312cc",
-    "deviceindex": "4",
+    "deviceindex": "2",
     "altdeviceid": "",
     "devicetype": "zwave",
-    "associationdevidx": "1",
+    "associationdevidx": "0",
     "altassdevid": ""
 }

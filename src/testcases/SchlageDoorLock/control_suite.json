@@ -1,346 +1,669 @@
-[ 
-	{
-		"testsuit" : "SCHLAGE Door Lock",
-		"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
-		"testcases" :	[
-			{	
-				"name"	: "listdevices",
-				"input" :{
-					"devicetype"	: "zwave"
-				}
-			},
-			{
-				"name" : "readsecurespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "BATTERY",
-					"command"		: "GET"
-				}
-			},
-			{
-				"name" : "writesecurespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "SET",
-					"data0"			: "BEEPER",
-					"data1"			: "FF",
-					"data2"			: ""
-				}
-			},
-			{
-				"name" : "readsecurespec",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "CONFIGURATION",
-					"command"		: "GET",
-					"data0"			: "BEEPER"
-				}
-			},
+[
+    {
+        "testsuite" : "Get sensing values",
+        "testcases" :   [
             {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "BEEPER",
-                    "data1"         : "00",
-                    "data2"         : ""
+                "name"              : "listdevices",
+                "description"       : "Get list of available devices in the controller",
+                "input"             : {
+                    "devicetype"    : "zwave"
                 }
             },
+
             {
-                "name" : "readsecurespec",
+                "name" : "get_battery",
+                "description"       : "Get Battery level , Please make device wakeup",
                 "input" : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "data0"         : "BEEPER"
-                }
-            },
-            {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "VACATION",
-                    "data1"         : "FF",
-                    "data2"         : ""
-                }
-            },
-            {
-                "name" : "readsecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "data0"         : "VACATION"
-                }
-            },
-            {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "VACATION",
-                    "data1"         : "00",
-                    "data2"         : ""
-                }
-            },
-            {
-                "name" : "readsecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "data0"         : "VACATION"
-                }
-            },
-            {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "LOCKANDLEAVE",
-                    "data1"         : "FF",
-                    "data2"         : ""
-                }
-            },
-            {
-                "name" : "readsecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "data0"         : "LOCKANDLEAVE"
-                }
-            },
-            {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "LOCKANDLEAVE",
-                    "data1"         : "00",
-                    "data2"         : ""
-                }
-            },
-            {
-                "name" : "readsecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "data0"         : "LOCKANDLEAVE"
-                }
-            },
-            {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "AUTO_LOCK",
-                    "data1"         : "FF",
-                    "data2"         : ""
-                }
-            },
-            {
-                "name" : "readsecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "data0"         : "AUTO_LOCK"
-                }
-            },
-            {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "AUTO_LOCK",
-                    "data1"         : "00",
-                    "data2"         : ""
-                }
-            },
-            {
-                "name" : "readsecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "data0"         : "AUTO_LOCK"
-                }
-            },
-            {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "PIN_LENGTH",
-                    "data1"         : "05",
-                    "data2"         : ""
-                }
-            },
-            {
-                "name" : "readsecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "data0"         : "PIN_LENGTH"
-                }
-            },
-            {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "SET",
-                    "data0"         : "PIN_LENGTH",
-                    "data1"         : "08",
-                    "data2"         : ""
-                }
-            },
-            {
-                "name" : "readsecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "command"       : "GET",
-                    "data0"         : "PIN_LENGTH"
-                }
-            },
-            {
-                "name" : "readsecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "USER_CODE",
-                    "command"       : "GET",
-                    "data0"         : "0F"
-                }
-            },
-            {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "USER_CODE",
-                    "command"       : "SET",
-                    "data0"         : "0F",
-                    "data1"         : "1",
-                    "data2"         : "13579000"
-                }
-            },
-            {
-                "name" : "readsecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "USER_CODE",
-                    "command"       : "GET",
-                    "data0"         : "0F"
-                }
-            },
-            {
-                "name" : "readsecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "USER_CODE",
-                    "command"       : "GET",
-                    "data0"         : "11"
-                }
-            },
-            {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "USER_CODE",
-                    "command"       : "SET",
-                    "data0"         : "11",
-                    "data1"         : "1",
-                    "data2"         : "02468000"
-                }
-            },
-            {
-                "name" : "readsecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "USER_CODE",
-                    "command"       : "GET",
-                    "data0"         : "11"
-                }
-            },
-            {
-                "name" : "readsecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "USER_CODE",
-                    "command"       : "GET_NUM"
-                }
-            },
-            {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "DOOR_LOCK",
-                    "command"       : "SET",
-                    "data0"         : "open"
-                }
-            },
-            {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "DOOR_LOCK",
-                    "command"       : "SET",
-                    "data0"         : "close"
-                }
-            },
-            {
-                "name" : "writesecurespec",
-                "input" : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "class"         : "DOOR_LOCK",
-                    "command"       : "SET",
-                    "data0"         : "open"
+                    "class"         : "BATTERY",
+                    "readcommand"   : "GET",
+                    "force"         : "1"
                 }
             }
-		]
-	}
+        ]
+    },
+
+    {
+        "testsuite" : "Beeper configuration",
+        "testcases" : [
+            {
+                "name"              : "beeper_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "BEEPER",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "BEEPER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            },
+
+            {
+                "name"              : "beeper_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "BEEPER",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "BEEPER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            }
+        ]
+    },
+
+    {
+        "testsuite" : "Vacation configuration",
+        "testcases" : [
+            {
+                "name"              : "vacation_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "VACATION",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "VACATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            },
+
+            {
+                "name"              : "vacation_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "VACATION",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "VACATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            }
+        ]
+    },
+
+    {
+        "testsuite" : "Lock and leave configuration",
+        "testcases" : [
+            {
+                "name"              : "lock_leave_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "LOCKANDLEAVE",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "LOCKANDLEAVE",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            },
+
+            {
+                "name"              : "lock_leave_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "LOCKANDLEAVE",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "LOCKANDLEAVE",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            }
+        ]
+    },
+
+
+    {
+        "testsuite" : "Auto lock configuration",
+        "testcases" : [
+            {
+                "name"              : "auto_lock_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "AUTO_LOCK",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "AUTO_LOCK",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            },
+
+            {
+                "name"              : "auto_lock_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "AUTO_LOCK",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "AUTO_LOCK",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            }
+        ]
+    },
+
+    {
+        "testsuite" : "Config Length and value of user code",
+        "testcases" : [
+            {
+                "name"              : "lenth_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "PIN_LENGTH",
+                    "data1"         : "4",
+                    "data2"         : "1",
+                    "type"          : "PIN_LENGTH",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     4
+                    }
+                }
+            },
+
+            {
+                "name"              : "user_code_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "",
+                    "data1"         : "1234",
+                    "data2"         : "1",
+                    "type"          : "",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1234
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            },
+
+            {
+                "name"              : "lenth_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "PIN_LENGTH",
+                    "data1"         : "5",
+                    "data2"         : "1",
+                    "type"          : "PIN_LENGTH",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     5
+                    }
+                }
+            },
+
+            {
+                "name"              : "user_code_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "",
+                    "data1"         : "12345",
+                    "data2"         : "1",
+                    "type"          : "",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     12345
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            },
+
+
+            {
+                "name"              : "lenth_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "PIN_LENGTH",
+                    "data1"         : "6",
+                    "data2"         : "1",
+                    "type"          : "PIN_LENGTH",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     6
+                    }
+                }
+            },
+
+            {
+                "name"              : "user_code_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "",
+                    "data1"         : "123456",
+                    "data2"         : "1",
+                    "type"          : "",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     123456
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            },
+
+            {
+                "name"              : "lenth_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "PIN_LENGTH",
+                    "data1"         : "7",
+                    "data2"         : "1",
+                    "type"          : "PIN_LENGTH",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     7
+                    }
+                }
+            },
+
+            {
+                "name"              : "user_code_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "",
+                    "data1"         : "12345678",
+                    "data2"         : "1",
+                    "type"          : "",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1234567
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            },
+
+            {
+                "name"              : "lenth_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "PIN_LENGTH",
+                    "data1"         : "8",
+                    "data2"         : "1",
+                    "type"          : "PIN_LENGTH",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     8
+                    }
+                }
+            },
+
+            {
+                "name"              : "user_code_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "",
+                    "data1"         : "12345678",
+                    "data2"         : "1",
+                    "type"          : "",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     12345678
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            }
+        ]
+    },
+
+    {
+        "testsuite" : "Open/Close Door",
+        "testcases" : [
+            {
+                "name"              : "door_lock_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "DOOR_LOCK",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "",
+                    "data1"         : "open",
+                    "data2"         : "1",
+                    "type"          : "",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     0
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            },
+
+            {
+                "name"              : "door_lock_configuration",
+                "description"       : "",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "",
+                    "data1"         : "close",
+                    "data2"         : "1",
+                    "type"          : "",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     1
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 10s to test",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "10"
+                }
+            }
+        ]
+    }
 ]
+    

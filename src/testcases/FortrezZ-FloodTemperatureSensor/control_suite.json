@@ -1,395 +1,343 @@
 [
 	{
-		"testsuit" : "FortrezZ-FloodTempuratureSensor",
+		"testsuite" : "Get sensing value",
 		"testcases" :	[
-			{	
+			{
 				"name"				: "listdevices",
+				"description" 		: "Get list of available devices in the controller",
 				"input" 			: {
 					"devicetype"	: "zwave"
+				},
+				"description" 		: "Get list of available devices in the controller"
+			},
+
+			{
+				"name" : "get_battery",
+				"description" 		: "Get Battery level",
+				"input" : {
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "BATTERY",
+					"readcommand"	: "GET",
+                    "force"         : "1"
 				}
 			},
 
 			{
-				"name" 				: "readspec",
+				"name" 				: "get_temperature",
+				"description"		: "Get status of TEMP ( temperature in fahrenheit and celsius ) for verifying value which is available",
 				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "BATTERY",
-					"command"       : "GET",
+					"devicetype" 	: "zwave",
+					"id" 			: "D_ID",
+					"class"			: "SENSOR_MULTILEVEL",
+					"readcommand"	: "GET",
+					"type"			: "TEMP",
 					"force"			: "1"
-				}
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "ONOFF_GROUP1"
-				}
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "ONOFF_GROUP2"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "ONOFF_GROUP3"
-				}
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "ONOFF_GROUP1",
-					"data1"			: "A_ID",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" 				: "readspec_takeaction",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "ONOFF_GROUP1",
-					"time"			: "60"
-				}
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "REMOVE",
-					"data0"         : "ONOFF_GROUP1",
-					"data1"         : "A_ID",
-					"data2"         : "1"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "ONOFF_GROUP1"
-				}
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "ONOFF_GROUP2",
-					"data1"			: "A_ID",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" 				: "readspec_takeaction",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "ONOFF_GROUP2",
-					"time"			: "60"
-				}
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "REMOVE",
-					"data0"         : "ONOFF_GROUP2",
-					"data1"         : "A_ID",
-					"data2"         : "1"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "ONOFF_GROUP2"
-				}
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zwave",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "SET",
-					"data0"			: "ONOFF_GROUP3",
-					"data1"			: "A_ID",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" 				: "readspec_takeaction",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "ONOFF_GROUP3",
-					"time"			: "60"
-				}
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "REMOVE",
-					"data0"         : "ONOFF_GROUP3",
-					"data1"         : "A_ID",
-					"data2"         : "1"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "ONOFF_GROUP3"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "SENSOR_MULTILEVEL",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "TEMP"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "LOW_TEMP_TRIGGER"
-				}
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "LOW_TEMP_TRIGGER",
-					"data1"         : "-10",
-					"data2"         : "1"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "LOW_TEMP_TRIGGER"
-				}
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "LOW_TEMP_TRIGGER",
-					"data1"         : "127",
-					"data2"         : "1"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "LOW_TEMP_TRIGGER"
-				}
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "LOW_TEMP_TRIGGER",
-					"data1"         : "100",
-					"data2"         : "1"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "LOW_TEMP_TRIGGER"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "HIGH_TEMP_TRIGGER"
-				}
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "HIGH_TEMP_TRIGGER",
-					"data1"         : "-128",
-					"data2"         : "1"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "HIGH_TEMP_TRIGGER"
-				}
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "HIGH_TEMP_TRIGGER",
-					"data1"         : "70",
-					"data2"         : "1"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "HIGH_TEMP_TRIGGER"
-				}
-			},
-
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "SET",
-					"data0"         : "HIGH_TEMP_TRIGGER",
-					"data1"         : "10",
-					"data2"         : "1"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zwave",
-					"id"            : "D_ID",
-					"class"         : "CONFIGURATION",
-					"command"       : "GET",
-					"force"			: "1",
-					"type"          : "HIGH_TEMP_TRIGGER"
+				},
+				"verdict"		: {
+					"method"		: "reference",
+					"value"		: {
+						"fahrenheit"	: "ref",
+						"celsius"		: "ref"
+					}
 				}
 			}
+		]
+	},
+
+	{
+		"testsuite" : "Association with another device",
+		"testcases" : [
+            {
+                "name" 				: "basic_set_association",
+                "description"		: "Association with our controller (ceres) to send water and heat alarm to controller",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP1",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP1",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["01"]
+					}
+				}
+            },
+
+            {
+                "name"              : "basic_set_association",
+                "description"       : "Association with Led zwave device to send basic set command to Led device when water alarm is active",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP2",
+                    "data1"         : "6B",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP2",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["01"]
+                    }
+                }
+            },
+
+            {
+                "name"              : "basic_set_association",
+                "description"       : "Association with Led zwave device to send basic set command to Led device when heat alarm is active",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP3",
+                    "data1"         : "6B",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP3",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["6B"]
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test association",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            }
+		]
+	},
+
+    {
+        "testsuite" : "Temperature trigger configuration",
+        "testcases" : [
+             {
+                "name"              : "temperature_configuration",
+                "description"       : "Set -10 for LOW_TEMP_TRIGGER , value -10 mean low temperature trigger point is -10 degrees",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "LOW_TEMP_TRIGGER",
+                    "data1"         : "-10",
+                    "data2"         : "1",
+                    "type"          : "LOW_TEMP_TRIGGER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     -10
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test LOW_TEMP_TRIGGER which have set before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            },
+
+            {
+                "name"              : "temperature_configuration",
+                "description"       : "Set 127 for LOW_TEMP_TRIGGER , value 127 mean low temperature trigger point is 127 degrees",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "LOW_TEMP_TRIGGER",
+                    "data1"         : "127",
+                    "data2"         : "1",
+                    "type"          : "LOW_TEMP_TRIGGER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     127
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test LOW_TEMP_TRIGGER which have set before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            },
+
+            {
+                "name"              : "temperature_configuration",
+                "description"       : "Set -128 for HIGH_TEMP_TRIGGER , value -128 mean high temperature trigger point is -128 degrees",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "HIGH_TEMP_TRIGGER",
+                    "data1"         : "-128",
+                    "data2"         : "1",
+                    "type"          : "HIGH_TEMP_TRIGGER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     -128
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test HIGH_TEMP_TRIGGER which have set before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            },
+
+            {
+                "name"              : "temperature_configuration",
+                "description"       : "Set 70 for HIGH_TEMP_TRIGGER , value 70 mean high temperature trigger point is 70 degrees",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "LOW_TEMP_TRIGGER",
+                    "data1"         : "70",
+                    "data2"         : "1",
+                    "type"          : "LOW_TEMP_TRIGGER",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     70
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test HIGH_TEMP_TRIGGER which have set before",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            }
+        ]
+    },
+
+
+	{
+		"testsuite" : "Remove association information",
+		"testcases" : [
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove controller (ceres) out of ONOFF_GROUP1",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP1",
+                    "data1"         : "01",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP1",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["01"]
+                    }
+                }
+            },
+
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove Led zwave device out of ONOFF_GROUP2",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP2",
+                    "data1"         : "6B",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP2",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["6B"]
+                    }
+                }
+            },
+
+            {
+                "name" 				: "remove_association",
+                "description"		: "Remove Led zwave device out of ONOFF_GROUP3",
+                "input" 			: {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP3",
+                    "data1"         : "6B",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP3",
+                    "force"			: "1"
+                },
+				"verdict"		: {
+					"method"		: "expectation",
+					"value"		: {
+						"nodefollow"	: ["6B"]
+					}
+				}
+            }
 		]
 	}
 ]

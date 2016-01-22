@@ -1,48 +1,34 @@
 [ 
 	{
-		"testsuit" : "FIBARO flood sensor",
-		"testcases" :	[
+		"testsuite" 				: "FibaroFloodSensor",
+		"testcases" 				:	[
 			{
-				"name" : "listdevices",
-				"input" : {
+				"name" 				: "listdevices",
+				"description" 		: "Get list of available devices in the controller",
+				"input" 			: {
 					"devicetype"	: "zwave"
-				},
-				"description" 		: "Get list of available devices in the controller"
+				}
 			},
 
-          	{ 
-				"name" : "removedevice", 
-				"input" : { 
+			{ 
+				"name" 				: "adddevice", 
+				"description"		: "Open network Add device in the second button pressing",
+				"input" 			: { 
 					"devicetype" 	: "zwave",
-					"id"			: ""
-				},
-				"description"		: "Remove device (existed devices or new device we want to add later steps"
+					"action"		: "open",
+					"time"			: "30"
+				}
 			},
-			
+
 			{ 
-				"name" : "removedevice", 
-				"input" : { 
+				"name" 				: "closenetwork",
+				"description"		: "Close network", 
+				"input" 			: { 
 					"devicetype" 	: "zwave",
-					"id"			: ""
-				},
-				"description"		: "Remove device (existed devices or new device we want to add later steps"
-			},
-
-			{ 
-				"name" : "adddevice", 
-				"input" : { 
-					"devicetype" : "zwave" 
-				},
-				"description"		: "Add device which we want to test"
-			},
-
-			{ 
-				"name" : "adddevice", 
-				"input" : { 
-					"devicetype" : "zwave" 
-				},
-				"description"		: "Add association device"
-			}
+					"action"		: "close"
+				}
+			}		
 		]
 	}
+
 ]

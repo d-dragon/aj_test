@@ -11,15 +11,6 @@
 			},
 
 			{ 
-				"name" 				: "removedevice", 
-				"description"		: "Remove device in the first button pressing",
-				"input" 			: { 
-					"devicetype" 	: "zwave",
-					"id"			: ""
-				}
-			},
-
-			{ 
 				"name" 				: "adddevice", 
 				"description"		: "Open network Add device in the second button pressing",
 				"input" 			: { 
