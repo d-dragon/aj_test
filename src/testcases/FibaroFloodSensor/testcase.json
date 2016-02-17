@@ -46,7 +46,7 @@
 		]
 	},
 
-	"lock_configuration":{
+	"alarm_type_configuration":{
 		"testitems": [
 			{"name" : "write_spec"},
 			{"name" : "read_spec"}
@@ -72,7 +72,7 @@
 		]
 	},
 
-	"motion_configuration":{
+	"delay_configuration":{
 		"testitems": [
 			{"name" : "write_spec"},
 			{"name" : "read_spec"}

@@ -175,8 +175,8 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 														json_unpack(json_ref_value_obj, "F", &sensing_ref);
 														json_unpack(resp_sensing_value, "F", &sensing_resp);
 
-														differential = sensing_ref * 0.1;
-														LOGCXX("reference = " << sensing_ref << " | response = " << sensing_resp << " | differential = " << differential );
+														differential = sensing_ref * test_ref.margin;
+														LOGCXX("reference = " << sensing_ref << " | response = " << sensing_resp << " | differential (reference * diff) =  " << differential );
 
 														if (((sensing_ref - differential) < sensing_resp) &&
 															((sensing_ref + differential) > sensing_resp)) {
@@ -200,7 +200,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 
 													sensing_resp = test_ref.referenceUnitObjs[i].numValue;
 													json_unpack(json_ref_value_obj, "F", &sensing_ref);
-													differential = sensing_ref * 0.1;
+													differential = sensing_ref * test_ref.margin;
 													LOGCXX("reference = " << sensing_ref << " | response = " << sensing_resp << " | differential = " << differential );
 
 													if (((sensing_ref - differential) < sensing_resp) &&

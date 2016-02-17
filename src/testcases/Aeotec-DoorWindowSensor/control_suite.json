@@ -28,6 +28,16 @@
         "testsuite" : "Association with another device",
         "testcases" : [
             {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test pre-association (auto alarms)",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            },
+
+            {
                 "name"              : "basic_set_association",
                 "description"       : "Association with our controller (ceres)",
                 "input"             : {
@@ -47,6 +57,16 @@
                     "value"     : {
                         "nodefollow"    : ["01"]
                     }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test association with controller",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
                 }
             },
 
@@ -144,7 +164,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 60s to test association",
+                "description"       : "Wait for 60s to test association with led device",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",

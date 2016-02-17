@@ -100,7 +100,7 @@
                     "writecommand"	: "SET",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "6B",
+                    "data1"         : "8D",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"			: "1"
@@ -108,7 +108,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"nodefollow"	: ["6B"]
+						"nodefollow"	: ["8D"]
 					}
 				}
 			},
@@ -268,7 +268,7 @@
                     "writecommand"	: "REMOVE",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "6B",
+                    "data1"         : "8D",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"			: "1"
@@ -276,7 +276,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"nodefollow"	: ["6B"]
+						"nodefollow"	: ["8D"]
 					}
 				}
             },

@@ -12,7 +12,7 @@
 
             {
                 "name" : "get_battery",
-                "description"       : "Get Battery level , Please make device wakeup",
+                "description"       : "Get Battery level , ensure make device wakeup",
                 "input" : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -27,6 +27,16 @@
     {
         "testsuite" : "Association with another device",
         "testcases" : [
+           {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test pre-association, burglar alarm will be sent automatically to controller",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            },
+
             {
                 "name"              : "basic_set_association",
                 "description"       : "Association with our controller (ceres)",
@@ -51,6 +61,16 @@
             },
 
             {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test association with controller",
+                "input"             : {
+                    "devicetype"    : "zwave", 
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            },
+
+            {
                 "name"              : "basic_set_association",
                 "description"       : "Association with Led zwave device",
                 "input"             : {
@@ -60,7 +80,7 @@
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "57",
+                    "data1"         : "95",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"         : "1"
@@ -68,14 +88,14 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "nodefollow"    : ["57"]
+                        "nodefollow"    : ["95"]
                     }
                 }
             },
 
             {
                 "name"              : "basic_set_configuration",
-                "description"       : "Set value 255 (Hex :FF) for BASIC_SET, value 255 means allow to send basic set message to turn off associated device when garage door close/open",
+                "description"       : "Set value 255 (Hex :FF) for ENABLE_ONOFF, value 255 means allow to send basic set message to turn on/off associated device when garage door close/open",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -98,11 +118,11 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 30s to test association, if having a motion occurs then the Led zwave will be turned on. Beside that, we test alarm (tempering is detected) message which will send to controller",
+                "description"       : "Wait for 60s to test association with led device, if having a motion occurs then the Led zwave will be turned on. Beside that, we test motion alarm (motion is detected) message which will send to controller",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "time"          : "30"
+                    "time"          : "60"
                 }
             }
         ]
@@ -113,7 +133,7 @@
         "testcases" : [
             {
                 "name"              : "basic_set_configuration",
-                "description"       : "Set value 0 for BASIC_SET, value 0 means not allow to send basic set message to turn off associated device when garage door close/open",
+                "description"       : "Set value 0 for ENABLE_ONOFF, value 0 means not allow to send basic set message to turn on/off associated device when garage door close/open",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -146,7 +166,7 @@
 
             {
                 "name"              : "basic_set_configuration",
-                "description"       : "Set value 255 (Hex :FF)  for BASIC_SET, value 255 means allow to send basic set message to turn off associated device when garage door close/open",
+                "description"       : "Set value 255 (Hex :FF)  for ENABLE_ONOFF, value 255 means allow to send basic set message to turn on/off associated device when garage door close/open",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -169,32 +189,11 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 30s to test BASIC_SET, if having a motion occurs then the Led zwave will be turned on",
+                "description"       : "Wait for 60s to test BASIC_SET, if having a motion occurs then the Led zwave will be turned on",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "time"          : "30"
-                }
-            }
-        ]
-    },
-
-    {
-        "testsuite" : "Switch On-Off device",
-        "testcases" : [
-            {
-                "name"              : "controlonoff",
-                "description"       : "Turn off device",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "57",
-                    "value"         : "0"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :  0
-                    }
+                    "time"          : "60"
                 }
             }
         ]
@@ -236,7 +235,7 @@
                     "writecommand"  : "REMOVE",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "57",
+                    "data1"         : "95",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"         : "1"
@@ -244,7 +243,7 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "nodefollow"    : ["57"]
+                        "nodefollow"    : ["95"]
                     }
                 }
             }

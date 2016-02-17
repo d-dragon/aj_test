@@ -28,6 +28,16 @@
         "testsuite" : "Association with another device",
         "testcases" : [
             {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test pre-association (auto alarms)",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
+
+            {
                 "name"              : "basic_set_association",
                 "description"       : "Association with our controller (ceres)",
                 "input"             : {

@@ -76,6 +76,7 @@ struct TestItemInfo
 
 
 
+
 /*
         3: removed successful[Association]
         2: included successful [Association]
@@ -147,6 +148,7 @@ struct TestCaseExpectation{
 struct TestCaseReferenceUnit{
 	unsigned short			numOfObject;
 	JsonFormatSimulation	*referenceUnitObjs;
+	double 					margin;
 };
 
 struct TestCase{

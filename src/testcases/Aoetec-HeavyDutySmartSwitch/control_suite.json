@@ -27,7 +27,8 @@
                            "unit": "ref",
                            "time": "ref",
                            "electricmeter": "ref"
-                    }
+                    },
+                    "diff"      : 0.1
                 }
             },
 
@@ -48,7 +49,8 @@
                         "fahrenheit"    : "ref",
                         "celsius"       : "ref"
                     }
-                }
+                },
+                "diff"      : 0.1
             }
         ]
     },

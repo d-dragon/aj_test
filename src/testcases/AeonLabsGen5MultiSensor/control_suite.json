@@ -37,7 +37,8 @@
 					"value"		: {
 						"fahrenheit"	: "ref",
 						"celsius"		: "ref"
-					}
+					},
+                    "diff"      :   0.1
 				}
 			},
 
@@ -57,7 +58,8 @@
 					"value"		: {
 						"percentage"		: "ref",
 						"absolute_humidity"	: "ref"
-					}
+					},
+                    "diff"      :   0.1
 				}
 			},
 
@@ -76,7 +78,8 @@
 					"method"	: "reference",
 					"value"		: {
 						"luminance"	: "ref"
-					}
+					},
+                    "diff"      :   0.1
 				}
 			}
 		]
@@ -85,6 +88,16 @@
 	{
         "testsuite" : "Test association with another device",
         "testcases" : [
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test pre-association (auto alarms)",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            },
+
             {
                 "name"              : "basic_set_association",
                 "description"       : "Association with our controller (ceres)",
@@ -109,6 +122,16 @@
             },
 
             {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test association with controller",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            },
+
+            {
                 "name"              : "basic_set_association",
                 "description"       : "Association with Led zwave device",
                 "input"             : {
@@ -118,7 +141,7 @@
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "57",
+                    "data1"         : "8F",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"         : "1"
@@ -126,7 +149,7 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "nodefollow"    : ["57"]
+                        "nodefollow"    : ["8F"]
                     }
                 }
             },
@@ -179,7 +202,7 @@
         
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 60s to test association and alarm report, after 1s (there is no triggered motion) then device will send basic set (off command) to associated device (on) .Otherwise, device will send on command to associated device (off) everytime detect motion. Beside that, alarm report will be sent to controller everytime device move",
+                "description"       : "Wait for 60s to test association and alarm report, after 1s (there is no triggered motion) then device will send basic set command to associated device everytime detect motion.",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -288,6 +311,16 @@
             },
 
             {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test time delay configuration",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
+
+            {
                 "name"              : "time_configuration",
                 "description"       : "Set TIME is 10, value 10 mean interval associated device to keep state On before sending it Off command.",
                 "input"             : {
@@ -358,7 +391,7 @@
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
                     "data0"         : "REPORT_SENSOR",
-                    "data1"         : "255",
+                    "data1"         : "225",
                     "data2"         : "1",
                     "type"          : "REPORT_SENSOR",
                     "force"         : "1"
@@ -366,14 +399,14 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "value"         : 255
+                        "value"         : 225
                     }
                 }
             },
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 60s to test time auto report and report sensor configuration ",
+                "description"       : "Wait for 60s to test time auto report (5s) and report sensor configuration ",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -449,7 +482,7 @@
 
             {
                 "name"              : "report_configuration",
-                "description"       : "Set REPORT_SENSOR to 225 (HEX : E1, Binary : 11110001), value 225 means enable all reports (temperature+humidity+luminance+battery) will send to controller",
+                "description"       : "Set REPORT_SENSOR to 192 (HEX : E1, Binary : 11000000), value 192 means enable humidity+luminance reports which will send to controller",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -457,7 +490,7 @@
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
                     "data0"         : "REPORT_SENSOR",
-                    "data1"         : "225",
+                    "data1"         : "192",
                     "data2"         : "1",
                     "type"          : "REPORT_SENSOR",
                     "force"         : "1"
@@ -465,7 +498,7 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "value"         : 225
+                        "value"         : 192
                     }
                 }
             },
@@ -500,6 +533,16 @@
                     "value"     : {
                         "value"         : 2678400
                     }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test tima auto reports (2678400s) configuration ",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
                 }
             }
         ]
@@ -541,7 +584,7 @@
                     "writecommand"	: "REMOVE",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "57",
+                    "data1"         : "8F",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"			: "1"
@@ -549,7 +592,7 @@
 				"verdict"		: {
 					"method"		: "expectation",
 					"value"		: {
-						"nodefollow"	: ["57"]
+						"nodefollow"	: ["8F"]
 					}
 				}
             }

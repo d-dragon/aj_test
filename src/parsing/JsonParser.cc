@@ -85,7 +85,6 @@ int JsonParser::GetDevIDInJSMsg(string *input, vector<DeviceInfo> *devList){
 				devList->push_back(devInfo);
 			}
 		}
-
     }
     else{
 		LOGCXX("Input list devices is invalid");
@@ -204,7 +203,6 @@ int JsonParser::startParser(int reference_flag){
 			return -1;
 		}
 		
-
 		const char *ts_name;
 
 		ts_name = json_string_value(json_object_get(tsObj, "testsuite"));
@@ -424,8 +422,22 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 							}
 							count_obj++;
 						}
-
 					}
+
+					/**
+					* Allow user input measurement uncertainty (margin of error) value via diff field 
+					* within verdict object for test case get sensor infor.
+					*/
+
+					json_t *verdict_diff;
+					verdict_diff = json_object_get(tc_verdict, "diff");
+					if (NULL != verdict_diff) {
+						if (json_is_number(verdict_diff)) {
+							double diff = json_real_value(verdict_diff);
+							test_case_info.testRef.margin = diff;
+						}
+					}
+
 					/* Debugging - Print all reference verdict info */
 #if 0
 					LOGCXX("Verdict type: " << test_case_info.verdictType << " - have " << test_case_info.testRef.numOfObject << "object");
@@ -733,7 +745,7 @@ int JsonParser::GetTestSuiteFileList(const char *dirPath){
 
 		/* just only get regular file */
 		if(dir_node->d_type == DT_REG) {
-			file_name.clear();\
+			file_name.clear();
 			file_name.assign(dir_node->d_name);
 			mFileList.push_back(file_name);
 		}

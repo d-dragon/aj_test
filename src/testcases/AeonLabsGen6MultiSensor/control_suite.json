@@ -1,21 +1,124 @@
 [
-	{
-		"testsuite" : "Get sensing value",
-		"testcases" :	[
-			{
-				"name"				: "listdevices",
-				"description" 		: "Get list of available devices in the controller",
-				"input" 			: {
-					"devicetype"	: "zwave"
-				},
-				"description" 		: "Get list of available devices in the controller"
-			}
-		]
-	},
+    {
+        "testsuite" : "Get sensing value",
+        "testcases" :   [
+            {
+                "name"              : "listdevices",
+                "description"       : "Get list of available devices in the controller",
+                "input"             : {
+                    "devicetype"    : "zwave"
+                },
+                "description"       : "Get list of available devices in the controller"
+            },
+
+            {
+                "name" : "get_battery",
+                "description"       : "Get Battery level",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "BATTERY",
+                    "readcommand"   : "GET"
+                }
+            },
+
+            {
+                "name"              : "get_temperature",
+                "description"       : "Get status of TEMP ( temperature in fahrenheit and celsius ) for verifying value which is available",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "SENSOR_MULTILEVEL",
+                    "readcommand"   : "GET",
+                    "type"          : "TEMP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "reference",
+                    "value"     : {
+                        "fahrenheit"    : "ref",
+                        "celsius"       : "ref"
+                    },
+                    "diff"              : 0.1
+                }
+            },
+
+            {
+                "name"              : "get_humidity",
+                "description"       : "Get status of HUMI ( humidity percentage and absolute humidity ) for verifying value which is available",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "SENSOR_MULTILEVEL",
+                    "readcommand"   : "GET",
+                    "type"          : "HUMI",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "reference",
+                    "value"     : {
+                        "percentage"        : "ref",
+                        "absolute_humidity" : "ref"
+                    },
+                    "diff"              :   0.1
+                }
+            },
+
+            {
+                "name"              : "get_luminance",
+                "description"       : "Get status of LUMI ( luminance index ) for verifying value which is available",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",  
+                    "class"         : "SENSOR_MULTILEVEL",
+                    "readcommand"   : "GET",
+                    "type"          : "LUMI",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"    : "reference",
+                    "value"     : {
+                        "luminance" : "ref"
+                    },
+                    "diff"              :  0.1
+                }
+            },
+
+            {
+                "name"              : "get_ultraviolet",
+                "description"       : "Get status of UV ( ultraviolet index ) for verifying value which is available",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "SENSOR_MULTILEVEL",
+                    "readcommand"   : "GET",
+                    "type"          : "UV",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"    : "reference",
+                    "value"     : {
+                        "luminance" : "ref"
+                    },
+                    "diff"              : 0.1
+                }
+            }
+        ]
+    },
 
     {
         "testsuite" : "Test association with another device",
         "testcases" : [
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test pre-association (auto alarms)",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            },
+
             {
                 "name"              : "basic_set_association",
                 "description"       : "Association with our controller (ceres)",
@@ -38,14 +141,118 @@
                     }
                 }
             },
-        
+
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 30s to test association and alarm report, after 10s (there is no triggered motion) then device will send basic set (off)  to associated device (on) .Otherwise, Device will send basic set (on) to associated device (off) everytime detect motion. Beside that, alarm report will be sent to controller everytime device move",
+                "description"       : "Wait for 30s to test viration (tampering alarm) report to controller",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "time"          : "30"
+                }
+            },
+
+
+            {
+                "name"              : "basic_set_association",
+                "description"       : "Association with Led zwave device",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "88",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["88"]
+                    }
+                }
+            },
+
+            {
+                "name"              : "lock_configuration",
+                "description"       : "Set LOCK_CONFIGURATION to 0, value 0 means disable lock configuration",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "LOCK_CONFIGURATION",
+                    "data1"         : "0",
+                    "data2"         : "1",
+                    "type"          : "LOCK_CONFIGURATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value"         : 0
+                    }
+                }
+            },
+
+            {
+                "name"              : "time_configuration",
+                "description"       : "This time setting to test lock configuration",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "TIME",
+                    "data1"         : "10",
+                    "data2"         : "1",
+                    "type"          : "TIME",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value"         : 10
+                    }
+                }
+            },
+
+
+            {
+                "name"              : "motion_configuration",
+                "description"       : "Set ENABLE_MOTION to 1, value 1 means  the current PIR sensitivity level=1",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "ENABLE_MOTION",
+                    "data1"         : "1",
+                    "data2"         : "1",
+                    "type"          : "ENABLE_MOTION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value"         : 1
+                    }
+                }
+            },
+        
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 90s to test association with zwave led device, after 10s (there is no triggered motion again) then device will send basic set (off)  to associated device .Otherwise, Device will send basic set (on) to associated device (off) everytime detect motion. Beside that, alarm report will also be sent to controller everytime devive move",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "90"
                 }
             }
         ]
@@ -171,6 +378,16 @@
                     "value"     : {
                         "value"         : 3600
                     }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test time configuration, after 3600s (there is no triggered motion) then device will send basic set (off)  to associated device (on) .Otherwise, Device will send basic set (on) to associated device (off) everytime detect motion ",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
                 }
             },
 
@@ -336,7 +553,7 @@
 
             {
                 "name"              : "report_configuration",
-                "description"       : "Set REPORT_SENSOR to 241 (HEX : F1, Binary : 11110001), value 241 means enable all reports (temperature+humidity+luminance+ultraviolet+battery) will send to controller",
+                "description"       : "Set REPORT_SENSOR to 145 (HEX : F1, Binary : 10010001), value 145 means enable luminance+ultraviolet+battery reports,which will send to controller",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -344,7 +561,7 @@
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
                     "data0"         : "REPORT_SENSOR",
-                    "data1"         : "241",
+                    "data1"         : "145",
                     "data2"         : "1",
                     "type"          : "REPORT_SENSOR",
                     "force"         : "1"
@@ -352,7 +569,7 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "value"         : 241
+                        "value"         : 145
                     }
                 }
             },
@@ -387,6 +604,16 @@
                     "value"     : {
                         "value"         : 2678400
                     }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test est time auto report and report sensor configuration",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
                 }
             }
         ]
@@ -448,7 +675,7 @@
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "time"          : "60"
+                    "time"          : "30"
                 }
             },
 
@@ -590,54 +817,77 @@
         ]
     },
 
-	{
-		"testsuite" : "Remove association information",
-		"testcases" : [
-			{
-                "name" 				: "remove_association",
-                "description"		: "Remove our controller out of ONOFF_GROUP",
-                "input" 			: {
+    {
+        "testsuite" : "Remove association information",
+        "testcases" : [
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove our controller out of ONOFF_GROUP",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "writecommand"	: "REMOVE",
+                    "writecommand"  : "REMOVE",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
                     "data1"         : "01",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
-                    "force"			: "1"
+                    "force"         : "1"
                 },
-				"verdict"		: {
-					"method"		: "expectation",
-					"value"		: {
-						"nodefollow"	: ["01"]
-					}
-				}
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["01"]
+                    }
+                }
             },
 
             {
-                "name" 				: "remove_association",
-                "description"		: "Remove led zwave device out of ONOFF_GROUP",
-                "input" 			: {
+                "name"              : "remove_association",
+                "description"       : "Remove led zwave device out of ONOFF_GROUP",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "writecommand"	: "REMOVE",
+                    "writecommand"  : "REMOVE",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "57",
+                    "data1"         : "88",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
-                    "force"			: "1"
+                    "force"         : "1"
                 },
-				"verdict"		: {
-					"method"		: "expectation",
-					"value"		: {
-						"nodefollow"	: ["57"]
-					}
-				}
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["88"]
+                    }
+                }
+            },
+
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove led zwave device out of ONOFF_GROUP",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"  : "REMOVE",
+                    "readcommand"   : "GET",
+                    "data0"         : "ONOFF_GROUP",
+                    "data1"         : "80",
+                    "data2"         : "1",
+                    "type"          : "ONOFF_GROUP",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["80"]
+                    }
+                }
             }
-		]
-	}
+        ]
+    }
 ]

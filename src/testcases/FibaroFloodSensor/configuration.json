@@ -1,9 +1,9 @@
 {
     "devicename": "FibaroFloodSensor",
     "serviceid": "93c06771-c725-48c2-b1ff-5c313ee312cc",
-    "deviceindex": "",
+    "deviceindex": "2",
     "altdeviceid": "",
     "devicetype": "zwave",
-    "associationdevidx": "2",
+    "associationdevidx": "3",
     "altassdevid": ""
 }

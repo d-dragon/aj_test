@@ -27,7 +27,8 @@
                            "unit": "ref",
                            "time": "ref",
                            "electricmeter": "ref"
-                    }
+                    },
+                    "diff"      : 0.1
                 }
             }
         ]
@@ -55,6 +56,45 @@
                     "method"        : "expectation",
                     "value"     : {
                         "nodefollow"    : ["01"]
+                    }
+                }
+            },
+
+            {
+                "name"              : "noti_send_configuration",
+                "description"       : "Set NOTIFICATION is 2, value 2 means enable sending basic CC report notification to our controller whwen the state of Siren changed",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "SET",
+                    "readcommand"   : "GET",
+                    "data0"         : "NOTIFICATION",
+                    "data1"         : "2",
+                    "data2"         : "1",
+                    "type"          : "NOTIFICATION",
+                    "force"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :     2
+                    }
+                }
+            },
+            
+            {
+                "name"              : "controlonoff",
+                "description"       : "This test case to test association with controller. Value 30 (Hex) means Smart dimmer will dim with value 48",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "30"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  30
                     }
                 }
             }

@@ -39,7 +39,8 @@
 					"value"		: {
 						"fahrenheit"	: "ref",
 						"celsius"		: "ref"
-					}
+					},
+                    "diff"      : 0.1
 				}
 			}
 		]
@@ -72,6 +73,16 @@
             },
 
             {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test association with group1  (indicate that temperature alarm or water alarm is active)",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            }
+
+            {
                 "name"              : "basic_set_association",
                 "description"       : "Association with Led zwave device to send basic set command to Led device when water alarm is active",
                 "input"             : {
@@ -93,6 +104,16 @@
                     }
                 }
             },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test association with group2 (water alarm)",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            }
 
             {
                 "name"              : "basic_set_association",
@@ -119,7 +140,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 60s to test association",
+                "description"       : "Wait for 60s to test association with group3  (temperature alarm)",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",

@@ -28,6 +28,16 @@
         "testsuite" : "Association with another device",
         "testcases" : [
             {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test pre-association",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
+
+            {
                 "name"              : "basic_set_association",
                 "description"       : "Association with our controller (ceres)",
                 "input"             : {
@@ -60,7 +70,7 @@
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "57",
+                    "data1"         : "9A",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"         : "1"
@@ -68,7 +78,7 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "nodefollow"    : ["57"]
+                        "nodefollow"    : ["9A"]
                     }
                 }
             },
@@ -83,7 +93,7 @@
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "59",
+                    "data1"         : "9D",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"         : "1"
@@ -91,7 +101,7 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "nodefollow"    : ["59"]
+                        "nodefollow"    : ["9D"]
                     }
                 }
             },
@@ -169,7 +179,7 @@
 
             {
                 "name"              : "dimmer_configuration",
-                "description"       : "Set value 63 (Hex) for SET_DIMMER, value 63 means mean associated device will dim with value 99",
+                "description"       : "Set value 63 (Hex) for SET_DIMMER, value 63 means mean associated device will dim with value 9A",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -271,7 +281,7 @@
                     "writecommand"  : "REMOVE",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "57",
+                    "data1"         : "9A",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"         : "1"
@@ -279,7 +289,7 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "nodefollow"    : ["57"]
+                        "nodefollow"    : ["9A"]
                     }
                 }
             },
@@ -294,7 +304,7 @@
                     "writecommand"  : "REMOVE",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "59",
+                    "data1"         : "9D",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"         : "1"
@@ -302,7 +312,7 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "nodefollow"    : ["59"]
+                        "nodefollow"    : ["9D"]
                     }
                 }
             }
