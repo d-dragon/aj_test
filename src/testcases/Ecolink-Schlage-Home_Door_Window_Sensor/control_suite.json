@@ -29,7 +29,7 @@
         "testcases" : [
            {
                 "name"              : "physical_test",
-                "description"       : "Wait for 60s to test pre-association, burglar alarm will be sent automatically to controller",
+                "description"       : "Wait for 60s to test pre-association,  (auto alarms) burglar alarm will be sent automatically to controller",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",

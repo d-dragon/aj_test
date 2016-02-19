@@ -1,33 +1,33 @@
 [
-	{
-		"testsuite" : "Get sensing value",
-		"testcases" :	[
-			{
-				"name"				: "listdevices",
-				"description" 		: "Get list of available devices in the controller",
-				"input" 			: {
-					"devicetype"	: "zwave"
-				},
-				"description" 		: "Get list of available devices in the controller"
-			},
+    {
+        "testsuite" : "Get sensing value",
+        "testcases" :   [
+            {
+                "name"              : "listdevices",
+                "description"       : "Get list of available devices in the controller",
+                "input"             : {
+                    "devicetype"    : "zwave"
+                },
+                "description"       : "Get list of available devices in the controller"
+            },
 
-			{
-				"name" : "get_battery",
-				"description" 		: "Get Battery level",
-				"input" : {
-					"devicetype" 	: "zwave",
-					"id" 			: "D_ID",
-					"class"			: "BATTERY",
-					"readcommand"	: "GET",
+            {
+                "name" : "get_battery",
+                "description"       : "Get Battery level",
+                "input" : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "class"         : "BATTERY",
+                    "readcommand"   : "GET",
                     "force"         : "1"
-				}
-			}
-		]
-	},
+                }
+            }
+        ]
+    },
 
-	{
-		"testsuite" : "Association with another device",
-		"testcases" : [
+    {
+        "testsuite" : "Association with another device",
+        "testcases" : [
             {
                 "name"              : "physical_test",
                 "description"       : "Wait for 20s to test pre-association (auto alarms)",
@@ -39,26 +39,26 @@
             },
 
             {
-                "name" 				: "basic_set_association",
-                "description"		: "Association with our controller (ceres)",
-                "input" 			: {
+                "name"              : "basic_set_association",
+                "description"       : "Association with our controller (ceres)",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "writecommand"	: "SET",
+                    "writecommand"  : "SET",
                     "readcommand"   : "GET",
                     "data0"         : "REPORT_GROUP",
                     "data1"         : "01",
                     "data2"         : "1",
                     "type"          : "REPORT_GROUP",
-                    "force"			: "1"
+                    "force"         : "1"
                 },
-				"verdict"		: { 
-					"method"		: "expectation",
-					"value"		: {
-						"nodefollow"	: ["01"]
-					}
-				}
+                "verdict"       : { 
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["01"]
+                    }
+                }
             },
 
             {
@@ -72,27 +72,27 @@
             },
 
             {
-                "name" 				: "basic_set_association",
-                "description"		: "Association with Led zwave device",
-                "input" 			: {
+                "name"              : "basic_set_association",
+                "description"       : "Association with Led zwave device",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "writecommand"	: "SET",
+                    "writecommand"  : "SET",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "A3",
+                    "data1"         : "B3",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
-                    "force"			: "1"
+                    "force"         : "1"
                 },
-				"verdict"		: {
-					"method"		: "expectation",
-					"value"		: {
-						"nodefollow"	: ["A3"]
-					}
-				}
-			},
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["B3"]
+                    }
+                }
+            },
 
             {
                 "name"              : "broadcast_configuration",
@@ -149,10 +149,10 @@
                     "time"          : "60"
                 }
             }
-		]
-	},
+        ]
+    },
    
-	{
+    {
         "testsuite" : "Alarm broadcast configuration",
         "testcases" : [
             {
@@ -254,7 +254,7 @@
                 }
             },
 
-             {
+            {
                 "name"              : "broadcast_configuration",
                 "description"       : "Set value 3 to ALARM_BOARDCAST, it means Broadcast active, tamper broadcast active",
                 "input"             : {
@@ -294,7 +294,7 @@
         "testcases" : [
             {
                 "name"              : "alarm_type_configuration",
-                "description"       : "",
+                "description"       : "Set value 0 to DISABLE, it means alarm water will be sent to controller when flooding detected or cancelled",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -315,7 +315,7 @@
                 }
             },
 
-             {
+            {
                 "name"              : "delay_configuration",
                 "description"       : "Set value 3600 to DELAY_ALARM, it means delay flood alarm cancelation in 3600s after flooding has ceased",
                 "input"             : {
@@ -350,7 +350,7 @@
 
             {
                 "name"              : "delay_configuration",
-                "description"       : "Set value 0 to DELAY_ALARM, it means delay flood alarm cancelation in 2s after flooding has ceased",
+                "description"       : "Set value 2 to DELAY_ALARM, it means delay flood alarm cancelation in 2s after flooding has ceased",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -421,7 +421,7 @@
 
             {
                 "name"              : "alarm_type_configuration",
-                "description"       : "Set value 255 to DISABLE, it means basic set command will be sent to controller when flooding detected or cancelled",
+                "description"       : "Set value 255 to DISABLE, it means basic set command will be sent to associated device when flooding detected or cancelled",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -454,54 +454,54 @@
         ]
     },
 
-	{
-		"testsuite" : "Remove association information",
-		"testcases" : [
-			{
-                "name" 				: "remove_association",
-                "description"		: "Remove controller (ceres) out of REPORT_GROUP",
-                "input" 			: {
+    {
+        "testsuite" : "Remove association information",
+        "testcases" : [
+            {
+                "name"              : "remove_association",
+                "description"       : "Remove controller (ceres) out of REPORT_GROUP",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "writecommand"	: "REMOVE",
+                    "writecommand"  : "REMOVE",
                     "readcommand"   : "GET",
                     "data0"         : "REPORT_GROUP",
                     "data1"         : "01",
                     "data2"         : "1",
                     "type"          : "REPORT_GROUP",
-                    "force"			: "1"
+                    "force"         : "1"
                 },
-				"verdict"		: {
-					"method"		: "expectation",
-					"value"		: {
-						"nodefollow"	: ["01"]
-					}
-				}
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["01"]
+                    }
+                }
             },
 
             {
-                "name" 				: "remove_association",
-                "description"		: "Remove Led zwave device out of ONOFF_GROUP",
-                "input" 			: {
+                "name"              : "remove_association",
+                "description"       : "Remove Led zwave device out of ONOFF_GROUP",
+                "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
                     "class"         : "ASSOCIATION",
-                    "writecommand"	: "REMOVE",
+                    "writecommand"  : "REMOVE",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "A3",
+                    "data1"         : "B3",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
-                    "force"			: "1"
+                    "force"         : "1"
                 },
-				"verdict"		: {
-					"method"		: "expectation",
-					"value"		: {
-						"nodefollow"	: ["A3"]
-					}
-				}
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "nodefollow"    : ["B3"]
+                    }
+                }
             }
-		]
-	}
+        ]
+    }
 ]

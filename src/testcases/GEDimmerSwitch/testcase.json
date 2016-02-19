@@ -46,7 +46,7 @@
 		]
 	},
 
-	"lock_configuration":{
+	"switch_on_off_LED":{
 		"testitems": [
 			{"name" : "write_spec"},
 			{"name" : "read_spec"}

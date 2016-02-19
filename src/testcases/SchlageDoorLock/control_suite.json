@@ -12,7 +12,7 @@
 
             {
                 "name" : "get_battery",
-                "description"       : "Get Battery level , Please make device wakeup",
+                "description"       : "Get Battery level of schlage lock",
                 "input" : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -29,7 +29,7 @@
         "testcases" : [
             {
                 "name"              : "beeper_configuration",
-                "description"       : "",
+                "description"       : "Set value 1 for BEEPER to disable beeper feature of lock",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -52,7 +52,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
+                "description"       : "Wait for 10s to test beeper value which have set before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -62,7 +62,7 @@
 
             {
                 "name"              : "beeper_configuration",
-                "description"       : "",
+                "description"       : "Set value 1 for BEEPER to enable beeper feature of lock",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -85,7 +85,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
+                "description"       : "Wait for 10s to test beeper value which have set before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -100,7 +100,7 @@
         "testcases" : [
             {
                 "name"              : "vacation_configuration",
-                "description"       : "",
+                "description"       : "Set value 1 for VACATION to enable vacation feature of lock",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -123,7 +123,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
+                "description"       : "Wait for 10s to test vacation value which have set before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -133,7 +133,7 @@
 
             {
                 "name"              : "vacation_configuration",
-                "description"       : "",
+                "description"       : "Set value 0 for BEEPER to disable vacation feature of lock",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -156,7 +156,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
+                "description"       : "Wait for 10s to test vacation value which have set before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -171,7 +171,7 @@
         "testcases" : [
             {
                 "name"              : "lock_leave_configuration",
-                "description"       : "",
+                "description"       : "Set value 0 for LOCKANDLEAVE to disable lock and leave feature of lock",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -194,7 +194,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
+                "description"       : "Wait for 10s to test lock and leave value which have set before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -204,7 +204,7 @@
 
             {
                 "name"              : "lock_leave_configuration",
-                "description"       : "",
+                "description"       : "Set value 1 for LOCKANDLEAVE to enable lock and leave feature of lock",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -227,7 +227,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
+                "description"       : "Wait for 10s to test lock and leave value which have set before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -243,7 +243,7 @@
         "testcases" : [
             {
                 "name"              : "auto_lock_configuration",
-                "description"       : "",
+                "description"       : "Set value 0 for AUTO_LOCK to disable auto lock feature of lock",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -266,7 +266,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
+                "description"       : "Wait for 10s to test auto lock value which have set before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -276,7 +276,7 @@
 
             {
                 "name"              : "auto_lock_configuration",
-                "description"       : "",
+                "description"       : "Set value 0 for AUTO_LOCK to enable auto lock feature of lock",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -299,7 +299,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
+                "description"       : "Wait for 10s to test auto lock value which have set before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -314,7 +314,7 @@
         "testcases" : [
             {
                 "name"              : "lenth_configuration",
-                "description"       : "",
+                "description"       : "Set value 4 for PIN_LENGTH, it means pin length of user code is 4 digits",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -337,7 +337,7 @@
 
             {
                 "name"              : "user_code_configuration",
-                "description"       : "",
+                "description"       : "Set user code is 1234 ",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -360,7 +360,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
+                "description"       : "Wait for 10s to test user code value which have set before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -370,7 +370,7 @@
 
             {
                 "name"              : "lenth_configuration",
-                "description"       : "",
+                "description"       : "Set value 5 for PIN_LENGTH, it means pin length of user code is 5 digits",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -393,7 +393,7 @@
 
             {
                 "name"              : "user_code_configuration",
-                "description"       : "",
+                "description"       : "Set user code is 12345",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -416,7 +416,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
+                "description"       : "Wait for 10s to test user code value which have set before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -426,7 +426,7 @@
 
             {
                 "name"              : "lenth_configuration",
-                "description"       : "",
+                "description"       : "Set value 6 for PIN_LENGTH, it means pin length of user code is 6 digits",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -449,7 +449,7 @@
 
             {
                 "name"              : "user_code_configuration",
-                "description"       : "",
+                "description"       : "Set user code is 123456",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -472,7 +472,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
+                "description"       : "Wait for 10s to test user code value which have set before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -482,7 +482,7 @@
 
             {
                 "name"              : "lenth_configuration",
-                "description"       : "",
+                "description"       : "Set value 7 for PIN_LENGTH, it means pin length of user code is 7 digits",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -505,7 +505,7 @@
 
             {
                 "name"              : "user_code_configuration",
-                "description"       : "",
+                "description"       : "Set user code is 1234567",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -528,7 +528,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
+                "description"       : "Wait for 10s to test use code value which have set before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -538,7 +538,7 @@
 
             {
                 "name"              : "lenth_configuration",
-                "description"       : "",
+                "description"       : "Set value 8 for PIN_LENGTH, it means pin length of user code is 8 digits",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -561,7 +561,7 @@
 
             {
                 "name"              : "user_code_configuration",
-                "description"       : "",
+                "description"       : "Set user code is 12345678",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -584,7 +584,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
+                "description"       : "Wait for 10s to test user code value which have set before",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -599,7 +599,7 @@
         "testcases" : [
             {
                 "name"              : "door_lock_configuration",
-                "description"       : "",
+                "description"       : "Open schlage lock",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -621,18 +621,8 @@
             },
 
             {
-                "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "time"          : "10"
-                }
-            },
-
-            {
                 "name"              : "door_lock_configuration",
-                "description"       : "",
+                "description"       : "Close schlage lock",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -650,16 +640,6 @@
                     "value"     : {
                         "value" :     1
                     }
-                }
-            },
-
-            {
-                "name"              : "physical_test",
-                "description"       : "Wait for 10s to test",
-                "input"             : {
-                    "devicetype"    : "zwave",
-                    "id"            : "D_ID",
-                    "time"          : "10"
                 }
             }
         ]

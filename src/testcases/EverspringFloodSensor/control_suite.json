@@ -29,7 +29,7 @@
         "testcases" : [
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 30s to test pre-association",
+                "description"       : "Wait for 30s to test pre-association (auto alarms)",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",

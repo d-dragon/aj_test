@@ -59,6 +59,16 @@
         "testsuite" : "Test association with another device",
         "testcases" : [
             {
+                "name"              : "physical_test",
+                "description"       : "Wait 30s to test pre-association",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
+
+            {
                 "name"              : "basic_set_association",
                 "description"       : "Association with our controller (ceres)",
                 "input"             : {
@@ -91,7 +101,7 @@
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "6F",
+                    "data1"         : "BD",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"         : "1"
@@ -99,7 +109,7 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "nodefollow"    : ["6F"]
+                        "nodefollow"    : ["BD"]
                     }
                 }
             },
@@ -114,7 +124,7 @@
                     "writecommand"  : "SET",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "6B",
+                    "data1"         : "BE",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"         : "1"
@@ -122,7 +132,7 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "nodefollow"    : ["6B"]
+                        "nodefollow"    : ["BE"]
                     }
                 }
             },
@@ -174,12 +184,34 @@
             },
 
             {
-                "name"              : "physical_test",
-                "description"       : "Wait 60s to test association",
+                "name"              : "controlonoff",
+                "description"       : "Value 30 (Hex) means Smart dimmer will dim with value 48. This test case to test association with smart dimmer 2nd and led zwave devices",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
-                    "time"          : "60"
+                    "value"         : "30"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  30
+                    }
+                }
+            },
+
+            {
+                "name"              : "controlonoff",
+                "description"       : "Turn off 2 devices",
+                "input"             : {
+                    "devicetype"    : "zwave",
+                    "id"            : "D_ID",
+                    "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
                 }
             }
         ]
@@ -303,7 +335,7 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 60s to test overload protection, The load wont be closed when the Current is more than 15.5A and the time is more than 2 minutes. ",
+                "description"       : "Wait for 60s to test overload protection, The load wont be closed when the Current is more than 39.5A and the time is more than 5s. ",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -553,7 +585,7 @@
                     "writecommand"  : "REMOVE",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "6B",
+                    "data1"         : "BE",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"         : "1"
@@ -561,7 +593,7 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "nodefollow"    : ["6B"]
+                        "nodefollow"    : ["BE"]
                     }
                 }
             },
@@ -576,7 +608,7 @@
                     "writecommand"  : "REMOVE",
                     "readcommand"   : "GET",
                     "data0"         : "ONOFF_GROUP",
-                    "data1"         : "6F",
+                    "data1"         : "BD",
                     "data2"         : "1",
                     "type"          : "ONOFF_GROUP",
                     "force"         : "1"
@@ -584,7 +616,7 @@
                 "verdict"       : {
                     "method"        : "expectation",
                     "value"     : {
-                        "nodefollow"    : ["6F"]
+                        "nodefollow"    : ["BD"]
                     }
                 }
             }

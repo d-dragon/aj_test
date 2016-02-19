@@ -16,7 +16,7 @@
 				"input" 			: { 
 					"devicetype" 	: "zwave",
 					"action"		: "open",
-					"time"			: "60"
+					"time"			: "120"
 				}
 			},
 

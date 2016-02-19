@@ -8,7 +8,6 @@
 				"input" 			: {
 					"devicetype"	: "zwave"
 				},
-				"description" 		: "Get list of available devices in the controller"
 			},
 
 			{
