@@ -1,120 +1,85 @@
 [
 	{
-		"testsuit" : "ZB-MotionZBMS3",
+		"testsuite" : "Get sensing value",
 		"testcases" :	[
-			{	
+			{
 				"name"				: "listdevices",
+				"description" 		: "Get list of available devices in the controller",
 				"input" 			: {
 					"devicetype"	: "zigbee"
 				}
 			},
 
 			{
-				"name" 				: "writespec",
+				"name" 				: "get_temperature",
+				"description"		: "Get status of TEMP ( celsius ) for verifying value which is available",
 				"input" 			: {
-					"devicetype"	: "zigbee",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "ONOFF",
-					"data0"			: "REMOVE",
-					"data1"			: "A_ID",
-					"data2"			: "1"
-				}
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zigbee",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "ONOFF"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zigbee",
-					"id"            : "D_ID",
-					"class"         : "SENSOR",
-					"command"       : "TEMP"
-				}
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zigbee",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "ONOFF",
-					"data0"			: "ADD",
-					"data1"			: "A_ID",
-					"data2"			: "1"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zigbee",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "ONOFF"
-				}
-			},
-
-			{
-				"name" 				: "controlonoff",
-				"input" 			: {
-					"devicetype"    : "zigbee",
-					"id"            : "18FE",
-					"value"         : "0"
-				}
-			},
-			{
-
-				"name" 				: "monitortrigger",
-				"description"		: "Monitor sensor status",
-				"input" 			: {
-					"devicetype"    : "zigbee",
-					"id"			: "D_ID",
-					"time"			: "90"
-				}
-			},
-
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zigbee",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "ONOFF",
-					"data0"			: "REMOVE",
-					"data1"			: "A_ID",
-					"data2"			: "1"
-				}
-			},
-
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zigbee",
-					"id"            : "D_ID",
-					"class"         : "ASSOCIATION",
-					"command"       : "ONOFF"
-				}
-			},
-
-			{
-
-				"name" 				: "monitortrigger",
-				"input" 			: {
-					"devicetype"    : "zigbee",
-					"id"			: "D_ID",
-					"time"			: "90"
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "SENSOR",
+                    "readcommand"   : "TEMP"
 				}
 			}
 		]
-	}
+	},
+
+	{
+		"testsuite" : "Association with another device",
+		"testcases" : [
+            {
+                "name" 				: "association",
+                "description"		: "Association with Led zigbee",
+                "input" 			: {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "ONOFF",
+                    "readcommand"   : "ONOFF",
+                    "data0"         : "ADD",
+                    "data1"         : "C757"
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test association with Led zigbee",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            }
+        ]
+    },
+
+    {
+        "testsuite" : "Control on-off device",
+        "testcases" : [
+    	    {
+                "name"              : "controlonoff",
+                "description"       : "Turn off device",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "C757",
+                    "value"         : "00"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 90s to test time trigger motion",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "90"
+                }
+            }
+        ]
+    }
 ]

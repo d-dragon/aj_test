@@ -316,7 +316,7 @@
         "testcases" : [
              {
                 "name"              : "noti_send_configuration",
-                "description"       : "Set NOTIFICATION is 0, value 0 means disable sending notification to our controller whwen the state of Siren changed",
+                "description"       : "Set NOTIFICATION is 0, value 0 means disable sending notification to our controller when the load changed",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -355,7 +355,7 @@
 
             {
                 "name"              : "noti_send_configuration",
-                "description"       : "Set NOTIFICATION is 1, value 1 means enable sending hail CC notification to our controller whwen the state of Siren changed",
+                "description"       : "Set NOTIFICATION is 1, value 1 means enable sending hail CC notification to our controller whwen the load changed",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",
@@ -394,7 +394,7 @@
 
             {
                 "name"              : "noti_send_configuration",
-                "description"       : "Set NOTIFICATION is 2, value 2 means enable sending basic CC report notification to our controller whwen the state of Siren changed",
+                "description"       : "Set NOTIFICATION is 2, value 2 means enable sending basic CC report notification to our controller whwen the load changed",
                 "input"             : {
                     "devicetype"    : "zwave",
                     "id"            : "D_ID",

@@ -11,6 +11,14 @@
 		]
 	},
 
+	"adddevice": {
+		"testitems": [
+			{ "name": "open_closenetwork" },
+			{"name" : "listen_notification"},
+			{ "name": "list_devices" }
+		]
+	},
+
 	"openclosenetwork": {
 		"testitems": [
 			{ "name": "open_closenetwork" },
@@ -46,6 +54,12 @@
 	"writespec":{
 		"testitems": [
 			{"name" : "write_spec"}
+		]
+	},
+
+	"closenetwork" :{
+		"testitems": [
+			{"name": "open_closenetwork"}
 		]
 	},
 

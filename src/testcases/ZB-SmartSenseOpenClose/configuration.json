@@ -1,8 +1,9 @@
 {
-	"serviceid" : "93c06771-c725-48c2-b1ff-5c313ee312cc",
-	"deviceindex" : "0",
-	"altdeviceid" : "",
-	"devicetype" : "zigbee",
-	"associationdevidx" : "1",
-	"altassdevid" : ""
+    "devicename": "ZBSmartSenceOpenClose",
+    "serviceid": "93c06771-c725-48c2-b1ff-5c313ee312cc",
+    "deviceindex": "2",
+    "altdeviceid": "",
+    "devicetype": "zigbee",
+    "associationdevidx": "0",
+    "altassdevid": ""
 }

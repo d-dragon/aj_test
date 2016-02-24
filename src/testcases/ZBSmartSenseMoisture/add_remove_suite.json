@@ -1,62 +1,48 @@
 [ 
 	{
-		"testsuit" : "SmartThings(TM) SmartSense Moisture",
-		"testcases" :	[
+		"testsuite" 				: "ZB-SmartSenseMoisture",
+		"testcases" 				:	[
+
 			{
 				"name" 				: "listdevices",
+				"description"		: "Open network to adding device",
 				"input" 			: {
 					"devicetype"	: "zigbee"
 				}
-				,
-				"description"		: "List devices which is available in the zigbee controller"
 			},
-			{
-				"name" 				: "openclosenetwork",
-				"input" 			: {
-					"devicetype"	: "zigbee",
-					"action"		: "open"
+
+			{ 
+				"name" 				: "adddevice",
+				"description"		: "Open network to adding device", 
+				"input" 			: { 
+					"devicetype" 	: "zigbee",
+					"action"		: "open",
+					"time"			: "60"
 				}
-				,
-				"description"		: "Set open network in oder to add new zigbee device to controller"
 			},
+
 			{
-				"name"				: "waitingfor",
-				"input"				: {
-					"devicetype"    : "zwave",
-					"id"            : "",
-					"time"			: "180"
-				},
-				"description"		: "Reset zigbee device and wait 3 minutes to add zigbee device"
-			},
-			{	
-				"name"	: "listdevices",
-				"input" :{
-					"devicetype"	: "zigbee"
-				},
-				"description"		: "List all device(s) in which are handled by this controller"
-			},
-			{
-				"name" 				: "writespec",
-				"input" 			: {
-					"devicetype"	: "zigbee",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "REPORT",
-					"data0"			: "ADD",
-					"data1"			: "01",
-					"data2"			: "1"
-				},
-				"description"		: "Set association for this device to report alarm information"
-			},
-			{
-				"name" 				: "openclosenetwork",
-				"input" 			: {
-					"devicetype"	: "zigbee",
+                "name" 				: "addjoinid",
+                "description"		: "Add join id to send notify to controller (ceres)",
+                "input" 			: {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "REPORT",
+                    "data0"         : "ADD",
+                    "data1"         : "01"
+                }
+            },
+
+
+			{ 
+				"name" 				: "closenetwork",
+				"description"		: "Close network", 
+				"input" 			: { 
+					"devicetype" 	: "zigbee",
 					"action"		: "close"
 				}
-				,
-				"description"		: "Close network command to stop adding new zigbee device"
-			}
+			}			
 		]
 	}
 ]

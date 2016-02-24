@@ -1,8 +1,9 @@
 {
+    "devicename": "ZB-MotionZBMS3",
     "serviceid": "93c06771-c725-48c2-b1ff-5c313ee312cc",
-    "deviceindex": "3",
+    "deviceindex": "0",
     "altdeviceid": "",
     "devicetype": "zigbee",
-    "associationdevidx": "4",
+    "associationdevidx": "1",
     "altassdevid": ""
 }

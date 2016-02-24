@@ -7,7 +7,7 @@
 				"description" 		: "Get list of available devices in the controller",
 				"input" 			: {
 					"devicetype"	: "zwave"
-				},
+				}
 			},
 
 			{

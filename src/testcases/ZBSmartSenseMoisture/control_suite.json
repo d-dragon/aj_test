@@ -1,62 +1,51 @@
-[ 
+[
 	{
-		"testsuit" : "SmartThings(TM) SmartSense Moisture",
+		"testsuite" : "Get sensing value",
 		"testcases" :	[
-			{	
-				"name"	: "listdevices",
-				"input" :{
+			{
+				"name"				: "listdevices",
+				"description" 		: "Get list of available devices in the controller",
+				"input" 			: {
 					"devicetype"	: "zigbee"
-				},
-				"description"		: "List all device(s) in which are handled by this controller"
+				}
 			},
+
 			{
-				"name" 				: "readspec",
+				"name" 				: "get_battery",
+				"description"		: "Get status of BATTERY ( percent ) for verifying value which is available",
 				"input" 			: {
-					"devicetype" 	: "zigbee",
-					"id" 			: "D_ID",
-					"class"			: "BATTERY",
-					"command"		: "PERCENT",
-					"type"			: "",
-					"force"			: "1"
-				},
-				"description"		: "Get remained batter of this Sensor (%)"
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "BATTERY",
+                    "readcommand"   : "PERCENT"
+				}
 			},
+
 			{
-				"name" 				: "readspec",
+				"name" 				: "get_temperature",
+				"description"		: "Get status of TEMP ( celsius ) for verifying value which is available",
 				"input" 			: {
-					"devicetype" 	: "zigbee",
-					"id" 			: "D_ID",
-					"class"			: "SENSOR",
-					"command"		: "TEMP",
-					"type"			: "",
-					"force"			: "1"
-				},
-				"description"		: "Get value of temperature which is measured by Sensor (Fahrenheit and Celsius)"
-			},
-			{
-				"name"				: "waitingfor",
-				"input"				: {
-					"devicetype"    : "zigbee",
-					"id"            : "D_ID",
-					"time"			: "120"
-				},
-				"description"		: "Please try to wake up zigbee device and observe the output message which having temperature of environment, and check Moisture/Flood dectect via notify message"
-			},
-			{
-				"name" 				: "removedevice",
-				"input" 			: {
-					"devicetype" 	: "zigbee",
-					"id" 			: "D_ID"
-				},
-				"description"		: "Remove SmartThings(TM) SmartSense Moisture was added before"
-			},
-			{	
-				"name"	: "listdevices",
-				"input" :{
-					"devicetype"	: "zigbee"
-				},
-				"description"		: "Verify whether zigbee SmartThings(TM) SmartSense Moisture was removed or not?"
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "SENSOR",
+                    "readcommand"   : "TEMP"
+				}
 			}
 		]
-	}
-]
+	},
+
+	{
+		"testsuite" : "Test alarm sending (water alarm and battery status) to controller when flood detected",
+		"testcases" :	[
+			{
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test flood alarm, put device into water then an alarm message will be sent to controller",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            }
+        ]
+    }
+]	

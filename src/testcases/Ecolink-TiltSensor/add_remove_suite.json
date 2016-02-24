@@ -12,7 +12,7 @@
 
 			{ 
 				"name" 				: "adddevice", 
-				"description"		: "Open network Add device in the second button pressing",
+				"description"		: "Open network to adding device",
 				"input" 			: { 
 					"devicetype" 	: "zwave",
 					"action"		: "open",

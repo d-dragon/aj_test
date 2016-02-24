@@ -18,6 +18,44 @@
 		]
 	},
 
+	"get_battery":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"get_temperature":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"addjoinid":{
+		"testitems": [
+			{"name" : "write_spec"}
+		]
+	},
+
+	"physical_test":{
+		"testitems": [
+			{"name" : "listen_notification"}
+		]
+	},
+
+	"adddevice": {
+		"testitems": [
+			{ "name": "open_closenetwork" },
+			{"name" : "listen_notification"},
+			{ "name": "list_devices" }
+		]
+	},
+
+	"closenetwork" :{
+		"testitems": [
+			{"name": "open_closenetwork"}
+		]
+	},
+
 	"listdevice" :{
 		"testitems": [
 			{"name": "list_devices"}

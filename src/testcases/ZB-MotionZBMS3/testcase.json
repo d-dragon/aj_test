@@ -33,7 +33,7 @@
 		]
 	},
 	
-	"readspec":{
+	"get_temperature":{
 		"testitems": [
 			{"name" : "read_spec"}
 		]
@@ -46,13 +46,20 @@
 		]
 	},
 
-	"monitortrigger":{
+	"physical_test":{
 		"testitems": [
 			{"name" : "listen_notification"}
 		]
 	},
 
-	"writespec":{
+	"association":{
+		"testitems": [
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
+		]
+	},
+
+	"addjoinid":{
 		"testitems": [
 			{"name" : "write_spec"}
 		]
@@ -81,6 +88,4 @@
 			{"name" : "rule_actions"}
 		]
 	}
-
-
 }

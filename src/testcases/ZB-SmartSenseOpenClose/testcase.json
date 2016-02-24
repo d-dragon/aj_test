@@ -1,7 +1,44 @@
 {
+	"wifisetup":{
+		"testitems" : [
+			{"name" : "onboarding"}
+		]
+	},
+	
 	"listdevices": {
 		"testitems": [
 			{"name": "list_devices"}
+		]
+	},
+
+	"openclosenetwork": {
+		"testitems": [
+			{ "name": "open_closenetwork" },
+			{ "name": "list_devices" }
+		]
+	},
+
+	"get_battery":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"get_temperature":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"addjoinid":{
+		"testitems": [
+			{"name" : "write_spec"}
+		]
+	},
+
+	"physical_test":{
+		"testitems": [
+			{"name" : "listen_notification"}
 		]
 	},
 
@@ -16,6 +53,12 @@
 	"closenetwork" :{
 		"testitems": [
 			{"name": "open_closenetwork"}
+		]
+	},
+
+	"listdevice" :{
+		"testitems": [
+			{"name": "list_devices"}
 		]
 	},
 
@@ -38,20 +81,6 @@
 			{"name" : "read_spec"}
 		]
 	},
-
-	"readspec_takeaction":{
-		"testitems": [
-			{"name" : "read_spec"},
-			{"name" : "listen_notification"}
-		]
-	},
-
-	"monitortrigger":{
-		"testitems": [
-			{"name" : "listen_notification"}
-		]
-	},
-
 	"writespec":{
 		"testitems": [
 			{"name" : "write_spec"}
@@ -80,7 +109,18 @@
 			{"name" : "get_rule"},
 			{"name" : "rule_actions"}
 		]
+	},
+
+	"wemoupnp" : {
+		"testitems" : [
+			{"name" : "listen_notification"},
+			{"name" : "get_binary"},
+			{"name" : "set_binary"}
+		]
+	},
+	"waitingfor":{
+		 "testitems" : [
+            {"name" : "listen_notification"}
+        ]
 	}
-
-
 }

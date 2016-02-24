@@ -1,44 +1,51 @@
 [
 	{
-		"testsuit" : "ZB-SmartSenseOpenClose",
+		"testsuite" : "Get sensing value",
 		"testcases" :	[
-			{	
+			{
 				"name"				: "listdevices",
+				"description" 		: "Get list of available devices in the controller",
 				"input" 			: {
 					"devicetype"	: "zigbee"
 				}
 			},
 
-
 			{
-				"name" 				: "readspec",
+				"name" 				: "get_battery",
+				"description"		: "Get status of BATTERY ( percent ) for verifying value which is available",
 				"input" 			: {
-					"devicetype"    : "zigbee",
-					"id"            : "D_ID",
-					"class"         : "SENSOR",
-					"command"       : "TEMP"
-				}
-			},
-			{
-				"name" 				: "readspec",
-				"input" 			: {
-					"devicetype"    : "zigbee",
-					"id"            : "D_ID",
-					"class"         : "BATTERY",
-					"command"       : "PERCENT"
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "BATTERY",
+                    "readcommand"   : "PERCENT"
 				}
 			},
 
-
 			{
-				"name" 				: "monitortrigger",
-				"description"		: "Monitor sensor status (open/close)",
+				"name" 				: "get_temperature",
+				"description"		: "Get status of TEMP ( celsius ) for verifying value which is available",
 				"input" 			: {
-					"devicetype"    : "zigbee",
-					"id"			: "D_ID",
-					"time"			: "120"
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "SENSOR",
+                    "readcommand"   : "TEMP"
 				}
-			}		
+			}
 		]
-	}
-]
+	},
+
+	{
+		"testsuite" : "Test alarm sending (open/close alarm and battery status) to controller when open or close the door",
+		"testcases" :	[
+			{
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test open/close alarm, do open or close the door then an alarm message will be sent to controller",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            }
+        ]
+    }
+]	
