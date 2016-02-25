@@ -28,7 +28,7 @@
 		"testcases" : [
             {
                 "name" 				: "association",
-                "description"		: "Association with Led zigbee",
+                "description"		: "Association with Led zigbee device",
                 "input" 			: {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
@@ -42,42 +42,11 @@
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 30s to test association with Led zigbee",
+                "description"       : "Wait for 360s to test trigger motion, after 180s sensor will report motion to controller",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
-                    "time"          : "30"
-                }
-            }
-        ]
-    },
-
-    {
-        "testsuite" : "Control on-off device",
-        "testcases" : [
-    	    {
-                "name"              : "controlonoff",
-                "description"       : "Turn off device",
-                "input"             : {
-                    "devicetype"    : "zigbee",
-                    "id"            : "C757",
-                    "value"         : "00"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :  0
-                    }
-                }
-            },
-
-            {
-                "name"              : "physical_test",
-                "description"       : "Wait for 90s to test time trigger motion",
-                "input"             : {
-                    "devicetype"    : "zigbee",
-                    "id"            : "D_ID",
-                    "time"          : "90"
+                    "time"          : "360"
                 }
             }
         ]

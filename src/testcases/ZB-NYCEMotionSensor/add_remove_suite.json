@@ -1,16 +1,19 @@
 [ 
 	{
-		"testsuit" 					: "ZB-NYCEMotionSensor",
+		"testsuite" 				: "ZB-NYCE-MotionSensor",
 		"testcases" 				:	[
+
 			{
 				"name" 				: "listdevices",
+				"description"		: "Open network to adding device",
 				"input" 			: {
 					"devicetype"	: "zigbee"
 				}
 			},
 
 			{ 
-				"name" 				: "adddevice", 
+				"name" 				: "adddevice",
+				"description"		: "Open network to adding device", 
 				"input" 			: { 
 					"devicetype" 	: "zigbee",
 					"action"		: "open",
@@ -18,28 +21,28 @@
 				}
 			},
 
+			{
+                "name" 				: "addjoinid",
+                "description"		: "Add join id to send notify to controller (ceres)",
+                "input" 			: {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "ASSOCIATION",
+                    "writecommand"	: "REPORT",
+                    "data0"         : "ADD",
+                    "data1"         : "01"
+                }
+            },
+
+
 			{ 
-				"name" 				: "closenetwork", 
+				"name" 				: "closenetwork",
+				"description"		: "Close network", 
 				"input" 			: { 
 					"devicetype" 	: "zigbee",
 					"action"		: "close"
 				}
-			},
-
-			
-			{
-				"name" 				: "writespec",
-				"description"		: "Add JoinID which sensor will report to",
-				"input" 			: {
-					"devicetype"	: "zigbee",
-					"id"			: "D_ID",
-					"class"			: "ASSOCIATION",
-					"command"		: "REPORT",
-					"data0"			: "ADD",
-					"data1"			: "01",
-					"data2"			: "1"
-				}
-			}
+			}			
 		]
 	}
 ]

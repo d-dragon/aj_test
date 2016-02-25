@@ -33,7 +33,32 @@
 		]
 	},
 	
-	"readspec":{
+	"addjoinid":{
+		"testitems": [
+			{"name" : "write_spec"}
+		]
+	},
+
+
+	"get_battery":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"get_temperature":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"get_huminity":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"get_time_delay":{
 		"testitems": [
 			{"name" : "read_spec"}
 		]
@@ -46,9 +71,15 @@
 		]
 	},
 
-	"writespec":{
+	"time_delay_configuration":{
 		"testitems": [
 			{"name" : "write_spec"}
+		]
+	},
+
+	"physical_test":{
+		"testitems": [
+			{"name" : "listen_notification"}
 		]
 	},
 

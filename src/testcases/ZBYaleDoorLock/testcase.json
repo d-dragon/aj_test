@@ -18,6 +18,13 @@
 		]
 	},
 
+	"get_battery":{
+		"testitems": [
+			{"name" : "read_s_spec"}
+		]
+	},
+
+
 	"listdevice" :{
 		"testitems": [
 			{"name": "list_devices"}
@@ -31,6 +38,21 @@
 		]
 	},
 
+	"adddevice": {
+		"testitems": [
+			{ "name": "open_closenetwork" },
+			{"name" : "listen_notification"},
+			{ "name": "list_devices" }
+		]
+	},
+
+	"closenetwork" :{
+		"testitems": [
+			{"name": "open_closenetwork"}
+		]
+	},
+
+
 	"controlonoff":{
 		"testitems": [
 			{"name" : "set_binary"},
@@ -38,14 +60,33 @@
 		]
 	},
 	
-	"readspec":{
+	"get_door_status":{
 		"testitems": [
-			{"name" : "read_spec"}
+			{"name" : "read_s_spec"}
 		]
 	},
-	"writespec":{
+
+	"get_user_code":{
 		"testitems": [
-			{"name" : "write_spec"}
+			{"name" : "read_s_spec"}
+		]
+	},
+	
+	"remove_user_code":{
+		"testitems": [
+			{"name" : "write_s_spec"}
+		]
+	},
+
+	"set_user_code":{
+		"testitems": [
+			{"name" : "write_s_spec"}
+		]
+	},
+
+	"open_close":{
+		"testitems": [
+			{"name" : "write_s_spec"}
 		]
 	},
 
@@ -80,7 +121,7 @@
 			{"name" : "set_binary"}
 		]
 	},
-	"waitingfor":{
+	"physical_test":{
 		 "testitems" : [
             {"name" : "listen_notification"}
         ]
