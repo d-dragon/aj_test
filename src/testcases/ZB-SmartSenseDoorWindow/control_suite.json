@@ -1,0 +1,29 @@
+[
+	{
+		"testsuite" : "Get sensing value",
+		"testcases" :	[
+			{
+				"name"				: "listdevices",
+				"description" 		: "Get list of available devices in the controller",
+				"input" 			: {
+					"devicetype"	: "zigbee"
+				}
+			}
+		]
+	},
+
+	{
+		"testsuite" : "Test alarm auto report message ",
+		"testcases" :	[
+			{
+                "name"              : "physical_test",
+                "description"       : "Wait for 120s to test alarm message (temperature, axises, open/close the door) which will be sent to controller",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "120"
+                }
+            }
+        ]
+    }
+]	

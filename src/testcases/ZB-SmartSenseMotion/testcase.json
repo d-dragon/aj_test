@@ -33,7 +33,32 @@
 		]
 	},
 	
-	"readspec":{
+	"addjoinid":{
+		"testitems": [
+			{"name" : "write_spec"}
+		]
+	},
+
+
+	"get_battery":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"get_temperature":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"get_huminity":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"get_time_delay":{
 		"testitems": [
 			{"name" : "read_spec"}
 		]
@@ -46,15 +71,15 @@
 		]
 	},
 
-	"monitortrigger":{
+	"time_delay_configuration":{
 		"testitems": [
-			{"name" : "listen_notification"}
+			{"name" : "write_spec"}
 		]
 	},
 
-	"writespec":{
+	"physical_test":{
 		"testitems": [
-			{"name" : "write_spec"}
+			{"name" : "listen_notification"}
 		]
 	},
 
@@ -80,7 +105,15 @@
 			{"name" : "get_rule"},
 			{"name" : "rule_actions"}
 		]
-	}
+	},
 
+	"wemoupnp" : {
+		"testitems" : [
+			{"name" : "listen_notification"},
+			{"name" : "get_binary"},
+			{"name" : "set_binary"}
+
+		]
+	}
 
 }

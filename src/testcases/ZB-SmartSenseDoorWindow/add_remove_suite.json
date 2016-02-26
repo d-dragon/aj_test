@@ -1,6 +1,6 @@
 [ 
 	{
-		"testsuite" 				: "ZB-SmartSenseTempHuminity",
+		"testsuite" 				: "ZB-NYCE-MotionSensor",
 		"testcases" 				:	[
 
 			{

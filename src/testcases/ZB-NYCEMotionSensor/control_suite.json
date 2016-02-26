@@ -74,6 +74,39 @@
 				}
 			},
 
+            {
+                "name"              : "time_delay_configuration",
+                "description"       : "Set TIME value is 5, it means time delay for motion report is 5s",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "TIME",
+                    "data0"         : "5"
+                }
+            },
+
+            {
+                "name"              : "get_time_delay",
+                "description"       : "Get status of TIME (time delay) which have set before",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "readcommand"   : "TIME"
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 60s to test time delay which have set before",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "60"
+                }
+            },
+
 			{
                 "name"              : "time_delay_configuration",
                 "description"       : "Set TIME value is 10, it means time delay for motion report is 10s",
