@@ -516,15 +516,30 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 				}
 			}
             LOGCXX("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl);
-			sleep(5);
+			/*Wait for 5s between test cases */
+			//sleep(5);
 		}
 		if (0 == mReferenceFlag) {
 
 			//mVerdictHelper->DBGPrint();
-			/* Implement temparary verdict reference result */
+			/* Implemen/'t temparary verdict reference result */
+
 			if (VERDICT_REFERENCE == test_case_info.verdictType) {
                 LOGCXX("Verdict type: REFERENCE");
-				test_case_info.verdictResult = mVerdictHelper->VerdictResult(&test_case_info, "src/references/references.json");
+                string device_type;
+
+                JSONGetObjectValue(tcInputArg, "devicetype", &device_type);
+  				/* compare device type */
+				if (0 == device_type.compare("zwave")) {
+					test_case_info.verdictResult = mVerdictHelper->VerdictResult(&test_case_info, "src/zwave_references/references.json");
+				}
+				else if (0 == device_type.compare("zigbee")){
+					test_case_info.verdictResult = mVerdictHelper->VerdictResult(&test_case_info, "src/zigbee_references/references.json");
+				}
+				else if (0 == device_type.compare("upnp")){
+				}
+				else if (0 == device_type.compare("wemo")){
+				}	
 			} else if (VERDICT_EXPECTED == test_case_info.verdictType){
                 LOGCXX("Verdict type: EXPECTED");
 				mVerdictHelper->VerdictResult(&test_case_info,"");
@@ -838,6 +853,17 @@ int JsonParser::UpdateReferenceValue(TestItemInfo *ti_info, string response_msg)
 							status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot, command_class_str, "", "electricmeter");
 						}
 					}
+				} else if ( 0 == strcmp(command_class_str, "SENSOR")) {
+
+					string sensor_type_str;
+					JSONGetObjectValue(command_info_obj, "cmd", &sensor_type_str);
+					LOGCXX("sensor_type_str = " << sensor_type_str);
+
+					if (0 == sensor_type_str.compare("TEMP")) {
+							status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot, command_class_str, sensor_type_str, "celsius");
+					} else if (0 == sensor_type_str.compare("HUMI")) {
+							status = ReplaceValueSensorMultilevel(response_obj, mRefJsonRoot, command_class_str, sensor_type_str, "relative_humidity");
+					}
 				} else {
 					LOGCXX("command class not matched");
 					return ERROR;
@@ -871,7 +897,7 @@ int JsonParser::ReplaceValueSensorMultilevel(json_t *resp_root, json_t *ref_root
 	if (NULL == target_ref_obj) {
 		return ERROR;
 	}
-	if (0 == strcmp(cmd_class, "SENSOR_MULTILEVEL")) {
+	if ((0 == strcmp(cmd_class, "SENSOR_MULTILEVEL")) || (0 == strcmp(cmd_class , "SENSOR"))) {
 
 		target_ref_obj = json_object_get(target_ref_obj, sensor_type.c_str());
 	}

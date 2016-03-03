@@ -73,7 +73,7 @@ struct TestItemInfo
 #define METER_CLASS						"METER"
 #define	BATTERY_CLASS					"BATTERY"
 #define SENSOR_MULTILEVEL_CLASS			"SENSOR_MULTILEVEL"
-
+#define ZIGBEE_SENSOR_CLASS				"SENSOR"
 
 
 
@@ -163,9 +163,9 @@ struct TestCase{
 };
 enum SignalTypeEnum{
     ZWAVE = 0,
-    ZIGBEE,
-    UPNP,
-    UNKNOWN
+    ZIGBEE = 1,
+    UPNP = 2,
+    UNKNOWN = 3
 };
 enum SignalNameEnum{
     ADD_DEV = 0,

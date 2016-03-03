@@ -1,7 +1,50 @@
 {
+	"wifisetup":{
+		"testitems" : [
+			{"name" : "onboarding"}
+		]
+	},
+	
 	"listdevices": {
 		"testitems": [
 			{"name": "list_devices"}
+		]
+	},
+
+	"openclosenetwork": {
+		"testitems": [
+			{ "name": "open_closenetwork" },
+			{ "name": "list_devices" }
+		]
+	},
+
+	"get_huminity":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"get_battery":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"get_temperature":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+
+	"addjoinid":{
+		"testitems": [
+			{"name" : "write_spec"}
+		]
+	},
+
+	"physical_test":{
+		"testitems": [
+			{"name" : "listen_notification"}
 		]
 	},
 
@@ -19,6 +62,12 @@
 		]
 	},
 
+	"listdevice" :{
+		"testitems": [
+			{"name": "list_devices"}
+		]
+	},
+
 	"removedevice": {
 		"testitems": [
 			{ "name": "remove_device" },
@@ -33,54 +82,14 @@
 		]
 	},
 	
-	"addjoinid":{
+	"readspec":{
+		"testitems": [
+			{"name" : "read_spec"}
+		]
+	},
+	"writespec":{
 		"testitems": [
 			{"name" : "write_spec"}
-		]
-	},
-
-
-	"get_battery":{
-		"testitems": [
-			{"name" : "read_spec"}
-		]
-	},
-
-	"get_temperature":{
-		"testitems": [
-			{"name" : "read_spec"}
-		]
-	},
-
-	"get_huminity":{
-		"testitems": [
-			{"name" : "read_spec"}
-		]
-	},
-
-	"get_time_delay":{
-		"testitems": [
-			{"name" : "read_spec"}
-		]
-	},
-
-	"readspec_takeaction":{
-		"testitems": [
-			{"name" : "read_spec"},
-			{"name" : "listen_notification"}
-		]
-	},
-
-	"time_delay_configuration":{
-		"testitems": [
-			{"name" : "write_spec"},
-			{"name" : "read_spec"}
-		]
-	},
-
-	"physical_test":{
-		"testitems": [
-			{"name" : "listen_notification"}
 		]
 	},
 
@@ -113,8 +122,11 @@
 			{"name" : "listen_notification"},
 			{"name" : "get_binary"},
 			{"name" : "set_binary"}
-
 		]
+	},
+	"waitingfor":{
+		 "testitems" : [
+            {"name" : "listen_notification"}
+        ]
 	}
-
 }

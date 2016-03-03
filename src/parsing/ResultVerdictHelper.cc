@@ -11,13 +11,14 @@ ResultVerdictHelper::~ResultVerdictHelper(){
 }
 
 int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *reference_path) {
+
 	int ret = VERDICT_RET_SUCCESS;
-    SignalTypeEnum sigtype;
+    SignalTypeEnum sigtype;       
 	if (VERDICT_REFERENCE == test_case_t->verdictType) {
 		int ref_verdict;
 		json_error_t err;
 		json_t *ref_root;
-
+        //Load file reference
 		ref_root = json_load_file(reference_path, 0, &err);
 		if (NULL == ref_root) {
 			cout << "load references.json failed: " << err.source << " >> " << err.text << endl;
@@ -34,7 +35,7 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
 			if (VERDICT_RET_SUCCESS != ref_verdict) {
 				ret = ref_verdict;
 			}
-			LOGCXX("Test item " << test_case_t->testItemInfo[i].name << ": " << GetVerdictStringByCode(ret) << endl);
+			LOGCXX( endl << "Test item " << test_case_t->testItemInfo[i].name << ": " << GetVerdictStringByCode(ret) << endl);
 
 		}
 		json_decref(ref_root);
@@ -45,9 +46,9 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
         LOGCXX("Signal type: "<< sigtype );
         switch (sigtype) {
             case ZWAVE:
-                LOGCXX("EvaluationTestCase");
-                test_case_t->verdictResult = EvaluationTestCase(*test_case_t);
-                ret                        = test_case_t->verdictResult;
+                LOGCXX("Evaluation Test Case For ZWAVE");
+                test_case_t->verdictResult = EvaluationTestCase(*test_case_t); 
+                ret                        = test_case_t->verdictResult; 
                 switch (test_case_t->verdictResult) {
                     case 	VERDICT_RET_INPUT_INVALID: /*!< Test item input invalid */
                         std::cout<<"=======>>>>>>>>>>>>>>>>Return value VERDICT_RET_INPUT_INVALID"<<std::endl;
@@ -67,6 +68,10 @@ int ResultVerdictHelper::VerdictResult(TestCase *test_case_t, const char *refere
                 }
             break;
             case ZIGBEE:
+            	LOGCXX("Evaluation Test Case For ZIGBEE");
+                test_case_t->verdictResult = EvaluationTestCase(*test_case_t); 
+                ret                        = test_case_t->verdictResult; 
+            	break;
             case UPNP:
             default:
                 LOGCXX("This type of command is not support now");
@@ -102,15 +107,18 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 
 		if (NULL == device_type) {
 			ret = VERDICT_RET_UNKNOWN;
+
+        /***** ZWAVE VERDICT REFERENCE ****/
+
 		} else if (0 == device_type->compare("zwave")) {
 			/* Specific verdict result for zwave device */
 			string resp_device_type, resp_method, resp_id, resp_status;
 
 			parser.JSONGetObjectValue(resp_root, "type", &resp_device_type);
-			parser.JSONGetObjectValue(resp_root, "deviceid", &resp_id);
+			//parser.JSONGetObjectValue(resp_root, "deviceid", &resp_id);
 			parser.JSONGetObjectValue(resp_root, "method", &resp_method);
 
-			id = GetTIArgumentValueByKey(test_item_t, "id");
+			//id = GetTIArgumentValueByKey(test_item_t, "id");
 
 			/* Verify device type, id and method */
 			if ((0 != device_type->compare(resp_device_type)) ||
@@ -122,6 +130,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 				json_t *resp_cmd_info;
 
 				parser.JSONGetObjectValue(resp_root, "status", &resp_status);
+
 				if (0 != resp_status.compare("successful")) {
 					ret = VERDICT_RET_FAILED;
 				} else {
@@ -141,8 +150,9 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 						} else {
 							/* Verdict the test item response result */
 							string resp_class, resp_type;
-							if (0 == cmd_class->compare(SENSOR_MULTILEVEL_CLASS)) {
 
+							if (0 == cmd_class->compare(SENSOR_MULTILEVEL_CLASS)) {
+                              
 								type = GetTIArgumentValueByKey(test_item_t, "type");
 
 								parser.JSONGetObjectValue(resp_cmd_info, "class", &resp_class);
@@ -201,7 +211,7 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 													sensing_resp = test_ref.referenceUnitObjs[i].numValue;
 													json_unpack(json_ref_value_obj, "F", &sensing_ref);
 													differential = sensing_ref * test_ref.margin;
-													LOGCXX("reference = " << sensing_ref << " | response = " << sensing_resp << " | differential = " << differential );
+													LOGCXX("reference = " << sensing_ref << " | response = " << sensing_resp << " | differential (reference * diff) =  " << differential );
 
 													if (((sensing_ref - differential) < sensing_resp) &&
 															((sensing_ref + differential) > sensing_resp)) {
@@ -211,11 +221,9 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 													}
 												}
 											}
-
 										}
 									}
 								}
-
 
 							} else if (0 == cmd_class->compare(BATTERY_CLASS)) {
 
@@ -226,7 +234,129 @@ int ResultVerdictHelper::ValidateTestItemResult(TestCaseReferenceUnit test_ref, 
 					}
 				}
 			}
-		}
+
+        /***** ZIGBEE VERDICT REFERENCE ****/
+
+		} else if (0 == device_type->compare("zigbee")) {
+
+            /* Specific verdict result for zwave device */
+            string resp_device_type, resp_method, resp_id, resp_status;
+
+            parser.JSONGetObjectValue(resp_root, "type", &resp_device_type);
+            parser.JSONGetObjectValue(resp_root, "method", &resp_method);
+
+            /* Verify device type and method */
+            if ((0 != device_type->compare(resp_device_type)) ||
+                ((0 != resp_method.compare("read_specR")) && (0 != resp_method.compare("read_s_specR")))) {
+                ret = VERDICT_RET_RESP_INVALID;
+            } else {
+
+                json_t *resp_cmd_info;
+
+                parser.JSONGetObjectValue(resp_root, "status", &resp_status);
+
+                if (0 != resp_status.compare("successful")) {
+                    ret = VERDICT_RET_FAILED;
+                } else {
+
+                    resp_cmd_info = json_object_get(resp_root, "commandinfo");
+                    if (NULL == resp_cmd_info) {
+                        ret = VERDICT_RET_RESP_INVALID;
+                    } else {
+
+                        /* Verify command class and sensing type */
+                        cmd_class = GetTIArgumentValueByKey(test_item_t, "class");
+                        command = GetTIArgumentValueByKey(test_item_t, "readcommand");
+
+                        if (NULL == cmd_class ||
+                                NULL == command) {
+                            ret = VERDICT_RET_UNKNOWN;
+                        } else {
+                            /* Verdict the test item response result */
+                            string resp_class, resp_cmd;
+
+                            if (0 == cmd_class->compare(ZIGBEE_SENSOR_CLASS)) {
+
+                                parser.JSONGetObjectValue(resp_cmd_info, "class", &resp_class);
+                                parser.JSONGetObjectValue(resp_cmd_info, "cmd", &resp_cmd);
+
+                                if ((0 != cmd_class->compare(resp_class)) || (0 != command->compare(resp_cmd))) {
+                                    ret = VERDICT_RET_RESP_INVALID;
+
+                                } else {
+
+                                    for (int i = 0; i < test_ref.numOfObject; i++) {
+                                       
+                                        if (0 < test_ref.referenceUnitObjs[i].value.size()) {
+                                            /* verdict sensing result by reference in reference.json */
+                                            json_t *resp_sensing_value;
+                                            /* get reference value from response message */
+                                            resp_sensing_value = json_object_get(resp_root, test_ref.referenceUnitObjs[i].key.c_str());
+                                            if (NULL == resp_sensing_value) {
+                                                /* TODO - Take suitable action in this case */
+                                                continue;
+                                            } else {
+                                                /* Get corresponding reference value to verdict */
+                                                json_t *json_ref_value_obj;
+                                                json_ref_value_obj = json_object_get(ref_root, ZIGBEE_SENSOR_CLASS);
+                                                json_ref_value_obj = json_object_get(json_ref_value_obj, command->c_str());
+                                                json_ref_value_obj = json_object_get(json_ref_value_obj, test_ref.referenceUnitObjs[i].key.c_str());
+
+                                                if (NULL != json_ref_value_obj) {
+                                                    if (json_is_real(resp_sensing_value) && json_is_real(json_ref_value_obj)) {
+                                                        double sensing_ref, sensing_resp, differential;
+
+                                                        json_unpack(json_ref_value_obj, "F", &sensing_ref);
+                                                        json_unpack(resp_sensing_value, "F", &sensing_resp);
+
+                                                        differential = sensing_ref * test_ref.margin;
+                                                        LOGCXX("reference = " << sensing_ref << " | response = " << sensing_resp << " | differential (reference * diff) =  " << differential );
+
+                                                        if (((sensing_ref - differential) < sensing_resp) &&
+                                                            ((sensing_ref + differential) > sensing_resp)) {
+                                                            ret = VERDICT_RET_SUCCESS;
+                                                        } else {
+                                                            ret = VERDICT_RET_FAILED;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            /* Use defined reference value in test suite for verdict */
+                                            json_t *json_ref_value_obj;
+                                            json_ref_value_obj = json_object_get(ref_root, ZIGBEE_SENSOR_CLASS);
+                                            json_ref_value_obj = json_object_get(json_ref_value_obj, command->c_str());
+                                            json_ref_value_obj = json_object_get(json_ref_value_obj, test_ref.referenceUnitObjs[i].key.c_str());
+
+                                            if (NULL != json_ref_value_obj) {
+                                                if (json_is_real(json_ref_value_obj)) {
+                                                    double sensing_ref, sensing_resp, differential;
+
+                                                    sensing_resp = test_ref.referenceUnitObjs[i].numValue;
+                                                    json_unpack(json_ref_value_obj, "F", &sensing_ref);
+                                                    differential = sensing_ref * test_ref.margin;
+                                                    LOGCXX("reference = " << sensing_ref << " | response = " << sensing_resp << " | differential (reference * diff) =  " << differential );
+
+                                                    if (((sensing_ref - differential) < sensing_resp) &&
+                                                            ((sensing_ref + differential) > sensing_resp)) {
+                                                        ret = VERDICT_RET_SUCCESS;
+                                                    } else {
+                                                        ret = VERDICT_RET_FAILED;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                            } else if (0 == cmd_class->compare(BATTERY_CLASS)) {
+
+                            } 
+                        }
+                    }
+                }
+            }
+        }
 	}
 
 	json_decref(resp_root);
@@ -267,12 +397,14 @@ SignalTypeEnum ResultVerdictHelper::GetSignalType(TestCase input, int index){
     tempTIarg = input.testItemInfo[index].testItemArg;
 
     for (i = 0; i < numArgofTI; i++){
+
         if ( 0 == tempTIarg[i].key.compare("devicetype")){
+
             for (j = 0; j < sizeof(signalTypeStr)/sizeof(SignalTypeStructure); j++)
-            {
-                if (0 == tempTIarg[i].value.front().compare(signalTypeStr[i].name)){
+            {	
+                if (0 == tempTIarg[i].value.front().compare(signalTypeStr[j].name)){
                     // Found a match
-                    return signalTypeStr[i].val;
+                    return signalTypeStr[j].val;
                 }
             }
         }
@@ -543,6 +675,7 @@ int ResultVerdictHelper::InOutTestCaseComparison(TestCase tc, PrivateData respDa
     bool isIncluded = false, isSecureRWSpec = false;
     std::vector<string> valInput;
     string sInput;
+    SignalTypeEnum signal_type;  
 
     index_of_write = -1;
     if (tc.numOfTestItem < 1){
@@ -576,13 +709,24 @@ int ResultVerdictHelper::InOutTestCaseComparison(TestCase tc, PrivateData respDa
     }
     if (index_of_write == -1){ // not found
         return VERDICT_RET_UNKNOWN;
-    }else{ // found
+    }else{ // found write commands
+    	/* Detect device type */
+    	signal_type = GetSignalType(tc,0); 
+
         for (i = 0; i < tc.testItemInfo[index_of_write].numOfArg; i++)
         {
-            if (0 == tc.testItemInfo[index_of_write].testItemArg[i].key.compare("data1")){
+        	if (0 == signal_type){
+        		if (0 == tc.testItemInfo[index_of_write].testItemArg[i].key.compare("data1")){
                 // Find out the key of value
                 valInput = tc.testItemInfo[index_of_write].testItemArg[i].value;
                 break;
+            	}
+        	} else if (1 == signal_type){
+        		if (0 == tc.testItemInfo[index_of_write].testItemArg[i].key.compare("data0")){
+                // Find out the key of value
+                valInput = tc.testItemInfo[index_of_write].testItemArg[i].value;
+                break;
+            	}	
             }
         }
         if (0 == valInput.size()){ // Not found data1

@@ -213,6 +213,7 @@ int main(int argc, char *argv[]){
 
 		} else if (0 == tester->mFileList[i].compare("references.json")) {
 			snprintf(reference_path, LEN_256B, "%s/%s", dir_path, tester->mFileList[i].c_str());
+			cout<<"Found references: "<<reference_path<<endl;
 		} else {
 			ts_list.push_back(tester->mFileList[i]);
 		}

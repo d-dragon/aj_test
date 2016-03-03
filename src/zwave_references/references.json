@@ -4,19 +4,25 @@
     },
     "SENSOR_MULTILEVEL": {
         "TEMP": {
-            "fahrenheit": 84.900002000000001,
-            "celsius": 29.38889
+            "fahrenheit": 89.599999999999994,
+            "celsius": 32.0
         },
         "HUMI": {
-            "percentage": 39,
-            "absolute_humidity": 10.608000000000001
+            "percentage": 34,
+            "absolute_humidity": 9.2479999999999993
         },
         "LUMI": {
-            "luminance": 23.0
+            "luminance": 16.0
         },
         "UV": {
             "ultraviolet": 0
         }
+    },
+    "SENSOR": {
+        "TEMP": {
+            "celsius": 29.38889
+        },
+        "HUMI": {}
     },
     "METER": {
         "unit": "kWh",

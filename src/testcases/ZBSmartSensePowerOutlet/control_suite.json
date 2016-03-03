@@ -22,21 +22,28 @@
                     "devicetype"    : "zigbee",
                     "id"            : "59F4",
                     "value"         : "1"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  1
+                    }
                 }
-            }
-        ]
-    },
+            },
 
-    {
-        "testsuite" : "Control on-off device",
-        "testcases" : [
-    	    {
+            {
                 "name"              : "controlonoff",
                 "description"       : "Turn off device",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "59F4",
                     "value"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value" :  0
+                    }
                 }
             }
         ]

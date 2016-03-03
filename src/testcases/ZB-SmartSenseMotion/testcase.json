@@ -73,7 +73,8 @@
 
 	"time_delay_configuration":{
 		"testitems": [
-			{"name" : "write_spec"}
+			{"name" : "write_spec"},
+			{"name" : "read_spec"}
 		]
 	},
 

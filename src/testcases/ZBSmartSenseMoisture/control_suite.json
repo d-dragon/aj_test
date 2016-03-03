@@ -29,13 +29,20 @@
                     "id"            : "D_ID",
                     "class"         : "SENSOR",
                     "readcommand"   : "TEMP"
-				}
+				},
+                "verdict"       : {
+                    "method"        : "reference",
+                    "value"     : {
+                        "celsius"       : "ref"
+                    },
+                    "diff"              : 0.1
+                }
 			}
 		]
 	},
 
 	{
-		"testsuite" : "Test alarm sending (water alarm and battery status) to controller when flood detected",
+		"testsuite" : "Test alarm sending (open-close alarm and battery status) to controller when flood detected",
 		"testcases" :	[
 			{
                 "name"              : "physical_test",

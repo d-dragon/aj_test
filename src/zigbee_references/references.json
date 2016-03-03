@@ -1,0 +1,13 @@
+{
+    "BATTERY": {
+        "batterylevel": 100
+    },
+    "SENSOR": {
+        "TEMP": {
+            "celsius": 28.23
+        },
+        "HUMI": {
+            "relative_humidity": 39.0
+        }
+    }
+}

@@ -10,16 +10,34 @@
 				}
 			},
 
-			{
-				"name" 				: "get_temperature",
-				"description"		: "Get status of TEMP ( celsius ) for verifying value which is available",
-				"input" 			: {
+            {
+                "name"              : "get_battery",
+                "description"       : "Get status of BATTERY ( percent ) for verifying value which is available",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "BATTERY",
+                    "readcommand"   : "PERCENT"
+                }
+            },
+
+            {
+                "name"              : "get_temperature",
+                "description"       : "Get status of TEMP ( celsius ) for verifying value which is available",
+                "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
                     "class"         : "SENSOR",
                     "readcommand"   : "TEMP"
-				}
-			}
+                },
+                "verdict"       : {
+                    "method"        : "reference",
+                    "value"     : {
+                        "celsius"       : "ref"
+                    },
+                    "diff"              : 0.1
+                }
+            }
 		]
 	},
 

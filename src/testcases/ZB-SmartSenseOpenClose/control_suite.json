@@ -29,17 +29,24 @@
                     "id"            : "D_ID",
                     "class"         : "SENSOR",
                     "readcommand"   : "TEMP"
-				}
+				},
+                "verdict"       : {
+                    "method"        : "reference",
+                    "value"     : {
+                        "celsius"       : "ref"
+                    },
+                    "diff"              : 0.1
+                }
 			}
 		]
 	},
 
 	{
-		"testsuite" : "Test alarm sending (open/close alarm and battery status) to controller when open or close the door",
+		"testsuite" : "Test alarm sending (open-close alarm and battery status) to controller when open or close the door",
 		"testcases" :	[
 			{
                 "name"              : "physical_test",
-                "description"       : "Wait for 30s to test open/close alarm, do open or close the door then an alarm message will be sent to controller",
+                "description"       : "Wait for 30s to test open-close alarm, do open or close the door then an alarm message will be sent to controller",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",

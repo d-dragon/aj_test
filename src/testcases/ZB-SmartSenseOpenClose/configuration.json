@@ -1,7 +1,7 @@
 {
     "devicename": "ZBSmartSenceOpenClose",
     "serviceid": "93c06771-c725-48c2-b1ff-5c313ee312cc",
-    "deviceindex": "2",
+    "deviceindex": "1",
     "altdeviceid": "",
     "devicetype": "zigbee",
     "associationdevidx": "0",

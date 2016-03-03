@@ -1,0 +1,36 @@
+[
+	{
+		"testsuite" : "Get sensing value",
+		"testcases" :	[
+			{
+				"name"				: "listdevices",
+				"description" 		: "Get list of available devices in the controller",
+				"input" 			: {
+					"devicetype"	: "zigbee"
+				}
+			},
+
+			{
+				"name" 				: "get_temperature",
+				"description"		: "Get status of TEMP ( celsius ) for verifying value which is available",
+				"input" 			: {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "SENSOR",
+                    "readcommand"   : "TEMP"
+				}
+			},
+
+			{
+                "name"              : "get_huminity",
+                "description"       : "Get status of HUMI ( celsius ) for verifying value which is available",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "SENSOR",
+                    "readcommand"   : "HUMI"
+            	}
+        	}
+        ]
+	}
+]	

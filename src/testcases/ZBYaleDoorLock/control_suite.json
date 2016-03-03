@@ -108,38 +108,38 @@
 
             {
                 "name"              : "get_user_code",
-                "description"       : "Get status of user 1st (userstatus should be available)",
+                "description"       : "Get status of user 0 (userstatus should be available)",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "readcommand"   : "STATUS",
-                    "data0"         : "1"
+                    "data0"         : "0"
                 }
             },
 
             {
                 "name"              : "set_user_code",
-                "description"       : "Set pin code (5678) for user 1st",
+                "description"       : "Set pin code (5678) for user 0",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "writecommand"  : "ADD",
-                    "data0"         : "1",
+                    "data0"         : "0",
                     "data1"         : "5678"
                 }
             },
 
             {
                 "name"              : "get_user_code",
-                "description"       : "Get status of user 1st after set pincode (userstatus should be occupied_enable) ",
+                "description"       : "Get status of user 0 after set pincode (userstatus should be occupied_enable) ",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "readcommand"   : "STATUS",
-                    "data0"         : "1"
+                    "data0"         : "0"
                 }
             },
 
@@ -149,54 +149,198 @@
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
-                    "time"          : "60"
+                    "time"          : "30"
                 }
             },
 
             {
                 "name"              : "get_user_code",
-                "description"       : "Get status of user 200 (userstatus should be available)",
+                "description"       : "Get status of user 50 (userstatus should be available)",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "readcommand"   : "STATUS",
-                    "data0"         : "200"
+                    "data0"         : "50"
                 }
             },
 
             {
                 "name"              : "set_user_code",
-                "description"       : "Set pin code (4321) for user 200",
+                "description"       : "Set pin code (45678) for user 50",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "writecommand"  : "ADD",
-                    "data0"         : "200",
-                    "data1"         : "4321"
+                    "data0"         : "50",
+                    "data1"         : "45678"
                 }
             },
 
             {
                 "name"              : "get_user_code",
-                "description"       : "Get status of user 200 after set pincode (userstatus should be occupied_enable)",
+                "description"       : "Get status of user 50 after set pincode (userstatus should be occupied_enable)",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "readcommand"   : "STATUS",
-                    "data0"         : "200"
+                    "data0"         : "50"
                 }
             },
 
             {
                 "name"              : "physical_test",
-                "description"       : "Test pin code which have set for user 200 before",
+                "description"       : "Test pin code which have set for user 50 before",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
-                    "time"          : "60"
+                    "time"          : "30"
+                }
+            },
+
+
+            {
+                "name"              : "get_user_code",
+                "description"       : "Get status of user 100 (userstatus should be available)",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "readcommand"   : "STATUS",
+                    "data0"         : "100"
+                }
+            },
+
+            {
+                "name"              : "set_user_code",
+                "description"       : "Set pin code (456789) for user 100",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "writecommand"  : "ADD",
+                    "data0"         : "100",
+                    "data1"         : "456780"
+                }
+            },
+
+            {
+                "name"              : "get_user_code",
+                "description"       : "Get status of user 100 after set pincode (userstatus should be occupied_enable)",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "readcommand"   : "STATUS",
+                    "data0"         : "100"
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Test pin code which have set for user 100 before",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
+
+
+            {
+                "name"              : "get_user_code",
+                "description"       : "Get status of user 150 (userstatus should be available)",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "readcommand"   : "STATUS",
+                    "data0"         : "150"
+                }
+            },
+
+            {
+                "name"              : "set_user_code",
+                "description"       : "Set pin code (3456789) for user 150",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "writecommand"  : "ADD",
+                    "data0"         : "150",
+                    "data1"         : "3456789"
+                }
+            },
+
+                        {
+                "name"              : "get_user_code",
+                "description"       : "Get status of user 150 after set pincode (userstatus should be occupied_enable)",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "readcommand"   : "STATUS",
+                    "data0"         : "150"
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Test pin code which have set for user 150 before",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
+
+
+            {
+                "name"              : "get_user_code",
+                "description"       : "Get status of user 249 (userstatus should be available)",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "readcommand"   : "STATUS",
+                    "data0"         : "249"
+                }
+            },
+
+            {
+                "name"              : "set_user_code",
+                "description"       : "Set pin code (23456789) for user 249",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "writecommand"  : "ADD",
+                    "data0"         : "249",
+                    "data1"         : "23456789"
+                }
+            },
+
+            {
+                "name"              : "get_user_code",
+                "description"       : "Get status of user 249 after set pincode (userstatus should be occupied_enable)",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "readcommand"   : "STATUS",
+                    "data0"         : "249"
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Test pin code which have set for user 249 before",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "30"
                 }
             },
 
@@ -221,29 +365,54 @@
                     "class"         : "USER_CODE",
                     "writecommand"  : "ADD",
                     "data0"         : "250",
-                    "data1"         : "8765"
+                    "data1"         : "12345"
                 }
             },
 
             {
                 "name"              : "get_user_code",
-                "description"       : "Get status of user 250 this test expect to fail",
+                "description"       : "Get status of user 1 (userstatus should be available)",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "readcommand"   : "STATUS",
-                    "data0"         : "250"
+                    "data0"         : "1"
+                }
+            },
+
+            {
+                "name"              : "set_user_code",
+                "description"       : "Set pin code (5678) for user 1 . This test expect to fail because the limited degit number of user code (4-8)",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "writecommand"  : "ADD",
+                    "data0"         : "1",
+                    "data1"         : "123456789"
+                }
+            },
+
+            {
+                "name"              : "get_user_code",
+                "description"       : "Get status of user 1 after set pincode (userstatus should be available) ",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "readcommand"   : "STATUS",
+                    "data0"         : "1"
                 }
             },
 
             {
                 "name"              : "physical_test",
-                "description"       : "Test pin code which have set for user 250 before",
+                "description"       : "Test pin code which have set for user 1 before",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
-                    "time"          : "60"
+                    "time"          : "30"
                 }
             },
 
@@ -256,6 +425,32 @@
                     "class"         : "USER_CODE",
                     "writecommand"  : "REMOVE",
                     "data0"         : "200",
+                    "data1"         : ""
+                }
+            },
+
+            {
+                "name"              : "remove_user_code",
+                "description"       : "c",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "writecommand"  : "REMOVE",
+                    "data0"         : "50",
+                    "data1"         : ""
+                }
+            },
+
+            {
+                "name"              : "remove_user_code",
+                "description"       : "c",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "writecommand"  : "REMOVE",
+                    "data0"         : "249",
                     "data1"         : ""
                 }
             },
@@ -275,7 +470,7 @@
 
             {
                 "name"              : "get_user_code",
-                "description"       : "Get user code status afre removing",
+                "description"       : "Get user code status after removing",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",

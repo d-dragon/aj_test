@@ -152,7 +152,6 @@
                 }
             },
 
-
             {
                 "name"              : "basic_set_association",
                 "description"       : "Association with Led zwave device",

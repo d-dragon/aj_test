@@ -1,7 +1,7 @@
 {
     "devicename": "AeonLabsGen6MultiSensor",
     "serviceid": "93c06771-c725-48c2-b1ff-5c313ee312cc",
-    "deviceindex": "5",
+    "deviceindex": "0",
     "altdeviceid": "",
     "devicetype": "zwave",
     "associationdevidx": "1",

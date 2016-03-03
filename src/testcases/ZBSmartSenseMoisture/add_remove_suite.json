@@ -17,7 +17,7 @@
 				"input" 			: { 
 					"devicetype" 	: "zigbee",
 					"action"		: "open",
-					"time"			: "60"
+					"time"			: "30"
 				}
 			},
 

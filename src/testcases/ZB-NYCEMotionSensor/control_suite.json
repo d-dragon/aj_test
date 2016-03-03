@@ -1,54 +1,68 @@
 [
-	{
-		"testsuite" : "Get sensing value",
-		"testcases" :	[
-			{
-				"name"				: "listdevices",
-				"description" 		: "Get list of available devices in the controller",
-				"input" 			: {
-					"devicetype"	: "zigbee"
-				}
-			},
+    {
+        "testsuite" : "Get sensing value",
+        "testcases" :   [
+            {
+                "name"              : "listdevices",
+                "description"       : "Get list of available devices in the controller",
+                "input"             : {
+                    "devicetype"    : "zigbee"
+                }
+            },
 
-			{
-				"name" 				: "get_battery",
-				"description"		: "Get status of BATTERY ( percent ) for verifying value which is available",
-				"input" 			: {
+            {
+                "name"              : "get_battery",
+                "description"       : "Get status of BATTERY ( percent ) for verifying value which is available",
+                "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
                     "class"         : "BATTERY",
                     "readcommand"   : "PERCENT"
-				}
-			},
+                }
+            },
 
-			{
-				"name" 				: "get_temperature",
-				"description"		: "Get status of TEMP ( celsius ) for verifying value which is available",
-				"input" 			: {
+            {
+                "name"              : "get_temperature",
+                "description"       : "Get status of TEMP ( celsius ) for verifying value which is available",
+                "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
                     "class"         : "SENSOR",
                     "readcommand"   : "TEMP"
-				}
-			},
+                },
+                "verdict"       : {
+                    "method"        : "reference",
+                    "value"     : {
+                        "celsius"       : "ref"
+                    },
+                    "diff"              : 0.1
+                }
+            },
 
-			{
-				"name" 				: "get_huminity",
-				"description"		: "Get status of HUMI ( celsius ) for verifying value which is available",
-				"input" 			: {
+            {
+                "name"              : "get_huminity",
+                "description"       : "Get status of HUMI ( celsius ) for verifying value which is available",
+                "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
                     "class"         : "SENSOR",
                     "readcommand"   : "HUMI"
-				}
-			}
-		]
-	},
+                },
+                "verdict"       : {
+                        "method"        : "reference",
+                        "value"     : {
+                            "relative_humidity" : "ref"
+                        },
+                        "diff"              : 0.1
+                    }
+                }
+        ]
+    },
 
-	{
-		"testsuite" : "Test alarm sending (motion alarm and battery status) to controller when motion detected",
-		"testcases" :	[
-			{
+    {
+        "testsuite" : "Test alarm sending (motion alarm and battery status) to controller when motion detected",
+        "testcases" :   [
+            {
                 "name"              : "physical_test",
                 "description"       : "Wait for 60s to test motion alarm, device will send alarm message to controller when motion detected",
                 "input"             : {
@@ -60,19 +74,37 @@
         ]
     },
 
-	{
-		"testsuite" : "Time delay configuration",
-		"testcases" :	[
-			{
-				"name" 				: "get_time_delay",
-				"description"		: "Get status of TIME (time delay for motion report) for verifying value which is available",
-				"input" 			: {
+       {
+        "testsuite" : "Time delay configuration",
+        "testcases" :   [
+            {
+                "name"              : "time_delay_configuration",
+                "description"       : "Set TIME value is 0, it means time delay for motion report is 0s",
+                "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
-                    "readcommand"   : "TIME"
-				}
-			},
+                    "writecommand"  : "TIME",
+                    "readcommand"   : "TIME",
+                    "data0"         : "0"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value"         : 0
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test time delay which have set before",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
 
             {
                 "name"              : "time_delay_configuration",
@@ -82,61 +114,111 @@
                     "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
                     "writecommand"  : "TIME",
+                    "readcommand"   : "TIME",
                     "data0"         : "5"
-                }
-            },
-
-            {
-                "name"              : "get_time_delay",
-                "description"       : "Get status of TIME (time delay) which have set before",
-                "input"             : {
-                    "devicetype"    : "zigbee",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "readcommand"   : "TIME"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value"         : 5
+                    }
                 }
             },
 
             {
                 "name"              : "physical_test",
-                "description"       : "Wait for 60s to test time delay which have set before",
+                "description"       : "Wait for 30s to test time delay which have set before",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
-                    "time"          : "60"
+                    "time"          : "30"
                 }
             },
 
-			{
+            {
+                "name"              : "time_delay_configuration",
+                "description"       : "Set TIME value is 7, it means time delay for motion report is 7s",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "TIME",
+                    "readcommand"   : "TIME",
+                    "data0"         : "7"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value"         : 7
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test time delay which have set before",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "30"
+                }
+            },
+
+            {
                 "name"              : "time_delay_configuration",
                 "description"       : "Set TIME value is 10, it means time delay for motion report is 10s",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
-                    "class" 		: "CONFIGURATION",
-                    "writecommand"	: "TIME",
-                    "data0"			: "10"
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "TIME",
+                    "readcommand"   : "TIME",
+                    "data0"         : "10"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value"         : 10
+                    }
                 }
             },
 
             {
-				"name" 				: "get_time_delay",
-				"description"		: "Get status of TIME (time delay) which have set before",
-				"input" 			: {
-                    "devicetype"    : "zigbee",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "readcommand"   : "TIME"
-				}
-			},
-
-            {
                 "name"              : "physical_test",
-                "description"       : "Wait for 60s to test time delay which have set before",
+                "description"       : "Wait for 30s to test time delay which have set before",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
-                    "time"          : "60"
+                    "time"          : "30"
+                }
+            },
+
+            {
+                "name"              : "time_delay_configuration",
+                "description"       : "Set TIME value is 15, it means time delay for motion report is 15s",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "TIME",
+                    "readcommand"   : "TIME",
+                    "data0"         : "15"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value"         : 15
+                    }
+                }
+            },
+
+            {
+                "name"              : "physical_test",
+                "description"       : "Wait for 30s to test time delay which have set before",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "time"          : "30"
                 }
             },
 
@@ -146,55 +228,47 @@
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
-                    "class" 		: "CONFIGURATION",
-                    "writecommand"	: "TIME",
-                    "data0"			: "65000"
+                    "class"         : "CONFIGURATION",
+                    "writecommand"  : "TIME",
+                    "readcommand"   : "TIME",
+                    "data0"         : "65000"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value"         : 65000
+                    }
                 }
             },
 
             {
-				"name" 				: "get_time_delay",
-				"description"		: "Get status of TIME (time delay) which have set before",
-				"input" 			: {
-                    "devicetype"    : "zigbee",
-                    "id"            : "D_ID",
-                    "class"         : "CONFIGURATION",
-                    "readcommand"   : "TIME"
-				}
-			},
-
-            {
                 "name"              : "physical_test",
-                "description"       : "Wait for 60s to test time delay which have set before",
+                "description"       : "Wait for 30s to test time delay which have set before",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
-                    "time"          : "60"
+                    "time"          : "30"
                 }
             },
 
             {
                 "name"              : "time_delay_configuration",
-                "description"       : "Set TIME value is 65536, it means time delay for motion report is 65536s",
+                "description"       : "Set TIME value is 65555, it means time delay for motion report is 65555s",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
-                    "class" 		: "CONFIGURATION",
-                    "writecommand"	: "TIME",
-                    "data0"			: "65536"
-                }
-            },
-
-            {
-				"name" 				: "get_time_delay",
-				"description"		: "Get status of TIME (time delay) which have set beforee",
-				"input" 			: {
-                    "devicetype"    : "zigbee",
-                    "id"            : "D_ID",
                     "class"         : "CONFIGURATION",
-                    "readcommand"   : "TIME"
-				}
-			}
+                    "writecommand"  : "TIME",
+                    "readcommand"   : "TIME",
+                    "data0"         : "65555"
+                },
+                "verdict"       : {
+                    "method"        : "expectation",
+                    "value"     : {
+                        "value"         : 65555
+                    }
+                }
+            }
         ]
     }
-]	
+]   
