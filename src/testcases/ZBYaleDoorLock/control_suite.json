@@ -28,7 +28,7 @@
         "testcases" :   [
             {
                 "name"              : "get_door_status",
-                "description"       : "",
+                "description"       : "Get status of the door",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
@@ -53,7 +53,7 @@
 
             {
                 "name"              : "get_door_status",
-                "description"       : "",
+                "description"       : "Get status of the door",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
@@ -78,7 +78,7 @@
           
             {
                 "name"              : "get_door_status",
-                "description"       : "",
+                "description"       : "Get status of the door",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
@@ -418,7 +418,7 @@
 
             {
                 "name"              : "remove_user_code",
-                "description"       : "c",
+                "description"       : "Remove user code infomation of user 200",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
@@ -431,7 +431,7 @@
 
             {
                 "name"              : "remove_user_code",
-                "description"       : "c",
+                "description"       : "Remove user code infomation of user 50",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
@@ -444,7 +444,7 @@
 
             {
                 "name"              : "remove_user_code",
-                "description"       : "c",
+                "description"       : "Remove user code infomation of user 249",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
@@ -457,7 +457,7 @@
 
             {
                 "name"              : "remove_user_code",
-                "description"       : "Remove user code info of user 1st",
+                "description"       : "Remove user code info of user 1",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
@@ -470,7 +470,7 @@
 
             {
                 "name"              : "get_user_code",
-                "description"       : "Get user code status after removing",
+                "description"       : "Get user code status of user 1 after removing",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
@@ -482,13 +482,25 @@
 
             {
                 "name"              : "get_user_code",
-                "description"       : "Get user code status after removing",
+                "description"       : "Get user code status of user 200 after removing",
                 "input"             : {
                     "devicetype"    : "zigbee",
                     "id"            : "D_ID",
                     "class"         : "USER_CODE",
                     "readcommand"   : "STATUS",
                     "data0"         : "200"
+                }
+            },
+
+            {
+                "name"              : "get_user_code",
+                "description"       : "Get user code status of user 249 after removing",
+                "input"             : {
+                    "devicetype"    : "zigbee",
+                    "id"            : "D_ID",
+                    "class"         : "USER_CODE",
+                    "readcommand"   : "STATUS",
+                    "data0"         : "249"
                 }
             },
 
