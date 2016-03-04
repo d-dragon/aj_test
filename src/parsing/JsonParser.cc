@@ -517,7 +517,7 @@ int JsonParser::TestCaseCollector(json_t *tcRoot){
 			}
             LOGCXX("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl);
 			/*Wait for 5s between test cases */
-			//sleep(5);
+			sleep(5);
 		}
 		if (0 == mReferenceFlag) {
 

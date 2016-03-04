@@ -20,14 +20,8 @@
                 "description"       : "Turn off device",
                 "input"             : {
                     "devicetype"    : "zigbee",
-                    "id"            : "59F4",
+                    "id"            : "71DD",
                     "value"         : "1"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :  1
-                    }
                 }
             },
 
@@ -36,14 +30,8 @@
                 "description"       : "Turn off device",
                 "input"             : {
                     "devicetype"    : "zigbee",
-                    "id"            : "59F4",
+                    "id"            : "71DD",
                     "value"         : "0"
-                },
-                "verdict"       : {
-                    "method"        : "expectation",
-                    "value"     : {
-                        "value" :  0
-                    }
                 }
             }
         ]
