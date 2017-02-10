@@ -93,7 +93,7 @@ void AlljoynClient::RemoteBusObject::RegisterCBFunc(void (*cbfunc)(int respFlag,
 }
 				
 
-AlljoynClient::RemoteBusObject::RemoteBusObject(BusAttachment& bus, const char* path,const char* interface, ProxyBusObject proxyObject, SessionId sessionId) : BusObject(path), remoteSessionId(sessionId), numMember(0), remoteSignalMember(NULL) {
+AlljoynClient::RemoteBusObject::RemoteBusObject(BusAttachment& bus, const char* path,const char* interface, ProxyBusObject proxyObject, SessionId sessionId, string busName) : BusObject(path), remoteSessionId(sessionId), numMember(0), remoteSignalMember(NULL), remoteBusName(busName) {
 
 	QStatus status;
 
@@ -157,11 +157,12 @@ QStatus AlljoynClient::RemoteBusObject::SendSignal(const char* methodName, size_
 		if(strcmp(remoteSignalMember[i]->name.c_str(), methodName) == 0) {
 
 			assert(&remoteSignalMember[i]);
-			status = Signal(NULL, remoteSessionId, *remoteSignalMember[i], args, numArg ,0, flags, NULL);
+			status = Signal(remoteBusName.c_str(), 0, *remoteSignalMember[i], args, numArg ,0, flags, NULL);
 			if (ER_OK != status) {
 
-				printf("Send Signal failed\n");
+				printf("Send Signal failed status (%s)\n", QCC_StatusText(status));
 			}
+			printf("Send Signal return status (%s)\n", QCC_StatusText(status));
 			return status;
 		}
 	}
@@ -185,21 +186,24 @@ void AlljoynClient::AlljoynClientAboutListener::Announced(const char* busName, u
 
     char *devID;
     QStatus ret;
-    if ((mRefDevID != "") && (mAboutData == NULL))
+    //if ((mRefDevID != "") && (mAboutData == NULL))
+    if (mAboutData == NULL)
     {
         mAboutData = new AboutData(aboutDataArg);
         ret = mAboutData->GetDeviceId(&devID);
-        cout << "Find out dev id :"<< devID <<std::endl;
         if (ER_OK != ret)
         {
             return;
         }
+        cout << "Find out dev id :"<< devID <<std::endl;
+		/*
         if ( 0 != strcmp (mRefDevID.c_str(),devID ))
         {
             delete mAboutData;
             mAboutData = NULL;
             return;
         }
+		*/
     	aboutInfo.objectDescription.CreateFromMsgArg(objectDescriptionArg);
     	aboutInfo.busName = string(busName);
     	aboutInfo.port = port;
@@ -224,7 +228,59 @@ void AlljoynClient::AlljoynClientAboutListener::Announced(const char* busName, u
     		status = mainBus-> JoinSession(busName, port, &sessionListener, sessionId, opts);
     		printf("SessionJoined sessionId = %u, status = %s\n", sessionId, QCC_StatusText(status));
     	}*/
-    }
+    } else {
+		AboutData aboutData(aboutDataArg);
+		char* appName;
+		char* deviceName;
+
+		cout << "\nReceived About signal:";
+		cout << "\n BusName          : " << busName << endl;
+
+		if (ER_OK == aboutData.GetAppName(&appName)) {
+			cout << " Application Name : " << appName << endl;
+		}
+		if (ER_OK == aboutData.GetDeviceName(&deviceName)) {
+			cout << " Device Name      : " << deviceName << endl;
+		}
+
+		cout << endl;
+	}
+}
+QStatus AlljoynClient::AnnounceClientAboutData()
+{
+	QStatus status;
+	clientAboutObj = new AboutObj(*mainBus);
+	
+	GUID128 appId;
+	printf("appId: %s\n", appId.ToString().c_str());
+	status = clientAboutData.SetAppId(appId.ToString().c_str());
+
+	clientAboutData.SetDefaultLanguage("en");
+    char buf[64];
+    gethostname(buf, sizeof(buf));
+    status = clientAboutData.SetDeviceName(buf);
+
+    GUID128 deviceId;
+    status = clientAboutData.SetDeviceId(deviceId.ToString().c_str());
+	printf("deviceId: %s\n", deviceId.ToString().c_str());
+    status = clientAboutData.SetAppName("Venus Alljoyn Client");
+    status = clientAboutData.SetManufacturer("VEriKsystems");
+    status = clientAboutData.SetModelNumber("1");
+    status = clientAboutData.SetDescription("Venus test tool");
+    status = clientAboutData.SetDateOfManufacture("2017-02-10");
+    status = clientAboutData.SetSoftwareVersion("0.1");
+    status = clientAboutData.SetHardwareVersion("0.0.1");
+    status = clientAboutData.SetSupportUrl("https://veriksystems.com/");
+
+	if (!clientAboutData.IsValid()) {
+		printf("Invalid aboutData\n");
+		return ER_FAIL;
+	}
+	status = clientAboutObj->Announce(25, clientAboutData);
+	if (ER_OK != status) {
+		printf("error %s::%d status: %s\n", __FUNCTION__, __LINE__, QCC_StatusText(status));
+	}
+	return status;
 }
 
 QStatus AlljoynClient::InitAlljoynClient(const char* interface){
@@ -248,11 +304,27 @@ QStatus AlljoynClient::InitAlljoynClient(const char* interface){
 	}
 
 	if ((status = mainBus->Connect()) == ER_OK) {
-		printf("BusAttachment connected!\n");
-	}else{
+		printf("BusAttachment connected! Bus name: %s\n", mainBus->GetUniqueName().c_str());
+	} else {
 		printf("start BusAttachment failed, reason %s!\n", QCC_StatusText(status));
 		return status;
 	}
+
+	status = InitSecurity2Infra();
+	if (ER_OK != status) {
+		printf("init security-2.0 infra failed\n");
+		return status;
+	}
+
+	SessionOpts opts;
+	SessionPort port = 25;
+	status = mainBus->BindSessionPort(port, opts, sessionPortListener);
+
+	if (ER_OK != (status = AnnounceClientAboutData())) {
+		printf("announce client about data failed\n");
+		return status;
+	}
+	pcl->WaitForClaimedState();
 
 	mainBus->RegisterAboutListener(aboutListener);
 
@@ -281,7 +353,7 @@ QStatus AlljoynClient::ConnectServiceProvider(const char* interface){
 
 	QStatus status;
 
-#ifdef DEBUG_ENABLE
+#ifdef DEBUG_ENABLED
 	size_t num_path = aboutListener.aboutInfo.objectDescription.GetPaths(NULL,0);
 	const char** paths = new const char*[num_path];
 	aboutListener.aboutInfo.objectDescription.GetPaths(paths, num_path);
@@ -293,9 +365,9 @@ QStatus AlljoynClient::ConnectServiceProvider(const char* interface){
 		for (size_t j = 0; j < num_interface; j++) {
 			printf("\t\t\t%s\n", interfaces[j]);
 		}
+		delete interfaces;
 	}
-	delete paths;
-	delete interfaces;
+	delete [] paths;
 #endif
 
 	if (aboutListener.aboutInfo.port == 0) {
@@ -303,7 +375,7 @@ QStatus AlljoynClient::ConnectServiceProvider(const char* interface){
 		printf("Service provider not found\n");
 		return ER_FAIL;
 	}
-	printf("busName: %s, SessionPort: %u\n", aboutListener.aboutInfo.busName.c_str(), aboutListener.aboutInfo.port);
+	printf("Remote bus name: %s, SessionPort: %u\n", aboutListener.aboutInfo.busName.c_str(), aboutListener.aboutInfo.port);
 	if (mainBus != NULL) {
 
 		SessionOpts opts(SessionOpts::TRAFFIC_MESSAGES, false, SessionOpts::PROXIMITY_ANY, TRANSPORT_ANY);
@@ -317,8 +389,8 @@ QStatus AlljoynClient::ConnectServiceProvider(const char* interface){
 	/*get proxybusobject*/
 	const char* path;
 	aboutListener.aboutInfo.objectDescription.GetInterfacePaths(interface, &path, 1);
-	printf("proxyObject for interface path: %s/%s\n", path, interface);
-	proxyObject = new ProxyBusObject(*mainBus, aboutListener.aboutInfo.busName.c_str(), path, sessionId);
+	printf("proxyObject  path: %s\n", path);
+	proxyObject = new ProxyBusObject(*mainBus, aboutListener.aboutInfo.busName.c_str(), aboutListener.aboutInfo.busName.c_str(), path, sessionId, true);
 	status = proxyObject->IntrospectRemoteObject();
 	if (ER_OK != status) {
 		
@@ -326,11 +398,12 @@ QStatus AlljoynClient::ConnectServiceProvider(const char* interface){
 		return status;
 	}
 
-	remoteObject = new RemoteBusObject(*mainBus, path, interface, *proxyObject, sessionId);
-	status = mainBus->RegisterBusObject(*remoteObject);
+	remoteObject = new RemoteBusObject(*mainBus, path, interface, *proxyObject, sessionId, aboutListener.aboutInfo.busName);
+	status = mainBus->RegisterBusObject(*remoteObject, true);
 	if(ER_OK == status) {
 		printf("BusAttachment RegisterBusObject success\n");
 	}
+	mainBus->CancelWhoImplements(VENUS_INTF);
 	return status;
 }
 
@@ -342,18 +415,27 @@ void AlljoynClient::AlljoynClientByeBye(){
 	if(status != ER_OK){
 		cout << "left joined session failed" << endl;
 	}
+	cout << "unregistering AboutListener" << endl;
 	mainBus->UnregisterAboutListener(aboutListener);
 
+	cout << "unregistering BusObject" << endl;
 	if(remoteObject != NULL){
 
 		mainBus->UnregisterBusObject(*remoteObject);
 	}
+	mainBus->UnbindSessionPort(CLIENT_APP_SESSION_PORT);
 
+	cout << "deallocating objects" << endl;
+	delete remoteObject;
+	delete proxyObject;
+	delete pcl;
+	delete clientAboutObj;
+	delete authListener;
+
+	cout << "disconnecting alljoyn bus" << endl;
 	mainBus->Disconnect();
 	mainBus->Stop();
 
-	delete remoteObject;
-	delete proxyObject;
 	delete mainBus;
 
 	AllJoynRouterShutdown();
@@ -392,5 +474,89 @@ QStatus AlljoynClient::SendRequestSignal(const char* signalName, size_t numArg, 
 	}
 	cout << "alljoyn client send signal " << signalName << endl; 
 	status = remoteObject->SendSignal(signalName, numArg, args);
+	return status;
+}
+
+
+void AlljoynClient::ClientPCL::PolicyChanged()
+{
+	lock.Lock();
+	QStatus status;
+	PermissionConfigurator::ApplicationState appState;
+	if (ER_OK == (status = ba.GetPermissionConfigurator().GetApplicationState(appState))) {
+		if (PermissionConfigurator::ApplicationState::CLAIMED == appState) {
+			qcc::Sleep(250);
+            // Upon a policy update, existing connections are invalidated
+            // and one needs to make them valid again.
+            if (ER_OK != (status = ba.SecureConnectionAsync(nullptr, true))) {
+                fprintf(stderr, "Attempt to secure the connection - status (%s)\n",
+                        QCC_StatusText(status));
+            }
+            sem.Signal();
+		}
+	} else {
+        fprintf(stderr, "Failed to GetApplicationState - status (%s)\n", QCC_StatusText(status));
+    }
+    lock.Unlock();
+
+}
+
+QStatus AlljoynClient::ClientPCL::WaitForClaimedState()
+{
+	lock.Lock();
+	PermissionConfigurator::ApplicationState appState;
+
+	QStatus status = ba.GetPermissionConfigurator().GetApplicationState(appState);
+	if (ER_OK != status) {
+		fprintf(stderr, "Failed to GetApplicationState - status (%s)\n",
+				QCC_StatusText(status));
+		lock.Unlock();
+		return status;
+	}
+
+	if (PermissionConfigurator::ApplicationState::CLAIMED == appState) {
+		printf("Already claimed !\n");
+		lock.Unlock();
+		return ER_OK;
+	}
+
+	printf("Waiting to be claimed...\n");
+	status = sem.Wait(lock);
+	if (ER_OK != status) {
+		lock.Unlock();
+		return status;
+	}
+
+	printf("Claimed !\n");
+	lock.Unlock();
+	return ER_OK;
+}
+
+QStatus AlljoynClient::InitSecurity2Infra()
+{
+	QStatus status;
+	pcl = new ClientPCL(*mainBus);
+	
+    authListener = new DefaultECDHEAuthListener();
+	status = mainBus->EnablePeerSecurity(KEYX_ECDHE_DSA " " KEYX_ECDHE_NULL " " KEYX_ECDHE_PSK, authListener, nullptr, false, pcl);
+    if (ER_OK != status) {
+        printf("Failed to EnablePeerSecurity - status (%s)\n", QCC_StatusText(status));
+        return status;
+	}
+
+    PermissionPolicy::Rule manifestRule;
+    manifestRule.SetInterfaceName(VENUS_INTF);
+
+	PermissionPolicy::Rule::Member member;
+	member.SetMemberName("*");
+	member.SetMemberType(PermissionPolicy::Rule::Member::SIGNAL);
+	member.SetActionMask(PermissionPolicy::Rule::Member::ACTION_OBSERVE | 
+			PermissionPolicy::Rule::Member::ACTION_PROVIDE);
+	manifestRule.SetMembers(1, &member);
+	status = mainBus->GetPermissionConfigurator().SetPermissionManifest(&manifestRule, 1);
+    if (ER_OK != status) {
+        printf("Failed to SetPermissionManifest - status (%s)\n", QCC_StatusText(status));
+        return status;
+    }
 	return status;
 }

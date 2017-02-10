@@ -12,7 +12,7 @@ struct SignalInfo{
 	
 }SignalInfo;
 
-static volatile int sigvalue = 1;
+static volatile int isTerminating = 1;
 
 static struct SignalInfo SignalInfoList[] = {
 	{"add_devices", 1, "(type) -> e.g. (zwave)"}, \
@@ -25,13 +25,53 @@ static struct SignalInfo SignalInfoList[] = {
 	{"rule_actions", 6, "(rule_action, rule_type, rule_name, new_name, new_conditions, new_actions)"}
 };
 
-void signal_handler(int signo, const char*, const char*, const char*)
+static void SignalHander(int signo)
 {
-    sigvalue = 1;
-    cout << "Signal Handler" << std::endl;
-    return;
+	switch(signo) {
+		case SIGINT:
+			printf("Received signal %d\n", signo);
+			isTerminating = 2;
+			break;
+	};
+	return;
 }
-int help(){
+
+static void SetSignalHandler(void) {
+	struct sigaction act, old_act;
+	act.sa_flags = (SA_NOCLDSTOP | SA_NOCLDWAIT | SA_RESTART | SA_SIGINFO);
+	act.sa_handler = SignalHander;
+
+	if (sigaction(SIGSEGV, &act, &old_act)) {
+		cout << "sigaction failed... errno: " << errno << endl;
+	} else {
+		if (old_act.sa_handler == SIG_IGN) {
+
+			cout << "oldact RTMIN: SIGIGN" << endl;
+		}
+		if (old_act.sa_handler == SIG_DFL) {
+
+			cout << "oldact RTMIN: SIGDFL" << endl;
+		}
+	}
+	if (sigaction(SIGINT, &act, &old_act)) {
+
+		cout << "sigaction failed... errno: " << errno;
+	} else {
+		if (old_act.sa_handler == SIG_IGN) {
+
+			cout << "oldact RTMIN: SIGIGN" << endl;
+		}
+		if (old_act.sa_handler == SIG_DFL) {
+
+			cout << "oldact RTMIN: SIGDFL" << endl;
+		}
+	}
+
+
+
+
+}
+static void help(){
 
 	int numSignalInfo = (sizeof SignalInfoList) / (sizeof SignalInfo);
 	printf("\n********Supported Features********************************************\n");
@@ -42,7 +82,9 @@ int help(){
 	cout << "\t" << "8:quit" << endl;
 	printf("Press the number to take corresponding action!!!\n");
 	printf("**********************************************************************\n");
+
 }
+
 
 #define TIMEOUT 10000
 int main()
@@ -51,34 +93,46 @@ int main()
 	int funcIndex;
     int sig_status;
     int cnt = 0;
+	SetSignalHandler();
 	printf("*********Start Alljoyn Client app **********\n");
 	AlljoynClient* ajClient = new AlljoynClient();
-	status = ajClient->InitAlljoynClient("com.verik.bus.VENUS_BOARD");
+	status = ajClient->InitAlljoynClient(VENUS_INTF);
 
 	if(ER_OK != status) {
 		printf("init alljoyn client failed\n");
 		return -1;
 	}
-	sleep(1);
-	status = ajClient->ConnectServiceProvider("com.verik.bus.VENUS_BOARD");
+	sleep(2);
+	status = ajClient->ConnectServiceProvider(VENUS_INTF);
+	if (status == ER_FAIL) {
+		return -1;
+	}
+	cout << "Connected to Venus hub successfully!" << endl;
+
+/*
     ajClient->RegisterCB(signal_handler);
+*/
     
 	if (ER_OK == status) {
-		while(1){
-            if (sigvalue != 1)
+		while(isTerminating != 2){
+			/*
+            if (isTerminating != 1)
             {
                 usleep(100);
-
                 continue;
             }
-            sigvalue = 0;
+			*/
+            isTerminating = 0;
 			help();
 			
 			cout << "Choose feature index:";
 			cin >> funcIndex;
-			if(funcIndex == 8) {
+			if (funcIndex > 8 || funcIndex < 0) {
+				cout << "Invalid index" << endl;
+				continue;
+			} else if (funcIndex == 8) {
 				cout << "Program exit>>>>>" << endl;
-				break;
+				goto exit;
 			}
 			cout << "Input " << SignalInfoList[funcIndex].numArg << " arguments of " << SignalInfoList[funcIndex].signalName << endl;
 			string args[SignalInfoList[funcIndex].numArg];
@@ -115,7 +169,10 @@ int main()
 						cout << "send signal ["<< SignalInfoList[funcIndex].signalName <<"] failed!" << endl;
 					}
 					break;
+				default:
+					break;
 			};
+			cin.clear();
 		};
 		/*ajClient->SendRequestSignal("add_devices", 1, "zwave");
 		sleep(4);*/
@@ -140,7 +197,8 @@ int main()
 /*		ajClient->SendRequestSignal("rule_actions", 6, "update", "time", "rule1", "rule2", "16:00;1,2,3,4,5", "zwave;33D5;0;01;0104");
 */
 	}
+exit:
+	delete ajClient;	
 	printf("App terminated\n");
-	// delete ajClient;	
 	return 0;
 }

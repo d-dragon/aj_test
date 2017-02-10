@@ -14,7 +14,7 @@ CXX=g++
 #
 # Link and include
 #	
-CXXFLAGS			= -std=c++11 -DROUTER -DQCC_OS_GROUP_POSIX -DBINDINGS=cpp -DWS=off -DBR=on -DICE=off -DOS=linux -DCPU=x86_64 -I./inc -I./src/onboarding -I./src/parsing
+CXXFLAGS			= -Wall -O0 -std=c++11 -DDEBUG_ENABLED -DROUTER -DQCC_OS_GROUP_POSIX -DBINDINGS=cpp -DWS=off -DBR=on -DICE=off -DOS=linux -DCPU=x86_64 -I./inc -I./inc/alljoyn -I./src/onboarding -I./src/parsing
 JANSSON_LIBS		= -ljansson
 DEFAULT_LIBS		= -L./lib -lrt -lpthread -lajrouter -lalljoyn -lalljoyn_about -lalljoyn_onboarding -lalljoyn_services_common -lalljoyn_config
 
@@ -41,8 +41,11 @@ ONBOARDING_OBJECTS	= $(patsubst $(ONBOARDING_SRCDIR)/%.cc,$(OBJDIR)/%.o,$(wildca
 AJCLIENT_OBJECTS	= $(patsubst $(AJCLIENT_SRCDIR)/%.cc,$(OBJDIR)/%.o,$(wildcard $(AJCLIENT_SRCDIR)/*.cc))
 PARSINGMODULE_OBJS	= $(patsubst $(PARSINGMODULE_SRC)/%.cc,$(OBJDIR)/%.o,$(wildcard $(PARSINGMODULE_SRC)/*.cc))
 
-AJ_CORE_SRC			= alljoyn-15.04.00b-src
-AJ_SERVICES_SRC		= alljoyn-services-15.04.00-src
+AJ_SERVICES_TARBALL	= alljoyn-base-16.04.00.tar.gz
+AJ_CORE_TARBALL 	= alljoyn-16.04.00a.tar.gz
+AJ_CORE_SRC			= alljoyn-16.04a-src
+AJ_SERVICES_SRC		= alljoyn-services-16.04.00-src
+SQLITE3_SRC			= sqlite-autoconf-3160200
 JANSSON_SRC			= jansson-2.7
 ROOT_DIR			= $(shell pwd)
 #
@@ -68,26 +71,33 @@ AlljoynClientApp: $(AJCLIENT_OBJECTS)
 
 common_libs: build_alljoyn_src build_alljoyn_services build_jansson
 
-build_alljoyn_src:
+build_alljoyn_src: prepare_aj_sources
 	@echo "Build Alljoyn source"
-	@tar xzf common_libs/$(AJ_CORE_SRC).tar.gz -C $(BUILDDIR)
-	@cd $(BUILDDIR)/$(AJ_CORE_SRC); scons BINDINGS=cpp WS=off BR=on ICE=off OS=linux CPU=x86_64 VARIANT=release; \
-	cp -a build/linux/x86_64/release/dist/cpp/lib/ ../../; \
-	cp -a build/linux/x86_64/release/dist/cpp/inc/ ../../; \
-	cd  $(ROOT_DIR)
-	
+	@if test -e $(LIBDIR)/liballjoyn.so;then echo "AJ libs are available";\
+		else cd $(BUILDDIR)/$(AJ_CORE_SRC);\
+		scons BINDINGS=cpp WS=off BR=on ICE=off OS=linux CPU=x86_64 CRYPTO=builtin \
+		VARIANT=release SQLITE_DIR=$(ROOT_DIR)/$(BUILDDIR)/sqlite-autoconf-3160200;\
+		cp -a build/linux/x86_64/release/dist/cpp/lib/* $(ROOT_DIR)/lib/;\
+		cp -a build/linux/x86_64/release/dist/cpp/inc/* $(ROOT_DIR)/inc;\
+		cp -a common/inc/qcc/* $(ROOT_DIR)/inc/qcc/;fi;
+	@cd  $(ROOT_DIR)
+
+prepare_aj_sources:
+	@if test -d $(BUILDDIR)/$(AJ_CORE_SRC); then echo "AJ core source is available";else tar xvf common_libs/$(AJ_CORE_TARBALL) -C $(BUILDDIR);fi
+	@if test -d $(BUILDDIR)/$(SQLITE3_SRC);then echo "sqlite3 source is available";else tar xvf common_libs/$(SQLITE3_SRC).tar.gz -C $(BUILDDIR);fi
+
 build_alljoyn_services:
 	@echo "Build Alljoyn services"
-	@tar xzf common_libs/$(AJ_SERVICES_SRC).tar.gz -C $(BUILDDIR)
-	@export ALLJOYN_DISTDIR=`pwd`/$(BUILDDIR)/$(AJ_CORE_SRC)/build/linux/x86_64/release/dist/;cd $(BUILDDIR)/$(AJ_SERVICES_SRC)/services/base/onboarding; \
+	@if test -d $(BUILDDIR)/$(AJ_SERVICES_SRC);then echo "Aj service source is available";else tar xvf common_libs/$(AJ_SERVICES_TARBALL) -C $(BUILDDIR);fi
+	@export ALLJOYN_DISTDIR=`pwd`/$(BUILDDIR)/$(AJ_CORE_SRC)/build/linux/x86_64/release/dist/;cd $(BUILDDIR)/$(AJ_SERVICES_SRC)/onboarding; \
     scons V=1 BINDINGS=cpp WS=off BR=on ICE=off OS=linux CPU=x86_64 VARIANT=release; \
-    cp -a build/linux/x86_64/release/dist/config/inc $(ROOT_DIR); \
-    cp -a build/linux/x86_64/release/dist/config/lib $(ROOT_DIR); \
     cp -a build/linux/x86_64/release/dist/onboarding/inc $(ROOT_DIR); \
     cp -a build/linux/x86_64/release/dist/onboarding/lib $(ROOT_DIR); \
     cp -a build/linux/x86_64/release/dist/services_common/inc $(ROOT_DIR); \
     cp -a build/linux/x86_64/release/dist/services_common/lib $(ROOT_DIR); \
     cd $(ROOT_DIR)
+    #cp -a build/linux/x86_64/release/dist/config/inc $(ROOT_DIR); \
+    #cp -a build/linux/x86_64/release/dist/config/lib $(ROOT_DIR); \
 
 build_jansson:
 	@echo "Build Jansson lib"
